@@ -1,20 +1,13 @@
 #				_-_-_-_-_-_-      JAVA COMPILE      -_-_-_-_-_
-
-#-cp src
-#-main Core
-#-java bin\java
-
-
-
-
-
+-cp src
+-main Core
+-java bin\java
 
 #				_-_-_-_-_-_-      SWF COMPILE      -_-_-_-_-_
 --next
 -cp src
 -main Core
-#-swf bin\flash\core.swf
--swf C:\xampp\htdocs\cores\core-0.1.1.1002.swf
+-swf bin\flash\core.swf
 
 --next
 -cp src
@@ -25,30 +18,6 @@
 -cp src
 -main Core
 -as3 bin\flash\src
-
-#-swf <file> : compile code to Flash SWF file
-
-#-swf-version <version> : change the SWF version (6 to 11.2, not adobe swf version, but flash player version). Implies the `-D flashN` switch, where `N` is the SWF version specified.
-
-#-swf-header <header> : define SWF header (width:height:fps[:color])
-
-#-swf-lib <file> : add the SWF library to the compiled SWF (Note: all classes of lib swf mixed with haxe classes. so you can use symbol class directly.
-#but class name must starts with UpperCase, also must not be conflicted with haxe classes.)
-#See: Getting started with Haxe/Flash check Using the Library section
-#See: Using/Exporting SWC Files
-
-#-swf-lib-extern <file> : add the SWF library for type checking but don't include it in the compiled SWF
-
-#-as3 <directory> : generate AS3 code into target directory. can not be used with -swf
-
-#--flash-strict : more type strict flash API
-
-#--flash-use-stage : place objects found on the stage of the SWF lib. In Haxe3 this has been changed to: -D flash-use-stage. 
-#(Not to be used together with -swf-header)
-
-#-swf9 <file>: (Deprecated: Use -swf-version instead) compile code to Flash9 SWF file
-
-
 
 
 #				_-_-_-_-_-_-      RUN      -_-_-_-_-_
