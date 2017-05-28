@@ -188,7 +188,7 @@ class IntBuildingMap
 	}
 	#end
 	
-	#if java
+	/*#if java
 	public function get_availables():NativeArray<Int>
 	{
 		var i:Int = 0;
@@ -218,6 +218,6 @@ class IntBuildingMap
 				ret.push(key);
 		return ret ;
 	}
-	#end
+	#end*/
 
 }
