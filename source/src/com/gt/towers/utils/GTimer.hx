@@ -8,14 +8,14 @@ package com.gt.towers.utils;
  
 class GTimer 
 {
-
-    public static var timers:Array<Timer> = new Array();
+	
+    public static var timers:Map<Int, Timer> = new Map<Int, Timer>();
     
     public static function setInterval(func:Dynamic, milliseconds:Int, rest:Array<Dynamic>):Int
     {
         var timer:Timer = new Timer(milliseconds);
-        timers.push(timer);
-        var id = timers.length - 1;
+        var id:Int = getRandomId();
+        timers.set( id , timer );
         timer.run = function() 
         {
             Reflect.callMethod(null, func, rest);
@@ -23,18 +23,19 @@ class GTimer
         
         return id;
     }
-    
+   
     public static function clearInterval(id:Int) 
     {
-        timers[id].stop();
-        timers[id] = null;
+        timers.get(id).stop();
+        timers.remove(id);
     }
     
+	
     public static function setTimeout(func:Dynamic, milliseconds:Int, rest:Array<Dynamic>):Int
     {
         var timer:Timer = new Timer(milliseconds);
-        timers.push(timer);
-        var id = timers.length-1;
+        var id:Int = getRandomId();
+        timers.set( id , timer );
         timer.run = function() 
         {
             Reflect.callMethod(null, func, rest);
@@ -46,9 +47,24 @@ class GTimer
 
     public static function clearTimeout(id:Int) 
     {
-        timers[id].stop();
-        timers[id] = null;
+        timers.get(id).stop();
+        timers.remove(id);
     }
 
-    
+	static private function getRandomId() : Int
+	{
+		var ret = Math.floor(Math.random() * 10000);
+		if (timers.exists(ret))
+			ret = getRandomId();
+		return ret;
+	}
+	
+	public static function stopAll() : Void
+	{
+		for (value in timers)
+			value.stop();
+		
+		timers = new Map<Int, Timer>();
+	}
+
 }
