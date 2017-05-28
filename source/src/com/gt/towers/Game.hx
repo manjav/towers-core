@@ -1,6 +1,5 @@
 package com.gt.towers;
 import com.gt.towers.Player;
-import com.gt.towers.others.BalancingData;
 import com.gt.towers.shop.Shop;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -12,8 +11,8 @@ import com.gt.towers.utils.maps.IntBuildingMap;
  */
 class Game
 {
-	public var noticeVersion:Int = 101;
-	public var forceVersion:Int = 100;
+	public static var loginData:LoginData = new LoginData();
+
 	public var battleField:BattleField;
 
 	public function new(data:InitData)
