@@ -5,39 +5,41 @@ set DATE=%date:~-10,2%%date:~-7,2%%time:~-11,2%%time:~-8,2%%time:~-5,2%
 :: Repace space with 0
 for %%a in (%DATE: =0%) do set DATE=%%a
 
-:: Get major version from first line of LoginData class
-for /f "tokens=1,*" %%a in (src\com\gt\towers\LoginData.hx) do (
-	set firstLine=%%a
-	call :exittag
-)
+set INTEXTFILE=src\com\gt\towers\LoginData.hx
+set OUTTEXTFILE=src\com\gt\towers\LoginData_temp.hx
+set SEARCHTEXT=coreVersion
+set REPLACETEXT=%DATE%;//do not change.
 
+for /f "tokens=1,* delims=¶" %%a in ( '"type %INTEXTFILE%"') do (
+echo %%a | findstr /C:%SEARCHTEXT% 1>nul
+	if not errorlevel 1 (
+		set mver=%%a
+		call :exittag
+	)
+)
 :exittag
 :: Concat major varsion with modified date
-set NEWNAME=%firstLine:~16%.%DATE%
+set NEWNAME=%mver:~32,4%%DATE%
 
-for %%a in ("%NEWNAME: =0%") do echo %%a
 
 :: Update core version in LoginData class
 setlocal enabledelayedexpansion
-set INTEXTFILE=src\com\gt\towers\LoginData.hx
-set OUTTEXTFILE=src\com\gt\towers\LoginData_temp.hx
-
-set SEARCHTEXT=999999
-set REPLACETEXT=%NEWNAME%
-set OUTPUTLINE=
-
 xcopy /y %INTEXTFILE% %OUTTEXTFILE%*
 del %INTEXTFILE%
 
 for /f "tokens=1,* delims=¶" %%A in ( '"type %OUTTEXTFILE%"') do (
-    SET string=%%A
-    setlocal EnableDelayedExpansion
-    SET modified=!string:%SEARCHTEXT%=%REPLACETEXT%!
-
-    >> %INTEXTFILE% echo(!modified!
-    endlocal
+echo %%A | findstr /C:%SEARCHTEXT% 1>nul
+	if not errorlevel 1 (
+		set line=%%A
+		set NEWNAME = %line:~0,36%%DATE%
+		>> %INTEXTFILE% echo(!line:~0,36!%REPLACETEXT%
+	) ELSE (
+		>> %INTEXTFILE% echo(%%A
+	)
 )
+
 del %OUTTEXTFILE%
+endlocal
 
 :: Compile haxe classes to flash and java platforms
 haxe compile.hxml
@@ -48,27 +50,5 @@ xcopy /y /i bin\flash\Core.swf C:\xampp\htdocs\cores\core-%NEWNAME%.swf
 xcopy /y /i bin\flash\Core.swc D:\_PROJECTS\_FLEX\towers-projects\towers-client\flex-project\libs\core.swc
 
 pause
-
-:: return LoginData to template form
-setlocal enabledelayedexpansion
-set INTEXTFILE=src\com\gt\towers\LoginData.hx
-set OUTTEXTFILE=src\com\gt\towers\LoginData_temp.hx
-
-set SEARCHTEXT=%NEWNAME%
-set REPLACETEXT=999999
-set OUTPUTLINE=
-
-xcopy /y %INTEXTFILE% %OUTTEXTFILE%*
-del %INTEXTFILE%
-
-for /f "tokens=1,* delims=¶" %%A in ( '"type %OUTTEXTFILE%"') do (
-    SET string=%%A
-    setlocal EnableDelayedExpansion
-    SET modified=!string:%SEARCHTEXT%=%REPLACETEXT%!
-
-    >> %INTEXTFILE% echo(!modified!
-    endlocal
-)
-del %OUTTEXTFILE%
 
 exit

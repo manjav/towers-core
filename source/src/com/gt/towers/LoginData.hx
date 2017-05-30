@@ -1,4 +1,3 @@
-//MAJOR_VERSION=102
 package com.gt.towers;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
@@ -10,7 +9,7 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class LoginData
 {
-	public var coreVersion:Float = 999999 ;
+	public var coreVersion:Float = 103.0530154515;//do not change len.
 	public var noticeVersion:Int = 102;
 	public var forceVersion:Int = 100;
 	public var resources:IntIntMap;
@@ -25,13 +24,13 @@ class LoginData
 		resources.set(ResourceType.CURRENCY_0, 100);
 		resources.set(ResourceType.CURRENCY_1, 30);
 		
-		resources.set(BuildingType.B00_COMMON, 1);
-		buildingsLevel.set(BuildingType.B00_COMMON, 1);
+		resources.set(BuildingType.B01_BARRACKS, 1);
+		buildingsLevel.set(BuildingType.B01_BARRACKS, 1);
 		
-		resources.set(BuildingType.B01_HEAVY, 1);
-		buildingsLevel.set(BuildingType.B01_HEAVY, 1);
+		resources.set(BuildingType.B02_RAPID, 1);
+		buildingsLevel.set(BuildingType.B02_RAPID, 1);
 		
-		resources.set(BuildingType.B02_SUPER_HEAVY, 1);
-		buildingsLevel.set(BuildingType.B02_SUPER_HEAVY, 1);
+		resources.set(BuildingType.B03_HEAVY, 1);
+		buildingsLevel.set(BuildingType.B03_HEAVY, 1);
 	}
 }
