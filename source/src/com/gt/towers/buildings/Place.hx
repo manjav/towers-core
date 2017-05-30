@@ -1,10 +1,10 @@
 package com.gt.towers.buildings;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
-import haxe.Timer;
 
 /**
  * ...
@@ -60,5 +60,16 @@ class Place
 			l ++;
 		}
 		return true;
+	}
+	
+	public function setBuilidng(type:Int) 
+	{
+		var troopType = building.troopType;
+		var population = building.get_population();
+		
+		building = BuildingType.instantiate(type, this, index);
+		
+		if (building != null)
+			building.createEngine(troopType, population);
 	}
 }

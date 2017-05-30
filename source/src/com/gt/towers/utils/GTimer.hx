@@ -24,8 +24,11 @@ class GTimer
         return id;
     }
    
-    public static function clearInterval(id:Int) 
+    public static function clearInterval(id:Int) :Void
     {
+		if (!timers.exists(id))
+			return;
+			
         timers.get(id).stop();
         timers.remove(id);
     }
@@ -45,8 +48,11 @@ class GTimer
         return id;
     }
 
-    public static function clearTimeout(id:Int) 
+    public static function clearTimeout(id:Int) : Void
     {
+		if (!timers.exists(id))
+			return;
+			
         timers.get(id).stop();
         timers.remove(id);
     }

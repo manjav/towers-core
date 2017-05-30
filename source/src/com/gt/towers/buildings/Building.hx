@@ -1,65 +1,160 @@
 package com.gt.towers.buildings;
+
 import com.gt.towers.constants.BuildingType;
-import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.Bundle;
 
+/**
+ * ...
+ * @author Mansour Djawadi
+ */
 class Building
 {
-	public var level:Int = 1;
+	public var place:Place;
+	public var level:Int;
 	public var index:Int;
+	
 	public var troopType:Int = -1;
-	public var troops:IntList;
 	
 	var _type:Int;
-	var spwnIntervalId:Int;
+	var _population:Float;
+	var spawnIntervalId:Int;
 	
-	public function new(index:Int)
+	public function new(place:Place, index:Int, level:Int = 1)
 	{
-		_type = BuildingType.B00_COMMON;
+		this.place = place;
 		this.index = index;
+		this.level = level;
 	}
 	
-
 	public function get_type():Int 
 	{
 		return _type;
 	}
-	
-	public function get_unlockLevel():Int 
-	{
-		return 100;
-	}	
-	
-	public function get_population():Int
-	{
-		return troops.size();
-	}
-	
+
 	public function get_capacity():Int 
 	{
 		return 10 * level;
 	}
-	
 	public function get_exitGap():Int 
 	{
-		return 300 - ((level-1) * 20);
+		return 200;
 	}
 	public function get_troopSpeed():Int
 	{
-		return 900 - ((level-1) * 20);
+		return 2000;
+	}
+	public function get_troopPower():Float
+	{
+		return 1;
 	}
 	public function get_spawnGap():Int
 	{
-		return 2000 - ((level-1) * 100);
+		return 2000;
 	}
-	public function upgradable():Bool 
+	public function get_options():IntList
 	{
-		return get_population() >= get_capacity();
+		return null;
+	}		
+	
+	
+	public function get_population():Int
+	{
+		return Math.round(_population);
+	}
+	public function improvable(type:Int):Bool 
+	{
+		return type != _type && (type == BuildingType.B00_CAMP || _population >= get_capacity()) ;
+	}
+
+	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+	
+	public function createEngine(troopType:Int, initialPopulation:Int = -1):Void
+	{
+		this.troopType = troopType;
+		
+		#if java
+
+		if (initialPopulation == -1)
+			initialPopulation = get_capacity();
+		
+		_population = initialPopulation;
+
+		spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
+		#end
+	}
+
+	
+	#if java
+	
+	public function improve(type:Int):Bool
+	{
+		if ( !improvable(type) )
+			return false;
+			
+		GTimer.clearInterval(spawnIntervalId);
+		
+		if (type == BuildingType.B00_CAMP)
+		{
+			place.setBuilidng(type);
+			return true;
+		}
+		
+		_population -= get_capacity();
+		
+		if (type != BuildingType.UPGRADE)
+		{
+			place.setBuilidng(type);
+			return true;
+		}
+		
+		level ++;
+		spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
+		
+		return true;
 	}
 	
-	/*public function get_unlockArena():Int 
+	private function calculatePopulation():Void
+	{
+		if(_population < get_capacity())
+			_population ++;
+		else if(_population > get_capacity())
+			_population --;
+	}
+	
+	public function popTroop():Void
+	{
+		_population --;
+	}
+	public function pushTroops(troopType:Int, troopPower:Float = 1) : Void
+	{
+		_population += ((this.troopType == troopType ? 1 : -1) * troopPower);
+		if (_population < 0)
+		{
+			_population *= -1;
+			this.troopType = troopType;
+			level = 1;
+			if (_type != BuildingType.B00_CAMP)
+				place.setBuilidng(BuildingType.B00_CAMP);
+		}
+	}
+	#end
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	public function upgrade(type:Int = 0):Bool
+	{
+		//if(level > 0)
+			//Game.get_instance().get_player().get_resources().reduceMap(get_upgradeRequirements());
+	}	
+	public function get_unlockArena():Int 
 	{
 		return 100;
 	}
@@ -67,7 +162,10 @@ class Building
 	{
 		return get_unlockArena() <= Game.get_instance().get_player().get_arena();
 	}
-	
+	public function get_unlockLevel():Int
+	{
+		return 100;
+	}	
 	public function unlocked():Bool 
 	{
 		return Game.get_instance().get_player().get_buildingsLevel().get(_type) > 0;
@@ -85,130 +183,5 @@ class Building
 	{
 		return new Bundle();
 	}*/
-
-	
-	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-	
-	
-	public function createEngine(troopType:Int):Void
-	{
-		this.troopType = troopType;
-		troops = new IntList();
-		
-		#if java
-
-		var i:Int = 0;
-		while ( i < get_capacity())
-		{
-			troops.push(troopType);
-			i ++;
-		}
-		
-		update(true);
-		spwnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
-		#end
-		//setInterval(calculatePopulation, spawnPerSecond*1000);
-	}
-
-	
-	#if java
-	
-	public function upgrade():Bool
-	{
-		//if(level > 0)
-			//Game.get_instance().get_player().get_resources().reduceMap(get_upgradeRequirements());
-		if ( !upgradable() )
-			return false;
-			
-		var i:Int = 0;
-		while (i < get_capacity())
-		{
-			troops.pop();
-			i ++;
-		}
-		level ++;
-		
-		GTimer.clearInterval(spwnIntervalId);
-		spwnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
-		
-		return true;
-	}
-	
-	private function calculatePopulation():Void
-	{
-		var _population:Int = get_population();
-			
-		if(_population < get_capacity())
-			troops.push(troopType);
-		else if(_population > get_capacity())
-			troops.pop();
-		
-		update();
-	}
-	
-	public function popTroop():Void
-	{
-		troops.pop();
-		update();
-	}
-	
-	public function pushTroops(len:Int, troopType:Int):Void
-	{
-		var _population:Int = get_population();
-		var i:Int = 0;
-		
-		if(troopType == this.troopType || _population == 0)
-		{
-			while (i < len)
-			{
-				troops.push(troopType);
-				i ++;
-			}
-		}
-		else
-		{
-			if(len >= _population)
-			{
-				troops.clear();
-				i = 0;
-				while (i < len - _population)
-				{
-					troops.push(troopType);
-					i ++;
-				}
-			}
-			else
-			{
-				i = 0;
-				while (i < len)
-				{
-					troops.pop();
-					i ++;
-				}
-			}
-		}
-		
-		// push a troop to occupy building
-		if(get_population() == 0)
-			troops.push(troopType);
-			
-		update();
-	}
-
-	
-	private function update(force:Bool = false):Void
-	{
-		if(get_population() == 0)
-			return;
-		
-		//var isForce:Bool = troops.get(0) != troopType || force;
-		if (troops.get(0) != troopType)
-		{
-			level = 1;
-			troopType = troops.get(0);
-		}
-		//dispatchEventWith(Event.UPDATE, false, isForce);
-	}
-	#end
 
 }

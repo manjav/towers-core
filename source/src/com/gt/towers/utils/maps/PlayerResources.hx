@@ -1,7 +1,5 @@
 package com.gt.towers.utils.maps;
-import com.gt.towers.buildings.Building;
 import com.gt.towers.utils.maps.Bundle;
-import com.gt.towers.Game;
 
 /**
  * ...

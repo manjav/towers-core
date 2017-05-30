@@ -1,8 +1,8 @@
 package com.gt.towers.battle;
-import com.gt.towers.buildings.Building;
-import com.gt.towers.buildings.HeavyBuilding;
+import com.gt.towers.buildings.Camp;
+import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
-import com.gt.towers.buildings.SuperHeavyBuilding;
+import com.gt.towers.buildings.Rapid;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.LinkList;
 import com.gt.towers.utils.lists.PlaceList;
@@ -31,13 +31,7 @@ class BattleField
 		{
 			//if (Game.get_instance().get_player().get_arena() >= 1)
 			//{
-			if (b == 0 || b == 2 || b == 12 || b == 14)
-				places.get(b).building = new Building(b);
-			else if (b > 5 && b < 9)
-				places.get(b).building = new SuperHeavyBuilding(b);
-			else
-				places.get(b).building = new HeavyBuilding(b);
-
+			places.get(b).building = new Camp(places.get(b), b, (b == 1 || b == 13 ? 2 : 1));
 			b ++;
 			//}
 		}

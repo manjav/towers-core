@@ -1,5 +1,6 @@
 package com.gt.towers.battle;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.lists.PlaceList;
@@ -42,7 +43,7 @@ class Troop
 	}
 	private function onTroopArrived(destination:Place):Void
 	{
-		destination.building.pushTroops(1, type);
+		destination.building.pushTroops(type, building.get_troopPower());
 		GTimer.setTimeout(destination.rush, building.get_exitGap(), [this]);
 	}
 	#end
