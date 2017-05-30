@@ -8,7 +8,7 @@ for %%a in (%DATE: =0%) do set DATE=%%a
 set INTEXTFILE=src\com\gt\towers\LoginData.hx
 set OUTTEXTFILE=src\com\gt\towers\LoginData_temp.hx
 set SEARCHTEXT=coreVersion
-set REPLACETEXT=%DATE%;//do not change.
+set REPLACETEXT=%DATE%;//do not change len.
 
 for /f "tokens=1,* delims=¶" %%a in ( '"type %INTEXTFILE%"') do (
 echo %%a | findstr /C:%SEARCHTEXT% 1>nul
