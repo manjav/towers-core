@@ -9,11 +9,15 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class LoginData
 {
-	public var coreVersion:Float = 103.0530154515;//do not change len.
+	public var battleJoinWaiting = 8000;
+	
+	
+	public var coreVersion:Float = 103.0531141354;//do not change len.
 	public var noticeVersion:Int = 102;
 	public var forceVersion:Int = 100;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
+	
 	public function new()
 	{
 		resources = new IntIntMap();

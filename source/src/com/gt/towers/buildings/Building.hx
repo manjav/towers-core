@@ -34,7 +34,7 @@ class Building
 
 	public function get_capacity():Int 
 	{
-		return 10 * level;
+		return 10 + Math.round( Math.log(level) * 14 );
 	}
 	public function get_exitGap():Int 
 	{
@@ -50,7 +50,7 @@ class Building
 	}
 	public function get_spawnGap():Int
 	{
-		return 2000;
+		return 2200;
 	}
 	public function get_options():IntList
 	{
@@ -100,7 +100,7 @@ class Building
 			return true;
 		}
 		
-		_population -= get_capacity();
+		_population -= Math.round(get_capacity() / 2);
 		
 		if (type != BuildingType.UPGRADE)
 		{

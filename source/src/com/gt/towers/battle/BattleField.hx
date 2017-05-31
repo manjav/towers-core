@@ -1,4 +1,5 @@
 package com.gt.towers.battle;
+import com.gt.towers.buildings.Barracks;
 import com.gt.towers.buildings.Camp;
 import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
@@ -31,7 +32,7 @@ class BattleField
 		{
 			//if (Game.get_instance().get_player().get_arena() >= 1)
 			//{
-			places.get(b).building = new Camp(places.get(b), b, (b == 1 || b == 13 ? 2 : 1));
+			places.get(b).building = b == 1 || b == 13 ? new Barracks(places.get(b), b, 2) : new Camp(places.get(b), b);
 			b ++;
 			//}
 		}
@@ -53,6 +54,9 @@ class BattleField
 			places.get(b).building.createEngine(tt);
 			b ++;
 		}
+		#if java
+		var a = new AIEnemy(this);
+		#end
 	}
 
 	private function createLinks():Void
@@ -111,7 +115,7 @@ class BattleField
 
 	public function getAllTowers(troopType:Int):PlaceList
 	{
-		if (troopType == -1)
+		if (troopType == TroopType.NONE)
 			return places;
 
 		var ret:PlaceList = new PlaceList();

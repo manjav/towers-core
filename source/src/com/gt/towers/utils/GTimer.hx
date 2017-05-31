@@ -67,8 +67,14 @@ class GTimer
 	
 	public static function stopAll() : Void
 	{
+		if (timers == null)
+			return;
+		
 		for (value in timers)
-			value.stop();
+		{
+			if(value != null)
+				value.stop();
+		}
 		
 		timers = new Map<Int, Timer>();
 	}
