@@ -11,12 +11,12 @@ class Rapid extends Building
 	public function new(place:Place, index:Int, level:Int = 1)
 	{
 		super(place, index, level);
-		_type = BuildingType.B02_RAPID;
+		type = BuildingType.B02_RAPID;
 	}
 	
 	public override function get_troopSpeed():Int
 	{
-		return 1600 - Math.round( Math.log(level) * 200);
+		return 2000 - Math.round( Math.log(level) * 200);
 	}
 	public override function get_options():IntList
 	{

@@ -13,7 +13,7 @@ class IntIntMap
 {
 
 	#if java
-	private var _map:Map<Int, Int>;
+	private var _map:java.util.HashMap<Int, Int>;
 	#elseif flash
 	private var _map:Map<Int, Int>;
 	#end

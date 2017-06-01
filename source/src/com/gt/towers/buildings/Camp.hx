@@ -11,13 +11,9 @@ class Camp extends Building
 	public function new(place:Place, index:Int, level:Int = 1)
 	{
 		super(place, index, level);
-		_type = BuildingType.B00_CAMP;
+		type = BuildingType.B00_CAMP;
 	}
 	
-	/*public override function get_troopSpeed():Int
-	{
-		return 1000;
-	}*/
 	public override function get_spawnGap():Int
 	{
 		return 2000;
@@ -28,6 +24,7 @@ class Camp extends Building
 		ret.push(BuildingType.B01_BARRACKS);
 		ret.push(BuildingType.B02_RAPID);
 		ret.push(BuildingType.B03_HEAVY);
+		ret.push(BuildingType.B04_SNIPER);
 		return ret;
 	}
 }

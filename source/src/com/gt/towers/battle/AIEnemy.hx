@@ -16,7 +16,7 @@ class AIEnemy
 	public var actionType:String = "";
 	public var sources:IntList;
 	public var destination:Int;
-	public var destinations:IntList;
+	public var destinations:IntIntMap;
 	
 	var battleField:BattleField;
 	
@@ -32,11 +32,11 @@ class AIEnemy
 		
 		var troopType = 1;
 		var minCapacity:Int = 1000;
-		var minPopulation:Int = 1000;
+		var minPopulation:Float = 1000;
 		var enemyPlaces = battleField.getAllTowers(troopType);
 		var enemyLen:Int = enemyPlaces.size();
 		sources = new IntList();
-		var dests = new IntIntMap();
+		destinations = new IntIntMap();
 		
 		if(enemyLen == 0)
 			return false;
@@ -57,10 +57,16 @@ class AIEnemy
 				{
 					if( enemyPlaces.get(p).links.get(m).building.troopType != troopType )
 					{
-						if(enemyPlaces.get(p).links.get(m).building.get_population() <= minPopulation )
+						var building = enemyPlaces.get(p).links.get(m).building;
+						var population = building.get_population() * building.get_troopPower() * building.get_damage();
+						population *= building.troopType == -1 ? 2 : 1;
+						if( population <= minPopulation )
 						{
-							minPopulation = enemyPlaces.get(p).links.get(m).building.get_population();
-							dests.set(enemyPlaces.get(p).links.get(m).index, minPopulation);
+							if ( population < minPopulation )
+								destinations = new IntIntMap();
+							
+							destinations.set(enemyPlaces.get(p).links.get(m).index, Math.round(population * 1000) );
+							minPopulation = population;
 						}
 					}
 					m ++;
@@ -69,25 +75,13 @@ class AIEnemy
 			p ++;
 		}
 		
-		// remove larger size values
-		destinations = new IntList();
-		var destsKeys = dests.keys();
-		p = destsKeys.length - 1;
-		minPopulation = 0;
-		while ( p >= 0 )
-		{
-			destination = dests.get(destsKeys[p]);
-			if ( minPopulation <= destination )
-			{
-				minPopulation = destination;
-				destinations.push( destsKeys[p] );
-			}
-			p --;
-		}
+		var keys = destinations.keys();
+		if ( keys.length == 0 || sources.size() == 0 )
+			return false;
 		
 		// get random target
-		destination = destinations.get(Math.floor(Math.random() * destinations.size()));
-		//destination = destinations.get(0);
+		destination = keys [ Math.floor( Math.random() * keys.length ) ];
+		//destination = destinations[0];
 		
 		actionType = "fight";
 		return true;

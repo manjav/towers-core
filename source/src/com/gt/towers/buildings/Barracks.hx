@@ -11,13 +11,9 @@ class Barracks extends Building
 	public function new(place:Place, index:Int, level:Int = 1)
 	{
 		super(place, index, level);
-		_type = BuildingType.B01_BARRACKS;
+		type = BuildingType.B01_BARRACKS;
 	}
 	
-	/*public override function get_troopSpeed():Int
-	{
-		return 800 - ((level-1) * 25);
-	}*/
 	public override function get_spawnGap():Int
 	{
 		return 1700 - Math.round( Math.log(level) * 280 );

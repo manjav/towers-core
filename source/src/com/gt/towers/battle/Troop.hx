@@ -12,12 +12,18 @@ import haxe.Timer;
  */
 class Troop 
 {
+	public var id:Int;
 	public var type:Int;
+	public var heath:Float;
 	public var path:PlaceList;
 	public var building:Building;
+	
+	var timeoutId:Int;
 
-	public function new( building:Building, path:PlaceList ) 
+	public function new( id:Int, building:Building, path:PlaceList ) 
 	{
+		this.id = id;
+		this.heath = building.get_troopPower();
 		this.building = building;
 		this.type = building.troopType;
 		
@@ -38,13 +44,17 @@ class Troop
 		if(destination == null)
 			return false;
 		
-		GTimer.setTimeout(onTroopArrived, building.get_troopSpeed(), [destination]);
+		timeoutId = GTimer.setTimeout(onTroopArrived, building.get_troopSpeed(), [destination]);
 		return true;
 	}
 	private function onTroopArrived(destination:Place):Void
 	{
-		destination.building.pushTroops(type, building.get_troopPower());
-		GTimer.setTimeout(destination.rush, building.get_exitGap(), [this]);
+		if ( destination.building.pushTroops(this) )
+			timeoutId = GTimer.setTimeout(destination.rush, building.get_exitGap(), [this]);
+	}
+	public function kill():Void
+	{
+		GTimer.clearTimeout(timeoutId);
 	}
 	#end
 }

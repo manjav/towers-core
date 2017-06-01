@@ -15,7 +15,7 @@ class IntBuildingMap
 {
 
 	#if java
-	private var _map:Map<Int, Building>;
+	private var _map:java.util.HashMap<Int, Building>;
 	#elseif flash
 	private var _map:Map<Int, Building>;
 	#end

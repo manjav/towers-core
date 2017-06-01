@@ -8,14 +8,14 @@ package com.gt.towers.utils;
  
 class GTimer 
 {
-	
-    public static var timers:Map<Int, Timer> = new Map<Int, Timer>();
+	#if java
+    public static var timers:java.util.HashMap<Int, Timer> = new java.util.HashMap<Int, Timer>();
     
     public static function setInterval(func:Dynamic, milliseconds:Int, rest:Array<Dynamic>):Int
     {
         var timer:Timer = new Timer(milliseconds);
-        var id:Int = getRandomId();
-        timers.set( id , timer );
+        var id:Int = getIncreasedId();
+        timers.put( id , timer );
         timer.run = function() 
         {
             Reflect.callMethod(null, func, rest);
@@ -26,7 +26,7 @@ class GTimer
    
     public static function clearInterval(id:Int) :Void
     {
-		if (!timers.exists(id))
+		if (!timers.containsKey(id))
 			return;
 			
         timers.get(id).stop();
@@ -37,8 +37,8 @@ class GTimer
     public static function setTimeout(func:Dynamic, milliseconds:Int, rest:Array<Dynamic>):Int
     {
         var timer:Timer = new Timer(milliseconds);
-        var id:Int = getRandomId();
-        timers.set( id , timer );
+        var id:Int = getIncreasedId();
+        timers.put( id , timer );
         timer.run = function() 
         {
             Reflect.callMethod(null, func, rest);
@@ -50,33 +50,42 @@ class GTimer
 
     public static function clearTimeout(id:Int) : Void
     {
-		if (!timers.exists(id))
+		if (!timers.containsKey(id))
 			return;
 			
         timers.get(id).stop();
         timers.remove(id);
     }
 
-	static private function getRandomId() : Int
-	{
-		var ret = Math.floor(Math.random() * 10000);
-		if (timers.exists(ret))
-			ret = getRandomId();
-		return ret;
-	}
-	
 	public static function stopAll() : Void
 	{
 		if (timers == null)
 			return;
 		
-		for (value in timers)
+		var i = 0;
+		var len = timers.keySet().size();
+		while ( i < len )
 		{
-			if(value != null)
-				value.stop();
+			if(timers.get(i) != null)
+				timers.get(i).stop();
+			i ++;
 		}
 		
-		timers = new Map<Int, Timer>();
+		timers.clear();
 	}
-
+	
+	static private function getIncreasedId() : Int
+	{
+		var i = 0;
+		var len = timers.keySet().size();
+		while ( i < len )
+		{
+			if (timers.get(i) == null)
+				return i;
+			i ++;
+		}
+		return len;
+	}
+	
+	#end
 }

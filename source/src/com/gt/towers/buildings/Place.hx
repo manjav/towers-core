@@ -12,6 +12,11 @@ import com.gt.towers.utils.lists.PlaceList;
  */
 class Place 
 {
+	#if java
+	var troops:java.util.HashMap<Int, Troop>;
+	#end
+
+	var troopId:Int;
 	public var index:Int;
 	public var owner:Place;
 	public var links:PlaceList;
@@ -20,6 +25,10 @@ class Place
 	public function new(index:Int) 
 	{
 		this.index = index;
+		this.troopId = index * 10000;
+	#if java
+		this.troops = new java.util.HashMap<Int, Troop>();
+	#end
 	}
 	
 	#if java
@@ -32,18 +41,28 @@ class Place
 		
 		var i:Int = 0;
 		var len:Int = Math.floor(building.get_population() / 2);
-		while(i < len)
+		while( i < len )
 		{
-			var t:Troop = new Troop(building, path);
-			GTimer.setTimeout(rush, building.get_exitGap() * i + 1, [t]);
+			var tid = getIncreasedId();
+			var troop = new Troop(tid, building, path);
+			troops.put( tid, troop );
+			GTimer.setTimeout(rush, building.get_exitGap() * i + 1, [troop]);
 			i ++;
 		}			
 	}
 	
-	public function rush(t:Troop):Void
+	public function rush(troop:Troop):Void
 	{
-		if(t.rush())
+		if(troop.rush())
 			building.popTroop();
+	}
+
+	public function killTroop(troopId:Int) : Void
+	{
+		if (!troops.containsKey(troopId))
+			return;
+		
+		troops.get(troopId).kill();
 	}
 	#end
 	
@@ -71,5 +90,11 @@ class Place
 		
 		if (building != null)
 			building.createEngine(troopType, population);
+	}
+	
+	public function getIncreasedId() : Int
+	{
+		troopId ++;
+		return troopId;
 	}
 }

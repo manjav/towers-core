@@ -12,7 +12,7 @@ class LoginData
 	public var battleJoinWaiting = 8000;
 	
 	
-	public var coreVersion:Float = 103.0531141354;//do not change len.
+	public var coreVersion:Float = 104.0602022339;//do not change len.
 	public var noticeVersion:Int = 102;
 	public var forceVersion:Int = 100;
 	public var resources:IntIntMap;

@@ -12,7 +12,7 @@ class IntShopMap
 {
 
 	#if java
-	private var _map:Map<Int, ShopItem>;
+	private var _map:java.util.HashMap<Int, ShopItem>;
 	#elseif flash
 	private var _map:Map<Int, ShopItem>;
 	#end

@@ -11,7 +11,7 @@ class Heavy extends Building
 	public function new(place:Place, index:Int, level:Int = 1)
 	{
 		super(place, index, level);
-		_type = BuildingType.B03_HEAVY;
+		type = BuildingType.B03_HEAVY;
 	}
 	
 	public override function get_troopSpeed():Int

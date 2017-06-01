@@ -1,5 +1,6 @@
 package com.gt.towers.buildings;
 
+import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.lists.IntList;
@@ -13,10 +14,10 @@ class Building
 	public var place:Place;
 	public var level:Int;
 	public var index:Int;
+	public var type:Int;
 	
 	public var troopType:Int = -1;
 	
-	var _type:Int;
 	var _population:Float;
 	var spawnIntervalId:Int;
 	
@@ -25,11 +26,6 @@ class Building
 		this.place = place;
 		this.index = index;
 		this.level = level;
-	}
-	
-	public function get_type():Int 
-	{
-		return _type;
 	}
 
 	public function get_capacity():Int 
@@ -42,7 +38,7 @@ class Building
 	}
 	public function get_troopSpeed():Int
 	{
-		return 2000;
+		return 2500;
 	}
 	public function get_troopPower():Float
 	{
@@ -64,9 +60,27 @@ class Building
 	}
 	public function improvable(type:Int):Bool 
 	{
-		return type != _type && (type == BuildingType.B00_CAMP || _population >= get_capacity()) ;
+		return type != this.type && (type == BuildingType.B00_CAMP || _population >= get_capacity()) ;
 	}
-
+	
+	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+	public function get_damage():Float
+	{
+		return 1;
+	}
+	public function get_damageGap():Float
+	{
+		return 1000;
+	}
+	public function get_damageRadius():Float
+	{
+		return 50;
+	}
+	public function get_damageRange():Float
+	{
+		return 0;
+	}
+	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	
 	public function createEngine(troopType:Int, initialPopulation:Int = -1):Void
@@ -116,33 +130,42 @@ class Building
 	
 	private function calculatePopulation():Void
 	{
-		if(_population < get_capacity())
-			_population ++;
-		else if(_population > get_capacity())
-			_population --;
+		if (_population < get_capacity())
+		{
+			if (_population + 1 > get_capacity())
+				_population = get_capacity();
+			else
+				_population ++;
+			
+		}
+		else if (_population > get_capacity())
+		{
+			if (_population - 2 < get_capacity())
+				_population = get_capacity();
+			else
+				_population -= 2;
+		}
 	}
 	
 	public function popTroop():Void
 	{
 		_population --;
 	}
-	public function pushTroops(troopType:Int, troopPower:Float = 1) : Void
+	public function pushTroops(troop:Troop) : Bool
 	{
-		_population += ((this.troopType == troopType ? 1 : -1) * troopPower);
+		var ret = troopType == troop.type;
+		_population += ((ret ? 1 : -1) * troop.heath);
 		if (_population < 0)
 		{
-			_population *= -1;
-			this.troopType = troopType;
+			_population = Math.abs(_population);
+			troopType = troop.type;
 			level = 1;
-			if (_type != BuildingType.B00_CAMP)
+			if (type != BuildingType.B00_CAMP)
 				place.setBuilidng(BuildingType.B00_CAMP);
 		}
+		return ret;
 	}
 	#end
-	
-	
-	
-	
 	
 	
 	

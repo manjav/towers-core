@@ -1,5 +1,7 @@
 @echo off
 
+rmdir /s /q bin
+
 :: Get date with this template =>mouth day hours minutes seconds
 set DATE=%date:~-10,2%%date:~-7,2%%time:~-11,2%%time:~-8,2%%time:~-5,2%
 :: Repace space with 0
