@@ -24,7 +24,7 @@ class Camp extends Building
 		ret.push(BuildingType.B01_BARRACKS);
 		ret.push(BuildingType.B02_RAPID);
 		ret.push(BuildingType.B03_HEAVY);
-		ret.push(BuildingType.B04_SNIPER);
+		ret.push(BuildingType.B04_CRYSTAL);
 		return ret;
 	}
 }

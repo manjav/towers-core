@@ -5,7 +5,7 @@ import com.gt.towers.buildings.Camp;
 import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.buildings.Rapid;
-import com.gt.towers.buildings.Sniper;
+import com.gt.towers.buildings.Crystal;
 
 /**
  * ...
@@ -22,7 +22,7 @@ class BuildingType
 	public static var B01_BARRACKS:Int = 1;
 	public static var B02_RAPID:Int = 2;
 	public static var B03_HEAVY:Int = 3;
-	public static var B04_SNIPER:Int = 4;
+	public static var B04_CRYSTAL:Int = 4;
 	
 	public static var NUM_WEAPONS:Int = 5;
 
@@ -38,8 +38,8 @@ class BuildingType
 			return new Rapid(place, index);
 		else if (type == BuildingType.B03_HEAVY)
 			return new Heavy(place, index);
-		else if (type == BuildingType.B04_SNIPER)
-			return new Sniper(place, index);
+		else if (type == BuildingType.B04_CRYSTAL)
+			return new Crystal(place, index);
 		else 
 			return null;
 	}

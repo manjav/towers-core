@@ -9,7 +9,7 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class LoginData
 {
-	public var coreVersion:Float = 105.0602200446;//do not change len.
+	public var coreVersion:Float = 105.0603014001;//do not change len.
 	public var noticeVersion:Int = 102;
 	public var forceVersion:Int = 100;
 	public var resources:IntIntMap;

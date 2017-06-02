@@ -29,7 +29,8 @@ class Heavy extends Building
 	public override function get_options():IntList
 	{
 		var ret = new IntList();
-		ret.push(BuildingType.UPGRADE);
+		if (level < 3 )
+			ret.push(BuildingType.UPGRADE);
 		ret.push(BuildingType.B00_CAMP);
 		return ret;
 	}	

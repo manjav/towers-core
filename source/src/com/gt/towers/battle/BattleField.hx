@@ -4,7 +4,7 @@ import com.gt.towers.buildings.Camp;
 import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.buildings.Rapid;
-import com.gt.towers.buildings.Sniper;
+import com.gt.towers.buildings.Crystal;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.LinkList;
 import com.gt.towers.utils.lists.PlaceList;
@@ -34,7 +34,7 @@ class BattleField
 			//if (Game.get_instance().get_player().get_arena() >= 1)
 			//{
 			if (b == 6 || b == 7 || b == 8)
-			places.get(b).building = new Sniper(places.get(b), b);
+			places.get(b).building = new Crystal(places.get(b), b);
 			else
 			places.get(b).building = b == 1 || b == 13 ? new Barracks(places.get(b), b, 2) : new Camp(places.get(b), b);
 			b ++;
