@@ -46,7 +46,7 @@ class Building
 	}
 	public function get_spawnGap():Int
 	{
-		return 2200;
+		return 2300;
 	}
 	public function get_options():IntList
 	{
@@ -106,7 +106,6 @@ class Building
 		if ( !improvable(type) )
 			return false;
 			
-		GTimer.clearInterval(spawnIntervalId);
 		
 		if (type == BuildingType.B00_CAMP)
 		{
@@ -123,6 +122,7 @@ class Building
 		}
 		
 		level ++;
+		GTimer.clearInterval(spawnIntervalId);
 		spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
 		
 		return true;
@@ -135,35 +135,42 @@ class Building
 			if (_population + 1 > get_capacity())
 				_population = get_capacity();
 			else
-				_population ++;
+				_population += 1;
 			
 		}
 		else if (_population > get_capacity())
 		{
-			if (_population - 2 < get_capacity())
+			if (_population - 1 < get_capacity())
 				_population = get_capacity();
 			else
-				_population -= 2;
+				_population -= 1;
 		}
 	}
 	
-	public function popTroop():Void
+	public function popTroop():Bool
 	{
-		_population --;
+		var ret = (_population - 1 > 0);
+		if(ret)
+			_population --;
+		return ret;
 	}
 	public function pushTroops(troop:Troop) : Bool
 	{
 		var ret = troopType == troop.type;
-		_population += ((ret ? 1 : -1) * troop.heath);
+		_population += ((ret ? 1 : -1) * troop.health);
 		if (_population < 0)
 		{
-			_population = Math.abs(_population);
+			_population = 0;
 			troopType = troop.type;
 			level = 1;
 			if (type != BuildingType.B00_CAMP)
 				place.setBuilidng(BuildingType.B00_CAMP);
 		}
 		return ret;
+	}
+	public function dispose() 
+	{
+		GTimer.clearInterval(spawnIntervalId);
 	}
 	#end
 	

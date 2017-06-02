@@ -13,6 +13,9 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class AIEnemy 
 {
+	private var maxEnemy:Int = 7;
+
+
 	public var actionType:String = "";
 	public var sources:IntList;
 	public var destination:Int;
@@ -27,7 +30,6 @@ class AIEnemy
 	
 	public function fightToWeakestPlace():Bool
 	{
-		
 		var checkSelfPopulation = 0;
 		
 		var troopType = 1;
@@ -35,7 +37,7 @@ class AIEnemy
 		var minPopulation:Float = 1000;
 		var enemyPlaces = battleField.getAllTowers(troopType);
 		var enemyLen:Int = enemyPlaces.size();
-		sources = new IntList();
+		var enemies = new IntList();
 		destinations = new IntIntMap();
 		
 		if(enemyLen == 0)
@@ -48,7 +50,7 @@ class AIEnemy
 			
 			if (checkSelfPopulation < enemyPlaces.get(p).building.get_population())
 			{
-				sources.push(enemyPlaces.get(p).index);
+				enemies.push(enemyPlaces.get(p).index);
 				
 				// find weakest of enemeis
 				m = 0;
@@ -75,9 +77,19 @@ class AIEnemy
 			p ++;
 		}
 		
+		// stop fighting when enemy loses or wins
 		var keys = destinations.keys();
-		if ( keys.length == 0 || sources.size() == 0 )
+		if ( keys.length == 0 || enemies.size() == 0 )
 			return false;
+		
+		//if num enemies greater than max enemies reduce to max enemies 
+		var max:Int = (enemies.size() > maxEnemy ? maxEnemy : enemies.size()) - 1;
+		sources = new IntList();
+		while ( max >= 0 )
+		{
+			sources.push(enemies.get(max));
+			max --;
+		}
 		
 		// get random target
 		destination = keys [ Math.floor( Math.random() * keys.length ) ];
@@ -91,7 +103,6 @@ class AIEnemy
 	{
 		if (seed == 0)
 			return fightToWeakestPlace();
-
 		return false;
 	}
 	

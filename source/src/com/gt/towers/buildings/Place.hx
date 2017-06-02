@@ -53,8 +53,8 @@ class Place
 	
 	public function rush(troop:Troop):Void
 	{
-		if(troop.rush())
-			building.popTroop();
+		if (building.popTroop())
+			troop.rush();
 	}
 
 	public function killTroop(troopId:Int) : Void
@@ -64,8 +64,25 @@ class Place
 		
 		troops.get(troopId).kill();
 	}
-	#end
 	
+	public function setBuilidng(type:Int) 
+	{
+		var troopType = building.troopType;
+		var population = building.get_population();
+		
+		building.dispose();
+		building = BuildingType.instantiate(type, this, index);
+		
+		if (building != null)
+			building.createEngine(troopType, population);
+	}
+	#end
+		
+	public function getIncreasedId() : Int
+	{
+		troopId ++;
+		return troopId;
+	}
 	
 	public function isAlone():Bool
 	{
@@ -79,22 +96,5 @@ class Place
 			l ++;
 		}
 		return true;
-	}
-	
-	public function setBuilidng(type:Int) 
-	{
-		var troopType = building.troopType;
-		var population = building.get_population();
-		
-		building = BuildingType.instantiate(type, this, index);
-		
-		if (building != null)
-			building.createEngine(troopType, population);
-	}
-	
-	public function getIncreasedId() : Int
-	{
-		troopId ++;
-		return troopId;
 	}
 }

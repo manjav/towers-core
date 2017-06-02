@@ -14,7 +14,7 @@ class Troop
 {
 	public var id:Int;
 	public var type:Int;
-	public var heath:Float;
+	public var health:Float;
 	public var path:PlaceList;
 	public var building:Building;
 	
@@ -23,7 +23,7 @@ class Troop
 	public function new( id:Int, building:Building, path:PlaceList ) 
 	{
 		this.id = id;
-		this.heath = building.get_troopPower();
+		this.health = building.get_troopPower();
 		this.building = building;
 		this.type = building.troopType;
 		
@@ -38,18 +38,17 @@ class Troop
 	}
 	
 	#if java
-	public function rush():Bool
+	public function rush():Void
 	{
 		var destination:Place = path.shift();
 		if(destination == null)
-			return false;
+			return ;
 		
 		timeoutId = GTimer.setTimeout(onTroopArrived, building.get_troopSpeed(), [destination]);
-		return true;
 	}
 	private function onTroopArrived(destination:Place):Void
 	{
-		if ( destination.building.pushTroops(this) )
+		if ( destination.building.pushTroops(this) && path.size() > 0)
 			timeoutId = GTimer.setTimeout(destination.rush, building.get_exitGap(), [this]);
 	}
 	public function kill():Void

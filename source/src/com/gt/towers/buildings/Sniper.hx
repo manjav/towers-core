@@ -20,7 +20,7 @@ class Sniper extends Building
 	}
 	public override function get_damageGap():Float
 	{
-		return 800 - Math.round( Math.log(level) * 200);
+		return 700 - Math.round( Math.log(level) * 200);
 	}
 	public override function get_damageRadius():Float
 	{
