@@ -1,12 +1,10 @@
 package com.gt.towers.battle;
-import com.gt.towers.buildings.Barracks;
-import com.gt.towers.buildings.Camp;
-import com.gt.towers.buildings.Heavy;
+import com.gt.towers.battle.fieldes.PlaceData;
+import com.gt.towers.battle.fieldes.FieldData;
+import com.gt.towers.battle.fieldes.QuestProvider;
 import com.gt.towers.buildings.Place;
-import com.gt.towers.buildings.Rapid;
-import com.gt.towers.buildings.Crystal;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.TroopType;
-import com.gt.towers.utils.lists.LinkList;
 import com.gt.towers.utils.lists.PlaceList;
 
 /**
@@ -15,106 +13,51 @@ import com.gt.towers.utils.lists.PlaceList;
  */
 class BattleField
 {
+	private var questProvider:QuestProvider;
 
 	public var places:PlaceList;
+	public var map:FieldData;
 
-	public function new()
+	public function new(mapName:String, troopType:Int)
 	{
+		
+		questProvider = new QuestProvider();
+		map = questProvider.fields.get(mapName);
+		
 		places = new PlaceList();
-		var b:Int = 0;
-		while (b < 15)
+		var p = 0;
+		var placesLen:Int = map.places.size();
+		var placeData:PlaceData = null;
+		var place:Place = null;
+		while ( p < placesLen )
 		{
-			places.push(new Place(b));
-			b ++;
+			placeData = map.places.get( p );
+			place = new Place(placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
+			place.building = BuildingType.instantiate(placeData.type, place, placeData.index, placeData.level);
+			place.building.createEngine(placeData.troopType);
+			places.push(place);
+			
+			p ++;
 		}
 
-		b = 0;
-		while (b < 15)
+		p = 0;
+		var l = 0;
+		while ( p < placesLen )
 		{
-			//if (Game.get_instance().get_player().get_arena() >= 1)
-			//{
-			if (b == 6 || b == 7 || b == 8)
-			places.get(b).building = new Crystal(places.get(b), b);
-			else
-			places.get(b).building = b == 1 || b == 13 ? new Barracks(places.get(b), b, 2) : new Camp(places.get(b), b);
-			b ++;
-			//}
-		}
-
-		createLinks();
-
-		// change start points troop types
-		b = 0;
-		var tt:Int = TroopType.NONE;
-		while (b < 15)
-		{
-			if (b == 1)
-				tt = TroopType.T0;
-			else if (b == 13)
-				tt = TroopType.T1;
-			else
-				tt = TroopType.NONE;
-
-			places.get(b).building.createEngine(tt);
-			b ++;
-		}
-		#if java
-		var a = new AIEnemy(this);
-		#end
-	}
-
-	private function createLinks():Void
-	{
-		var _links:LinkList = new LinkList();
-		//if (Game.get_instance().get_player().get_arena() >= 1)
-		//	{
-
-		// horizontal links
-		_links.push(0, 1);
-		_links.push(1, 2);
-		_links.push(3, 4);
-		_links.push(4, 5);
-		_links.push(6, 7);
-		_links.push(7, 8);
-		_links.push(9, 10);
-		_links.push(10, 11);
-		_links.push(12, 13);
-		_links.push(13, 14);
-
-		// vertical links
-		_links.push(0, 3);
-		_links.push(3, 6);
-		_links.push(6, 9);
-		_links.push(9, 12);
-		_links.push(1, 4);
-		_links.push(4, 7);
-		_links.push(7, 10);
-		_links.push(10, 13);
-		_links.push(2, 5);
-		_links.push(5, 8);
-		_links.push(8, 11);
-		_links.push(11, 14);
-		//}
-
-		var placesLen:Int = places.size();
-		var linksLen:Int = _links.size();
-		var p:Int = 0;
-		var l:Int = 0;
-		while (p < placesLen)
-		{
+			placeData = map.places.get( p );
 			places.get(p).links = new PlaceList();
 			l = 0;
-			while (l < linksLen)
+			while (l < placeData.links.size())
 			{
-				if (p == _links.getX(l))
-					places.get(p).links.push(places.get(_links.getY(l)));
-				else if (p == _links.getY(l))
-					places.get(p).links.push(places.get(_links.getX(l)));
-
+				places.get(p).links.push( places.get( placeData.links.get( l ) ) );
 				l ++;
 			}
 			p ++;
 		}
+
+		#if java
+		var a = new AIEnemy(this);
+		#end
 	}
 
 	public function getAllTowers(troopType:Int):PlaceList

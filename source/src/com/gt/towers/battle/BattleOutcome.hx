@@ -9,7 +9,7 @@ import com.gt.towers.Game;
  * ...
  * @author Mansour Djawadi
  */
-class Outcome 
+class BattleOutcome 
 {
 
 	public static var MAX_POINTS:Int = 30;

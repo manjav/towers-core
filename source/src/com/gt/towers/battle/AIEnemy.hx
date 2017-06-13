@@ -48,7 +48,7 @@ class AIEnemy
 		while( p < enemyLen )
 		{
 			
-			if (checkSelfPopulation < enemyPlaces.get(p).building.get_population())
+			if (checkSelfPopulation < enemyPlaces.get(p).building.get_population() && enemyPlaces.get(p).enabled)
 			{
 				enemies.push(enemyPlaces.get(p).index);
 				

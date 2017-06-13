@@ -16,15 +16,22 @@ class Place
 	var troops:java.util.HashMap<Int, Troop>;
 	#end
 
-	var troopId:Int;
 	public var index:Int;
+	public var x:Float;
+	public var y:Float;
+	public var enabled:Bool;
 	public var owner:Place;
 	public var links:PlaceList;
 	public var building:Building;
+	
+	private var troopId:Int;
 
-	public function new(index:Int) 
+	public function new(index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{
 		this.index = index;
+		this.x = x;
+		this.y = y;
+		this.enabled = botEnabled;
 		this.troopId = index * 10000;
 	#if java
 		this.troops = new java.util.HashMap<Int, Troop>();
@@ -54,7 +61,7 @@ class Place
 	public function rush(troop:Troop):Void
 	{
 		if (building.popTroop())
-			troop.rush();
+			troop.rush(this);
 	}
 
 	public function killTroop(troopId:Int) : Void

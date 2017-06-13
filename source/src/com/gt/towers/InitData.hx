@@ -11,12 +11,14 @@ class InitData
 	public var id:Int;
 	public var nickName:String;
 	public var resources:Bundle;
+	public var quests:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var deck:IntIntMap;
 	
 	public function new() 
 	{
 		resources = new Bundle();
+		quests = new IntIntMap();
 		buildingsLevel = new IntIntMap();
 		deck = new IntIntMap();
 	}

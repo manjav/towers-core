@@ -15,7 +15,7 @@ class Player
 
 	public function new(initData:InitData)
 	{
-		_id = ""+initData.id;
+		_id = initData.id;
 		_nickName = initData.nickName;
 		
 		// add player buildings level
@@ -23,33 +23,35 @@ class Player
 		
 		// add player resources data
 		_resources = new PlayerResources();
+		_quests = new IntIntMap();
 		
-		var r:Int = 0;
+		var i:Int = 0;
 		var kies = initData.resources.keys();
-		while (r < kies.length)
+		while (i < kies.length)
 		{
-			_resources.set(kies[r], initData.resources.get(kies[r]));
-			r++;
+			_resources.set(kies[i], initData.resources.get(kies[i]));
+			i++;
+		}
+		
+		// add player quests data
+		i = 0;
+		kies = initData.quests.keys();
+		while (i < kies.length)
+		{
+			_quests.set(kies[i], initData.quests.get(kies[i]));
+			i++;
 		}
 	}
 
-	private var _id:String = "no_id";
-	public function get_id():String
-	{
-		return _id;
-	}
+	private var _id:Int;
+	public function get_id():Int { return _id; }
 
 	private var _nickName:String = "no_nickName";
-	public function get_nickName():String
-	{
-		return _nickName;
-	}
+	public function get_nickName():String { return _nickName; }
 
 	private var _resources:PlayerResources;
-	public function get_resources():PlayerResources
-	{
-		return _resources;
-	}
+	public function get_resources():PlayerResources { return _resources; }
+	
 	public function get_xp():Int { return get_resources().get(ResourceType.XP); }
 	public function get_point():Int { return get_resources().get(ResourceType.POINT); }
 	public function get_money():Int { return get_resources().get(ResourceType.CURRENCY_0); }
@@ -92,6 +94,10 @@ class Player
 	}
 	
 		
+	private var _quests:IntIntMap;
+	public function get_quests():IntIntMap { return _quests; }
+	public function get_questIndex():Int { return _quests.keys().length; }
+	
 	private var _buildingsLevel:IntIntMap;
 	public function get_buildingsLevel():IntIntMap
 	{

@@ -22,7 +22,7 @@ class Camp extends Building
 	{
 		var ret = new IntList();
 		ret.push(BuildingType.B01_BARRACKS);
-		ret.push(BuildingType.B02_RAPID);
+		//ret.push(BuildingType.B02_RAPID);
 		ret.push(BuildingType.B03_HEAVY);
 		ret.push(BuildingType.B04_CRYSTAL);
 		return ret;

@@ -10,7 +10,7 @@ for %%a in (%DATE: =0%) do set DATE=%%a
 set INTEXTFILE=src\com\gt\towers\LoginData.hx
 set OUTTEXTFILE=src\com\gt\towers\LoginData_temp.hx
 set SEARCHTEXT=coreVersion
-set REPLACETEXT=%DATE%;//do not change len.
+set REPLACETEXT=%DATE%";//do not change len.
 
 for /f "tokens=1,* delims=¶" %%a in ( '"type %INTEXTFILE%"') do (
 echo %%a | findstr /C:%SEARCHTEXT% 1>nul
@@ -21,7 +21,7 @@ echo %%a | findstr /C:%SEARCHTEXT% 1>nul
 )
 :exittag
 :: Concat major varsion with modified date
-set NEWNAME=%mver:~32,4%%DATE%
+set NEWNAME=%mver:~34,4%%DATE%
 
 
 :: Update core version in LoginData class
@@ -33,8 +33,8 @@ for /f "tokens=1,* delims=¶" %%A in ( '"type %OUTTEXTFILE%"') do (
 echo %%A | findstr /C:%SEARCHTEXT% 1>nul
 	if not errorlevel 1 (
 		set line=%%A
-		set NEWNAME = %line:~0,36%%DATE%
-		>> %INTEXTFILE% echo(!line:~0,36!%REPLACETEXT%
+		set NEWNAME = %line:~0,38%%DATE%
+		>> %INTEXTFILE% echo(!line:~0,38!%REPLACETEXT%
 	) ELSE (
 		>> %INTEXTFILE% echo(%%A
 	)
@@ -48,7 +48,7 @@ haxe compile.hxml
 
 :: Move to usage address
 ::xcopy /y /i bin\java\Core.jar C:\Users\ManJav\SmartFoxServer_2X\SFS2X\lib\core.jar
-echo f | xcopy /f /y bin\java\Core.jar C:\Users\ManJav\SmartFoxServer_2X\SFS2X\lib\core.jar
+echo f | xcopy /f /y bin\java\Core.jar C:\Users\ManJav\SmartFoxServer_2X\SFS2X\extensions\__lib__\core.jar
 echo f | xcopy /f /y bin\flash\Core.swf C:\xampp\htdocs\cores\core-%NEWNAME%.swf
 echo f | xcopy /f /y bin\flash\Core.swc D:\_PROJECTS\_FLEX\towers-projects\towers-client\flex-project\libs\core.swc
 

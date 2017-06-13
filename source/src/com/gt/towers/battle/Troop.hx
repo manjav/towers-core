@@ -18,7 +18,7 @@ class Troop
 	public var path:PlaceList;
 	public var building:Building;
 	
-	var timeoutId:Int;
+	private var timeoutId:Int;
 
 	public function new( id:Int, building:Building, path:PlaceList ) 
 	{
@@ -38,13 +38,14 @@ class Troop
 	}
 	
 	#if java
-	public function rush():Void
+	public function rush(source:Place):Void
 	{
 		var destination:Place = path.shift();
 		if(destination == null)
 			return ;
 		
-		timeoutId = GTimer.setTimeout(onTroopArrived, building.get_troopSpeed(), [destination]);
+		var distance:Float = Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
+		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.get_troopSpeed() * distance), [destination]);
 	}
 	private function onTroopArrived(destination:Place):Void
 	{

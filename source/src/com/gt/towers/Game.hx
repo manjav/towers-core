@@ -13,15 +13,12 @@ class Game
 {
 	public static var loginData:LoginData = new LoginData();
 
-	public var battleField:BattleField;
-
 	public function new(data:InitData)
 	{
 		_instance = this;
 
 		_player = new Player(data);
-		_shop = new Shop();
-		battleField = new BattleField();
+		//_shop = new Shop();
 	}
 
 	private var _player:Player;

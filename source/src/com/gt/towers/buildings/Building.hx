@@ -94,7 +94,8 @@ class Building
 		
 		_population = initialPopulation;
 
-		spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
+		if(place.enabled)
+			spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
 		#end
 	}
 

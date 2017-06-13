@@ -28,18 +28,18 @@ class BuildingType
 
 	public function new(){}
 	
-	public static function instantiate(type:Int, place:Place, index:Int):Building
+	public static function instantiate(type:Int, place:Place, index:Int, level:Int = 1):Building
 	{
 		if (type == BuildingType.B00_CAMP)
-			return new Camp(place, index);
+			return new Camp(place, index, level);
 		else if (type == BuildingType.B01_BARRACKS)
-			return new Barracks(place, index);
+			return new Barracks(place, index, level);
 		else if (type == BuildingType.B02_RAPID)
-			return new Rapid(place, index);
+			return new Rapid(place, index, level);
 		else if (type == BuildingType.B03_HEAVY)
-			return new Heavy(place, index);
+			return new Heavy(place, index, level);
 		else if (type == BuildingType.B04_CRYSTAL)
-			return new Crystal(place, index);
+			return new Crystal(place, index, level);
 		else 
 			return null;
 	}
