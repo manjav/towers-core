@@ -1,5 +1,4 @@
 package;
-import com.gt.tanks.constants.*;
 import com.gt.towers.Game;
 
 /**
@@ -8,8 +7,6 @@ import com.gt.towers.Game;
  */
 class Core
 {
-	private var game:Game;
-
 	static function main()
 	{
 	}

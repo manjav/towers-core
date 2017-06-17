@@ -6,6 +6,8 @@ import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.buildings.Rapid;
 import com.gt.towers.buildings.Crystal;
+import com.gt.towers.utils.lists.IntList;
+import com.gt.towers.utils.maps.IntIntMap;
 
 /**
  * ...
@@ -17,6 +19,7 @@ class BuildingType
 	public static var NONE:Int = -1;
 	
 	public static var B00_CAMP:Int = 0;
+	public static var B01_CAMP:Int = 1;
 	
 	public static var B10_BARRACKS:Int = 10;
 	public static var B11_BARRACKS:Int = 11;
@@ -39,9 +42,10 @@ class BuildingType
 	public static var B43_CRYSTAL:Int = 43;
 	public static var B44_CRYSTAL:Int = 44;
 	
-	//public static var NUM_WEAPONS:Int = 5;
-
-	public function new(){}
+	public function new()
+	{
+		
+}
 	
 	public static function get_category(type:Int):Int
 	{
@@ -65,4 +69,34 @@ class BuildingType
 		else 
 			return null;
 	}
+	
+	
+	private static var _all:IntIntMap;
+	public static function getAll():IntIntMap
+	{
+		if ( _all == null )
+		{
+			_all = new IntIntMap();
+		
+			_all.set( B11_BARRACKS, 0 );
+			_all.set( B12_BARRACKS, 0 );
+			_all.set( B13_BARRACKS, 0 );
+			
+			_all.set( B21_RAPID, 0 );
+			_all.set( B22_RAPID, 0 );
+			_all.set( B23_RAPID, 0 );
+			
+			_all.set( B31_HEAVY, 0 );
+			_all.set( B32_HEAVY, 0 );
+			_all.set( B33_HEAVY, 0 );
+			
+			_all.set( B41_CRYSTAL, 0 );
+			_all.set( B42_CRYSTAL, 0 );
+			_all.set( B43_CRYSTAL, 0 );
+			_all.set( B44_CRYSTAL, 0 );
+		}
+	
+		return _all;
+	}
+
 }

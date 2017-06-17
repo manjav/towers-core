@@ -1,7 +1,7 @@
 package com.gt.towers.battle;
 import com.gt.towers.battle.fieldes.PlaceData;
 import com.gt.towers.battle.fieldes.FieldData;
-import com.gt.towers.battle.fieldes.QuestProvider;
+import com.gt.towers.battle.fieldes.FieldProvider;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.TroopType;
@@ -13,7 +13,7 @@ import com.gt.towers.utils.lists.PlaceList;
  */
 class BattleField
 {
-	private var questProvider:QuestProvider;
+	private var questProvider:FieldProvider;
 
 	public var places:PlaceList;
 	public var map:FieldData;
@@ -21,8 +21,7 @@ class BattleField
 	public function new(mapName:String, troopType:Int)
 	{
 		
-		questProvider = new QuestProvider();
-		map = questProvider.fields.get(mapName);
+		map = Game.fieldProvider.fields.get(mapName);
 		
 		places = new PlaceList();
 		var p = 0;

@@ -10,7 +10,7 @@ import com.gt.towers.utils.GameError;
 	import flash.Vector;
 #end
 
-class StringQuestMap
+class StringFieldMap
 {
 
 	#if java

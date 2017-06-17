@@ -1,24 +1,23 @@
 package com.gt.towers.battle.fieldes;
-import com.gt.towers.utils.maps.StringQuestMap;
+import com.gt.towers.utils.maps.StringFieldMap;
 /**
  * ...
  * @author Mansour Djawadi
  */
-class QuestProvider 
+class FieldProvider 
 {
-	public var fields:StringQuestMap;
+	public var fields:StringFieldMap;
 	
 	public function new() 
 	{
-		fields = new StringQuestMap();
+		fields = new StringFieldMap();
 		var field:FieldData = null;
 	
-		
-		
+
 		field = new FieldData(0, "quest_0", true, true, "100,100,100" );
 		// create places
-		field.places.push( new PlaceData( 0,	400,	690,	0,	1,	1,	"1",	false,	1	) );
-		field.places.push( new PlaceData( 1,	680,	1230,	1,	3,	0,	"0",	true,	0	) );
+		field.places.push( new PlaceData( 0,	400,	690,	1,	1,	"1",	false,	1	) );
+		field.places.push( new PlaceData( 1,	680,	1230,	12,	0,	"0",	true,	0	) );
 		// create images
 		field.images.push( new ImageData( "road-v"	,	330.2,	642.85,	0.8946533203125,	-0.446823120117188,	0.446823120117188,	0.8946533203125) );
 		field.images.push( new ImageData( "road-v"	,	458.8,	902.45,	0.8946533203125,	-0.446823120117188,	0.446823120117188,	0.8946533203125) );
@@ -38,11 +37,13 @@ class QuestProvider
 		fields.set( "quest_0" , field );
 
 
+
+
 		field = new FieldData(1, "quest_1", true, true, "100,100,100" );
 		// create places
-		field.places.push( new PlaceData( 0,	521.45,	669.7,	0,	1,	1,	"2,1",	false,	2	) );
-		field.places.push( new PlaceData( 1,	285.95,	1208.35,	1,	1,	0,	"0",	true,	0	) );
-		field.places.push( new PlaceData( 2,	796.55,	1080.6,	3,	1,	0,	"0",	true,	1	) );
+		field.places.push( new PlaceData( 0,	521.45,	669.7,	1,	1,	"1,2",	false,	2	) );
+		field.places.push( new PlaceData( 1,	285.95,	1208.35,12,	0,	"0",	true,	0	) );
+		field.places.push( new PlaceData( 2,	796.55,	1080.6,	12,	0,	"0",	true,	1	) );
 		// create images
 		field.images.push( new ImageData( "road-v"	,	508.35,	588.1,	0.913772583007813,	0.403274536132813,	-0.403289794921875,	0.913742065429688,	44.45,	201.5) );
 		field.images.push( new ImageData( "road-v"	,	505.85,	716.8,	0.827590942382813,	-0.561355590820313,	0.561355590820313,	0.827590942382813) );
@@ -67,12 +68,13 @@ class QuestProvider
 
 
 
+
 		field = new FieldData(2, "quest_2", false, false, "30,55,70" );
 		// create places
-		field.places.push( new PlaceData( 0,	400,	390,	1,	1,	1,	"1",	true,	-2	) );
-		field.places.push( new PlaceData( 1,	770,	540,	0,	1,	-1,	"2,0",	true,	-2	) );
-		field.places.push( new PlaceData( 2,	310,	1380,	0,	1,	-1,	"3,1",	true,	-2	) );
-		field.places.push( new PlaceData( 3,	680,	1530,	1,	2,	0,	"2",	true,	-2	) );
+		field.places.push( new PlaceData( 0,	400,	390,	1,	1,	"1",	true,	-2	) );
+		field.places.push( new PlaceData( 1,	770,	540,	1,	-1,	"0,2",	true,	-2	) );
+		field.places.push( new PlaceData( 2,	310,	1380,	1,	-1,	"1,3",	true,	-2	) );
+		field.places.push( new PlaceData( 3,	680,	1530,	12,	0,	"2",	true,	-2	) );
 		// create images
 		field.images.push( new ImageData( "background-0-l"	,	0,	0,	1.18948364257813,	0,	0,	1.18948364257813,	0.05,	0) );
 		field.images.push( new ImageData( "background-0-r"	,	701.7,	0,	1.1715087890625,	0,	0,	1.1715087890625,	2.95,	0) );
@@ -95,21 +97,19 @@ class QuestProvider
 		field.images.push( new ImageData( "building-plot"	,	195.75,	1307.1,	1,	0,	0,	1) );
 		field.images.push( new ImageData( "building-plot"	,	562.95,	1458.65,	1,	0,	0,	1) );
 		fields.set( "quest_2" , field );
-		
-		
 
 
-		field = new FieldData(0, "battle_0", false, false, "70,85,100" );
+		field = new FieldData(0, "battle_0", false, false, "70,85,180" );
 		// create places
-		field.places.push( new PlaceData( 0,	340,	320,	1,	2,	1,	"1,2",	true,	-2	) );
-		field.places.push( new PlaceData( 1,	770,	600,	0,	1,	-1,	"0,2",	true,	-2	) );
-		field.places.push( new PlaceData( 2,	300,	640,	0,	1,	-1,	"0,1,3",	true,	-2	) );
-		field.places.push( new PlaceData( 3,	540,	960,	0,	1,	-1,	"2,4",	true,	-2	) );
-		field.places.push( new PlaceData( 4,	780,	1280,	0,	1,	-1,	"3,6,5",	true,	-2	) );
-		field.places.push( new PlaceData( 5,	310,	1320,	0,	1,	-1,	"4,6",	true,	-2	) );
-		field.places.push( new PlaceData( 6,	740,	1600,	1,	2,	0,	"4,5",	true,	-2	) );
-		field.places.push( new PlaceData( 7,	240,	850,	4,	1,	-1,	"",	true,	-2	) );
-		field.places.push( new PlaceData( 8,	840,	1070,	4,	1,	-1,	"",	true,	-2	) );
+		field.places.push( new PlaceData( 0,	340,	320,	12,	1,	"1,2",	true,	-2	) );
+		field.places.push( new PlaceData( 1,	770,	600,	1,	-1,	"0,2",	true,	-2	) );
+		field.places.push( new PlaceData( 2,	300,	640,	1,	-1,	"0,1,3",	true,	-2	) );
+		field.places.push( new PlaceData( 3,	540,	960,	1,	-1,	"2,4",	true,	-2	) );
+		field.places.push( new PlaceData( 4,	780,	1280,	1,	-1,	"3,6,5",	true,	-2	) );
+		field.places.push( new PlaceData( 5,	310,	1320,	1,	-1,	"4,6",	true,	-2	) );
+		field.places.push( new PlaceData( 6,	740,	1600,	12,	0,	"4,5",	true,	-2	) );
+		field.places.push( new PlaceData( 7,	240,	850,	41,	-1,	"",	true,	-2	) );
+		field.places.push( new PlaceData( 8,	840,	1070,	41,	-1,	"",	true,	-2	) );
 		// create images
 		field.images.push( new ImageData( "background-0-l"	,	0,	0,	1.18948364257813,	0,	0,	1.18948364257813,	0.05,	0) );
 		field.images.push( new ImageData( "background-0-r"	,	701.7,	0,	1.1715087890625,	0,	0,	1.1715087890625,	2.95,	0) );
@@ -141,7 +141,6 @@ class QuestProvider
 		field.images.push( new ImageData( "building-plot"	,	657,	532.25,	1,	0,	0,	1) );
 		field.images.push( new ImageData( "building-plot"	,	233,	253.8,	1,	0,	0,	1) );
 		fields.set( "battle_0" , field );
-
 
 
 	}

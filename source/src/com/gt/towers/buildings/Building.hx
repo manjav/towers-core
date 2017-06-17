@@ -9,15 +9,13 @@ import com.gt.towers.utils.lists.IntList;
  * ...
  * @author Mansour Djawadi
  */
-class Building
+class Building extends AbstractBuilding
 {
 	public var place:Place;
-	public var level:Int;
 	public var index:Int;
-	public var type:Int;
 	
 	public var troopType:Int = -1;
-	public var improveLevel:Float;
+	public var improveLevel:Int;
 	
 	var _population:Float;
 	var spawnIntervalId:Int;
@@ -26,14 +24,17 @@ class Building
 	{
 		this.place = place;
 		this.index = index;
-		this.type = type;
 		this.improveLevel = type % 10;
-		this.level = Game.get_instance().get_player().get_buildingsLevel().get(type);
+		
+		var lvl = 1;
+		if (getAbstract(type) != null)
+			lvl = getAbstract(type).level ;
+		super( type, lvl );
 	}
 
 	public function get_capacity():Int 
 	{
-		return 10 + Math.round( Math.log(level) * 14 );
+		return 10 + Math.round( Math.log(improveLevel) * 14 );
 	}
 	public function get_exitGap():Int 
 	{
@@ -56,9 +57,9 @@ class Building
 	public function get_options():IntList
 	{
 		var ret = new IntList();
-		if ( Game.get_instance().get_player().get_buildingsLevel().exists(type + 1) )
+		if ( BuildingType.getAll().exists( type + 1 ) )
 			ret.push(type + 1);
-		ret.push(BuildingType.B00_CAMP);
+		ret.push( BuildingType.B01_CAMP );
 		return ret;
 	}
 	public function get_population():Int
@@ -67,7 +68,11 @@ class Building
 	}
 	public function improvable(type:Int):Bool 
 	{
-		return equalsCategory(type) && Game.get_instance().get_player().get_buildingsLevel().exists(type) && (type == BuildingType.B00_CAMP || _population >= get_capacity()) ;
+		if (type == this.type)
+			return false;
+		if (type == BuildingType.B01_CAMP)
+			return true;
+		return (equalsCategory(type) || this.type == BuildingType.B01_CAMP) && getAbstract(type) != null &&  _population >= get_capacity() ;
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -95,7 +100,6 @@ class Building
 		this.troopType = troopType;
 		
 		#if java
-
 		if (initialPopulation == -1)
 			initialPopulation = get_capacity();
 		
@@ -114,13 +118,8 @@ class Building
 		if ( !improvable(type) )
 			return false;
 			
-		if (type == BuildingType.B00_CAMP)
-		{
-			place.setBuilidng(type);
-			return true;
-		}
-		
-		_population -= Math.round(get_capacity() / 2);
+		if (type != BuildingType.B01_CAMP)
+			_population -= Math.round(get_capacity() / 2);
 		
 		if( !equalsCategory(type) )
 		{
@@ -171,9 +170,8 @@ class Building
 		{
 			_population = 0;
 			troopType = troop.type;
-			level = 1;
-			if (type != BuildingType.B00_CAMP)
-				place.setBuilidng(BuildingType.B00_CAMP);
+			if (type != BuildingType.B01_CAMP)
+				place.setBuilidng(BuildingType.B01_CAMP);
 		}
 		return ret;
 	}
@@ -184,46 +182,15 @@ class Building
 	#end
 	
 	
+	public function getAbstract(type:Int):AbstractBuilding
+	{
+		if ( !Game.get_instance().get_player().get_buildingsLevel().exists(type) )
+			return null;
+		return Game.get_instance().get_player().get_buildingsLevel().get(type);
+	}
 	public function equalsCategory(type:Int):Bool
 	{
 		return BuildingType.get_category(this.type) == BuildingType.get_category(type);
 	}
-	
-	
-	/*
-	public function upgrade(type:Int = 0):Bool
-	{
-		//if(level > 0)
-			//Game.get_instance().get_player().get_resources().reduceMap(get_upgradeRequirements());
-	}	
-	public function get_unlockArena():Int 
-	{
-		return 100;
-	}
-	public function availabled():Bool 
-	{
-		return get_unlockArena() <= Game.get_instance().get_player().get_arena();
-	}
-	public function get_unlockLevel():Int
-	{
-		return 100;
-	}	
-	public function unlocked():Bool 
-	{
-		return Game.get_instance().get_player().get_buildingsLevel().get(_type) > 0;
-	}
-	
-	public function upgradable():Bool 
-	{
-		return get_upgradeRequirements().enough();
-	}
-	public function get_upgradeRequirements():Bundle 
-	{
-		return new Bundle();
-	}
-	public function get_upgradeRewards():Bundle 
-	{
-		return new Bundle();
-	}*/
 
 }

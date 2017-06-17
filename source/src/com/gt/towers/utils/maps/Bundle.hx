@@ -25,17 +25,4 @@ class Bundle extends IntIntMap
 		}
 		return true;
 	}
-	
-	public function containWeapon():Bool
-	{
-		var i:Int = 0;
-		var keis = keys();
-		while (i < keis.length)
-		{
-			if ( keis[i] < 1000)
-				return true;
-			i++;
-		}
-		return false;
-	}
 }

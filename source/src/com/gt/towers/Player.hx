@@ -1,8 +1,9 @@
 package com.gt.towers;
+import com.gt.towers.buildings.AbstractBuilding;
 import com.gt.towers.constants.ResourceType;
+import com.gt.towers.utils.maps.Bundle;
+import com.gt.towers.utils.maps.IntAbstractBuildingMap;
 import com.gt.towers.utils.maps.IntIntMap;
-import com.gt.towers.utils.maps.IntBuildingMap;
-import com.gt.towers.utils.maps.PlayerResources;
 
 /**
  * ...
@@ -18,27 +19,18 @@ class Player
 		_id = initData.id;
 		_nickName = initData.nickName;
 		
-		// add player buildings level
-		_buildingsLevel = initData.buildingsLevel;
 		
 		// add player resources data
-		_resources = new PlayerResources();
-		_quests = new IntIntMap();
+		_resources = initData.resources;// new Bundle();
+		_quests = initData.quests;// new IntIntMap();
 		
+		// add player buildings level
+		_buildingsLevel = new IntAbstractBuildingMap();
 		var i:Int = 0;
-		var kies = initData.resources.keys();
+		var kies = initData.buildingsLevel.keys();
 		while (i < kies.length)
 		{
-			_resources.set(kies[i], initData.resources.get(kies[i]));
-			i++;
-		}
-		
-		// add player quests data
-		i = 0;
-		kies = initData.quests.keys();
-		while (i < kies.length)
-		{
-			_quests.set(kies[i], initData.quests.get(kies[i]));
+			_buildingsLevel.set(kies[i], new AbstractBuilding(kies[i], initData.buildingsLevel.get(kies[i] ) ) );
 			i++;
 		}
 	}
@@ -49,8 +41,8 @@ class Player
 	private var _nickName:String = "no_nickName";
 	public function get_nickName():String { return _nickName; }
 
-	private var _resources:PlayerResources;
-	public function get_resources():PlayerResources { return _resources; }
+	private var _resources:Bundle;
+	public function get_resources():Bundle { return _resources; }
 	
 	public function get_xp():Int { return get_resources().get(ResourceType.XP); }
 	public function get_point():Int { return get_resources().get(ResourceType.POINT); }
@@ -80,7 +72,6 @@ class Player
 		}
 	}
 	
-	
 	public function get_arena():Int
 	{
 		var point:Int = get_point();
@@ -93,13 +84,12 @@ class Player
 			return 3;
 	}
 	
-		
 	private var _quests:IntIntMap;
 	public function get_quests():IntIntMap { return _quests; }
 	public function get_questIndex():Int { return _quests.keys().length; }
 	
-	private var _buildingsLevel:IntIntMap;
-	public function get_buildingsLevel():IntIntMap
+	private var _buildingsLevel:IntAbstractBuildingMap;
+	public function get_buildingsLevel():IntAbstractBuildingMap
 	{
 		return _buildingsLevel;
 	}

@@ -16,6 +16,7 @@ class FieldData
 	public var places:PlaceDataList;
 	public var images:ImageDataList;
 	public var times:IntList;
+	public var isQuest:Bool;
 
 	public function new(index:Int, name:String, hasIntro:Bool = false, hasFinal:Bool = false, times:String = "") 
 	{
@@ -23,6 +24,7 @@ class FieldData
 		this.name = name;
 		this.hasIntro = hasIntro;
 		this.hasFinal = hasFinal;
+		this.isQuest = name.substr(0, 6) == "quest_";
 		
 		this.places = new PlaceDataList();
 		this.images = new ImageDataList();

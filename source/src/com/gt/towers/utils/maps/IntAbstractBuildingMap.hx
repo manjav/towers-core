@@ -1,6 +1,6 @@
 package com.gt.towers.utils.maps;
-import com.gt.towers.constants.ResourceType;
-import com.gt.towers.utils.GameError;
+import com.gt.towers.buildings.AbstractBuilding;
+
 
 #if java
 	import java.util.Map;
@@ -9,21 +9,26 @@ import com.gt.towers.utils.GameError;
 	import flash.Vector;
 #end
 
-class IntIntMap
+/**
+ * ...
+ * @author Mansour Djawadi
+ */
+
+class IntAbstractBuildingMap
 {
 
 	#if java
-	private var _map:java.util.HashMap<Int, Int>;
+	private var _map:java.util.HashMap<Int, AbstractBuilding>;
 	#elseif flash
-	private var _map:Map<Int, Int>;
+	private var _map:Map<Int, AbstractBuilding>;
 	#end
 
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<Int, Int>();
+		_map = new java.util.HashMap<Int, AbstractBuilding>();
 		#elseif flash
-		_map = new Map<Int, Int>();
+		_map = new Map<Int, AbstractBuilding>();
 		#end
 	}
 
@@ -32,7 +37,7 @@ class IntIntMap
 		If `key` already has a mapping, the previous value disappears.
 		If `key` is null, the result is unspecified.
 	**/
-	public function set(key:Int, value:Int) : Void
+	public function set(key:Int, value:AbstractBuilding) : Void
 	{
 		#if java
 		_map.put(key, value);
@@ -53,14 +58,14 @@ class IntIntMap
 		used.
 		If `key` is null, the result is unspecified.
 	**/
-	public function get(key:Int) :Int
+	public function get(key:Int) :AbstractBuilding
 	{
 		#if java
 		return _map.get(key);
 		#elseif flash
 		return _map.get(key);
 		#end
-		return -1;
+		return null;
 	}
 	
 	/**
@@ -112,14 +117,14 @@ class IntIntMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<Int>
+	public function values():NativeArray<AbstractBuilding>
 	{
 		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Int> = new NativeArray<Int>(keis.length);
+		var ret:NativeArray<AbstractBuilding> = new NativeArray<AbstractBuilding>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
-			ret[i] = cast(get(keis[i]), Int);
+			ret[i] = cast(get(keis[i]), AbstractBuilding);
 			i++;
 		}
 		return ret ;
@@ -142,74 +147,13 @@ class IntIntMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<Int>
+	public function values():Vector<AbstractBuilding>
 	{
-		var ret:Vector<Int> = new Vector<Int>();
+		var ret:Vector<AbstractBuilding> = new Vector<AbstractBuilding>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;
 	}
 	#end
-	
-	
-	public function reduceMap(bundle:Bundle):Void
-	{
-		var keys = bundle.keys();
-		var i:Int = 0;
-		
-		if (!bundle.enough())
-		{
-			var ret:Bundle = new Bundle();
-			var diff:Int = 0;
-			while (i < keys.length)
-			{
-				diff = bundle.get(keys[i]) - get(keys[i]);
-				if (diff > 0)
-					ret.set(keys[i], diff);
-				i++;
-			}
-			throw new GameError(0, "bundle not enough. you need more.", ret);
-			return;
-		}
-		
-		while (i < keys.length)
-		{
-			reduce(keys[i], bundle.get(keys[i]));
-			i++;
-		}
-	}
-	private function reduce(key:Int, value:Int):Void
-	{
-		if (!exists(key))
-			throw new GameError(1, key + " not found.");
-
-		if (key != ResourceType.CURRENCY_HARD && key != ResourceType.POINT && get(key) < value)
-			throw new GameError(0, key + " not enough. you need " + (value-get(key)) +" more.");
-
-		set(key, get(key) - value);
-	}
-	
-	
-	public function increaseMap(bundle:Bundle):Void
-	{
-		var keys = bundle.keys();
-		var i:Int = 0;
-		while (i < keys.length)
-		{
-			increase(keys[i], bundle.get(keys[i]));
-			i++;
-		}
-	}
-	private function increase(key:Int, value:Int):Void
-	{
-		//if (!exists(key))
-		//	throw new GameError(1, "key " + key + " not found.");
-			
-		if (exists(key))
-			set(key, get(key) + value);
-		else
-			set(key, value);
-	}
-
 	
 }

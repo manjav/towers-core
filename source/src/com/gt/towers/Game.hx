@@ -1,8 +1,10 @@
 package com.gt.towers;
 import com.gt.towers.Player;
+import com.gt.towers.battle.fieldes.FieldProvider;
 import com.gt.towers.shop.Shop;
 import com.gt.towers.battle.BattleField;
-import com.gt.towers.utils.maps.IntBuildingMap;
+import com.gt.towers.battle.BattleOutcome;
+import com.gt.towers.constants.PageType;
 
 
 /**
@@ -12,6 +14,7 @@ import com.gt.towers.utils.maps.IntBuildingMap;
 class Game
 {
 	public static var loginData:LoginData = new LoginData();
+	public static var fieldProvider:FieldProvider = new FieldProvider();
 
 	public function new(data:InitData)
 	{
