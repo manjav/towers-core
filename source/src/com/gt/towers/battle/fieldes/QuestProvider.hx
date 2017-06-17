@@ -67,7 +67,7 @@ class QuestProvider
 
 
 
-		field = new FieldData(2, "quest_2", false, false, "30,45,60" );
+		field = new FieldData(2, "quest_2", false, false, "30,55,70" );
 		// create places
 		field.places.push( new PlaceData( 0,	400,	390,	1,	1,	1,	"1",	true,	-2	) );
 		field.places.push( new PlaceData( 1,	770,	540,	0,	1,	-1,	"2,0",	true,	-2	) );
@@ -99,7 +99,7 @@ class QuestProvider
 		
 
 
-		field = new FieldData(0, "battle_0", false, false, "60,75,100" );
+		field = new FieldData(0, "battle_0", false, false, "70,85,100" );
 		// create places
 		field.places.push( new PlaceData( 0,	340,	320,	1,	2,	1,	"1,2",	true,	-2	) );
 		field.places.push( new PlaceData( 1,	770,	600,	0,	1,	-1,	"0,2",	true,	-2	) );

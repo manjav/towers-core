@@ -33,7 +33,7 @@ class BattleField
 		{
 			placeData = map.places.get( p );
 			place = new Place(placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
-			place.building = BuildingType.instantiate(placeData.type, place, placeData.index, placeData.level);
+			place.building = BuildingType.instantiate(placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
 			

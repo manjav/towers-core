@@ -17,15 +17,18 @@ class Building
 	public var type:Int;
 	
 	public var troopType:Int = -1;
+	public var improveLevel:Float;
 	
 	var _population:Float;
 	var spawnIntervalId:Int;
 	
-	public function new(place:Place, index:Int, level:Int = 1)
+	public function new(place:Place, index:Int, type:Int)
 	{
 		this.place = place;
 		this.index = index;
-		this.level = level;
+		this.type = type;
+		this.improveLevel = type % 10;
+		this.level = Game.get_instance().get_player().get_buildingsLevel().get(type);
 	}
 
 	public function get_capacity():Int 
@@ -48,19 +51,23 @@ class Building
 	{
 		return 2300;
 	}
+	
+	
 	public function get_options():IntList
 	{
-		return null;
-	}		
-	
-	
+		var ret = new IntList();
+		if ( Game.get_instance().get_player().get_buildingsLevel().exists(type + 1) )
+			ret.push(type + 1);
+		ret.push(BuildingType.B00_CAMP);
+		return ret;
+	}
 	public function get_population():Int
 	{
 		return Math.round(_population);
 	}
 	public function improvable(type:Int):Bool 
 	{
-		return type != this.type && (type == BuildingType.B00_CAMP || _population >= get_capacity()) ;
+		return equalsCategory(type) && Game.get_instance().get_player().get_buildingsLevel().exists(type) && (type == BuildingType.B00_CAMP || _population >= get_capacity()) ;
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -107,7 +114,6 @@ class Building
 		if ( !improvable(type) )
 			return false;
 			
-		
 		if (type == BuildingType.B00_CAMP)
 		{
 			place.setBuilidng(type);
@@ -116,13 +122,15 @@ class Building
 		
 		_population -= Math.round(get_capacity() / 2);
 		
-		if (type != BuildingType.UPGRADE)
+		if( !equalsCategory(type) )
 		{
 			place.setBuilidng(type);
 			return true;
 		}
 		
-		level ++;
+		type ++;
+		improveLevel ++;
+		
 		GTimer.clearInterval(spawnIntervalId);
 		spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
 		
@@ -176,7 +184,10 @@ class Building
 	#end
 	
 	
-	
+	public function equalsCategory(type:Int):Bool
+	{
+		return BuildingType.get_category(this.type) == BuildingType.get_category(type);
+	}
 	
 	
 	/*

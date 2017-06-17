@@ -8,11 +8,10 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Camp extends Building
 {
-	public function new(place:Place, index:Int, level:Int = 1)
+	/*public function new(place:Place, index:Int, type:Int = 1)
 	{
-		super(place, index, level);
-		type = BuildingType.B00_CAMP;
-	}
+		super(place, index, type);
+	}*/
 	
 	public override function get_spawnGap():Int
 	{
@@ -21,10 +20,10 @@ class Camp extends Building
 	public override function get_options():IntList
 	{
 		var ret = new IntList();
-		ret.push(BuildingType.B01_BARRACKS);
+		ret.push(BuildingType.B11_BARRACKS);
 		//ret.push(BuildingType.B02_RAPID);
-		ret.push(BuildingType.B03_HEAVY);
-		ret.push(BuildingType.B04_CRYSTAL);
+		ret.push(BuildingType.B31_HEAVY);
+		ret.push(BuildingType.B41_CRYSTAL);
 		return ret;
 	}
 }
