@@ -42,7 +42,7 @@ class FieldProvider
 		field = new FieldData(1, "quest_1", true, true, "100,100,100" );
 		// create places
 		field.places.push( new PlaceData( 0,	521.45,	669.7,	1,	1,	"1,2",	false,	2	) );
-		field.places.push( new PlaceData( 1,	285.95,	1208.35,12,	0,	"0",	true,	0	) );
+		field.places.push( new PlaceData( 1,	285.95,	1208.35,	12,	0,	"0",	true,	0	) );
 		field.places.push( new PlaceData( 2,	796.55,	1080.6,	12,	0,	"0",	true,	1	) );
 		// create images
 		field.images.push( new ImageData( "road-v"	,	508.35,	588.1,	0.913772583007813,	0.403274536132813,	-0.403289794921875,	0.913742065429688,	44.45,	201.5) );
@@ -64,7 +64,6 @@ class FieldProvider
 		field.images.push( new ImageData( "chair-1"	,	480.75,	307.15,	1.38555908203125,	0,	0,	1.38555908203125,	45,	25) );
 		field.images.push( new ImageData( "road-v"	,	399.4,	829.45,	0.913772583007813,	0.403274536132813,	-0.403289794921875,	0.913742065429688,	44.45,	201.5) );
 		fields.set( "quest_1" , field );
-
 
 
 
@@ -99,7 +98,9 @@ class FieldProvider
 		fields.set( "quest_2" , field );
 
 
-		field = new FieldData(0, "battle_0", false, false, "70,85,180" );
+
+
+		field = new FieldData(0, "battle_0", false, false, "90,120,180" );
 		// create places
 		field.places.push( new PlaceData( 0,	340,	320,	12,	1,	"1,2",	true,	-2	) );
 		field.places.push( new PlaceData( 1,	770,	600,	1,	-1,	"0,2",	true,	-2	) );
@@ -132,7 +133,7 @@ class FieldProvider
 		field.images.push( new ImageData( "road-v"	,	739.35,	1298.65,	0.993881225585938,	0.110366821289063,	-0.0697479248046875,	0.628250122070313,	40.1,	201.55) );
 		field.images.push( new ImageData( "road-h"	,	370.5,	1311.25,	0.827072143554688,	0.537506103515625,	-0.544921875,	0.838485717773438,	207.95,	48.35) );
 		field.images.push( new ImageData( "tree-0"	,	609.65,	1300.5,	1.38604736328125,	0,	0,	1.38604736328125,	61,	71.5) );
-		field.images.push( new ImageData( "hut-0"	,	-182.15,	877.6,	1.54179382324219,	0,	0,	1.54179382324219,	174,	105) );
+		field.images.push( new ImageData( "hut-0"	,	-235.35,	987.45,	1.54179382324219,	0,	0,	1.54179382324219,	174,	105) );
 		field.images.push( new ImageData( "building-plot"	,	623.35,	1532.6,	1,	0,	0,	1) );
 		field.images.push( new ImageData( "building-plot"	,	201,	1256.05,	1,	0,	0,	1) );
 		field.images.push( new ImageData( "building-plot"	,	669.7,	1208.45,	1,	0,	0,	1) );
