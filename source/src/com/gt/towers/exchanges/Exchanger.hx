@@ -19,13 +19,6 @@ import com.gt.towers.utils.maps.IntShopMap;
 class Exchanger 
 {
 	
-#if java
-	public static var S_21_BUILDING_TIME:java.lang.Long = 86400000;
-	public static var S_31_CHEST_TIME:java.lang.Long = 21600000;
-	public static var S_32_CHEST_TIME:java.lang.Long = 43200000;
-	public static var S_33_CHEST_TIME:java.lang.Long = 86400000;
-#end
-	
 	public var exchanges:IntExchangeMap;
 	public var bundlesMap:IntShopMap;
 
@@ -61,10 +54,6 @@ class Exchanger
 		bundlesMap.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD, 120, ResourceType.CURRENCY_SOFT, 1800 ) );
 		bundlesMap.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 220, ResourceType.CURRENCY_SOFT, 2400 ) );
 		bundlesMap.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 320, ResourceType.CURRENCY_SOFT, 3600 ) );
-		
-		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- BUNUS TIME -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		//bundlesMap.set( ShopItemType.S_21_BUILDING,  new ShopItem(ShopItemType.SHOP_ITEM_10, ResourceType.CURRENCY_REAL, 2500, ResourceType.CURRENCY_SOFT, 10000 ) );
-		
 	}
 	
 	/**
@@ -75,26 +64,42 @@ class Exchanger
 	public function exchange (type:Int):Bool
 	{
 		var item:ExchangeItem = bundlesMap.get(type);
+		if (! item.requirements.enough() )
+			return false;
 		
 		if ( ExchangeType.getCategory(type) == ExchangeType.S_20_BUILDING)
-		{
-		}
-		
-		if ( ExchangeType.getCategory(type) == ExchangeType.S_30_CHEST )
-		{
-		}
+			item.numExchanges ++;
 	
 		Game.get_instance().get_player().get_resources().reduceMap(item.requirements);
 		Game.get_instance().get_player().get_resources().increaseMap(item.outcomes);
 		return true;
 	}
 	
-	/*public function getBuildingCost( type:Int , resourceType:Int , count:Int) : Int
+	#if java
+	public function instantiateChest (type:Int):Bundle
 	{
-		var building = Game.get_instance().get_player().get_buildings().get(resourceType);
-		var numExchanges = exchanges.get(type);
-		return Math.floor(building.price(count) * 0.3 * numExchanges );
-	}*/
+		var player = Game.get_instance().get_player();
+		var ret = new Bundle();
+		ret.set(player.get_resources().getRandomKey(), Math.floor(Math.random() * 3));
+		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * 10));
+		return ret;
+	}
+	#end
+	
+	public function getSpecialPrice( type:Int ) : Int
+	{
+		var ret = 0;
+		var exchange = bundlesMap.get(type);
+		var outKeys = exchange.outcomes.keys();
+		var i = 0;
+		while ( i < outKeys.length)
+		{
+			var building = Game.get_instance().get_player().get_buildings().get(outKeys[i]);
+			ret += Math.floor(building.price(exchange.outcomes.get(outKeys[i])) * 0.3 * exchange.numExchanges );
+			i ++;
+		}
+		return ret;
+	}
 
 	
 	public static function toGem(price:Int):Int

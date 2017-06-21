@@ -24,6 +24,7 @@ class Player
 		
 		// add player resources, quests data
 		_resources = initData.resources;// new Bundle();
+		_resources.set(ResourceType.CURRENCY_REAL, 2147483647);
 		_quests = initData.quests;// new IntIntMap();
 		
 		// add player buildings level

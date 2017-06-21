@@ -15,6 +15,7 @@ class ExchangeItem extends Exchange
 	public function new(type:Int, reqKey_0:Int=-1, reqVal_0:Int=-1, outKey_0:Int=-1, outVal_0:Int=-1, numExchanges:Int=1, expiredAt:Float=0) 
 	{
 		super(type, numExchanges, expiredAt, 0);
+		
 		this.requirements = new Bundle();
 		if (reqKey_0 > -1 )
 			requirements.set(reqKey_0, reqVal_0);
@@ -23,13 +24,13 @@ class ExchangeItem extends Exchange
 		if (outKey_0 > -1 )
 			outcomes.set(outKey_0, outVal_0);
 	}
-	
+/*	
 	public static function instantiateRandom(type:Int):ExchangeItem
 	{
 		var ret = new ExchangeItem(type);
 		ret.outcomes.set( Game.get_instance().get_player().get_buildings().getRandomKey(), 1);
 		ret.requirements.set( ResourceType.CURRENCY_SOFT, -1);
 		return ret;
-	}
+	}*/
 	
 }

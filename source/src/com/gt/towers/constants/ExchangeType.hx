@@ -43,5 +43,20 @@ class ExchangeType
 	{
 		return Math.floor(type / 10) * 10;
 	}
-
+	
+	#if java
+	public static function getCooldown(type:Int):java.lang.Long
+	{
+		if (type == S_21_BUILDING)
+			return 86400000;
+		else if (type == S_31_CHEST)
+			return 21600000;
+		else if (type == S_32_CHEST)
+			return 43200000;
+		else if (type == S_33_CHEST)
+			return 86400000;
+		else
+			return 0;
+	}
+	#end
 }
