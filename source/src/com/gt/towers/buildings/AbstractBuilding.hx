@@ -1,5 +1,9 @@
 package com.gt.towers.buildings;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
+import com.gt.towers.constants.BuildingFeatureType;
+import com.gt.towers.exchanges.Exchanger;
+import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.Bundle;
 
 /**
@@ -10,20 +14,40 @@ class AbstractBuilding
 {
 	public var type:Int;
 	public var level:Int;
+	public var improveLevel:Int;
 	
 	public function new(type:Int, level:Int)
 	{
 		this.type = type;
 		this.level = level;
+		this.improveLevel = type % 10;
 	}
 	
+	
+	public function get_upgradeCost():Int
+	{
+		return Math.floor( Math.pow( 10, level ) ) ;
+	}
+	public function get_upgradeCards():Int
+	{
+		return Math.floor( Math.pow( 2, level ) ) ;
+	}
 	public function get_upgradeRequirements():Bundle
 	{
 		var ret = new Bundle();
-		ret.set( ResourceType.CURRENCY_0, Math.floor( Math.pow( 10, level ) ) );
-		ret.set( type, Math.floor( Math.pow( 2, level ) ) );
+		ret.set( ResourceType.CURRENCY_SOFT, get_upgradeCost() );
+		ret.set( type, get_upgradeCards() );
 		return ret;
 	}
+	
+	public function get_upgradeRewards():Bundle 
+	{
+		var ret = new Bundle();
+		ret.set(ResourceType.XP, Math.round( ( Math.log(level * level) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
+		return ret;
+	}
+	
+	
 	public function upgradable():Bool 
 	{
 		return get_upgradeRequirements().enough();
@@ -33,6 +57,8 @@ class AbstractBuilding
 		if ( !upgradable() )
 			return false;
 		Game.get_instance().get_player().get_resources().reduceMap(get_upgradeRequirements());
+		Game.get_instance().get_player().get_resources().increaseMap(get_upgradeRewards());
+		
 		level ++;
 		return true;
 	}	
@@ -49,11 +75,15 @@ class AbstractBuilding
 		return Game.get_instance().get_player().get_resources().exists(type);
 	}
 
-	public function get_upgradeRewards():Bundle 
-	{
-		var ret = new Bundle();
-		ret.set(ResourceType.XP, Math.floor( Math.pow( 0.5, level) ) );
-		return ret;
-	}
+
 	
+	public function price(count:Int = 1):Int
+	{
+		return Math.round( Math.round( Math.log(level * level) + Math.log(improveLevel * improveLevel))+1 ); 
+	}
+	public function toGem(count:Int = 1):Int
+	{
+		return Exchanger.toGem( price(count) );
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.gt.towers.utils.maps;
 import com.gt.towers.Game;
+import com.gt.towers.constants.ResourceType;
 
 /**
  * ...
@@ -19,7 +20,7 @@ class Bundle extends IntIntMap
 		var keis = keys();
 		while (i < keis.length)
 		{
-			if ( get(keis[i]) < Game.get_instance().get_player().get_resources().get(keis[i]) )
+			if ( get(keis[i]) > Game.get_instance().get_player().get_resources().get(keis[i]) )
 				return false;
 			i++;
 		}

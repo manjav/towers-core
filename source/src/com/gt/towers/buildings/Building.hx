@@ -1,6 +1,7 @@
 package com.gt.towers.buildings;
 
 import com.gt.towers.battle.Troop;
+import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.lists.IntList;
@@ -15,21 +16,23 @@ class Building extends AbstractBuilding
 	public var index:Int;
 	
 	public var troopType:Int = -1;
-	public var improveLevel:Int;
 	
 	var _population:Float;
 	var spawnIntervalId:Int;
 	
-	public function new(place:Place, index:Int, type:Int)
+	public function new(place:Place, index:Int, type:Int, level:Int = 0)
 	{
 		this.place = place;
 		this.index = index;
-		this.improveLevel = type % 10;
 		
-		var lvl = 1;
-		if (getAbstract(type) != null)
-			lvl = getAbstract(type).level ;
-		super( type, lvl );
+		if ( level == 0 )
+		{
+			if (getAbstract(type) != null)
+				level = getAbstract(type).level ;
+			else
+				level = 1;
+		}
+		super( type, level );
 	}
 
 	public function get_capacity():Int 
@@ -184,13 +187,33 @@ class Building extends AbstractBuilding
 	
 	public function getAbstract(type:Int):AbstractBuilding
 	{
-		if ( !Game.get_instance().get_player().get_buildingsLevel().exists(type) )
+		if ( !Game.get_instance().get_player().get_buildings().exists(type) )
 			return null;
-		return Game.get_instance().get_player().get_buildingsLevel().get(type);
+		return Game.get_instance().get_player().get_buildings().get(type);
 	}
 	public function equalsCategory(type:Int):Bool
 	{
 		return BuildingType.get_category(this.type) == BuildingType.get_category(type);
 	}
 
+	public function getFeatureValue(feature:Int):Float
+	{
+		if ( feature == BuildingFeatureType.F01_CAPACITY )
+			return get_capacity();
+		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
+			return get_spawnGap();
+		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
+			return get_troopSpeed();
+		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
+			return get_troopPower();
+		else if ( feature == BuildingFeatureType.F21_DAMAGE )
+			return get_damage();
+		else if ( feature == BuildingFeatureType.F22_FIRE_SPEED )
+			return get_damageGap();
+		else if ( feature == BuildingFeatureType.F23_RANGE )
+			return get_damageRadius();
+		else if ( feature == BuildingFeatureType.F24_DAMAGE_RANGE )
+			return get_damageRange();
+		return 0;
+	}
 }

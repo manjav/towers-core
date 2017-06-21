@@ -37,7 +37,7 @@ class BattleOutcome
 			ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (score > 0 ? score : -3) / 3 ), Int ) );
 			
 			// calculate money
-			ret.set(ResourceType.CURRENCY_0, 10 * score);
+			ret.set(ResourceType.CURRENCY_SOFT, 10 * score);
 		}
 		else
 		{
@@ -49,7 +49,7 @@ class BattleOutcome
 		
 		
 		// calculate rewards
-		var unlockedBuildings = player.get_buildingsLevel().keys();
+		var unlockedBuildings = player.get_buildings().keys();
 		var i:Int = 0;
 		var numUnlocked = Math.min(unlockedBuildings.length, rewardChance);
 		while (i < numUnlocked)

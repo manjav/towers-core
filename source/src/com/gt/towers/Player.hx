@@ -1,8 +1,10 @@
 package com.gt.towers;
 import com.gt.towers.buildings.AbstractBuilding;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.Bundle;
-import com.gt.towers.utils.maps.IntAbstractBuildingMap;
+import com.gt.towers.utils.maps.IntBuildingMap;
+import com.gt.towers.utils.maps.IntExchangeMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -20,19 +22,20 @@ class Player
 		_nickName = initData.nickName;
 		
 		
-		// add player resources data
+		// add player resources, quests data
 		_resources = initData.resources;// new Bundle();
 		_quests = initData.quests;// new IntIntMap();
 		
 		// add player buildings level
-		_buildingsLevel = new IntAbstractBuildingMap();
+		_buildingsLevel = new IntBuildingMap();
 		var i:Int = 0;
 		var kies = initData.buildingsLevel.keys();
 		while (i < kies.length)
 		{
-			_buildingsLevel.set(kies[i], new AbstractBuilding(kies[i], initData.buildingsLevel.get(kies[i] ) ) );
+			_buildingsLevel.set(kies[i], BuildingType.instantiate( kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
 			i++;
 		}
+		
 	}
 
 	private var _id:Int;
@@ -46,8 +49,8 @@ class Player
 	
 	public function get_xp():Int { return get_resources().get(ResourceType.XP); }
 	public function get_point():Int { return get_resources().get(ResourceType.POINT); }
-	public function get_money():Int { return get_resources().get(ResourceType.CURRENCY_0); }
-	public function get_gem():Int { return get_resources().get(ResourceType.CURRENCY_1); }
+	public function get_money():Int { return get_resources().get(ResourceType.CURRENCY_SOFT); }
+	public function get_gem():Int { return get_resources().get(ResourceType.CURRENCY_HARD); }
 	
 	public function get_level():Int
 	{
@@ -88,9 +91,7 @@ class Player
 	public function get_quests():IntIntMap { return _quests; }
 	public function get_questIndex():Int { return _quests.keys().length; }
 	
-	private var _buildingsLevel:IntAbstractBuildingMap;
-	public function get_buildingsLevel():IntAbstractBuildingMap
-	{
-		return _buildingsLevel;
-	}
+	private var _buildingsLevel:IntBuildingMap;
+	public function get_buildings():IntBuildingMap { return _buildingsLevel; }
+
 }

@@ -42,30 +42,27 @@ class BuildingType
 	public static var B43_CRYSTAL:Int = 43;
 	public static var B44_CRYSTAL:Int = 44;
 	
-	public function new()
-	{
-		
-}
+	public function new(){}
 	
 	public static function get_category(type:Int):Int
 	{
 		return Math.floor(type / 10) * 10;
 	}
-		
-	public static function instantiate(type:Int, place:Place, index:Int):Building
+
+	public static function instantiate(type:Int, place:Place, index:Int, level:Int = 0):Building
 	{
 		var category = get_category( type );
 		
 		if (category == BuildingType.B00_CAMP)
-			return new Camp(place, index, type);
+			return new Camp(place, index, type, level);
 		else if (category == BuildingType.B10_BARRACKS)
-			return new Barracks(place, index, type);
+			return new Barracks(place, index, type, level);
 		else if (category == BuildingType.B20_RAPID)
-			return new Rapid(place, index, type);
+			return new Rapid(place, index, type, level);
 		else if (category == BuildingType.B30_HEAVY)
-			return new Heavy(place, index, type);
+			return new Heavy(place, index, type, level);
 		else if (category == BuildingType.B40_CRYSTAL)
-			return new Crystal(place, index, type);
+			return new Crystal(place, index, type, level);
 		else 
 			return null;
 	}

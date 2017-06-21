@@ -1,5 +1,6 @@
 package com.gt.towers.utils.maps;
-import com.gt.towers.exchanges.ExchangeItem;
+import com.gt.towers.buildings.Building;
+
 
 #if java
 	import java.util.Map;
@@ -8,21 +9,26 @@ import com.gt.towers.exchanges.ExchangeItem;
 	import flash.Vector;
 #end
 
-class IntShopMap
+/**
+ * ...
+ * @author Mansour Djawadi
+ */
+
+class IntBuildingMap
 {
 
 	#if java
-	private var _map:java.util.HashMap<Int, ExchangeItem>;
+	private var _map:java.util.HashMap<Int, Building>;
 	#elseif flash
-	private var _map:Map<Int, ExchangeItem>;
+	private var _map:Map<Int, Building>;
 	#end
 
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<Int, ExchangeItem>();
+		_map = new java.util.HashMap<Int, Building>();
 		#elseif flash
-		_map = new Map<Int, ExchangeItem>();
+		_map = new Map<Int, Building>();
 		#end
 	}
 
@@ -31,7 +37,7 @@ class IntShopMap
 		If `key` already has a mapping, the previous value disappears.
 		If `key` is null, the result is unspecified.
 	**/
-	public function set(key:Int, value:ExchangeItem) : Void
+	public function set(key:Int, value:Building) : Void
 	{
 		#if java
 		_map.put(key, value);
@@ -52,7 +58,7 @@ class IntShopMap
 		used.
 		If `key` is null, the result is unspecified.
 	**/
-	public function get(key:Int) :ExchangeItem
+	public function get(key:Int) :Building
 	{
 		#if java
 		return _map.get(key);
@@ -111,14 +117,14 @@ class IntShopMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<ExchangeItem>
+	public function values():NativeArray<Building>
 	{
 		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<ExchangeItem> = new NativeArray<ExchangeItem>(keis.length);
+		var ret:NativeArray<Building> = new NativeArray<Building>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
-			ret[i] = cast(get(keis[i]), ExchangeItem);
+			ret[i] = cast(get(keis[i]), Building);
 			i++;
 		}
 		return ret ;
@@ -141,13 +147,22 @@ class IntShopMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<ExchangeItem>
+	public function values():Vector<Building>
 	{
-		var ret:Vector<ExchangeItem> = new Vector<ExchangeItem>();
+		var ret:Vector<Building> = new Vector<Building>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;
 	}
 	#end
 	
+	
+	public function getRandomKey():Int
+	{
+		var keis = keys();
+		var t = keis[ Math.floor( Math.random() * keis.length ) ];
+		if ( t >= 1000 )
+			return getRandomKey();
+		return t;
+	}
 }

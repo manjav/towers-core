@@ -1,6 +1,5 @@
 package com.gt.towers.utils.maps;
-import com.gt.towers.buildings.AbstractBuilding;
-
+import com.gt.towers.exchanges.Exchange;
 
 #if java
 	import java.util.Map;
@@ -9,26 +8,21 @@ import com.gt.towers.buildings.AbstractBuilding;
 	import flash.Vector;
 #end
 
-/**
- * ...
- * @author Mansour Djawadi
- */
-
-class IntAbstractBuildingMap
+class IntExchangeMap
 {
 
 	#if java
-	private var _map:java.util.HashMap<Int, AbstractBuilding>;
+	private var _map:java.util.HashMap<Int, Exchange>;
 	#elseif flash
-	private var _map:Map<Int, AbstractBuilding>;
+	private var _map:Map<Int, Exchange>;
 	#end
 
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<Int, AbstractBuilding>();
+		_map = new java.util.HashMap<Int, Exchange>();
 		#elseif flash
-		_map = new Map<Int, AbstractBuilding>();
+		_map = new Map<Int, Exchange>();
 		#end
 	}
 
@@ -37,7 +31,7 @@ class IntAbstractBuildingMap
 		If `key` already has a mapping, the previous value disappears.
 		If `key` is null, the result is unspecified.
 	**/
-	public function set(key:Int, value:AbstractBuilding) : Void
+	public function set(key:Int, value:Exchange) : Void
 	{
 		#if java
 		_map.put(key, value);
@@ -58,7 +52,7 @@ class IntAbstractBuildingMap
 		used.
 		If `key` is null, the result is unspecified.
 	**/
-	public function get(key:Int) :AbstractBuilding
+	public function get(key:Int) :Exchange
 	{
 		#if java
 		return _map.get(key);
@@ -117,14 +111,14 @@ class IntAbstractBuildingMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<AbstractBuilding>
+	public function values():NativeArray<Exchange>
 	{
 		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<AbstractBuilding> = new NativeArray<AbstractBuilding>(keis.length);
+		var ret:NativeArray<Exchange> = new NativeArray<Exchange>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
-			ret[i] = cast(get(keis[i]), AbstractBuilding);
+			ret[i] = cast(get(keis[i]), Exchange);
 			i++;
 		}
 		return ret ;
@@ -147,9 +141,9 @@ class IntAbstractBuildingMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<AbstractBuilding>
+	public function values():Vector<Exchange>
 	{
-		var ret:Vector<AbstractBuilding> = new Vector<AbstractBuilding>();
+		var ret:Vector<Exchange> = new Vector<Exchange>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;

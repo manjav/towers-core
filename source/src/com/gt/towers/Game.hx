@@ -1,10 +1,11 @@
 package com.gt.towers;
 import com.gt.towers.Player;
 import com.gt.towers.battle.fieldes.FieldProvider;
-import com.gt.towers.shop.Shop;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.BattleOutcome;
 import com.gt.towers.constants.PageType;
+import com.gt.towers.constants.BuildingFeatureType;
+import com.gt.towers.exchanges.Exchanger;
 
 
 /**
@@ -21,7 +22,7 @@ class Game
 		_instance = this;
 
 		_player = new Player(data);
-		//_shop = new Shop();
+		_exchanger = new Exchanger(data);
 	}
 
 	private var _player:Player;
@@ -30,14 +31,11 @@ class Game
 		return _player;
 	}
 	
-	private var _shop:Shop;
-	public function get_shop():Shop
+	private var _exchanger:Exchanger;
+	public function get_exchanger():Exchanger
 	{
-		return _shop;
+		return _exchanger;
 	}
-
-
-
 
 	private static var _instance:Game;
 	public static function get_instance():Game

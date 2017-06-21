@@ -16,6 +16,6 @@ class Rapid extends Building
 	
 	public override function get_troopSpeed():Int
 	{
-		return 2000 - Math.round( Math.log(improveLevel) * 200);
+		return 2000 - Math.round( (Math.log(improveLevel) + Math.log(level)) * 200);
 	}
 }
