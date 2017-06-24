@@ -16,4 +16,9 @@ class ResourceType
 	public static var NUM_RESOURCES:Int = 5;
 	
 	public function new() {	}
+	
+	static public function isBuilding(type:Int) 
+	{
+		return type < 1000; 
+	}
 }

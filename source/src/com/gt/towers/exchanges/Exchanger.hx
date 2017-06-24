@@ -34,15 +34,12 @@ class Exchanger
 		{
 			var ex = exchanges.get(exchangeKeys[i]);
 			if ( ExchangeType.getCategory( exchangeKeys[i] ) == ExchangeType.S_20_BUILDING )
-			{
-				var building = Game.get_instance().get_player().get_buildings().get(ex.outcome);
-				bundlesMap.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], ResourceType.CURRENCY_SOFT, Math.floor(building.price() * 0.3) * ex.numExchanges , ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
-			}
+				bundlesMap.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
 			
 			if ( ExchangeType.getCategory( exchangeKeys[i] ) == ExchangeType.S_30_CHEST )
 				bundlesMap.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
 				
-			i++;
+			i ++;
 		}
 		
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
@@ -61,30 +58,41 @@ class Exchanger
 	 * @param	itemId
 	 * @return
 	 */
-	public function exchange (type:Int):Bool
+	public function exchange (item:ExchangeItem, time:Int, confirmedHards:Int=0):Bool
 	{
-		var item:ExchangeItem = bundlesMap.get(type);
-		if (! item.requirements.enough() )
+		var deductions = item.requirements.deductions();
+		var needsHard = toHard(deductions);
+		if ( !item.requirements.enough() && needsHard > confirmedHards  )
 			return false;
 		
-		if ( ExchangeType.getCategory(type) == ExchangeType.S_20_BUILDING)
+		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_BUILDING )
+		{
+			item.requirements = item.getSpecialRequierments();
+		}
+		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_30_CHEST )
+		{
+			var remaining = item.expiredAt - time;
+			needsHard += timeToHard(remaining);
+			if ( remaining > 0 && needsHard > confirmedHards )
+				return false;
+			
+			item.outcomes = item.getChestOutcomes();
+		}
+		
+		var playerResources = Game.get_instance().get_player().get_resources();
+		playerResources.set(ResourceType.CURRENCY_HARD, playerResources.get(ResourceType.CURRENCY_HARD) - needsHard);
+		playerResources.increaseMap(deductions);
+		
+		playerResources.reduceMap(item.requirements);
+		playerResources.increaseMap(item.outcomes);
+		
+		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_BUILDING )
 			item.numExchanges ++;
-	
-		Game.get_instance().get_player().get_resources().reduceMap(item.requirements);
-		Game.get_instance().get_player().get_resources().increaseMap(item.outcomes);
+		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_30_CHEST )
+			item.expiredAt = time + ExchangeType.getCooldown(item.type);
+				
 		return true;
 	}
-	
-	#if java
-	public function instantiateChest (type:Int):Bundle
-	{
-		var player = Game.get_instance().get_player();
-		var ret = new Bundle();
-		ret.set(player.get_resources().getRandomKey(), Math.floor(Math.random() * 3));
-		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * 10));
-		return ret;
-	}
-	#end
 	
 	public function getSpecialPrice( type:Int ) : Int
 	{
@@ -102,14 +110,34 @@ class Exchanger
 	}
 
 	
-	public static function toGem(price:Int):Int
+	public static function toHard(requirements:Bundle):Int
+	{
+		var reqKeys = requirements.keys();
+		var softs = 0;
+		var hards = 0;
+		var i = 0;
+		while ( i < reqKeys.length )
+		{
+			if (reqKeys[i] == ResourceType.CURRENCY_HARD )
+				hards += requirements.get(reqKeys[i]);
+			else if (reqKeys[i] == ResourceType.CURRENCY_SOFT )
+				softs += requirements.get(reqKeys[i]);
+			else if ( ResourceType.isBuilding(reqKeys[i])) 
+			{
+				softs += Game.get_instance().get_player().get_buildings().get(reqKeys[i]).price();
+			}
+			i ++;
+		}
+		return softToHard(softs) + hards ;
+	}
+	
+	public static function softToHard(price:Int):Int
 	{
 		return Math.round( price * 0.2 ) ;
 	}
-	
-	public static function timeToGem(time:Int):Int
+	public static function timeToHard(time:Int):Int
 	{
-		return Math.round( time * 0.2 ) ;
+		return Math.round( time * 0.05 ) ;
 	}
 	
 	

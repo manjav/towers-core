@@ -2,6 +2,7 @@ package com.gt.towers.buildings;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.BuildingFeatureType;
+import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.Bundle;
@@ -52,12 +53,17 @@ class AbstractBuilding
 	{
 		return get_upgradeRequirements().enough();
 	}
-	public function upgrade():Bool
+	public function upgrade(confirmedHards:Int=0):Bool
 	{
 		if ( !upgradable() )
 			return false;
-		Game.get_instance().get_player().get_resources().reduceMap(get_upgradeRequirements());
-		Game.get_instance().get_player().get_resources().increaseMap(get_upgradeRewards());
+			
+		var ei = new ExchangeItem(0);
+		ei.requirements = get_upgradeRequirements();
+		ei.outcomes = get_upgradeRewards();
+		Game.get_instance().get_exchanger().exchange(ei, confirmedHards);
+//		Game.get_instance().get_player().get_resources().reduceMap();
+//		Game.get_instance().get_player().get_resources().increaseMap(get_upgradeRewards());
 		
 		level ++;
 		return true;
@@ -83,7 +89,7 @@ class AbstractBuilding
 	}
 	public function toGem(count:Int = 1):Int
 	{
-		return Exchanger.toGem( price(count) );
+		return Exchanger.softToHard( price(count) );
 	}
 
 }

@@ -9,10 +9,10 @@ class Exchange
 
 	public var type:Int;
 	public var numExchanges:Int;
-	public var expiredAt:Float;
+	public var expiredAt:Int;
 	public var outcome:Int;
 	
-	public function new(type:Int, numExchanges:Int = 1, expiredAt:Float = 0, outcome:Int = 0) 
+	public function new(type:Int, numExchanges:Int = 1, expiredAt:Int = 0, outcome:Int = 0) 
 	{
 		this.type = type;
 		this.numExchanges = numExchanges;

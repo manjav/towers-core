@@ -50,8 +50,8 @@ class Player
 	
 	public function get_xp():Int { return get_resources().get(ResourceType.XP); }
 	public function get_point():Int { return get_resources().get(ResourceType.POINT); }
-	public function get_money():Int { return get_resources().get(ResourceType.CURRENCY_SOFT); }
-	public function get_gem():Int { return get_resources().get(ResourceType.CURRENCY_HARD); }
+	public function get_softs():Int { return get_resources().get(ResourceType.CURRENCY_SOFT); }
+	public function get_hards():Int { return get_resources().get(ResourceType.CURRENCY_HARD); }
 	
 	public function get_level():Int
 	{
