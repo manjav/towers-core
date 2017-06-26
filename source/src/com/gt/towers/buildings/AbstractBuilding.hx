@@ -1,11 +1,12 @@
 package com.gt.towers.buildings;
+import com.gt.towers.Game;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.Bundle;
+import com.gt.towers.utils.maps.IntIntMap;
 
 /**
  * ...
@@ -17,8 +18,11 @@ class AbstractBuilding
 	public var level:Int;
 	public var improveLevel:Int;
 	
-	public function new(type:Int, level:Int)
+	private var game:Game;
+	
+	public function new(game:Game, type:Int, level:Int)
 	{
+		this.game = game;
 		this.type = type;
 		this.level = level;
 		this.improveLevel = type % 10;
@@ -33,17 +37,17 @@ class AbstractBuilding
 	{
 		return Math.floor( Math.pow( 2, level ) ) ;
 	}
-	public function get_upgradeRequirements():Bundle
+	public function get_upgradeRequirements():IntIntMap
 	{
-		var ret = new Bundle();
+		var ret = new IntIntMap();
 		ret.set( ResourceType.CURRENCY_SOFT, get_upgradeCost() );
 		ret.set( type, get_upgradeCards() );
 		return ret;
 	}
 	
-	public function get_upgradeRewards():Bundle 
+	public function get_upgradeRewards():IntIntMap 
 	{
-		var ret = new Bundle();
+		var ret = new IntIntMap();
 		ret.set(ResourceType.XP, Math.round( ( Math.log(level * level) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
 		return ret;
 	}
@@ -51,7 +55,7 @@ class AbstractBuilding
 	
 	public function upgradable():Bool 
 	{
-		return get_upgradeRequirements().enough();
+		return game.player.has(get_upgradeRequirements());
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
@@ -61,9 +65,9 @@ class AbstractBuilding
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_upgradeRequirements();
 		ei.outcomes = get_upgradeRewards();
-		Game.get_instance().get_exchanger().exchange(ei, confirmedHards);
-//		Game.get_instance().get_player().get_resources().reduceMap();
-//		Game.get_instance().get_player().get_resources().increaseMap(get_upgradeRewards());
+		game.exchanger.exchange(ei, confirmedHards);
+//		game.player.resources.reduceMap();
+//		game.player.resources.increaseMap(get_upgradeRewards());
 		
 		level ++;
 		return true;
@@ -74,11 +78,11 @@ class AbstractBuilding
 	}
 	public function availabled():Bool 
 	{
-		return get_unlockArena() <= Game.get_instance().get_player().get_arena();
+		return get_unlockArena() <= game.player.get_arena();
 	}
 	public function unlocked():Bool 
 	{
-		return Game.get_instance().get_player().get_resources().exists(type);
+		return game.player.resources.exists(type);
 	}
 
 
@@ -89,7 +93,7 @@ class AbstractBuilding
 	}
 	public function toGem(count:Int = 1):Int
 	{
-		return Exchanger.softToHard( price(count) );
+		return game.exchanger.softToHard( price(count) );
 	}
 
 }

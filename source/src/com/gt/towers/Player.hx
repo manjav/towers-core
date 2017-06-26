@@ -1,8 +1,9 @@
 package com.gt.towers;
+import com.gt.towers.Game;
 import com.gt.towers.buildings.AbstractBuilding;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.utils.maps.Bundle;
+import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
 import com.gt.towers.utils.maps.IntExchangeMap;
 import com.gt.towers.utils.maps.IntIntMap;
@@ -14,45 +15,42 @@ import com.gt.towers.utils.maps.IntIntMap;
 
 class Player
 {
+	public var id:Int;
+	public var nickName:String = "no_nickName";
 	public var troopType:Int = -1;
-
-	public function new(initData:InitData)
+	public var resources:IntIntMap;
+	public var quests:IntIntMap;
+	public var buildings:IntBuildingMap;
+	
+	private var game:Game;
+	
+	public function new(game:Game, initData:InitData)
 	{
-		_id = initData.id;
-		_nickName = initData.nickName;
-		
+		this.game = game;
+		id = initData.id;
+		nickName = initData.nickName;
 		
 		// add player resources, quests data
-		_resources = initData.resources;// new Bundle();
-		_resources.set(ResourceType.CURRENCY_REAL, 2147483647);
-		_quests = initData.quests;// new IntIntMap();
+		resources = initData.resources;// new IntIntMap();
+		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
+		quests = initData.quests;// new IntIntMap();
 		
-		// add player buildings level
-		_buildingsLevel = new IntBuildingMap();
+		// add player buildings data
+		buildings = new IntBuildingMap();
 		var i:Int = 0;
 		var kies = initData.buildingsLevel.keys();
 		while (i < kies.length)
 		{
-			_buildingsLevel.set(kies[i], BuildingType.instantiate( kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
+			buildings.set(kies[i], BuildingType.instantiate( game, kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
 			i++;
 		}
-		
 	}
 
-	private var _id:Int;
-	public function get_id():Int { return _id; }
-
-	private var _nickName:String = "no_nickName";
-	public function get_nickName():String { return _nickName; }
-
-	private var _resources:Bundle;
-	public function get_resources():Bundle { return _resources; }
-	
-	public function get_xp():Int { return get_resources().get(ResourceType.XP); }
-	public function get_point():Int { return get_resources().get(ResourceType.POINT); }
-	public function get_softs():Int { return get_resources().get(ResourceType.CURRENCY_SOFT); }
-	public function get_hards():Int { return get_resources().get(ResourceType.CURRENCY_HARD); }
-	
+	public function get_questIndex():Int { return quests.keys().length; }
+	public function get_xp():Int { return resources.get(ResourceType.XP); }
+	public function get_point():Int { return resources.get(ResourceType.POINT); }
+	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
+	public function get_hards():Int { return resources.get(ResourceType.CURRENCY_HARD); }
 	public function get_level():Int
 	{
 		var xp:Int = get_xp();
@@ -88,11 +86,32 @@ class Player
 			return 3;
 	}
 	
-	private var _quests:IntIntMap;
-	public function get_quests():IntIntMap { return _quests; }
-	public function get_questIndex():Int { return _quests.keys().length; }
 	
-	private var _buildingsLevel:IntBuildingMap;
-	public function get_buildings():IntBuildingMap { return _buildingsLevel; }
-
+	public function has(IntIntMap:IntIntMap):Bool
+	{
+		var i:Int = 0;
+		var keis = IntIntMap.keys();
+		while (i < keis.length)
+		{
+			if ( IntIntMap.get(keis[i]) > resources.get(keis[i]) )
+				return false;
+			i++;
+		}
+		return true;
+	}
+	
+	public function deductions(IntIntMap:IntIntMap) : IntIntMap
+	{
+		var ret = new IntIntMap();
+		var keis = IntIntMap.keys();
+		var i = 0;
+		while ( i < keis.length )
+		{
+			var remain = IntIntMap.get(keis[i]) - resources.get(keis[i]);
+			if(remain > 0)
+				ret.set(keis[i], remain);
+			i ++;
+		}
+		return ret;
+	}
 }

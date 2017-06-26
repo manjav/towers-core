@@ -1,4 +1,5 @@
 package com.gt.towers.buildings;
+import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
@@ -25,9 +26,11 @@ class Place
 	public var building:Building;
 	
 	private var troopId:Int;
+	private var game:Game;
 
-	public function new(index:Int, x:Float, y:Float, botEnabled:Bool) 
+	public function new(game:Game, index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{
+		this.game = game;
 		this.index = index;
 		this.x = x;
 		this.y = y;
@@ -78,7 +81,7 @@ class Place
 		var population = building.get_population();
 		
 		building.dispose();
-		building = BuildingType.instantiate(type, this, index);
+		building = BuildingType.instantiate(game, type, this, index);
 		
 		if (building != null)
 			building.createEngine(troopType, population);

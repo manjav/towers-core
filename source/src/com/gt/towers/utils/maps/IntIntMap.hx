@@ -152,14 +152,13 @@ class IntIntMap
 	#end
 	
 	
-	public function reduceMap(bundle:Bundle):Void
+	public function reduceMap(bundle:IntIntMap):Void
 	{
 		var keys = bundle.keys();
 		var i:Int = 0;
-		
-		if (!bundle.enough())
+	/*	if (!bundle.enough())
 		{
-			var ret:Bundle = new Bundle();
+			var ret:IntIntMap = new IntIntMap();
 			var diff:Int = 0;
 			while (i < keys.length)
 			{
@@ -168,9 +167,9 @@ class IntIntMap
 					ret.set(keys[i], diff);
 				i++;
 			}
-			throw new GameError(0, "bundle not enough. you need more.", ret);
+			throw new GameError(0, "IntIntMap not enough. you need more.");
 			return;
-		}
+		}*/
 		
 		while (i < keys.length)
 		{
@@ -190,7 +189,7 @@ class IntIntMap
 	}
 	
 	
-	public function increaseMap(bundle:Bundle):Void
+	public function increaseMap(bundle:IntIntMap):Void
 	{
 		var keys = bundle.keys();
 		var i:Int = 0;

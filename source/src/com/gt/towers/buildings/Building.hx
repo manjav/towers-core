@@ -1,5 +1,6 @@
 package com.gt.towers.buildings;
 
+import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
@@ -20,8 +21,9 @@ class Building extends AbstractBuilding
 	var _population:Float;
 	var spawnIntervalId:Int;
 	
-	public function new(place:Place, index:Int, type:Int, level:Int = 0)
+	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
+		this.game = game;
 		this.place = place;
 		this.index = index;
 		
@@ -32,7 +34,7 @@ class Building extends AbstractBuilding
 			else
 				level = 1;
 		}
-		super( type, level );
+		super( game, type, level );
 	}
 
 	public function get_capacity():Int 
@@ -187,9 +189,9 @@ class Building extends AbstractBuilding
 	
 	public function getAbstract(type:Int):AbstractBuilding
 	{
-		if ( !Game.get_instance().get_player().get_buildings().exists(type) )
+		if ( !game.player.buildings.exists(type) )
 			return null;
-		return Game.get_instance().get_player().get_buildings().get(type);
+		return game.player.buildings.get(type);
 	}
 	public function equalsCategory(type:Int):Bool
 	{
