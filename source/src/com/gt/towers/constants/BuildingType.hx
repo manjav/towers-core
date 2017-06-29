@@ -25,16 +25,19 @@ class BuildingType
 	public static var B11_BARRACKS:Int = 11;
 	public static var B12_BARRACKS:Int = 12;
 	public static var B13_BARRACKS:Int = 13;
+	public static var B14_BARRACKS:Int = 14;
 	
 	public static var B20_RAPID:Int = 20;
 	public static var B21_RAPID:Int = 21;
 	public static var B22_RAPID:Int = 22;
 	public static var B23_RAPID:Int = 23;
+	public static var B24_RAPID:Int = 24;
 	
 	public static var B30_HEAVY:Int = 30;
 	public static var B31_HEAVY:Int = 31;
 	public static var B32_HEAVY:Int = 32;
 	public static var B33_HEAVY:Int = 33;
+	public static var B34_HEAVY:Int = 34;
 	
 	public static var B40_CRYSTAL:Int = 40;
 	public static var B41_CRYSTAL:Int = 41;
@@ -78,14 +81,17 @@ class BuildingType
 			_all.set( B11_BARRACKS, 0 );
 			_all.set( B12_BARRACKS, 0 );
 			_all.set( B13_BARRACKS, 0 );
+			_all.set( B14_BARRACKS, 0 );
 			
 			_all.set( B21_RAPID, 0 );
 			_all.set( B22_RAPID, 0 );
 			_all.set( B23_RAPID, 0 );
+			_all.set( B24_RAPID, 0 );
 			
 			_all.set( B31_HEAVY, 0 );
 			_all.set( B32_HEAVY, 0 );
 			_all.set( B33_HEAVY, 0 );
+			_all.set( B34_HEAVY, 0 );
 			
 			_all.set( B41_CRYSTAL, 0 );
 			_all.set( B42_CRYSTAL, 0 );
