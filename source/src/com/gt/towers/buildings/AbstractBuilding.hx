@@ -31,7 +31,7 @@ class AbstractBuilding
 	
 	public function get_upgradeCost():Int
 	{
-		return Math.floor( Math.pow( 10, level ) ) ;
+		return Math.floor( Math.pow( 2, level ) * 10 ) ;
 	}
 	public function get_upgradeCards():Int
 	{
