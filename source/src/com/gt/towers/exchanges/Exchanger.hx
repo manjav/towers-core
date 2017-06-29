@@ -78,7 +78,7 @@ class Exchanger
 			if ( remaining > 0 && needsHard > confirmedHards )
 				return false;
 			
-			item.outcomes = getChestOutcomes();
+			item.outcomes = getChestOutcomes(item.type);
 		}
 		
 		var playerResources = game.player.resources;
@@ -165,12 +165,14 @@ class Exchanger
 		return ret;
 	}
 	
-	public function getChestOutcomes() 
+	public function getChestOutcomes(type:Int) 
 	{
 		var ret = new IntIntMap();
 	#if java 
-			ret.set(game.player.resources.getRandomKey(), Math.floor(Math.random() * 3));
-			ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * 10));
+			ret.set(game.player.resources.getRandomKey(), Math.floor(Math.random() * 3)+1);
+			ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * 10) + 1);
+			if(type > ExchangeType.S_31_CHEST)
+				ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * 2)+1);
 	#end
 		return ret;
 	}
