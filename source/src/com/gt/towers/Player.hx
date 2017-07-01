@@ -37,6 +37,7 @@ class Player
 		
 		// add player buildings data
 		buildings = new IntBuildingMap();
+		
 		var i:Int = 0;
 		var kies = initData.buildingsLevel.keys();
 		while (i < kies.length)
@@ -46,7 +47,20 @@ class Player
 		}
 	}
 
-	public function get_questIndex():Int { return quests.keys().length; }
+	public function get_questIndex():Int 
+	{ 
+		var i:Int = 0;
+		var kies = quests.keys();
+		while (i < kies.length)
+		{
+			if (quests.get(kies[i]) == 0)
+				return i;
+				
+			i++;
+		}
+		return i-1;
+	}
+	
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
 	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
