@@ -58,7 +58,7 @@ class Player
 				
 			i++;
 		}
-		return i-1;
+		return i;
 	}
 	
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
