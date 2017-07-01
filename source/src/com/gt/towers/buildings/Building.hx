@@ -169,17 +169,27 @@ class Building extends AbstractBuilding
 	}
 	public function pushTroops(troop:Troop) : Bool
 	{
-		var ret = troopType == troop.type;
+		var ret = troopType == troop.type; // if ret true troop is mine
 		_population += ((ret ? 1 : -1) * troop.health);
 		if (_population < 0)
 		{
-			_population = 0;
-			troopType = troop.type;
-			if (type != BuildingType.B01_CAMP)
-				place.setBuilidng(BuildingType.B01_CAMP);
+			occupy(troop);
+		}
+		else if (_population == 0 && !place.enabled) 
+		{
+			occupy(troop);
 		}
 		return ret;
 	}
+	
+	function occupy(troop:Troop) 
+	{
+		_population = 0;
+		troopType = troop.type;
+		if (type != BuildingType.B01_CAMP)
+			place.setBuilidng(BuildingType.B01_CAMP);
+	}
+	
 	public function dispose() 
 	{
 		GTimer.clearInterval(spawnIntervalId);
