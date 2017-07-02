@@ -221,9 +221,9 @@ class FieldProvider
 
 		field = new FieldData(6, "quest_6", false, false, "80,130,160" );
 		// create places
-		field.places.push( new PlaceData( 0,	807.95,	559.8,	11,	1,	"1",	true,	-2	) );
-		field.places.push( new PlaceData( 1,	559.45,	943.2,	1,	-1,	"2,0,4",	true,	-2	) );
-		field.places.push( new PlaceData( 2,	391.05,	1274.9,	1,	-1,	"3,5,1",	true,	-2	) );
+		field.places.push( new PlaceData( 0,	807.95,	559.8,	1,	1,	"1",	true,	-2	) );
+		field.places.push( new PlaceData( 1,	559.45,	943.2,	1,	-1,	"0,2,4",	true,	-2	) );
+		field.places.push( new PlaceData( 2,	391.05,	1274.9,	1,	-1,	"1,3,5",	true,	-2	) );
 		field.places.push( new PlaceData( 3,	691,	1426.45,	1,	0,	"2",	true,	-2	) );
 		field.places.push( new PlaceData( 4,	299.55,	575.85,	1,	1,	"1",	true,	-2	) );
 		field.places.push( new PlaceData( 5,	255,	1531.65,	1,	0,	"2",	true,	-2	) );
@@ -277,11 +277,12 @@ class FieldProvider
 		fields.set( "quest_6" , field );
 		
 		
-		field = new FieldData(7, "quest_7", false, false, "30,55,70" );
+		
+				field = new FieldData(7, "quest_7", false, false, "70,110,140" );
 		// create places
-		field.places.push( new PlaceData( 0,	749.95,	698.9,	11,	1,	"1",	true,	-2	) );
-		field.places.push( new PlaceData( 1,	501.45,	1082.3,	1,	-1,	"2,0,4",	true,	-2	) );
-		field.places.push( new PlaceData( 2,	391.05,	1369.65,	1,	-1,	"3,1",	true,	-2	) );
+		field.places.push( new PlaceData( 0,	749.95,	698.9,	1,	1,	"1",	true,	-2	) );
+		field.places.push( new PlaceData( 1,	501.45,	1082.3,	1,	-1,	"0,2,4",	true,	-2	) );
+		field.places.push( new PlaceData( 2,	391.05,	1369.65,	1,	-1,	"1,3",	true,	-2	) );
 		field.places.push( new PlaceData( 3,	691,	1521.2,	12,	0,	"2",	true,	-2	) );
 		field.places.push( new PlaceData( 4,	241.55,	714.95,	1,	1,	"1",	true,	-2	) );
 		// create images
@@ -329,14 +330,15 @@ class FieldProvider
 		fields.set( "quest_7" , field );
 		
 		
-				field = new FieldData(8, "quest_8", false, false, "30,55,70" );
+		
+				field = new FieldData(8, "quest_8", false, false, "80,135,160" );
 		// create places
 		field.places.push( new PlaceData( 0,	848.55,	471.4,	1,	1,	"1",	true,	-2	) );
-		field.places.push( new PlaceData( 1,	600.05,	854.8,	1,	-1,	"2,0,4",	true,	-2	) );
-		field.places.push( new PlaceData( 2,	391.05,	1274.9,	1,	-1,	"3,5,1",	true,	-2	) );
-		field.places.push( new PlaceData( 3,	691,	1426.45,	11,	0,	"5,2",	true,	-2	) );
+		field.places.push( new PlaceData( 1,	600.05,	854.8,	1,	-1,	"0,2,4",	true,	-2	) );
+		field.places.push( new PlaceData( 2,	391.05,	1274.9,	1,	-1,	"1,3,5",	true,	-2	) );
+		field.places.push( new PlaceData( 3,	691,	1426.45,	11,	0,	"2,5",	true,	-2	) );
 		field.places.push( new PlaceData( 4,	340.15,	487.45,	1,	1,	"1",	true,	-2	) );
-		field.places.push( new PlaceData( 5,	255,	1570.1,	1,	0,	"3,2",	true,	-2	) );
+		field.places.push( new PlaceData( 5,	255,	1570.1,	1,	0,	"2,3",	true,	-2	) );
 		// create images
 		field.images.push( new ImageData( "background-0-l"	,	0,	0,	1.18948364257813,	0,	0,	1.18948364257813,	0.05,	0) );
 		field.images.push( new ImageData( "background-0-r"	,	701.7,	0,	1.1715087890625,	0,	0,	1.1715087890625,	2.95,	0) );
@@ -386,6 +388,40 @@ class FieldProvider
 		field.images.push( new ImageData( "road-h"	,	293.1,	1535.5,	0.934158325195313,	-0.3568115234375,	0.3568115234375,	0.934158325195313) );
 		field.images.push( new ImageData( "building-plot"	,	144,	1507.1,	1,	0,	0,	1) );
 		fields.set( "quest_8" , field );
+		
+		
+		
+		field = new FieldData(9, "quest_9", false, false, "80,135,160" );
+		// create places
+		field.places.push( new PlaceData( 0,	848.55,	471.4,	1,	1,	"1,4",	true,	-2	) );
+		field.places.push( new PlaceData( 1,	600.05,	854.8,	1,	1,	"2,0,4",	true,	-2	) );
+		field.places.push( new PlaceData( 2,	391.05,	1274.9,	1,	0,	"5,3,1",	true,	-2	) );
+		field.places.push( new PlaceData( 3,	691,	1426.45,	1,	0,	"5,2",	true,	-2	) );
+		field.places.push( new PlaceData( 4,	340.15,	487.45,	1,	1,	"0,1",	true,	-2	) );
+		field.places.push( new PlaceData( 5,	255,	1570.1,	1,	0,	"2,3",	true,	-2	) );
+		// create images
+		field.images.push( new ImageData( "background-0-l"	,	0,	0,	1.18948364257813,	0,	0,	1.18948364257813,	0.05,	0) );
+		field.images.push( new ImageData( "background-0-r"	,	701.7,	0,	1.1715087890625,	0,	0,	1.1715087890625,	2.95,	0) );
+		field.images.push( new ImageData( "foreground-0-l"	,	-1.3,	1547.45,	1.9007568359375,	0,	0,	1.9007568359375,	0,	0) );
+		field.images.push( new ImageData( "foreground-0-r"	,	573.05,	1656.6,	1.14199829101563,	0,	0,	1.14199829101563,	0,	0) );
+		field.images.push( new ImageData( "bush-0"	,	837.8,	836.25,	2.2449951171875,	0,	0,	2.2449951171875,	30,	18) );
+		field.images.push( new ImageData( "bush-7"	,	791.8,	315.15,	2.17710876464844,	0,	0,	2.17710876464844,	41.5,	19) );
+		field.images.push( new ImageData( "bush-4"	,	175.1,	1473.8,	3.05917358398438,	0,	0,	3.05917358398438,	35.55,	28) );
+		field.images.push( new ImageData( "chair-1"	,	324.75,	579.9,	2.67575073242188,	0,	0,	2.67575073242188,	45.05,	25.05) );
+		field.images.push( new ImageData( "rock-0"	,	529.6,	1152.1,	2.41012573242188,	0,	0,	2.41012573242188,	39.5,	17.5) );
+		field.images.push( new ImageData( "rock-3"	,	555.45,	1400.65,	1.71110534667969,	0,	0,	1.71110534667969,	27,	15) );
+		field.images.push( new ImageData( "rock-5"	,	224.4,	825.55,	2.204833984375,	0,	0,	2.204833984375,	55.5,	31) );
+		field.images.push( new ImageData( "road-v"	,	624.75,	702.05,	0.87652587890625,	0.481353759765625,	-0.481353759765625,	0.87652587890625) );
+		field.images.push( new ImageData( "road-v"	,	447.65,	1024.55,	0.87652587890625,	0.481353759765625,	-0.481353759765625,	0.87652587890625) );
+		field.images.push( new ImageData( "road-v"	,	740.25,	491.65,	0.87652587890625,	0.481353759765625,	-0.481353759765625,	0.87652587890625) );
+		field.images.push( new ImageData( "road-h"	,	380.8,	337.55,	0.92657470703125,	0.376083374023438,	-0.376083374023438,	0.92657470703125) );
+		field.images.push( new ImageData( "road-h"	,	335.25,	1343.9,	0.912872314453125,	0.408218383789063,	-0.408218383789063,	0.912872314453125) );
+		field.images.push( new ImageData( "building-plot"	,	284.25,	325.15,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "building-plot"	,	651.75,	470.15,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "building-plot"	,	195.75,	1307.1,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "building-plot"	,	562.95,	1458.65,	1,	0,	0,	1) );
+		fields.set( "quest_9" , field );
+		
 		
 		
 		field = new FieldData(0, "battle_0", false, false, "90,120,180" );
