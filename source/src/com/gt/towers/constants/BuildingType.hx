@@ -16,6 +16,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 
 class BuildingType
 {
+	public static var UPGRADE:Int = -2;
 	public static var NONE:Int = -1;
 	
 	public static var B00_CAMP:Int = 0;

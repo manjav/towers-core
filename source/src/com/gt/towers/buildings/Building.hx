@@ -62,9 +62,9 @@ class Building extends AbstractBuilding
 	public function get_options():IntList
 	{
 		var ret = new IntList();
-		if ( BuildingType.getAll().exists( type + 1 ) )
-			ret.push(type + 1);
 		ret.push( BuildingType.B01_CAMP );
+		if ( BuildingType.getAll().exists( type + 1 ) )
+			ret.push( BuildingType.UPGRADE );
 		return ret;
 	}
 	public function get_population():Int
