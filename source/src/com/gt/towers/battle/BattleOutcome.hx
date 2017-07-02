@@ -20,43 +20,40 @@ class BattleOutcome
 	public static var MAX_POINTS:Int = 30;
 	public static var MAX_CARDS:Int = 2;
 	
-	
 	public static function get_outcomes(player:Player, field:FieldData, score:Int):IntIntMap
 	{
 		var ret:IntIntMap = new IntIntMap();
 		
-		
-		
-		var rewardChance : Int = 0;
 		if ( field.isQuest )
 		{
-			if ( !player.quests.exists(field.index) || player.quests.get(field.index) < score )
-				rewardChance = score - player.quests.get(field.index);
-			
-			// calculate xp
-			ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (score > 0 ? score : -3) / 3 ), Int ) );
-			
-			// calculate money
-			ret.set(ResourceType.CURRENCY_SOFT, 10 * score);
+			var diffScore = score - player.quests.get(field.index);
+			var newRecord = diffScore > 0;
+			if ( newRecord )
+			{
+				// calculate xp
+				ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (score > 0 ? score : -3) / 3 ), Int ) );
+				
+				// calculate rewards
+				var unlockedBuildings = player.buildings.keys();
+				var i:Int = 0;
+				var numUnlocked = Math.min(unlockedBuildings.length, diffScore);
+				while ( i < numUnlocked )
+				{
+					//if ( Math.random() < 1/numUnlocked )
+					ret.set(unlockedBuildings[i], Math.ceil(Math.random() * MAX_CARDS));
+					i++;
+				}
+	
+				// calculate money
+				ret.set(ResourceType.CURRENCY_SOFT, 10 * diffScore);
+			}
 		}
 		else
 		{
-			rewardChance = score;
-			
+			// calculate money
+			ret.set(ResourceType.CURRENCY_SOFT, 4 * score);
 			// calculate point
 			ret.set(ResourceType.POINT, cast( Math.max(0, MAX_POINTS * (score > 0 ? score : -3) / 3 ), Int ) );
-		}
-		
-		
-		// calculate rewards
-		var unlockedBuildings = player.buildings.keys();
-		var i:Int = 0;
-		var numUnlocked = Math.min(unlockedBuildings.length, rewardChance);
-		while (i < numUnlocked)
-		{
-			//if ( Math.random() < 1/numUnlocked )
-				ret.set(unlockedBuildings[i], Math.ceil(Math.random() * MAX_CARDS));
-			i++;
 		}
 
 		return ret;
