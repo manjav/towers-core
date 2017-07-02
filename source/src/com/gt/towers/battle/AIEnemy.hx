@@ -18,7 +18,7 @@ class AIEnemy
 
 	public var actionType:String = "";
 	public var sources:IntList;
-	public var destination:Int;
+	public var target:Int;
 	public var destinations:IntIntMap;
 	
 	var battleField:BattleField;
@@ -92,7 +92,7 @@ class AIEnemy
 		}
 		
 		// get random target
-		destination = keys [ Math.floor( Math.random() * keys.length ) ];
+		target = keys [ Math.floor( Math.random() * keys.length ) ];
 		//destination = destinations[0];
 		
 		actionType = "fight";
@@ -103,7 +103,35 @@ class AIEnemy
 	{
 		if (seed == 0)
 			return fightToWeakestPlace();
+		else if (seed == 10)
+			return improveSelf();
 		return false;
+		
 	}
+	
+	private function improveSelf():Bool 
+	{
+		var troopType = 1;
+		var enemyPlaces = battleField.getAllTowers(troopType);
+		var enemyLen = enemyPlaces.size();
+		var maxPopulation = 0;
+		target = -1;
+		
+		if(enemyLen == 0)
+			return false;
+		
+		var p:Int = 0;
+		while( p < enemyLen )
+		{
+			if (maxPopulation < enemyPlaces.get(p).building.get_population() && enemyPlaces.get(p).enabled)
+			{
+				maxPopulation = enemyPlaces.get(p).building.get_population();
+				target = p;
+			}
+		}
+		actionType = "improve";
+		return true;
+	}
+	
 	
 }
