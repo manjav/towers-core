@@ -64,7 +64,7 @@ class Building extends AbstractBuilding
 		var ret = new IntList();
 		ret.push( BuildingType.B01_CAMP );
 		if ( BuildingType.getAll().exists( type + 1 ) )
-			ret.push( BuildingType.UPGRADE );
+			ret.push( BuildingType.IMPROVE );
 		return ret;
 	}
 	public function get_population():Int
@@ -77,7 +77,8 @@ class Building extends AbstractBuilding
 			return false;
 		if (type == BuildingType.B01_CAMP)
 			return true;
-		return (equalsCategory(type) || this.type == BuildingType.B01_CAMP) && getAbstract(type) != null &&  _population >= get_capacity() ;
+		//return (equalsCategory(type) || this.type == BuildingType.B01_CAMP) && getAbstract(type) != null &&  _population >= get_capacity() ;
+		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -126,13 +127,16 @@ class Building extends AbstractBuilding
 		if (type != BuildingType.B01_CAMP)
 			_population -= Math.round(get_capacity() / 2);
 		
+		if (type == BuildingType.IMPROVE)
+			type = this.type + 1;
+			
 		if( !equalsCategory(type) )
 		{
 			place.setBuilidng(type);
 			return true;
 		}
 		
-		type ++;
+		this.type ++;
 		improveLevel ++;
 		
 		GTimer.clearInterval(spawnIntervalId);
