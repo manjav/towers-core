@@ -128,6 +128,7 @@ class AIEnemy
 				maxPopulation = enemyPlaces.get(p).building.get_population();
 				target = p;
 			}
+			p ++;
 		}
 		actionType = "improve";
 		return true;
