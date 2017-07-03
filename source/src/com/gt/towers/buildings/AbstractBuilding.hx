@@ -82,10 +82,14 @@ class AbstractBuilding
 	}
 	public function unlocked(type:Int=-1):Bool 
 	{
+		if ( type == BuildingType.B01_CAMP )
+			return true;
+			
 		if ( type == BuildingType.NONE )
 			type = this.type;
 		else if ( type == BuildingType.IMPROVE )
 			type = this.type + 1;
+			
 		return game.player.resources.exists(type);
 	}
 
