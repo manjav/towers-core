@@ -71,12 +71,16 @@ class Building extends AbstractBuilding
 	{
 		return Math.round(_population);
 	}
+	
 	public function improvable(type:Int):Bool 
 	{
 		if (type == this.type)
 			return false;
 		if (type == BuildingType.B01_CAMP)
 			return true;
+		if ( !unlocked(type) )
+			return false;
+			
 		//return (equalsCategory(type) || this.type == BuildingType.B01_CAMP) && getAbstract(type) != null &&  _population >= get_capacity() ;
 		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
 	}

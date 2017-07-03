@@ -80,11 +80,14 @@ class AbstractBuilding
 	{
 		return get_unlockArena() <= game.player.get_arena();
 	}
-	public function unlocked():Bool 
+	public function unlocked(type:Int=-1):Bool 
 	{
+		if ( type == BuildingType.NONE )
+			type = this.type;
+		else if ( type == BuildingType.IMPROVE )
+			type = this.type + 1;
 		return game.player.resources.exists(type);
 	}
-
 
 	
 	public function price(count:Int = 1):Int
