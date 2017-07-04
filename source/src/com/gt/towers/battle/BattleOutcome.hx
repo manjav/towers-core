@@ -51,9 +51,10 @@ class BattleOutcome
 		else
 		{
 			// calculate money
-			ret.set(ResourceType.CURRENCY_SOFT, 4 * score);
+			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
+			
 			// calculate point
-			ret.set(ResourceType.POINT, cast( Math.max(0, MAX_POINTS * (score > 0 ? score : -3) / 3 ), Int ) );
+			ret.set(ResourceType.POINT, score * 10 );
 		}
 
 		return ret;
