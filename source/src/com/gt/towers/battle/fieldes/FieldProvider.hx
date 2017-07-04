@@ -746,5 +746,90 @@ class FieldProvider
 		field.images.push( new ImageData( "rock-4"	,	135.55,	375.4,	2.25,	0,	0,	2.25,	64.5,	23) );
 		field.images.push( new ImageData( "tree-0"	,	64.05,	1068.75,	1,	0,	0,	1) );
 		fields.set( "battle_1" , field );
+		
+		
+				field = new FieldData(2, "battle_2", false, false, "30,50,70" );
+		// create places
+		field.places.push( new PlaceData( 0,	397.45,	709.9,	1,	1,	"",	true,	0	) );
+		field.places.push( new PlaceData( 1,	761.65,	984.15,	1,	-1,	"",	true,	0	) );
+		field.places.push( new PlaceData( 2,	355.55,	1195.75,	1,	0,	"",	true,	0	) );
+		// create images
+		field.images.push( new ImageData( "road-v"	,	351.8,	725.15,	0.998199462890625,	0.0603485107421875,	-0.0603485107421875,	0.998199462890625) );
+		field.images.push( new ImageData( "road-v"	,	376.4,	761.95,	0.5513916015625,	-0.834274291992188,	0.834274291992188,	0.5513916015625) );
+		field.images.push( new ImageData( "road-v"	,	347.7,	831.5,	0.998199462890625,	0.0603485107421875,	-0.0603485107421875,	0.998199462890625) );
+		field.images.push( new ImageData( "background-0-l"	,	0,	0,	1.18948364257813,	0,	0,	1.18948364257813,	0.05,	0) );
+		field.images.push( new ImageData( "background-0-r"	,	701.7,	0,	1.1715087890625,	0,	0,	1.1715087890625,	2.95,	0) );
+		field.images.push( new ImageData( "foreground-0-l"	,	-1.3,	1547.45,	1.9007568359375,	0,	0,	1.9007568359375,	0,	0) );
+		field.images.push( new ImageData( "foreground-0-r"	,	573.05,	1656.6,	1.14199829101563,	0,	0,	1.14199829101563,	0,	0) );
+		field.images.push( new ImageData( "bush-0"	,	190.05,	352.2,	2.2449951171875,	0,	0,	2.2449951171875,	30,	18) );
+		field.images.push( new ImageData( "bush-7"	,	635.4,	575.3,	2.17710876464844,	0,	0,	2.17710876464844,	41.5,	19) );
+		field.images.push( new ImageData( "bush-4"	,	71.2,	1242.85,	3.05917358398438,	0,	0,	3.05917358398438,	35.55,	28) );
+		field.images.push( new ImageData( "rock-0"	,	598.25,	1596.05,	2.41012573242188,	0,	0,	2.41012573242188,	39.5,	17.5) );
+		field.images.push( new ImageData( "rock-3"	,	654.7,	1225.05,	1.71110534667969,	0,	0,	1.71110534667969,	-103.2,	-77.15) );
+		field.images.push( new ImageData( "building-plot"	,	281.7,	645.05,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "building-plot"	,	244.55,	1132.75,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "hole-1"	,	658.4,	249.45,	2.170166015625,	0,	0,	2.170166015625,	35.5,	28.5) );
+		field.images.push( new ImageData( "hole-2"	,	436.55,	899.85,	1.80490112304688,	0,	0,	1.80490112304688,	51,	34) );
+		field.images.push( new ImageData( "road-v"	,	408.6,	1224.05,	-0.446792602539063,	-0.894638061523438,	0.8946533203125,	-0.446792602539063) );
+		field.images.push( new ImageData( "building-plot"	,	650.65,	921.15,	1,	0,	0,	1) );
+		fields.set( "battle_2" , field );
+
+
+
+
+		field = new FieldData(2, "battle_2", false, false, "30,50,70" );
+		// create places
+		field.places.push( new PlaceData( 0,	397.45,	709.9,	1,	1,	"2,1",	true,	0	) );
+		field.places.push( new PlaceData( 1,	761.65,	984.15,	1,	-1,	"0,2",	true,	0	) );
+		field.places.push( new PlaceData( 2,	355.55,	1195.75,	1,	0,	"0,1",	true,	0	) );
+		// create images
+		field.images.push( new ImageData( "road-v"	,	351.8,	725.15,	0.998199462890625,	0.0603485107421875,	-0.0603485107421875,	0.998199462890625) );
+		field.images.push( new ImageData( "road-v"	,	376.4,	761.95,	0.5513916015625,	-0.834274291992188,	0.834274291992188,	0.5513916015625) );
+		field.images.push( new ImageData( "road-v"	,	347.7,	831.5,	0.998199462890625,	0.0603485107421875,	-0.0603485107421875,	0.998199462890625) );
+		field.images.push( new ImageData( "background-0-l"	,	0,	0,	1.18948364257813,	0,	0,	1.18948364257813,	0.05,	0) );
+		field.images.push( new ImageData( "background-0-r"	,	701.7,	0,	1.1715087890625,	0,	0,	1.1715087890625,	2.95,	0) );
+		field.images.push( new ImageData( "foreground-0-l"	,	-1.3,	1547.45,	1.9007568359375,	0,	0,	1.9007568359375,	0,	0) );
+		field.images.push( new ImageData( "foreground-0-r"	,	573.05,	1656.6,	1.14199829101563,	0,	0,	1.14199829101563,	0,	0) );
+		field.images.push( new ImageData( "bush-0"	,	190.05,	352.2,	2.2449951171875,	0,	0,	2.2449951171875,	30,	18) );
+		field.images.push( new ImageData( "bush-7"	,	635.4,	575.3,	2.17710876464844,	0,	0,	2.17710876464844,	41.5,	19) );
+		field.images.push( new ImageData( "bush-4"	,	71.2,	1242.85,	3.05917358398438,	0,	0,	3.05917358398438,	35.55,	28) );
+		field.images.push( new ImageData( "rock-0"	,	598.25,	1596.05,	2.41012573242188,	0,	0,	2.41012573242188,	39.5,	17.5) );
+		field.images.push( new ImageData( "rock-3"	,	654.7,	1225.05,	1.71110534667969,	0,	0,	1.71110534667969,	-103.2,	-77.15) );
+		field.images.push( new ImageData( "building-plot"	,	281.7,	645.05,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "building-plot"	,	244.55,	1132.75,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "hole-1"	,	658.4,	249.45,	2.170166015625,	0,	0,	2.170166015625,	35.5,	28.5) );
+		field.images.push( new ImageData( "hole-2"	,	436.55,	899.85,	1.80490112304688,	0,	0,	1.80490112304688,	51,	34) );
+		field.images.push( new ImageData( "road-v"	,	408.6,	1224.05,	-0.446792602539063,	-0.894638061523438,	0.8946533203125,	-0.446792602539063) );
+		field.images.push( new ImageData( "building-plot"	,	650.65,	921.15,	1,	0,	0,	1) );
+		fields.set( "battle_2" , field );
+
+
+
+
+		field = new FieldData(2, "battle_2", false, false, "30,50,70" );
+		// create places
+		field.places.push( new PlaceData( 0,	397.45,	709.9,	1,	1,	"2,1",	true,	0	) );
+		field.places.push( new PlaceData( 1,	761.65,	984.15,	1,	-1,	"0,2",	true,	0	) );
+		field.places.push( new PlaceData( 2,	355.55,	1195.75,	1,	0,	"0,1",	true,	0	) );
+		// create images
+		field.images.push( new ImageData( "road-v"	,	351.8,	725.15,	0.998199462890625,	0.0603485107421875,	-0.0603485107421875,	0.998199462890625) );
+		field.images.push( new ImageData( "road-v"	,	376.4,	761.95,	0.5513916015625,	-0.834274291992188,	0.834274291992188,	0.5513916015625) );
+		field.images.push( new ImageData( "road-v"	,	347.7,	831.5,	0.998199462890625,	0.0603485107421875,	-0.0603485107421875,	0.998199462890625) );
+		field.images.push( new ImageData( "background-0-l"	,	0,	0,	1.18948364257813,	0,	0,	1.18948364257813,	0.05,	0) );
+		field.images.push( new ImageData( "background-0-r"	,	701.7,	0,	1.1715087890625,	0,	0,	1.1715087890625,	2.95,	0) );
+		field.images.push( new ImageData( "foreground-0-l"	,	-1.3,	1547.45,	1.9007568359375,	0,	0,	1.9007568359375,	0,	0) );
+		field.images.push( new ImageData( "foreground-0-r"	,	573.05,	1656.6,	1.14199829101563,	0,	0,	1.14199829101563,	0,	0) );
+		field.images.push( new ImageData( "bush-0"	,	190.05,	352.2,	2.2449951171875,	0,	0,	2.2449951171875,	30,	18) );
+		field.images.push( new ImageData( "bush-7"	,	635.4,	575.3,	2.17710876464844,	0,	0,	2.17710876464844,	41.5,	19) );
+		field.images.push( new ImageData( "bush-4"	,	71.2,	1242.85,	3.05917358398438,	0,	0,	3.05917358398438,	35.55,	28) );
+		field.images.push( new ImageData( "rock-0"	,	598.25,	1596.05,	2.41012573242188,	0,	0,	2.41012573242188,	39.5,	17.5) );
+		field.images.push( new ImageData( "rock-3"	,	654.7,	1225.05,	1.71110534667969,	0,	0,	1.71110534667969,	-103.2,	-77.15) );
+		field.images.push( new ImageData( "building-plot"	,	281.7,	645.05,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "building-plot"	,	244.55,	1132.75,	1,	0,	0,	1) );
+		field.images.push( new ImageData( "hole-1"	,	658.4,	249.45,	2.170166015625,	0,	0,	2.170166015625,	35.5,	28.5) );
+		field.images.push( new ImageData( "hole-2"	,	436.55,	899.85,	1.80490112304688,	0,	0,	1.80490112304688,	51,	34) );
+		field.images.push( new ImageData( "road-v"	,	408.6,	1224.05,	-0.446792602539063,	-0.894638061523438,	0.8946533203125,	-0.446792602539063) );
+		field.images.push( new ImageData( "building-plot"	,	650.65,	921.15,	1,	0,	0,	1) );
+		fields.set( "battle_2" , field );
 	}
 }
