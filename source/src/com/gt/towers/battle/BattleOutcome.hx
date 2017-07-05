@@ -54,6 +54,9 @@ class BattleOutcome
 			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
 			
 			// calculate point
+			if ( score < 0 && player.resources.get(ResourceType.POINT) < -score * 10)
+				score = 0;
+
 			ret.set(ResourceType.POINT, score * 10 );
 		}
 
