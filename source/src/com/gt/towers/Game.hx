@@ -2,6 +2,7 @@ package com.gt.towers;
 import com.gt.towers.Player;
 import com.gt.towers.battle.fieldes.FieldProvider;
 import com.gt.towers.exchanges.Exchanger;
+import com.gt.towers.utils.Tracer;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -16,12 +17,15 @@ class Game
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
 	public var arenas:IntIntMap;
+	public var tracer:Tracer;
 
-	public function new(data:InitData)
+	public function new(data:InitData, tracer:Tracer )
 	{
 		player = new Player(this, data);
 		exchanger = new Exchanger(this, data);
 		fieldProvider = new FieldProvider();
+		
+		this.tracer = tracer;
 		
 		arenas = new IntIntMap();
 		arenas.set(0, 0);
