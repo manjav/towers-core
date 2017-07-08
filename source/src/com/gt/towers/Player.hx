@@ -19,6 +19,7 @@ class Player
 	public var nickName:String = "no_nickName";
 	public var troopType:Int = -1;
 	public var resources:IntIntMap;
+	public var arenas:IntIntMap;
 	public var quests:IntIntMap;
 	public var buildings:IntBuildingMap;
 	
@@ -90,14 +91,13 @@ class Player
 	
 	public function get_arena():Int
 	{
-		var point:Int = get_point();
-		
-		if (point < 100)
-			return 1;
-		else if (point < 1000)
-			return 2;
-		else
-			return 3;
+		var point = get_point();
+		var arena = 0;
+		while ( point >= game.arenas.get(arena) )
+		{
+			arena ++;
+		}
+		return arena - 1 ;
 	}
 	
 	
