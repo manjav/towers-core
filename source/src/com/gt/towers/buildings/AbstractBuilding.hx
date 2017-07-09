@@ -18,7 +18,7 @@ class AbstractBuilding
 	public var level:Int;
 	public var improveLevel:Int;
 	
-	private var game:Game;
+	public var game:Game;
 	
 	public function new(game:Game, type:Int, level:Int)
 	{

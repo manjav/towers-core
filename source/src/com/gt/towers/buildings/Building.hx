@@ -151,6 +151,7 @@ class Building extends AbstractBuilding
 	
 	private function calculatePopulation():Void
 	{
+		//var p = _population;
 		if (_population < get_capacity())
 		{
 			if (_population + 1 > get_capacity())
@@ -166,6 +167,11 @@ class Building extends AbstractBuilding
 			else
 				_population -= 1;
 		}
+		/*if ( p != _population)
+		{
+			p = _population;
+			game.tracer.log("[calculatePopulation] => index:" + index + ", population:" + _population + ", get_capacity():" + get_capacity());
+		}*/
 	}
 	
 	public function popTroop():Bool
@@ -178,7 +184,7 @@ class Building extends AbstractBuilding
 	public function pushTroops(troop:Troop) : Bool
 	{
 		var ret = troopType == troop.type; // if ret true troop is mine
-		_population += ((ret ? 1 : -1) * troop.health);
+		_population += ((ret ? 1 : -1));
 		if (_population < 0)
 		{
 			occupy(troop);
