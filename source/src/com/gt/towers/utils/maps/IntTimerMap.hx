@@ -13,7 +13,6 @@ class IntTimerMap
 	public function new()
 	{
 		_map = new java.util.HashMap<Int, Timer>();
-
 	}
 
 	/**
@@ -53,16 +52,6 @@ class IntTimerMap
 	}
 
 	/**
-		Removes the mapping of `key` and returns true if such a mapping existed,
-		false otherwise.
-		If `key` is null, the result is unspecified.
-	**/
-	public function remove(key:Int):Void
-	{
-		_map.remove(key);
-	}
-
-	/**
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
@@ -74,22 +63,6 @@ class IntTimerMap
 		while (i < keis.length)
 		{
 			ret[i] = cast(keis[i], Int);
-			i++;
-		}
-		return ret ;
-	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():NativeArray<Timer>
-	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Timer> = new NativeArray<Timer>(keis.length);
-		var i:Int = 0;
-		while (i < keis.length)
-		{
-			ret[i] = cast(get(keis[i]), Timer);
 			i++;
 		}
 		return ret ;

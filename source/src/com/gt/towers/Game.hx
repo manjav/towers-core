@@ -1,4 +1,5 @@
 package com.gt.towers;
+import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.battle.fieldes.FieldProvider;
 import com.gt.towers.exchanges.Exchanger;
@@ -17,15 +18,26 @@ class Game
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
 	public var arenas:IntIntMap;
-	public var tracer:Tracer;
 
-	public function new(data:InitData, tracer:Tracer )
+#if java
+	public var tracer:Tracer;
+	public function new( data:InitData, tracer:Tracer )
+	{
+		this.tracer = tracer;
+		init(data);
+	}
+#else
+	public function new( data:InitData )
+	{
+		init(data);
+	}
+#end
+	
+	function init(data:InitData) 
 	{
 		player = new Player(this, data);
 		exchanger = new Exchanger(this, data);
 		fieldProvider = new FieldProvider();
-		
-		this.tracer = tracer;
 		
 		arenas = new IntIntMap();
 		arenas.set(0, 0);
@@ -36,6 +48,6 @@ class Game
 		arenas.set(5, 1000);
 		arenas.set(6, 1500);
 		arenas.set(7, 2200);
-		arenas.set(8, 300);
+		arenas.set(8, 3000);
 	}
 }

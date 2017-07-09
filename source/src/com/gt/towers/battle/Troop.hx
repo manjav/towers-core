@@ -46,7 +46,7 @@ class Troop
 		
 		var distance:Float = Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
 		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.get_troopSpeed() * distance), [destination]);
-		building.game.tracer.log("troop-> rush id:" + id );
+		//building.game.tracer.log("troop-> rush id:" + id );
 	}
 	private function onTroopArrived(destination:Place):Void
 	{
@@ -55,7 +55,7 @@ class Troop
 		{
 			timeoutId = GTimer.setTimeout(destination.rush, building.get_exitGap(), [this]);
 		}
-		building.game.tracer.log("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
+		//building.game.tracer.log("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
 	}
 	public function kill():Void
 	{
