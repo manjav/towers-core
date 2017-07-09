@@ -5,7 +5,7 @@ package com.gt.towers.utils;
  * @author Mansour Djawadi
  */
 #if java
-	import com.gt.owers.utils.maps.IntTimerMap;
+	import com.gt.towers.utils.maps.IntTimerMap;
 	import haxe.Timer;
 #end
  

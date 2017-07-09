@@ -1,29 +1,19 @@
 package com.gt.towers.utils.maps;
-import haxe.Timer;
 
-#if java
-	import java.util.Map;
-	import java.NativeArray;
-#elseif flash
-	import flash.Vector;
-#end
+import haxe.Timer;
+import java.util.Map;
+import java.NativeArray;
+
 
 class IntTimerMap
 {
 
-	#if java
 	private var _map:java.util.HashMap<Int, Timer>;
-	#elseif flash
-	private var _map:Map<Int, Timer>;
-	#end
 
 	public function new()
 	{
-		#if java
 		_map = new java.util.HashMap<Int, Timer>();
-		#elseif flash
-		_map = new Map<Int, Timer>();
-		#end
+
 	}
 
 	/**
@@ -33,11 +23,7 @@ class IntTimerMap
 	**/
 	public function set(key:Int, value:Timer) : Void
 	{
-		#if java
 		_map.put(key, value);
-		#elseif flash
-		_map.set(key, value);
-		#end
 	}
 
 	/**
@@ -54,12 +40,7 @@ class IntTimerMap
 	**/
 	public function get(key:Int) :Timer
 	{
-		#if java
 		return _map.get(key);
-		#elseif flash
-		return _map.get(key);
-		#end
-		return null;
 	}
 	
 	/**
@@ -68,12 +49,7 @@ class IntTimerMap
 	**/
 	public function exists(key:Int):Bool
 	{
-		#if java
 		return _map.containsKey(key);
-		#elseif flash
-		return _map.exists(key);
-		#end
-		return false;
 	}
 
 	/**
@@ -83,14 +59,9 @@ class IntTimerMap
 	**/
 	public function remove(key:Int):Void
 	{
-		#if java
 		_map.remove(key);
-		#elseif flash
-		_map.remove(key);
-		#end
 	}
 
-	#if java
 	/**
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
@@ -123,31 +94,4 @@ class IntTimerMap
 		}
 		return ret ;
 	}
-	#end
-	
-	#if flash
-	/**
-		Returns an Iterator over the keys of `this` Map.
-		The order of keys is undefined.
-	**/
-	public function keys():Vector<Int>
-	{
-		var ret:Vector<Int> = new Vector<Int>();
-		for (key in _map.keys())
-			ret.push(key);
-		return ret ;
-	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():Vector<Timer>
-	{
-		var ret:Vector<Timer> = new Vector<Timer>();
-		for (value in _map)
-			ret.push(value);
-		return ret ;
-	}
-	#end
-	
 }
