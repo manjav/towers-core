@@ -62,7 +62,7 @@ class Player
 		return i;
 	}
 	
-	public function inTutorial():Bool { return get_questIndex() < 5; }
+	public function inTutorial():Bool { return get_questIndex() < 4; }
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
 	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
