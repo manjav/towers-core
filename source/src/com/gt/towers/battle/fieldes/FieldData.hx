@@ -61,7 +61,7 @@ class FieldData
 		while (i < places.size())
 		{
 			if ( places.get(i).tutorIndex < 0 && places.get(i).tutorIndex != -3)
-				return pla );
+				return places.get( i );
 				
 				i ++;
 		}
