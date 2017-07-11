@@ -16,7 +16,7 @@ class PlaceData
 	public var enabled:Bool;
 	public var tutorIndex:Int;
 	
-	public function new(index:Int, x:Float, y:Float, type:Int, troopType:Int, links:String, enabled:Bool = true, tutorIndex:Int = -2) 
+	public function new(index:Int, x:Float, y:Float, type:Int, troopType:Int, links:String, enabled:Bool = true, tutorIndex:Int = -5) 
 	{
 		this.index = index;
 		this.x = x;
