@@ -45,8 +45,12 @@ class FieldProvider
 		fields.set( "battle_201" , new Battle_201( 201, "battle_201", false, false, "30,80,160" ) );
 		fields.set( "battle_202" , new Battle_202( 202, "battle_202", false, false, "30,80,160" ) );
 		fields.set( "battle_203" , new Battle_203( 203, "battle_203", false, false, "50,100,180" ) );
-		fields.set( "battle_203" , new Battle_203( 203, "battle_203", false, false, "50,100,180" ) );
 		fields.set( "battle_301" , new Battle_301( 301, "battle_301", false, false, "80,100,180" ) );
+		fields.set( "battle_302" , new Battle_302( 302, "battle_302", false, false, "100,100,100" ) );
+		fields.set( "battle_303" , new Battle_303( 303, "battle_303", false, false, "80,100,180" ) );
+		fields.set( "battle_401" , new Battle_401( 401, "battle_401", false, false, "80,100,180" ) );
+		fields.set( "battle_402" , new Battle_402( 402, "battle_402", false, false, "80,100,180" ) );
+		fields.set( "battle_403" , new Battle_403( 403, "battle_403", false, false, "80,100,180" ) );
 		
 	}
 }
