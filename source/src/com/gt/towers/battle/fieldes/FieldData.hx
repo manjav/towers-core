@@ -60,7 +60,7 @@ class FieldData
 		var i = 0;
 		while (i < places.size())
 		{
-			if (places.get(i).tutorIndex == -1)
+			if (places.get(i).tutorIndex < 0 && places.get(i).tutorIndex != -3)
 				return places.get(i);
 				
 				i ++;

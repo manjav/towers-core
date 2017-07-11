@@ -1,4 +1,4 @@
-package com.gt.towers.battle.fieldes;
+package com.gt.towers.battle;
 import com.gt.towers.utils.maps.StringFieldMap;
 /**
  * ...

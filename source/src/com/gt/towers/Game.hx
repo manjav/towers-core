@@ -1,7 +1,7 @@
 package com.gt.towers;
 import com.gt.towers.InitData;
 import com.gt.towers.Player;
-import com.gt.towers.battle.fieldes.FieldProvider;
+import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.utils.Tracer;
 import com.gt.towers.utils.maps.IntIntMap;

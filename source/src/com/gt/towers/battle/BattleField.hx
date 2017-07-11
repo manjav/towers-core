@@ -2,7 +2,7 @@ package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.battle.fieldes.PlaceData;
 import com.gt.towers.battle.fieldes.FieldData;
-import com.gt.towers.battle.fieldes.FieldProvider;
+import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.TroopType;
