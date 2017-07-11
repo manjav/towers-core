@@ -13,6 +13,11 @@ class FieldProvider
 		fields = new StringFieldMap();
 		var field:FieldData = null;
 		
+		fields.set( "quest_0" , new Quest_0(0, "quest_0", false, false, "100,100,100" ) );
+
+		field = new Quest_0(0, "quest_0", false, false, "100,100,100" );
+		fields.set( "quest_0" , field );
+		
 		field = new Quest_0(0, "quest_0", false, false, "100,100,100" );
 		fields.set( "quest_0" , field );
 
