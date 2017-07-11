@@ -12,6 +12,7 @@ class FieldProvider
 	public function new() 
 	{
 		fields = new StringFieldMap();
+
 		
 		fields.set( "quest_0" , new Quest_0( 0, "quest_0", false, false, "100,100,100" ) );
 		fields.set( "quest_1" , new Quest_1( 1, "quest_1", false, false, "100,130,150" ) );
