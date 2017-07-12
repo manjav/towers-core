@@ -12,7 +12,6 @@ class FieldProvider
 	public function new() 
 	{
 		fields = new StringFieldMap();
-
 		
 		fields.set( "quest_0" , new Quest_0( 0, "quest_0", false, false, "100,100,100" ) );
 		fields.set( "quest_1" , new Quest_1( 1, "quest_1", false, false, "100,130,150" ) );
@@ -22,17 +21,16 @@ class FieldProvider
 		fields.set( "quest_5" , new Quest_5( 5, "quest_5", false, false, "50,70,100" ) );
 		fields.set( "quest_6" , new Quest_6( 6, "quest_6", false, false, "60,90,150" ) );
 		fields.set( "quest_7" , new Quest_7( 7, "quest_7", false, false, "60,90,150" ) );
-		fields.set( "quest_8" , new Quest_8( 8, "quest_8", false, false, "40,70,90" ) );
-		fields.set( "quest_9" , new Quest_9( 9, "quest_9", false, false, "70,120,160" ) );
-		fields.set( "quest_10" , new Quest_10( 10, "quest_10", false, false, "60,90,150" ) );
-		fields.set( "quest_11" , new Quest_11( 11, "quest_11", false, false, "60,90,150" ) );
-		fields.set( "quest_12" , new Quest_12( 12, "quest_12", false, false, "40,70,100" ) );
-		fields.set( "quest_13" , new Quest_13( 13, "quest_13", false, false, "60,90,150" ) );
-		fields.set( "quest_14" , new Quest_14( 14, "quest_14", false, false, "80,140,230" ) );
+		fields.set( "quest_8" , new Quest_8( 8, "quest_8", false, false, "40,70,90" ) );	
+		fields.set( "quest_9" , new Quest_9( 9, "quest_9", false, false, "40,70,90" ) );
+		fields.set( "quest_10" , new Quest_10( 10, "quest_10", false, false, "40,70,90" ) );
+		fields.set( "quest_11" , new Quest_11( 11, "quest_11", false, false, "40,70,90" ) );
+		fields.set( "quest_12" , new Quest_12( 12, "quest_12", false, false, "40,70,90" ) );
+		fields.set( "quest_13" , new Quest_13( 13, "quest_13", false, false, "40,70,90" ) );
+		fields.set( "quest_14" , new Quest_14( 14, "quest_14", false, false, "40,70,90" ) );
 		fields.set( "quest_15" , new Quest_15( 15, "quest_15", false, false, "60,100,150" ) );
 		fields.set( "quest_16" , new Quest_16( 16, "quest_16", false, false, "60,100,150" ) );
 		fields.set( "quest_17" , new Quest_17( 17, "quest_17", false, false, "60,100,150" ) );
-		
 		
 		
 		
@@ -51,6 +49,9 @@ class FieldProvider
 		fields.set( "battle_401" , new Battle_401( 401, "battle_401", false, false, "80,100,180" ) );
 		fields.set( "battle_402" , new Battle_402( 402, "battle_402", false, false, "80,100,180" ) );
 		fields.set( "battle_403" , new Battle_403( 403, "battle_403", false, false, "80,100,180" ) );
+		fields.set( "battle_501" , new Battle_501( 501, "battle_501", false, false, "80,100,180" ) );
+		fields.set( "battle_502" , new Battle_502( 502, "battle_502", false, false, "80,100,180" ) );
+		fields.set( "battle_503" , new Battle_503( 503, "battle_503", false, false, "80,100,180" ) );
 		
 	}
 }
