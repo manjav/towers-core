@@ -23,14 +23,18 @@ class FieldProvider
 		fields.set( "quest_7" , new Quest_7( 7, "quest_7", false, false, "60,90,150" ) );
 		fields.set( "quest_8" , new Quest_8( 8, "quest_8", false, false, "40,70,90" ) );	
 		fields.set( "quest_9" , new Quest_9( 9, "quest_9", false, false, "40,70,90" ) );
-		fields.set( "quest_10" , new Quest_10( 10, "quest_10", false, false, "40,70,90" ) );
-		fields.set( "quest_11" , new Quest_11( 11, "quest_11", false, false, "40,70,90" ) );
+		fields.set( "quest_10" , new Quest_10( 10, "quest_10", false, false, "50,80,100" ) );
+		fields.set( "quest_11" , new Quest_11( 11, "quest_11", false, false, "60,80,100" ) );
 		fields.set( "quest_12" , new Quest_12( 12, "quest_12", false, false, "40,70,90" ) );
 		fields.set( "quest_13" , new Quest_13( 13, "quest_13", false, false, "40,70,90" ) );
-		fields.set( "quest_14" , new Quest_14( 14, "quest_14", false, false, "40,70,90" ) );
-		fields.set( "quest_15" , new Quest_15( 15, "quest_15", false, false, "60,100,150" ) );
-		fields.set( "quest_16" , new Quest_16( 16, "quest_16", false, false, "60,100,150" ) );
-		fields.set( "quest_17" , new Quest_17( 17, "quest_17", false, false, "60,100,150" ) );
+		fields.set( "quest_14" , new Quest_14( 14, "quest_14", false, false, "50,80,105" ) );
+		fields.set( "quest_15" , new Quest_15( 15, "quest_15", false, false, "50,80,105" ) );
+		fields.set( "quest_16" , new Quest_16( 16, "quest_16", false, false, "50,80,105" ) );
+		fields.set( "quest_17" , new Quest_17( 17, "quest_17", false, false, "80,120,170" ) );
+		fields.set( "quest_18" , new Quest_18( 18, "quest_18", false, false, "100,150,220" ) );
+		fields.set( "quest_19" , new Quest_19( 19, "quest_19", false, false, "100,150,220" ) );
+		fields.set( "quest_20" , new Quest_20( 20, "quest_20", false, false, "100,150,220" ) );
+
 		
 		
 		

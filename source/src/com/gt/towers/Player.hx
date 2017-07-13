@@ -94,7 +94,7 @@ class Player
 	{
 		var point = get_point();
 		var arena = 0;
-		while ( point >= game.arenas.get(arena).m )
+		while ( point >= game.arenas.get(arena).min )
 		{
 			arena ++;
 		}
