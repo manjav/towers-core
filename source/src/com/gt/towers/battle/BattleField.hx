@@ -76,4 +76,17 @@ class BattleField
 		}
 		return ret;
 	}
+	
+	#if java
+	public function dispose():Void
+	{
+		var placesLen:Int = places.size();
+		var p:Int = 0;
+		while ( p < placesLen )
+		{
+			places.get(p).building.dispose();
+			p ++;
+		}
+	}
+	#end
 }

@@ -32,7 +32,7 @@ class GTimer
    
     public static function clearInterval(id:Int) :Void
     {
-		if ( !timers.exists(id) )
+		if ( timers==null || !timers.exists(id) || timers.get(id)==null )
 			return;
 			
         timers.get(id).stop();
@@ -58,7 +58,7 @@ class GTimer
 
     public static function clearTimeout(id:Int) : Void
     {
-		if ( !timers.exists( id ) )
+		if ( timers==null || !timers.exists(id) || timers.get(id)==null )
 			return;
 			
         timers.get(id).stop();
