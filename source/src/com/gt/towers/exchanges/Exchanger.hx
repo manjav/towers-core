@@ -96,22 +96,6 @@ class Exchanger
 		return true;
 	}
 	
-	public function getSpecialPrice( type:Int ) : Int
-	{
-		var ret = 0;
-		var exchange = items.get(type);
-		var outKeys = exchange.outcomes.keys();
-		var i = 0;
-		while ( i < outKeys.length)
-		{
-			var building = game.player.buildings.get(outKeys[i]);
-			ret += Math.floor(building.price(exchange.outcomes.get(outKeys[i])) * 0.3 * exchange.numExchanges );
-			i ++;
-		}
-		return ret;
-	}
-
-	
 	public function toHard(requirements:IntIntMap):Int
 	{
 		var reqKeys = requirements.keys();
