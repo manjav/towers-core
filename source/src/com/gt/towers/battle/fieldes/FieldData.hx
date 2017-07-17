@@ -11,6 +11,7 @@ class FieldData
 {
 	public var index:Int;
 	public var name:String;
+	public var hasStart:Bool;
 	public var hasIntro:Bool;
 	public var hasFinal:Bool;
 	public var places:PlaceDataList;
@@ -18,10 +19,11 @@ class FieldData
 	public var times:IntList;
 	public var isQuest:Bool;
 
-	public function new(index:Int, name:String, hasIntro:Bool = false, hasFinal:Bool = false, times:String = "") 
+	public function new(index:Int, name:String, hasStart:Bool = false, hasIntro:Bool = false, hasFinal:Bool = false, times:String = "") 
 	{
 		this.index = index;
 		this.name = name;
+		this.hasStart = hasStart;
 		this.hasIntro = hasIntro;
 		this.hasFinal = hasFinal;
 		this.isQuest = name.substr(0, 6) == "quest_";
