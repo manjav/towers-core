@@ -77,6 +77,7 @@ class Place
 	
 	public function setBuilidng(type:Int) 
 	{
+		enabled = true;
 		var troopType = building.troopType;
 		var population = building.get_population();
 		
