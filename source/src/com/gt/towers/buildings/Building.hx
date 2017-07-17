@@ -110,12 +110,12 @@ class Building extends AbstractBuilding
 		this.troopType = troopType;
 		
 		#if java
-		if (initialPopulation == -1)
+		if ( initialPopulation == -1 )
 			initialPopulation = get_capacity();
 		
 		_population = initialPopulation;
 
-		if(place.enabled)
+		if ( place.enabled )
 			spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
 		#end
 	}
@@ -200,7 +200,14 @@ class Building extends AbstractBuilding
 	{
 		_population = 0;
 		troopType = troop.type;
-		if (type != BuildingType.B01_CAMP)
+		
+		if ( !place.enabled )
+		{
+			place.enabled = true;
+			createEngine ( troopType, 0 );
+		}
+		
+		if ( type != BuildingType.B01_CAMP)
 			place.setBuilidng(BuildingType.B01_CAMP);
 	}
 	
