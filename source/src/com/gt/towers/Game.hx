@@ -52,4 +52,24 @@ class Game
 		arenas.set(7, new Arena(7, 2201,	3000,	"43,24"	));
 		arenas.set(8, new Arena(8, 3001,	100000,	"44,34"	));
 	}
+	
+	public function unlockedBuildingAt (type:Int) : Int
+	{
+		var arenaIndex = 0;
+		var arenaKeys = arenas.keys();
+		while ( arenaIndex < arenaKeys.length )
+		{
+			var cardIndex = 0;
+			var arena = arenas.get(arenaKeys[arenaIndex]);
+			while ( cardIndex <  arena.cards.size() )
+			{
+				if( arena.cards.get(cardIndex) == type )
+					return arenaIndex;
+				cardIndex ++;
+			}
+			arenaIndex ++;
+		}
+		
+		return 100;
+	}
 }

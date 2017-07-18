@@ -72,13 +72,13 @@ class AbstractBuilding
 		level ++;
 		return true;
 	}	
-	public function get_unlockArena():Int 
+	public function get_unlockAt():Int 
 	{
-		return 100;
+		return game.unlockedBuildingAt(type);
 	}
 	public function availabled():Bool 
 	{
-		return get_unlockArena() <= game.player.get_arena();
+		return get_unlockAt() <= game.player.get_arena();
 	}
 	public function unlocked(type:Int=-1):Bool 
 	{
