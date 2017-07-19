@@ -13,10 +13,10 @@ class FieldProvider
 	{
 		fields = new StringFieldMap();
 		
-		fields.set( "quest_0" , new Quest_0( 0, "quest_0", true, true, true, "100,100,100" ) );
-		fields.set( "quest_1" , new Quest_1( 1, "quest_1", false, false, false, "100,130,150" ) );
-		fields.set( "quest_2" , new Quest_2( 2, "quest_2", false, true, true, "100,100,100" ) );
-		fields.set( "quest_3" , new Quest_3( 3, "quest_3", false, true, true, "40,60,70" ) );
+		fields.set( "quest_0" , new Quest_0( 0, "quest_0", true , true, true, "100,100,100" ) );
+		fields.set( "quest_1" , new Quest_1( 1, "quest_1", true, true, true, "100,130,150" ) );
+		fields.set( "quest_2" , new Quest_2( 2, "quest_2", true, true, true, "100,100,100" ) );
+		fields.set( "quest_3" , new Quest_3( 3, "quest_3", true, true, true, "40,60,70" ) );
 		fields.set( "quest_4" , new Quest_4( 4, "quest_4", false, false, false, "30,55,70" ) );
 		fields.set( "quest_5" , new Quest_5( 5, "quest_5", false, false, false, "50,70,100" ) );
 		fields.set( "quest_6" , new Quest_6( 6, "quest_6", false, false, false, "60,90,150" ) );
