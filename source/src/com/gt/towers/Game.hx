@@ -53,7 +53,7 @@ class Game
 		arenas.set(8, new Arena(8, 3001,	100000,	"44,34"	));
 	}
 	
-	public function unlockedBuildingAt (type:Int) : Int
+	public function unlockedBuildingAt ( type:Int ) : Int
 	{
 		var arenaIndex = 0;
 		var arenaKeys = arenas.keys();

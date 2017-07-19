@@ -53,21 +53,20 @@ class AbstractBuilding
 	}
 	
 	
-	public function upgradable():Bool 
+	public function upgradable(confirmedHards:Int=0):Bool 
 	{
-		return game.player.has(get_upgradeRequirements());
+		return confirmedHards >= game.exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
-		if ( !upgradable() )
+		if ( !upgradable(confirmedHards) )
 			return false;
 			
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_upgradeRequirements();
 		ei.outcomes = get_upgradeRewards();
-		game.exchanger.exchange(ei, confirmedHards);
-//		game.player.resources.reduceMap();
-//		game.player.resources.increaseMap(get_upgradeRewards());
+		if ( !game.exchanger.exchange(ei, 0, confirmedHards) )
+			return false;
 		
 		level ++;
 		return true;
