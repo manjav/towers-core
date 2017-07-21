@@ -77,7 +77,7 @@ class AbstractBuilding
 	}
 	public function availabled():Bool 
 	{
-		return get_unlockAt() <= game.player.get_arena();
+		return get_unlockAt() <= game.player.get_arena(0);
 	}
 	public function unlocked(type:Int=-1):Bool 
 	{

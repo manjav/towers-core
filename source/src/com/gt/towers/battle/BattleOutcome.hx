@@ -20,13 +20,13 @@ class BattleOutcome
 	public static var MAX_POINTS:Int = 30;
 	public static var MAX_CARDS:Int = 2;
 	
-	public static function get_outcomes(player:Player, field:FieldData, score:Int):IntIntMap
+	public static function get_outcomes(game:Game, field:FieldData, score:Int):IntIntMap
 	{
 		var ret:IntIntMap = new IntIntMap();
 		
 		if ( field.isQuest )
 		{
-			var diffScore = score - player.quests.get(field.index);
+			var diffScore = score - game.player.quests.get(field.index);
 			var newRecord = diffScore > 0;
 			if ( newRecord )
 			{
@@ -34,7 +34,7 @@ class BattleOutcome
 				ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (score > 0 ? score : -3) / 3 ), Int ) );
 				
 				// calculate rewards
-				var unlockedBuildings = player.buildings.keys();
+				var unlockedBuildings = game.player.buildings.keys();
 				var i:Int = 0;
 				var numUnlocked = Math.min(unlockedBuildings.length, diffScore);
 				while ( i < numUnlocked )
@@ -50,16 +50,29 @@ class BattleOutcome
 		}
 		else
 		{
-			// calculate money
+			// money manipulation 
 			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
 			
-			// calculate point
-			if ( score < 0 && player.resources.get(ResourceType.POINT) < -score * 10)
-				score = 0;
+			// point manipulation
+			var point = score * 10;
+			if ( point < 0 && game.player.resources.get(ResourceType.POINT) < -point)
+				point = 0;
+			ret.set(ResourceType.POINT, point );
 
-			ret.set(ResourceType.POINT, score * 10 );
+			// unlocked cards manipulation 
+			var nextArena = game.player.get_arena( game.player.get_point() + point );
+			if ( nextArena > game.player.get_arena(0) )
+			{
+				var cards = game.arenas.get ( nextArena ).cards;
+				var c = 0;
+				while ( c < cards.size() )
+				{
+					if ( !game.player.buildings.exists( cards.get(c) ) )
+						ret.set( cards.get(c) , 1 );
+					c ++;
+				}
+			}
 		}
-
 		return ret;
 	}
 	#end

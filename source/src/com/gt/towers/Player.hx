@@ -90,9 +90,10 @@ class Player
 		}
 	}
 	
-	public function get_arena():Int
+	public function get_arena(point:Int):Int
 	{
-		var point = get_point();
+		if ( point == 0 )
+			point = get_point();
 		var arena = 0;
 		while ( point >= game.arenas.get(arena).min )
 		{
