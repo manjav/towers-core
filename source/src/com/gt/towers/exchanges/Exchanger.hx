@@ -49,10 +49,7 @@ class Exchanger
 		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 3500, ResourceType.CURRENCY_HARD, 1500 ) );
 		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 6000, ResourceType.CURRENCY_HARD, 2000 ) );
 		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 7000, ResourceType.CURRENCY_HARD, 4000 ) );
-		items.set( ExchangeType.S_4_HARD,  new ExchangeItem ( ExchangeType.S_4_HARD, ResourceType.CURRENCY_REAL, 3500, ResourceType.CURRENCY_HARD, 1500 ) );
-		items.set( ExchangeType.S_5_HARD,  new ExchangeItem ( ExchangeType.S_5_HARD, ResourceType.CURRENCY_REAL, 6000, ResourceType.CURRENCY_HARD, 2000 ) );
-		items.set( ExchangeType.S_6_HARD,  new ExchangeItem ( ExchangeType.S_6_HARD, ResourceType.CURRENCY_REAL, 7000, ResourceType.CURRENCY_HARD, 4000 ) );
-		
+	
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MONEY -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD,  75, ResourceType.CURRENCY_SOFT, 1500 ) );
 		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 150, ResourceType.CURRENCY_SOFT, 3750 ) );
