@@ -22,11 +22,17 @@ class ExchangeType
 	public static var S_1_HARD:Int = 1;
 	public static var S_2_HARD:Int = 2;
 	public static var S_3_HARD:Int = 3;
+	public static var S_4_HARD:Int = 4;
+	public static var S_5_HARD:Int = 5;
+	public static var S_6_HARD:Int = 5;
 	
 	static public var S_10_SOFT:Int = 10;
 	static public var S_11_SOFT:Int = 11;
 	static public var S_12_SOFT:Int = 12;
 	static public var S_13_SOFT:Int = 13;
+	static public var S_14_SOFT:Int = 14;
+	static public var S_15_SOFT:Int = 15;
+	static public var S_16_SOFT:Int = 16;
 	
 	static public var S_20_BUILDING:Int = 20;
 	static public var S_21_BUILDING:Int = 21;
@@ -35,6 +41,7 @@ class ExchangeType
 	static public var S_31_CHEST:Int = 31;
 	static public var S_32_CHEST:Int = 32;
 	static public var S_33_CHEST:Int = 33;
+	
 	
 	
 	public function new() {	}
