@@ -2,6 +2,7 @@ package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.Player;
 import com.gt.towers.battle.fieldes.FieldData;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.IntIntMap;
 
@@ -77,8 +78,17 @@ class BattleOutcome
 	}
 	#end
 	
-	public static function consume_outcomes(player:Player, outcomes:IntIntMap):Void
+	public static function consume_outcomes(game:Game, outcomes:IntIntMap):Void
 	{
-		player.resources.increaseMap(outcomes);
+		game.player.resources.increaseMap(outcomes);
+		
+		var outKeys = outcomes.keys();
+		var i = 0;
+		while ( i < outKeys.length )
+		{
+			if ( ResourceType.isBuilding(outKeys[i]) && !game.player.buildings.exists(outKeys[i]) )
+				game.player.buildings.set(outKeys[i], BuildingType.instantiate( game, outKeys[i], null, 0, 1 ) );
+			i ++;
+		}
 	}
 }
