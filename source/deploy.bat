@@ -47,8 +47,8 @@ endlocal
 haxe compile.hxml
 
 :: Move to usage address
-echo f | xcopy /f /y bin\java\Core.jar C:\Users\ManJav\SmartFoxServer_2X\SFS2X\extensions\__lib__\core.jar
+echo f | xcopy /f /y bin\java\Core.jar C:\Program Files (x86)\SmartFoxServer_2X\SFS2X\extensions\__lib__\core.jar
 echo f | xcopy /f /y bin\flash\Core.swf C:\xampp\htdocs\cores\core-%NEWNAME%.swf
-echo f | xcopy /f /y bin\flash\Core.swc D:\_PROJECTS\_FLEX\towers-projects\towers-client\flex-project\libs\core.swc
-
+echo f | xcopy /f /y bin\flash\Core.swc C:\_projects\towers-projects\towers-client\flex-project\libs\core.swc
+pause
 exit
