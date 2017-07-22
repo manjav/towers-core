@@ -1,6 +1,7 @@
 @echo off
 
 rmdir /s /q bin
+pause
 
 :: Get date with this template =>mouth day hours minutes seconds
 set DATE=%date:~-10,2%%date:~-7,2%%time:~-11,2%%time:~-8,2%%time:~-5,2%
@@ -41,13 +42,15 @@ echo %%A | findstr /C:%SEARCHTEXT% 1>nul
 )
 
 del %OUTTEXTFILE%
+
+
 endlocal
 
 :: Compile haxe classes to flash and java platforms
 haxe compile.hxml
 
 :: Move to usage address
-echo f | xcopy /f /y bin\java\Core.jar C:\Program Files (x86)\SmartFoxServer_2X\SFS2X\extensions\__lib__\core.jar
+echo f | xcopy /f /y bin\java\Core.jar C:\SmartFoxServer_2X\SFS2X\extensions\__lib__\core.jar
 echo f | xcopy /f /y bin\flash\Core.swf C:\xampp\htdocs\cores\core-%NEWNAME%.swf
 echo f | xcopy /f /y bin\flash\Core.swc C:\_projects\towers-projects\towers-client\flex-project\libs\core.swc
 pause
