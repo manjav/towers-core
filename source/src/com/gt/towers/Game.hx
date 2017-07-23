@@ -42,7 +42,7 @@ class Game
 		fieldProvider = new FieldProvider();
 		
 		arenas = new IntArenaMap();
-		//arenas.set(0, new Arena(0, 0,		20,		"21"    ));
+		arenas.set(0, new Arena(0, 0,		20,		""    ));
 		arenas.set(1, new Arena(1, 21,		60,		"21"	));
 		arenas.set(2, new Arena(2, 61,		135,	"31"	));
 		arenas.set(3, new Arena(3, 136,		240,	"12"	));
