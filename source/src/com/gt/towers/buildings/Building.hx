@@ -39,7 +39,8 @@ class Building extends AbstractBuilding
 
 	public function get_capacity():Int 
 	{
-		return 10 + Math.round( Math.log(improveLevel) * 14 );
+		//return 10 + Math.round( Math.log(improveLevel) * 14 );
+		return 10 + (5 * improveLevel);
 	}
 	public function get_exitGap():Int 
 	{

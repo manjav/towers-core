@@ -16,6 +16,10 @@ class Camp extends Building
 	public override function get_spawnGap():Int
 	{
 		return 2000;
+	}	
+	public override function get_capacity():Int
+	{
+		return 10;
 	}
 	public override function get_options():IntList
 	{
