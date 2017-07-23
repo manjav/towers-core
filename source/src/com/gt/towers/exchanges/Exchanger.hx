@@ -46,14 +46,14 @@ class Exchanger
 		}
 		
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 3500, ResourceType.CURRENCY_HARD, 1500 ) );
-		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 6000, ResourceType.CURRENCY_HARD, 2000 ) );
-		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 7000, ResourceType.CURRENCY_HARD, 4000 ) );
+		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 1500, ResourceType.CURRENCY_HARD, 10 ) );
+		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, 80 ) );
+		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 50000, ResourceType.CURRENCY_HARD, 450 ) );
 	
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MONEY -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD,  75, ResourceType.CURRENCY_SOFT, 1500 ) );
-		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 150, ResourceType.CURRENCY_SOFT, 3750 ) );
-		items.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 320, ResourceType.CURRENCY_SOFT, 12000 ) );
+		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD,  20, ResourceType.CURRENCY_SOFT, 500 ) );
+		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 90, ResourceType.CURRENCY_SOFT, 2000 ) );
+		items.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 500, ResourceType.CURRENCY_SOFT, 10000 ) );
 	}
 	
 	/**
@@ -124,7 +124,31 @@ class Exchanger
 	}
 	public function timeToHard(time:Int):Int
 	{
-		return Math.round( time * 0.05 ) ;
+		var remainigHour = Math.floor(time / 3600);
+		
+		if ( remainigHour >= 24 )
+			return 350 * Math.ceil(remainigHour / 24);
+		else if ( remainigHour >= 18 )
+			return 310;
+		else if ( remainigHour >= 15 )
+			return 280;
+		else if ( remainigHour >= 12 )
+			return 250;
+		else if ( remainigHour >= 8 )
+			return 250 - ( (12 - remainigHour) * 25 );
+		else if ( remainigHour >= 4 )
+			return 150 - ( ( 8 - remainigHour) * 20 );
+		else if ( remainigHour >= 1 )
+			return 70 - ( ( 4 - remainigHour) * 15 );
+		else
+			if ( (time / 60) > 45 )
+				return 15;
+			else if ( (time / 60) > 30 )
+				return 10;
+			else if ( (time / 60) > 15 )
+				return 6;
+			else
+				return 3;
 	}
 	
 	
