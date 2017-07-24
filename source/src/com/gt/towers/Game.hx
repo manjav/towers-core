@@ -42,15 +42,16 @@ class Game
 		fieldProvider = new FieldProvider();
 		
 		arenas = new IntArenaMap();
-		arenas.set(0, new Arena(0, 0,		20,		""    ));
-		arenas.set(1, new Arena(1, 21,		60,		"21"	));
-		arenas.set(2, new Arena(2, 61,		135,	"31"	));
-		arenas.set(3, new Arena(3, 136,		240,	"12"	));
-		arenas.set(4, new Arena(4, 240,		400,	"41,32" ));
-		arenas.set(5, new Arena(5, 401,		650,	"22,42"	));
-		arenas.set(6, new Arena(6, 651,		1100,	"13,23"	));
-		arenas.set(7, new Arena(7, 981,		1900,	"33,43"	));
-		arenas.set(8, new Arena(8, 1901,	20000,	"24,14"	));
+		arenas.set(0, new Arena(0, 0,		50,		"11"    ));
+		arenas.set(1, new Arena(1, 51,		100,	"21"	));
+		arenas.set(2, new Arena(2, 101,		170,	"31"	));
+		arenas.set(3, new Arena(3, 171,		240,	"12"	));
+		arenas.set(4, new Arena(4, 241,		310,	"41,22" ));
+		arenas.set(5, new Arena(5, 311,		500,	"13,32"	));
+		arenas.set(6, new Arena(6, 501,		700,	"42,23"	));
+		arenas.set(7, new Arena(7, 701,		1000,	"14,33"	));
+		arenas.set(8, new Arena(8, 1001,	1400,	"24,43"	));
+		arenas.set(9, new Arena(8, 1401,	2000,	"34,44"	));
 	}
 	
 	public function unlockedBuildingAt ( type:Int ) : Int
