@@ -180,10 +180,10 @@ class IntIntMap
 	private function reduce(key:Int, value:Int):Void
 	{
 		if (!exists(key))
-			throw new GameError(1, key + " not found.");
+			throw new GameError(1, key + " not found.", key);
 
 		if (key != ResourceType.CURRENCY_REAL && key != ResourceType.POINT && get(key) < value)
-			throw new GameError(0, key + " not enough. you need " + (value-get(key)) +" more.");
+			throw new GameError(0, key + " not enough. you need " + (value-get(key)) +" more.", key);
 
 		set(key, get(key) - value);
 	}

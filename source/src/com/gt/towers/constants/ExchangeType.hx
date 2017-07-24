@@ -60,5 +60,12 @@ class ExchangeType
 			return 86400;
 		else
 			return 0;
+	}	
+	
+	public static function getMaxExchanges(type:Int):Int
+	{
+		if (type == S_21_BUILDING)
+			return 50;
+		return 0;
 	}
 }

@@ -70,6 +70,9 @@ class Exchanger
 		
 		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_BUILDING )
 		{
+			if ( item.numExchanges > ExchangeType.getMaxExchanges(item.type) )
+				return false;
+				
 			item.requirements = getSpecialRequierments(item);
 		}
 		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_30_CHEST )
@@ -160,9 +163,9 @@ class Exchanger
 		var outKeys = item.outcomes.keys();
 		var i = 0;
 		var softs = 0;
-		while ( i < outKeys.length)
+		while ( i < outKeys.length )
 		{
-			if (game.player.buildings.exists(outKeys[i]) )
+			if ( game.player.buildings.exists(outKeys[i]) )
 			{
 				var count = Math.round(game.player.buildings.get(outKeys[i]).price() * 0.5);
 				var ratio = Std.int(Math.pow(2, cast(item.numExchanges, Float)));
@@ -170,7 +173,7 @@ class Exchanger
 			}
 			i++;
 		}
-		ret.set( ResourceType.CURRENCY_SOFT, softs);
+		ret.set( ResourceType.CURRENCY_SOFT, softs );
 		return ret;
 	}
 	
