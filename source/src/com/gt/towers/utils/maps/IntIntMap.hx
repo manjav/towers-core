@@ -7,9 +7,15 @@ import com.gt.towers.utils.GameError;
 	import java.NativeArray;
 #elseif flash
 	import flash.Vector;
+	import flash.events.EventDispatcher;
+	import com.gt.towers.events.ResouceEvent;
 #end
 
+#if java
 class IntIntMap
+#elseif flash
+class IntIntMap extends EventDispatcher
+#end
 {
 
 	#if java
@@ -23,6 +29,7 @@ class IntIntMap
 		#if java
 		_map = new java.util.HashMap<Int, Int>();
 		#elseif flash
+		super();
 		_map = new Map<Int, Int>();
 		#end
 	}
@@ -34,11 +41,13 @@ class IntIntMap
 	**/
 	public function set(key:Int, value:Int) : Void
 	{
+		var from = exists(key) ? get(key) : 0;
 		#if java
 		_map.put(key, value);
 		#elseif flash
 		_map.set(key, value);
 		#end
+		dispatchChangeEvent(key, from, get(key));
 	}
 
 	/**
@@ -185,7 +194,9 @@ class IntIntMap
 		if (key != ResourceType.CURRENCY_REAL && key != ResourceType.POINT && get(key) < value)
 			throw new GameError(0, key + " not enough. you need " + (value-get(key)) +" more.", key);
 
+		var from = get(key);
 		set(key, get(key) - value);
+		dispatchChangeEvent(key, from, get(key));
 	}
 	
 	
@@ -203,11 +214,17 @@ class IntIntMap
 	{
 		//if (!exists(key))
 		//	throw new GameError(1, "key " + key + " not found.");
-			
+		var from = 0;
 		if (exists(key))
+		{
+			from = get(key);
 			set(key, get(key) + value);
+		}
 		else
+		{
 			set(key, value);
+		}
+		dispatchChangeEvent(key, from, get(key));
 	}
 
 	public function getRandomKey():Int
@@ -217,5 +234,14 @@ class IntIntMap
 		if ( t >= 1000 )
 			return getRandomKey();
 		return t;
+	}
+	
+		
+	private function dispatchChangeEvent (key:Int, from:Int, to:Int) :Void
+	{
+		#if flash
+		//if( hasEventListener ( key+"" ) )
+			dispatchEvent(new ResouceEvent(key, from, to) );
+		#end
 	}
 }
