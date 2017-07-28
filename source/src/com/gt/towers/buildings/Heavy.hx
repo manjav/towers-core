@@ -20,7 +20,7 @@ class Heavy extends Building
 	}
 	public override function get_troopPower():Float
 	{
-		return 1.2 + (Math.log(improveLevel) + Math.log(level)) * 0.5;
+		return 1.2 + ( Math.log(level)*Math.log(level) + 3*(Math.log(improveLevel)) ) * 0.5;
 	}
 	public override function get_spawnGap():Int
 	{

@@ -16,9 +16,6 @@ class Barracks extends Building
 	
 	public override function get_spawnGap():Int
 	{
-		return 1650 - Math.round( ( Math.log(level) + Math.log(improveLevel) )* 300 );
-	}
-	
-
-	
+		return 2000 - Math.round( ( Math.log(level)*Math.log(level) + 3*(Math.log(improveLevel)) )* 200 );
+	}	
 }

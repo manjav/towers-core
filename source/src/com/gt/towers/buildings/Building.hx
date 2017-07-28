@@ -48,7 +48,7 @@ class Building extends AbstractBuilding
 	}
 	public function get_troopSpeed():Int
 	{
-		return 2500;
+		return 3000;
 	}
 	public function get_troopPower():Float
 	{
