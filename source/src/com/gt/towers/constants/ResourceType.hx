@@ -21,4 +21,15 @@ class ResourceType
 	{
 		return type < 1000; 
 	}
+	
+	static public function getName(type:Int) : String
+	{
+		if ( type == XP ) return "XP";
+		else if ( type == POINT ) return "POINT";
+		else if ( type == CURRENCY_SOFT ) return "CURRENCY_SOFT";
+		else if ( type == CURRENCY_HARD ) return "CURRENCY_HARD";
+		else if ( type == CURRENCY_REAL ) return "CURRENCY_REAL";
+		else return "TYPE_" + type;
+	}
+	
 }

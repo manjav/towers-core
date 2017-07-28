@@ -8,7 +8,7 @@ import com.gt.towers.utils.GameError;
 #elseif flash
 	import flash.Vector;
 	import flash.events.EventDispatcher;
-	import com.gt.towers.events.ResouceEvent;
+	import com.gt.towers.events.CoreEvent;
 #end
 
 #if java
@@ -194,9 +194,7 @@ class IntIntMap extends EventDispatcher
 		if (key != ResourceType.CURRENCY_REAL && key != ResourceType.POINT && get(key) < value)
 			throw new GameError(0, key + " not enough. you need " + (value-get(key)) +" more.", key);
 
-		var from = get(key);
 		set(key, get(key) - value);
-		dispatchChangeEvent(key, from, get(key));
 	}
 	
 	
@@ -214,17 +212,10 @@ class IntIntMap extends EventDispatcher
 	{
 		//if (!exists(key))
 		//	throw new GameError(1, "key " + key + " not found.");
-		var from = 0;
 		if (exists(key))
-		{
-			from = get(key);
 			set(key, get(key) + value);
-		}
 		else
-		{
 			set(key, value);
-		}
-		dispatchChangeEvent(key, from, get(key));
 	}
 
 	public function getRandomKey():Int
@@ -240,8 +231,9 @@ class IntIntMap extends EventDispatcher
 	private function dispatchChangeEvent (key:Int, from:Int, to:Int) :Void
 	{
 		#if flash
-		//if( hasEventListener ( key+"" ) )
-			dispatchEvent(new ResouceEvent(key, from, to) );
+		//if( hasEventListener ( CoreEvent.CHANGE ) )
+		if( from != to )
+			dispatchEvent(new CoreEvent(CoreEvent.CHANGE, key, from, to) );
 		#end
 	}
 }
