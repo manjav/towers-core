@@ -41,7 +41,7 @@ class FieldProvider
 		
 		
 		fields.set( "battle_1" , new Battle_1( 1, "battle_1", false, false, false, "80,120,200" ) );
-		//fields.set( "battle_2" , new Battle_2( 2, "battle_2", false, false, false, "80,120,200" ) );
+		fields.set( "battle_2" , new Battle_2( 2, "battle_2", false, false, false, "80,120,200" ) );
 		fields.set( "battle_101" , new Battle_101( 101, "battle_101", false, false, false, "80,120,200" ) );
 		fields.set( "battle_102" , new Battle_102( 102, "battle_102", false, false, false, "80,100,200" ) );
 		fields.set( "battle_103" , new Battle_103( 103, "battle_103", false, false, false, "80,100,200" ) );
