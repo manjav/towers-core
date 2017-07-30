@@ -63,6 +63,9 @@ class Exchanger
 	 */
 	public function exchange (item:ExchangeItem, time:Int, confirmedHards:Int=0):Bool
 	{
+		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_30_CHEST )
+			item.requirements = getChestRequierement(item.expiredAt - time);
+		
 		var deductions = game.player.deductions(item.requirements);
 		var needsHard = toHard(deductions);
 		if ( !game.player.has(item.requirements) && needsHard > confirmedHards  )
@@ -77,11 +80,6 @@ class Exchanger
 		}
 		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_30_CHEST )
 		{
-			var remaining = item.expiredAt - time;
-			needsHard += timeToHard(remaining);
-			if ( remaining > 0 && needsHard > confirmedHards )
-				return false;
-			
 			item.outcomes = getChestOutcomes(item.type);
 		}
 		
@@ -103,12 +101,15 @@ class Exchanger
 	public function toHard(requirements:IntIntMap):Int
 	{
 		var reqKeys = requirements.keys();
+		var keys = 0;
 		var softs = 0;
 		var hards = 0;
 		var i = 0;
 		while ( i < reqKeys.length )
 		{
-			if (reqKeys[i] == ResourceType.CURRENCY_HARD )
+			if (reqKeys[i] == ResourceType.KEY )
+				keys += requirements.get(reqKeys[i]);
+			else if (reqKeys[i] == ResourceType.CURRENCY_HARD )
 				hards += requirements.get(reqKeys[i]);
 			else if (reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += requirements.get(reqKeys[i]);
@@ -118,7 +119,7 @@ class Exchanger
 			}
 			i ++;
 		}
-		return softToHard(softs) + hards ;
+		return keyToHard(keys) + softToHard(softs) + hards ;
 	}
 	
 	public function softToHard(price:Int):Int
@@ -153,9 +154,21 @@ class Exchanger
 			else
 				return 3;
 	}
+	public function timeToKey(time:Int):Int
+	{
+		return Math.floor(timeToHard(time) / 10);
+	}
+	public function keyToHard(count:Int):Int
+	{
+		return Math.round( count * 0.2 ) ;
+	}	
 	
-	
-	
+	public function getChestRequierement(time:Int) 
+	{
+		var ret = new IntIntMap();
+		ret.set(ResourceType.KEY, timeToKey(time) );
+		return ret;
+	}
 	public function getSpecialRequierments(item:ExchangeItem):IntIntMap
 	{
 		var ret = new IntIntMap();
@@ -181,10 +194,32 @@ class Exchanger
 	{
 		var ret = new IntIntMap();
 	#if java 
-			ret.set(game.player.resources.getRandomKey(), Math.floor(Math.random() * 3)+1);
 			ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * 10) + 1);
 			if(type > ExchangeType.S_31_CHEST)
-				ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * 2)+1);
+				ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * 2) + 1);
+				
+			// random cards
+			ret.set(game.player.resources.getRandomKey(), Math.floor(Math.random() * 3)+1);
+			
+			// try to find new card
+			if (type > ExchangeType.S_33_CHEST)
+			{
+				var a = 0;
+				var allCards = new IntList();
+				var arena = game.player.get_arena(0);
+				while ( a < arena )
+				{
+					var cards = game.arenas.get ( a ).cards;
+					var c = 0;
+					while ( c < cards.size() )
+					{
+						allCards.push( cards.get(c) );
+						c ++;
+					}
+					a ++;
+				}
+				ret.set(allCards.get(Math.floor(Math.random() * allCards.size())), 1);
+			}
 	#end
 		return ret;
 	}

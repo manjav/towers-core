@@ -35,7 +35,7 @@ class BattleOutcome
 				ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (score > 0 ? score : -3) / 3 ), Int ) );
 				
 				// calculate rewards
-				var unlockedBuildings = game.player.buildings.keys();
+				/*var unlockedBuildings = game.player.buildings.keys();
 				var i:Int = 0;
 				var numUnlocked = Math.min(unlockedBuildings.length, diffScore);
 				while ( i < numUnlocked )
@@ -43,7 +43,8 @@ class BattleOutcome
 					//if ( Math.random() < 1/numUnlocked )
 					ret.set(unlockedBuildings[i], Math.ceil(Math.random() * MAX_CARDS));
 					i++;
-				}
+				}*/
+				ret.set(ResourceType.KEY, diffScore);
 	
 				// calculate money
 				ret.set(ResourceType.CURRENCY_SOFT, 10 * diffScore);
@@ -54,6 +55,9 @@ class BattleOutcome
 			// money manipulation 
 			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
 			
+			// key manipulation 
+			ret.set(ResourceType.KEY, score);
+		
 			// point manipulation
 			var point = score * 10;
 			if ( point < 0 && game.player.resources.get(ResourceType.POINT) < -point)
@@ -61,7 +65,7 @@ class BattleOutcome
 			ret.set(ResourceType.POINT, point );
 
 			// unlocked cards manipulation 
-			var nextArena = game.player.get_arena( game.player.get_point() + point );
+			/*var nextArena = game.player.get_arena( game.player.get_point() + point );
 			if ( nextArena > game.player.get_arena(0) )
 			{
 				var cards = game.arenas.get ( nextArena ).cards;
@@ -72,7 +76,7 @@ class BattleOutcome
 						ret.set( cards.get(c) , 1 );
 					c ++;
 				}
-			}
+			}*/
 		}
 		return ret;
 	}
