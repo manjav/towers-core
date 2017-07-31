@@ -160,7 +160,12 @@ class Exchanger
 	}
 	public function keyToHard(count:Int):Int
 	{
-		return Math.round( count * 10 ) ;
+		if( count < 5 )
+			return Math.round( count * 10 ) ;
+		else if ( count < 10 )
+			return Math.round( count * 9 ) ;
+		else
+			return Math.round( count * 8 ) ;
 	}	
 	
 	public function getChestRequierement(time:Int) 
