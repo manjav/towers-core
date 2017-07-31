@@ -88,7 +88,7 @@ class Exchanger
 		playerResources.increaseMap(deductions);
 		
 		playerResources.reduceMap(item.requirements);
-		playerResources.increaseMap(item.outcomes);
+		game.player.addResources(item.outcomes);
 		
 		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_BUILDING )
 			item.numExchanges ++;
@@ -160,7 +160,7 @@ class Exchanger
 	}
 	public function keyToHard(count:Int):Int
 	{
-		return Math.round( count * 0.2 ) ;
+		return Math.round( count * 10 ) ;
 	}	
 	
 	public function getChestRequierement(time:Int) 
@@ -190,7 +190,7 @@ class Exchanger
 		return ret;
 	}
 	
-	public function getChestOutcomes(type:Int) 
+	public function getChestOutcomes(type:Int) : IntIntMap
 	{
 		var ret = new IntIntMap();
 	#if java 
@@ -199,11 +199,15 @@ class Exchanger
 				ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * 2) + 1);
 				
 			// random cards
-			ret.set(game.player.resources.getRandomKey(), Math.floor(Math.random() * 3)+1);
+			addRandomCard(ret);
 			
 			// try to find new card
-			if (type > ExchangeType.S_33_CHEST)
+			if (type == ExchangeType.S_33_CHEST)
 			{
+				addRandomCard(ret);
+				addRandomCard(ret);
+
+				
 				var a = 0;
 				var allCards = new IntList();
 				var arena = game.player.get_arena(0);
@@ -218,9 +222,20 @@ class Exchanger
 					}
 					a ++;
 				}
-				ret.set(allCards.get(Math.floor(Math.random() * allCards.size())), 1);
+				ret.set( allCards.get(Math.floor(Math.random() * allCards.size())), Math.round(arena / 2) + 1 );
 			}
 	#end
 		return ret;
+	}
+	
+	function addRandomCard(ret:IntIntMap) : Void
+	{
+		var random = game.player.resources.getRandomKey();
+		if ( ret.exists(random) )
+		{
+			addRandomCard(ret);
+			return;
+		}
+		ret.set(random, Math.floor(Math.random() * 3)+1);
 	}
 }

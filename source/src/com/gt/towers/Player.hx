@@ -132,4 +132,17 @@ class Player
 		}
 		return ret;
 	}
+	
+	public function addResources(bundle:IntIntMap) : Void
+	{
+		resources.increaseMap ( bundle );
+		var bundleKeys = bundle.keys();
+		var i = 0;
+		while ( i < bundleKeys.length )
+		{
+			if ( ResourceType.isBuilding(bundleKeys[i]) && !game.player.buildings.exists(bundleKeys[i]) )
+				game.player.buildings.set(bundleKeys[i], BuildingType.instantiate( game, bundleKeys[i], null, 0, 1 ) );
+			i ++;
+		}
+	}
 }

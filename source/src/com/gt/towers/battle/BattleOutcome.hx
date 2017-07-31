@@ -81,18 +81,4 @@ class BattleOutcome
 		return ret;
 	}
 	#end
-	
-	public static function consume_outcomes(game:Game, outcomes:IntIntMap):Void
-	{
-		game.player.resources.increaseMap(outcomes);
-		
-		var outKeys = outcomes.keys();
-		var i = 0;
-		while ( i < outKeys.length )
-		{
-			if ( ResourceType.isBuilding(outKeys[i]) && !game.player.buildings.exists(outKeys[i]) )
-				game.player.buildings.set(outKeys[i], BuildingType.instantiate( game, outKeys[i], null, 0, 1 ) );
-			i ++;
-		}
-	}
 }
