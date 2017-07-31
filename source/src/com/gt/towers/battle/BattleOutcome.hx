@@ -29,6 +29,8 @@ class BattleOutcome
 		{
 			var diffScore = score - game.player.quests.get(field.index);
 			var newRecord = diffScore > 0;
+			if (game.player.inTutorial)
+				return ret;
 			if ( newRecord )
 			{
 				// calculate xp
@@ -56,7 +58,7 @@ class BattleOutcome
 			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
 			
 			// key manipulation 
-			ret.set(ResourceType.KEY, score);
+			ret.set(ResourceType.KEY, Math.max(0, score));
 		
 			// point manipulation
 			var point = score * 10;
