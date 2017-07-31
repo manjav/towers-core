@@ -29,6 +29,8 @@ class BattleOutcome
 		{
 			var diffScore = score - game.player.quests.get(field.index);
 			var newRecord = diffScore > 0;
+			if (game.player.inTutorial)
+				return ret;
 			if ( newRecord )
 			{
 				// calculate xp
