@@ -36,10 +36,12 @@ class Exchanger
 		while ( i < exchangeKeys.length )
 		{
 			var ex = exchanges.get(exchangeKeys[i]);
-			if ( ExchangeType.getCategory( exchangeKeys[i] ) == ExchangeType.S_20_BUILDING )
+			var cex = ExchangeType.getCategory( exchangeKeys[i] );
+			
+			if ( cex == ExchangeType.S_20_SPECIALS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
 			
-			if ( ExchangeType.getCategory( exchangeKeys[i] ) == ExchangeType.S_30_CHEST )
+			if ( cex == ExchangeType.S_30_CHEST || cex == ExchangeType.S_40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
 				
 			i ++;
@@ -67,7 +69,7 @@ class Exchanger
 		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_30_CHEST )
 			item.requirements = getChestRequierement(item.expiredAt - time);
 			
-		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_BUILDING )
+		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_SPECIALS )
 		{
 			if ( item.numExchanges > ExchangeType.getMaxExchanges(item.type) )
 				return false;
@@ -92,7 +94,7 @@ class Exchanger
 		game.player.addResources(item.outcomes);
 		
 		// reset item
-		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_BUILDING )
+		if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_SPECIALS )
 			item.numExchanges ++;
 		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_30_CHEST )
 			item.expiredAt = time + ExchangeType.getCooldown(item.type);
@@ -201,16 +203,20 @@ class Exchanger
 	public function getChestOutcomes(type:Int) : IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random()*(type%10)*10 ) + 1);
 		
 		if (type > ExchangeType.S_31_CHEST)
 		{
-			// random hards
-			ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * (type%10) ) + 1);
-		
 			// random cards
 			addRandomCard(ret);
-			
+			if (type == ExchangeType.S_33_CHEST)
+			{
+				addRandomCard(ret);
+				addRandomCard(ret);
+			}
+
+			// random hards
+			ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * (type%10) ) + 1);
+
 			// try to find new card
 			var a = 0;
 			var allCards = new IntList();
@@ -229,18 +235,15 @@ class Exchanger
 			if( allCards.size() > 0 )
 				ret.set( allCards.get(Math.floor(Math.random() * allCards.size())), Math.round(arena / 2) + 1 );
 		}
-		
-		if (type == ExchangeType.S_33_CHEST)
-		{
-			addRandomCard(ret);
-			addRandomCard(ret);
-		}
+
+		// random softs
+		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * (type % 10) * 10 ) + 1);
 
 		return ret;
 	}
 	#end
 	
-	function addRandomCard(ret:IntIntMap) : Void
+	private function addRandomCard(ret:IntIntMap) : Void
 	{
 		if ( game.player.buildings.keys().length <= ret.keys().length )
 			return;

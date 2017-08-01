@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.Player;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.IntIntMap;
 
@@ -29,8 +30,10 @@ class BattleOutcome
 		{
 			var diffScore = score - game.player.quests.get(field.index);
 			var newRecord = diffScore > 0;
-			if (game.player.inTutorial)
+			
+			if ( game.player.inTutorial() )
 				return ret;
+				
 			if ( newRecord )
 			{
 				// calculate xp
@@ -58,7 +61,14 @@ class BattleOutcome
 			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
 			
 			// key manipulation 
-			ret.set(ResourceType.KEY, Math.max(0, score));
+			var keyItem = game.exchanger.items.get(ExchangeType.S_41_KEYS);
+			var maxKeys = 10;
+			if ( keyItem.numExchanges < maxKeys )
+			{
+				var numKeys = cast( Math.min( maxKeys-keyItem.numExchanges, Math.max(0, score) ), Int );
+				ret.set(ResourceType.KEY, numKeys);
+				keyItem.numExchanges += numKeys;
+			}
 		
 			// point manipulation
 			var point = score * 10;

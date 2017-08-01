@@ -31,15 +31,17 @@ class ExchangeType
 	static public var S_12_SOFT:Int = 12;
 	static public var S_13_SOFT:Int = 13;
 	
-	static public var S_20_BUILDING:Int = 20;
-	static public var S_21_BUILDING:Int = 21;
+	static public var S_20_SPECIALS:Int = 20;
+	static public var S_21_SPECIALS:Int = 21;
 	
 	static public var S_30_CHEST:Int = 30;
 	static public var S_31_CHEST:Int = 31;
 	static public var S_32_CHEST:Int = 32;
 	static public var S_33_CHEST:Int = 33;
 	
-	
+	static public var S_40_OTHERS:Int = 40;
+	static public var S_41_KEYS:Int = 41;
+
 	
 	public function new() {	}
 	
@@ -50,7 +52,7 @@ class ExchangeType
 	
 	public static function getCooldown(type:Int):Int
 	{
-		if (type == S_21_BUILDING)
+		if (type == S_21_SPECIALS)
 			return 86400;
 		else if (type == S_31_CHEST)
 			return 21600;
@@ -58,13 +60,15 @@ class ExchangeType
 			return 43200;
 		else if (type == S_33_CHEST)
 			return 86400;
+		else if (type == S_41_KEYS)
+			return 86400;
 		else
 			return 0;
 	}	
 	
 	public static function getMaxExchanges(type:Int):Int
 	{
-		if (type == S_21_BUILDING)
+		if (type == S_21_SPECIALS)
 			return 50;
 		return 0;
 	}
