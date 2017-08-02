@@ -221,7 +221,7 @@ class Exchanger
 			var a = 0;
 			var allCards = new IntList();
 			var arena = game.player.get_arena(0);
-			while ( a < arena )
+			while ( a <= arena )
 			{
 				var cards = game.arenas.get ( a ).cards;
 				var c = 0;
