@@ -72,6 +72,9 @@ class BattleOutcome
 		
 			// point manipulation
 			var point = score * 10;
+			if ( point != 0 )
+				point += Math.round(Math.random() * 4) - 2;
+				
 			if ( point < 0 && game.player.resources.get(ResourceType.POINT) < -point)
 				point = 0;
 			ret.set(ResourceType.POINT, point );
