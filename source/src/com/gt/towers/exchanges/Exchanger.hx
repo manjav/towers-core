@@ -202,20 +202,22 @@ class Exchanger
 	#if java
 	public function getChestOutcomes(type:Int) : IntIntMap
 	{
+		var hasKeysReward:Bool = false;
 		var ret = new IntIntMap();
+		addRandomCard(ret);
+		addRandomCard(ret);	
 		
-		if (type > ExchangeType.S_31_CHEST)
+		if ( type > ExchangeType.S_31_CHEST )
 		{
 			// random cards
-			addRandomCard(ret);
 			if (type == ExchangeType.S_33_CHEST)
 			{
 				addRandomCard(ret);
-				addRandomCard(ret);
+				
+				hasKeysReward = Math.random() < 0.1;
+				if( !hasKeysReward )
+					addRandomCard(ret);
 			}
-
-			// random hards
-			ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * (type%10) ) + 1);
 
 			// try to find new card
 			var a = 0;
@@ -232,13 +234,25 @@ class Exchanger
 				}
 				a ++;
 			}
-			if( allCards.size() > 0 )
-				ret.set( allCards.get(Math.floor(Math.random() * allCards.size())), Math.round(arena / 2) + 1 );
+			if ( allCards.size() > 0 )
+			{
+				var randCard = allCards.get(Math.floor(Math.random() * allCards.size()));
+				if ( randCard % 10 > 1 && !game.player.buildings.exists(randCard - 1) )
+					randCard --;
+				ret.set( randCard, 1 );
+			}
+			
+			// random hards
+			ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * (type%10) ) + 1);
 		}
 
 		// random softs
 		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * (type % 10) * 10 ) + 1);
 
+		// random keys
+		if( hasKeysReward )
+			ret.set(ResourceType.KEY, 10 + Math.floor(Math.random() * 10) );
+		
 		return ret;
 	}
 	#end
