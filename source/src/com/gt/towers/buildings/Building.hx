@@ -37,29 +37,51 @@ class Building extends AbstractBuilding
 		super( game, type, level );
 	}
 
+	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
 	{
-		//return 10 + Math.round( Math.log(improveLevel) * 14 );
 		return 10 + (5 * improveLevel);
 	}
+	public static var BASE_EXIT_GAP:Int = 200;
 	public function get_exitGap():Int 
 	{
-		return 200;
+		return BASE_EXIT_GAP;
 	}
+	public static var BASE_TROOP_SPEED:Int = 2600;
 	public function get_troopSpeed():Int
 	{
-		return 2600;
+		return BASE_TROOP_SPEED;
 	}
+	public static var BASE_TROOP_POWER:Float = 1;
 	public function get_troopPower():Float
 	{
-		return 1;
+		return BASE_TROOP_POWER;
 	}
+	
+	public static var BASE_SPAWN_GAP:Int = 2300;
 	public function get_spawnGap():Int
 	{
-		return 2300;
+		return BASE_SPAWN_GAP;
 	}
-	
-	
+
+	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+	public static var BASE_DAMAGE:Float = 1;
+	public function get_damage():Float
+	{
+		return BASE_DAMAGE;
+	}
+	public static var BASE_DAMAGE_GAP:Int = 1000;
+	public function get_damageGap():Int
+	{
+		return BASE_DAMAGE_GAP;
+	}
+	public static var BASE_DAMAGE_RADIUS:Float = 50;
+	public function get_damageRadius():Float
+	{
+		return BASE_DAMAGE_RADIUS;
+	}
+
 	public function get_options():IntList
 	{
 		var ret = new IntList();
@@ -84,24 +106,6 @@ class Building extends AbstractBuilding
 			
 		//return (equalsCategory(type) || this.type == BuildingType.B01_CAMP) && getAbstract(type) != null &&  _population >= get_capacity() ;
 		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
-	}
-	
-	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-	public function get_damage():Float
-	{
-		return 1;
-	}
-	public function get_damageGap():Float
-	{
-		return 1000;
-	}
-	public function get_damageRadius():Float
-	{
-		return 50;
-	}
-	public function get_damageRange():Float
-	{
-		return 0;
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -240,8 +244,27 @@ class Building extends AbstractBuilding
 			return get_damageGap();
 		else if ( feature == BuildingFeatureType.F23_RANGE )
 			return get_damageRadius();
-		else if ( feature == BuildingFeatureType.F24_DAMAGE_RANGE )
-			return get_damageRange();
+
+		return 0;
+	}
+	
+	public function getFeatureBaseValue(feature:Int):Float
+	{
+		if ( feature == BuildingFeatureType.F01_CAPACITY )
+			return BASE_CAPACITY;
+		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
+			return BASE_SPAWN_GAP;
+		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
+			return BASE_TROOP_SPEED;
+		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
+			return BASE_TROOP_POWER;
+		else if ( feature == BuildingFeatureType.F21_DAMAGE )
+			return BASE_DAMAGE;
+		else if ( feature == BuildingFeatureType.F22_FIRE_SPEED )
+			return BASE_DAMAGE_GAP;
+		else if ( feature == BuildingFeatureType.F23_RANGE )
+			return BASE_DAMAGE_RADIUS;
+
 		return 0;
 	}
 }

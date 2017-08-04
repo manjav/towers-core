@@ -88,5 +88,12 @@ class BattleField
 			p ++;
 		}
 	}
+	
+	public var now:Float = 0;
+	public var startAt:Float = 0;
+	public function getDuration() : Float
+	{
+		return now - startAt;
+	}
 	#end
 }

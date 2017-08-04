@@ -8,11 +8,6 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Barracks extends Building 
 {
-	/*public function new(place:Place, index:Int, level:Int = 1)
-	{
-		super(place, index, level);
-		type = BuildingType.B11_BARRACKS;
-	}*/
 	
 	public override function get_spawnGap():Int
 	{

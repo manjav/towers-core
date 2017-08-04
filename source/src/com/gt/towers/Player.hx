@@ -20,7 +20,6 @@ class Player
 	public var nickName:String = "no_nickName";
 	public var troopType:Int = -1;
 	public var resources:IntIntMap;
-	public var arenas:IntIntMap;
 	public var quests:IntIntMap;
 	public var buildings:IntBuildingMap;
 	

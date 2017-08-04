@@ -8,17 +8,12 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Crystal extends Building 
 {
-	/*public function new(place:Place, index:Int, level:Int=1) 
-	{
-		super(place, index, level);
-		type = BuildingType.B41_CRYSTAL;
-	}*/
-	
+
 	public override function get_damage():Float
 	{
 		return 1.01 + (Math.log(improveLevel) +  Math.log(level)) / 3;
 	}
-	public override function get_damageGap():Float
+	public override function get_damageGap():Int
 	{
 		return 800 - Math.round(  3*(Math.log(improveLevel) +  Math.log(level) ) * 100 );
 	}

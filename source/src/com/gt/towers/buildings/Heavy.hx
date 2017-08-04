@@ -8,12 +8,7 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Heavy extends Building 
 {
-	/*public function new(place:Place, index:Int, level:Int = 1)
-	{
-		super(place, index, level);
-		type = BuildingType.B31_HEAVY;
-	}*/
-	
+
 	public override function get_troopSpeed():Int
 	{
 		return 2500;
