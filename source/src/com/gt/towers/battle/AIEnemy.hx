@@ -2,6 +2,7 @@ package com.gt.towers.battle;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.lists.PlaceList;
@@ -33,15 +34,26 @@ class AIEnemy
 		var checkSelfPopulation = 0;
 		
 		var troopType = 1;
-		var minCapacity:Int = 1000;
-		var minPopulation:Float = 1000;
+		var enemyPopulation:Int = 0;
+		var minPlayerPopulation:Float = 1000;
 		var enemyPlaces = battleField.getAllTowers(troopType);
 		var enemyLen:Int = enemyPlaces.size();
 		var enemies = new IntList();
 		destinations = new IntIntMap();
 		
-		if(enemyLen == 0)
+		if (enemyLen == 0)
+		{
 			return false;
+		}
+		else if ( enemyLen == 1 )
+		{
+			var singlePlace = enemyPlaces.get(0);
+			if( singlePlace.enabled && singlePlace.building.type==BuildingType.B01_CAMP && battleField.getDuration()<battleField.map.times.get(0) )
+			{
+				singlePlace.building.improve(BuildingType.B11_BARRACKS);
+				return true;
+			}
+		}
 		
 		var p:Int = 0;
 		var m:Int = 0;
@@ -51,6 +63,7 @@ class AIEnemy
 			if (checkSelfPopulation < enemyPlaces.get(p).building.get_population() && enemyPlaces.get(p).enabled)
 			{
 				enemies.push(enemyPlaces.get(p).index);
+				enemyPopulation += enemyPlaces.get(p).building.get_population();
 				
 				// find weakest of enemeis
 				m = 0;
@@ -62,13 +75,13 @@ class AIEnemy
 						var building = enemyPlaces.get(p).links.get(m).building;
 						var population = building.get_population() * building.get_troopPower() * building.get_damage();
 						population *= building.troopType == -1 ? 2 : 1;
-						if( population <= minPopulation )
+						if( population <= minPlayerPopulation )
 						{
-							if ( population < minPopulation )
+							if ( population < minPlayerPopulation )
 								destinations = new IntIntMap();
 							
 							destinations.set(enemyPlaces.get(p).links.get(m).index, Math.round(population * 1000) );
-							minPopulation = population;
+							minPlayerPopulation = population;
 						}
 					}
 					m ++;
@@ -95,44 +108,19 @@ class AIEnemy
 		target = keys [ Math.floor( Math.random() * keys.length ) ];
 		//destination = destinations[0];
 		
+		if (battleField.places.get(target).building.get_population() > enemyPopulation )
+			return false;
+		
 		actionType = "fight";
 		return true;
 	}
 	
-	public function doAction(seed:Int):Bool
+	public function doAction():Bool
 	{
-		if (seed == 0)
+		var seed:Int = Math.round(battleField.now%5);
+		if ( seed == 1 )
 			return fightToWeakestPlace();
-		else if (seed == 10)
-			return improveSelf();
 		return false;
-		
 	}
-	
-	private function improveSelf():Bool 
-	{
-		var troopType = 1;
-		var enemyPlaces = battleField.getAllTowers(troopType);
-		var enemyLen = enemyPlaces.size();
-		var maxPopulation = 0;
-		target = -1;
-		
-		if(enemyLen == 0)
-			return false;
-		
-		var p:Int = 0;
-		while( p < enemyLen )
-		{
-			if (maxPopulation < enemyPlaces.get(p).building.get_population() && enemyPlaces.get(p).enabled)
-			{
-				maxPopulation = enemyPlaces.get(p).building.get_population();
-				target = p;
-			}
-			p ++;
-		}
-		actionType = "improve";
-		return true;
-	}
-	
 	
 }
