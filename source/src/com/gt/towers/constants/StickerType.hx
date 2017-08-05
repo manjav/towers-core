@@ -34,7 +34,7 @@ class StickerType
 	}
 
 	
-	public static function getAnswers(sticker:Int):IntList
+	private static function getAnswers(sticker:Int):IntList
 	{
 		var ret:IntList = new IntList();
 		
@@ -45,4 +45,13 @@ class StickerType
 			
 		return ret;
 	}
+	public static function getRandomAnswer(sticker:Int):Int
+	{
+		var answers = getAnswers(sticker);
+		if (answers.size() == 0)
+			return -1;
+		
+		return answers.get( Math.floor(Math.random() * answers.size()) );
+	}
+		
 }
