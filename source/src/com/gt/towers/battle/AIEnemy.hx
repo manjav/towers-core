@@ -23,10 +23,12 @@ class AIEnemy
 	public var destinations:IntIntMap;
 	
 	var battleField:BattleField;
+	public var accessPoint:Float;
 	
 	public function new(battleField:BattleField)
 	{
 		this.battleField = battleField;
+		accessPoint = Math.floor(battleField.startAt%5) + 1;
 	}
 	
 	public function fightToWeakestPlace():Bool
@@ -50,8 +52,11 @@ class AIEnemy
 			var singlePlace = enemyPlaces.get(0);
 			if( singlePlace.enabled && singlePlace.building.type==BuildingType.B01_CAMP && battleField.getDuration()<battleField.map.times.get(0) )
 			{
-				singlePlace.building.improve(BuildingType.B11_BARRACKS);
-				return true;
+				if ( Math.random() < 0.8 )
+				{
+					singlePlace.building.improve(BuildingType.B11_BARRACKS);
+					return true;
+				}
 			}
 		}
 		
@@ -111,14 +116,17 @@ class AIEnemy
 		if (battleField.places.get(target).building.get_population() > enemyPopulation )
 			return false;
 		
-		actionType = "fight";
+		if (battleField.places.get(target).building.get_population() > enemyPopulation*0.7 )
+			actionType = "fight2x";
+		else
+			actionType = "fight";
 		return true;
 	}
 	
 	public function doAction():Bool
 	{
-		var seed:Int = Math.round(battleField.now%5);
-		if ( seed == 1 )
+		var seed:Int = Math.floor(battleField.now%5);
+		if ( seed == accessPoint )
 			return fightToWeakestPlace();
 		return false;
 	}
