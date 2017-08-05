@@ -52,6 +52,9 @@ class Player
 	{ 
 		var i:Int = 0;
 		var kies = quests.keys();
+		if (kies.length == 0)
+			return 0;
+		
 		while (i < kies.length)
 		{
 			if (quests.get(kies[i]) == 0)
@@ -59,7 +62,7 @@ class Player
 				
 			i++;
 		}
-		return i;
+		return i-1;
 	}
 	
 	public function inTutorial():Bool { return get_questIndex() < 4; }
