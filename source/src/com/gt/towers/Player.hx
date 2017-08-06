@@ -60,12 +60,12 @@ class Player
 			i++;
 		}
 		
-		if(i == 23)
-			return 22;
+		if(i == 22)
+			return 21;
 		return i;
 	}
 	
-	public function inTutorial():Bool { return get_questIndex() < 4; }
+	public function inTutorial():Bool { return get_questIndex() < 3; }
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_keys():Int { return resources.get(ResourceType.KEY); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
