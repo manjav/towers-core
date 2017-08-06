@@ -221,10 +221,7 @@ class IntIntMap extends EventDispatcher
 	public function getRandomKey():Int
 	{
 		var keis = keys();
-		var t = keis[ Math.floor( Math.random() * keis.length ) ];
-		if ( t >= 1000 )
-			return getRandomKey();
-		return t;
+		return keis[ Math.floor( Math.random() * keis.length ) ];
 	}
 	
 		
