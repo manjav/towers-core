@@ -20,7 +20,7 @@ class ResourceType
 	
 	static public function isBuilding(type:Int) 
 	{
-		return type < 1000; 
+		return type < 1000 && type >= 10; 
 	}
 	
 	static public function getName(type:Int) : String
