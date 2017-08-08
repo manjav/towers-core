@@ -85,7 +85,8 @@ class Building extends AbstractBuilding
 	public function get_options():IntList
 	{
 		var ret = new IntList();
-		ret.push( BuildingType.B01_CAMP );
+		if(!game.player.inTutorial())
+			ret.push( BuildingType.B01_CAMP );
 		if ( BuildingType.getAll().exists( type + 1 ) )
 			ret.push( BuildingType.IMPROVE );
 		return ret;
