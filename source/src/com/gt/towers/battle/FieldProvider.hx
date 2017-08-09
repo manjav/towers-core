@@ -54,5 +54,11 @@ class FieldProvider
 		fields.set( "battle_601" , new Battle_601( 601, "battle_601", false, false, false, "100,150,250" ) );
 		fields.set( "battle_602" , new Battle_602( 602, "battle_602", false, false, false, "100,150,250" ) );
 		
+		fields.set( "battle_701" , new Battle_601( 701, "battle_701", false, false, false, "100,150,250" ) );
+		fields.set( "battle_702" , new Battle_602( 702, "battle_702", false, false, false, "100,150,250" ) );
+		fields.set( "battle_801" , new Battle_601( 801, "battle_801", false, false, false, "100,150,250" ) );
+		fields.set( "battle_802" , new Battle_602( 802, "battle_802", false, false, false, "100,150,250" ) );
+		fields.set( "battle_901" , new Battle_601( 901, "battle_901", false, false, false, "100,150,250" ) );
+		fields.set( "battle_902" , new Battle_602( 902, "battle_902", false, false, false, "100,150,250" ) );
 	}
 }
