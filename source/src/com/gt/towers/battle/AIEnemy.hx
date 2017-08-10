@@ -14,24 +14,34 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class AIEnemy 
 {
-	private var maxEnemy:Int = 7;
 
+	public static var TYPE_ANY_ENEMY:Int = -10;
+	public static var TYPE_ANY_ENABLED_ENEMY:Int = -11;
+	public static var TYPE_WAIT_FOR_GROW:Int = -12;
+	
+	public static var TYPE_NO_CHANCE:Int = -1;
+	
+	public static var TYPE_FIGHT:Int = 1;
+	public static var TYPE_FIGHT_DOUBLE:Int = 2;
+	public static var TYPE_IMPROVE:Int = 10;
 
-	public var actionType:String = "";
+	public var actionType:Int = -100;
 	public var sources:IntList;
 	public var target:Int;
 	public var destinations:IntIntMap;
 	
-	var battleField:BattleField;
 	public var accessPoint:Float;
+	
+	private var battleField:BattleField;
+	private var maxEnemy:Int = 7;
 	
 	public function new(battleField:BattleField)
 	{
 		this.battleField = battleField;
-		accessPoint = Math.floor(battleField.startAt%5) + 1;
+		accessPoint = Math.floor(battleField.startAt%5);
 	}
 	
-	public function fightToWeakestPlace():Bool
+	public function tryAction():Int
 	{
 		var checkSelfPopulation = 0;
 		
@@ -45,7 +55,7 @@ class AIEnemy
 		
 		if (enemyLen == 0)
 		{
-			return false;
+			return TYPE_ANY_ENEMY;
 		}
 		else if ( enemyLen == 1 )
 		{
@@ -55,7 +65,7 @@ class AIEnemy
 				if ( Math.random() < 0.8 )
 				{
 					singlePlace.building.improve(BuildingType.B11_BARRACKS);
-					return true;
+					return TYPE_IMPROVE;
 				}
 			}
 		}
@@ -65,7 +75,7 @@ class AIEnemy
 		while( p < enemyLen )
 		{
 			
-			if (checkSelfPopulation < enemyPlaces.get(p).building.get_population() && enemyPlaces.get(p).enabled)
+			if ( enemyPlaces.get(p).enabled )//checkSelfPopulation < enemyPlaces.get(p).building.get_population() && 
 			{
 				enemies.push(enemyPlaces.get(p).index);
 				enemyPopulation += enemyPlaces.get(p).building.get_population();
@@ -98,7 +108,7 @@ class AIEnemy
 		// stop fighting when enemy loses or wins
 		var keys = destinations.keys();
 		if ( keys.length == 0 || enemies.size() == 0 )
-			return false;
+			return TYPE_ANY_ENABLED_ENEMY;
 		
 		//if num enemies greater than max enemies reduce to max enemies 
 		var max:Int = (enemies.size() > maxEnemy ? maxEnemy : enemies.size()) - 1;
@@ -114,21 +124,19 @@ class AIEnemy
 		//destination = destinations[0];
 		
 		if (battleField.places.get(target).building.get_population() > enemyPopulation )
-			return false;
+			return TYPE_WAIT_FOR_GROW;
 		
 		if (battleField.places.get(target).building.get_population() > enemyPopulation*0.7 )
-			actionType = "fight2x";
-		else
-			actionType = "fight";
-		return true;
+			return TYPE_FIGHT_DOUBLE;
+		return TYPE_FIGHT;
 	}
 	
-	public function doAction():Bool
+	public function doAction():Int
 	{
 		var seed:Int = Math.floor(battleField.now%5);
-		if ( seed == accessPoint )
-			return fightToWeakestPlace();
-		return false;
+		if ( seed == accessPoint && ( actionType == TYPE_NO_CHANCE ||  actionType == -100 ) )
+			return actionType = tryAction();
+		return actionType = TYPE_NO_CHANCE;
 	}
 	
 }

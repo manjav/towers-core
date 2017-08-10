@@ -53,10 +53,6 @@ class BattleField
 			}
 			p ++;
 		}
-
-		#if java
-		var a = new AIEnemy(this);
-		#end
 	}
 
 	public function getAllTowers(troopType:Int):PlaceList

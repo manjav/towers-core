@@ -4,9 +4,13 @@ import com.gt.towers.Player;
 import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.exchanges.Exchanger;
-import com.gt.towers.utils.Tracer;
 import com.gt.towers.utils.maps.IntArenaMap;
 import com.gt.towers.utils.maps.IntIntMap;
+
+#if java
+import com.gt.towers.utils.Tracer;
+import com.gt.towers.battle.AIEnemy;
+#end
 
 /**
  * ...
