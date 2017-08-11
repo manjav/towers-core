@@ -98,12 +98,16 @@ class Player
 	{
 		if ( point == 0 )
 			point = get_point();
+			
 		var arena = 0;
-		while ( point >= game.arenas.get(arena).min )
+		var arenaKeys = game.arenas.keys();
+		while ( arena < arenaKeys.length )
 		{
+			if ( point < game.arenas.get( arenaKeys[arena] ).max )
+				return arena;
 			arena ++;
 		}
-		return arena - 1 ;
+		return 0 ;
 	}
 	
 	

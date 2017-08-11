@@ -55,7 +55,7 @@ class Game
 		arenas.set(6, new Arena(6, 501,		700,	"42,23"	));
 		arenas.set(7, new Arena(7, 701,		1000,	"14,33"	));
 		arenas.set(8, new Arena(8, 1001,	1400,	"24,43"	));
-		arenas.set(9, new Arena(8, 1401,	2000,	"34,44"	));
+		arenas.set(9, new Arena(9, 1401,	10000,	"34,44"	));
 	}
 	
 	public function unlockedBuildingAt ( type:Int ) : Int
