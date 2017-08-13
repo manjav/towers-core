@@ -57,9 +57,11 @@ class Troop
 		}
 		//building.game.tracer.log("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
 	}
-	public function kill():Void
+	public function hit(damage:Float):Void
 	{
-		GTimer.clearTimeout(timeoutId);
+		health -= damage;
+		if(health <= 0)
+			GTimer.clearTimeout(timeoutId);
 	}
 	#end
 }

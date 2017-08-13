@@ -67,12 +67,12 @@ class Place
 			troop.rush(this);
 	}
 
-	public function killTroop(troopId:Int) : Void
+	public function hit(troopId:Int, damage:Float) : Void
 	{
 		if (!troops.containsKey(troopId))
 			return;
 		
-		troops.get(troopId).kill();
+		troops.get(troopId).hit(damage);
 	}
 	
 	public function setBuilidng(type:Int) 

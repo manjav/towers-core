@@ -14,15 +14,15 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	
-	public var coreVersion:String = "117.0811190822";//do not change len.
-	public var noticeVersion:Int = 102;
-	public var forceVersion:Int = 100;
+	public var coreVersion:String = "118.0813183940";//do not change len.
+	public var noticeVersion:Int = 118;
+	public var forceVersion:Int = 118;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;
 	
 	
-	public var nameMinLen:Int = 4;
+	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
 	
 	public function new()

@@ -190,7 +190,7 @@ class Building extends AbstractBuilding
 	public function pushTroops(troop:Troop) : Bool
 	{
 		var ret = troopType == troop.type; // if ret true troop is mine
-		_population += ((ret ? 1 : -1));
+		_population += ((ret ? 1 : -1)*troop.health);
 		if (_population < 0)
 		{
 			occupy(troop);
@@ -228,7 +228,7 @@ class Building extends AbstractBuilding
 	{
 		return BuildingType.get_category(this.type) == BuildingType.get_category(type);
 	}
-
+ 
 	public function getFeatureValue(feature:Int):Float
 	{
 		if ( feature == BuildingFeatureType.F01_CAPACITY )
