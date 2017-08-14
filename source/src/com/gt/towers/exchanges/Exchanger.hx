@@ -242,11 +242,14 @@ class Exchanger
 			}
 			
 			// random hards
-			ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * (type%10) ) + 1);
+			ret.set(ResourceType.CURRENCY_HARD, Math.ceil(Math.random() * (type%10) ) * 2);
 		}
 
 		// random softs
 		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * (type % 10) * 10 ) + 1);
+
+		// random xp
+		ret.set(ResourceType.XP, Math.ceil(Math.random() * (type%10) ) * 2);
 
 		// random keys
 		if( hasKeysReward )
@@ -261,7 +264,7 @@ class Exchanger
 		if ( game.player.buildings.keys().length <= ret.keys().length )
 			return;
 		
-		var random = game.player.resources.getRandomKey();
+		var random = game.player.getRandomBuilding();
 		if ( ret.exists(random) )
 		{
 			addRandomCard(ret);
