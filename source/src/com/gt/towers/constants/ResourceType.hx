@@ -33,5 +33,4 @@ class ResourceType
 		else if ( type == CURRENCY_REAL ) return "CURRENCY_REAL";
 		else return "TYPE_" + type;
 	}
-	
 }
