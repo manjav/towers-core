@@ -21,6 +21,7 @@ class BattleOutcome
 	public static var MAX_XP:Int = 10;
 	public static var MAX_POINTS:Int = 30;
 	public static var MAX_CARDS:Int = 2;
+	public static var SCORE_RATIO:Int = 3;
 	
 	public static function get_outcomes(game:Game, field:FieldData, score:Int):IntIntMap
 	{
@@ -71,7 +72,7 @@ class BattleOutcome
 			}
 		
 			// point manipulation
-			var point = score * 10;
+			var point = score * SCORE_RATIO;
 			if ( point != 0 )
 				point += Math.round(Math.random() * 4) - 2;
 				
