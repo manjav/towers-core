@@ -118,7 +118,7 @@ class Exchanger
 			else if (reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += requirements.get(reqKeys[i]);
 			else if ( ResourceType.isBuilding(reqKeys[i])) 
-				softs += game.player.buildings.get(reqKeys[i]).price();
+				softs += game.player.buildings.get(reqKeys[i]).price() * requirements.get(reqKeys[i]);
 
 			i ++;
 		}
