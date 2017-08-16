@@ -42,9 +42,9 @@ class FieldProvider
 		fields.set( "battle_1" , new Battle_1( 1, "battle_1", false, false, false, "80,120,200" ) );
 		fields.set( "battle_2" , new Battle_2( 2, "battle_2", false, false, false, "80,120,200" ) );
 		fields.set( "battle_101" , new Battle_101( 101, "battle_101", false, false, false, "80,120,200" ) );
-		fields.set( "battle_102" , new Battle_102( 102, "battle_102", false, false, false, "80,100,200" ) );
-		fields.set( "battle_201" , new Battle_201( 201, "battle_201", false, false, false, "80,100,200" ) );
-		fields.set( "battle_202" , new Battle_202( 202, "battle_202", false, false, false, "80,100,200" ) );
+		fields.set( "battle_102" , new Battle_102( 102, "battle_102", false, false, false, "80,120,200" ) );
+		fields.set( "battle_201" , new Battle_201( 201, "battle_201", false, false, false, "80,120,200" ) );
+		fields.set( "battle_202" , new Battle_202( 202, "battle_202", false, false, false, "80,120,200" ) );
 		fields.set( "battle_301" , new Battle_301( 301, "battle_301", false, false, false, "100,150,250" ) );
 		fields.set( "battle_302" , new Battle_302( 302, "battle_302", false, false, false, "100,150,250" ) );
 		fields.set( "battle_401" , new Battle_401( 401, "battle_401", false, false, false, "100,150,250" ) );
@@ -54,11 +54,11 @@ class FieldProvider
 		fields.set( "battle_601" , new Battle_601( 601, "battle_601", false, false, false, "100,150,250" ) );
 		fields.set( "battle_602" , new Battle_602( 602, "battle_602", false, false, false, "100,150,250" ) );
 		
-		fields.set( "battle_701" , new Battle_601( 701, "battle_701", false, false, false, "100,150,250" ) );
-		fields.set( "battle_702" , new Battle_602( 702, "battle_702", false, false, false, "100,150,250" ) );
-		fields.set( "battle_801" , new Battle_601( 801, "battle_801", false, false, false, "100,150,250" ) );
-		fields.set( "battle_802" , new Battle_602( 802, "battle_802", false, false, false, "100,150,250" ) );
-		fields.set( "battle_901" , new Battle_601( 901, "battle_901", false, false, false, "100,150,250" ) );
-		fields.set( "battle_902" , new Battle_602( 902, "battle_902", false, false, false, "100,150,250" ) );
+		fields.set( "battle_701" , new Battle_601( 701, "battle_701", false, false, false, "150,200,300" ) );
+		fields.set( "battle_702" , new Battle_602( 702, "battle_702", false, false, false, "150,200,300" ) );
+		fields.set( "battle_801" , new Battle_601( 801, "battle_801", false, false, false, "150,200,300" ) );
+		fields.set( "battle_802" , new Battle_602( 802, "battle_802", false, false, false, "150,200,300" ) );
+		fields.set( "battle_901" , new Battle_601( 901, "battle_901", false, false, false, "150,200,300" ) );
+		fields.set( "battle_902" , new Battle_602( 902, "battle_902", false, false, false, "150,200,300" ) );
 	}
 }
