@@ -37,31 +37,27 @@ class BattleOutcome
 				
 			if ( newRecord )
 			{
-				// calculate xp
+				// xp
 				ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (score > 0 ? score : -3) / 3 ), Int ) );
 				
-				// calculate rewards
-				/*var unlockedBuildings = game.player.buildings.keys();
-				var i:Int = 0;
-				var numUnlocked = Math.min(unlockedBuildings.length, diffScore);
-				while ( i < numUnlocked )
-				{
-					//if ( Math.random() < 1/numUnlocked )
-					ret.set(unlockedBuildings[i], Math.ceil(Math.random() * MAX_CARDS));
-					i++;
-				}*/
+				// keys
 				ret.set(ResourceType.KEY, diffScore);
 	
-				// calculate money
+				// moneis
 				ret.set(ResourceType.CURRENCY_SOFT, 10 * diffScore);
 			}
 		}
 		else
 		{
-			// money manipulation 
+			// moneis
 			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
 			
-			// key manipulation 
+			// battle stats 
+			ret.set(ResourceType.BATTLES_COUNT, 1);
+			if ( score > 0 )
+				ret.set(ResourceType.BATTLES_WINS, 1);
+			
+			// keys
 			var keyItem = game.exchanger.items.get(ExchangeType.S_41_KEYS);
 			var maxKeys = 10;
 			if ( keyItem.numExchanges < maxKeys )
@@ -71,7 +67,7 @@ class BattleOutcome
 				keyItem.numExchanges += numKeys;
 			}
 		
-			// point manipulation
+			// points
 			var point = score * SCORE_RATIO;
 			if ( point != 0 )
 				point += Math.round(Math.random() * 4) - 2;
@@ -79,20 +75,6 @@ class BattleOutcome
 			if ( point < 0 && game.player.resources.get(ResourceType.POINT) < -point)
 				point = 0;
 			ret.set(ResourceType.POINT, point );
-
-			// unlocked cards manipulation 
-			/*var nextArena = game.player.get_arena( game.player.get_point() + point );
-			if ( nextArena > game.player.get_arena(0) )
-			{
-				var cards = game.arenas.get ( nextArena ).cards;
-				var c = 0;
-				while ( c < cards.size() )
-				{
-					if ( !game.player.buildings.exists( cards.get(c) ) )
-						ret.set( cards.get(c) , 1 );
-					c ++;
-				}
-			}*/
 		}
 		return ret;
 	}

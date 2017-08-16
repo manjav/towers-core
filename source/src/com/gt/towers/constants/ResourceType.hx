@@ -12,9 +12,14 @@ class ResourceType
 	public static var CURRENCY_SOFT:Int = 1002;
 	public static var CURRENCY_HARD:Int = 1003;
 	public static var KEY:Int = 1004;
+	public static var NUM_RESOURCES:Int = 5;
+
 	public static var CURRENCY_REAL:Int = 1101;
 	
-	public static var NUM_RESOURCES:Int = 5;
+	
+	public static var BATTLES_COUNT:Int = 1201;
+	public static var BATTLES_WINS:Int = 1202;
+	
 	
 	public function new() {	}
 	
