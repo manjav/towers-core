@@ -65,7 +65,6 @@ class Player
 		return i;
 	}
 	
-	public function inTutorial():Bool { return get_questIndex() < 3; }
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_keys():Int { return resources.get(ResourceType.KEY); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
@@ -159,4 +158,8 @@ class Player
 			return getRandomBuilding();
 		return t;
 	}
+	
+	public function inTutorial():Bool { return get_questIndex() < 3; }
+	public function villageEnabled():Bool { return get_arena(0) > 0; }
+
 }
