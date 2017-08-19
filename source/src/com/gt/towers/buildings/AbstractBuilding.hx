@@ -131,7 +131,7 @@ class AbstractBuilding
 	
 	public function price(count:Int = 1):Int
 	{
-		return   Math.round( Math.round( Math.log(Math.pow(level, 5)) + Math.log(Math.pow(improveLevel, 4)))*5+10 ); 
+		return   Math.round( (improveLevel * 10) + 10 ); 
 	}
 	public function toGem(count:Int = 1):Int
 	{

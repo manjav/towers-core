@@ -190,7 +190,7 @@ class Building extends AbstractBuilding
 	public function pushTroops(troop:Troop) : Bool
 	{
 		var ret = troopType == troop.type; // if ret true troop is mine
-		_population += ((ret ? 1 : -1)*troop.health);
+		_population += (ret ? 1 : -troop.health);
 		if (_population < 0)
 		{
 			occupy(troop);

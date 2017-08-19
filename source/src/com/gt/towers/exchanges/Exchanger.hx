@@ -85,8 +85,8 @@ class Exchanger
 		// provide reqs by hard
 		if ( confirmedHards > 0 )
 		{
-			game.player.resources.set(ResourceType.CURRENCY_HARD, game.player.resources.get(ResourceType.CURRENCY_HARD) - needsHard);
-			game.player.resources.increaseMap(deductions);
+			game.player.resources.reduce (ResourceType.CURRENCY_HARD, needsHard);
+			game.player.addResources(deductions);
 		}
 		
 		// add and consume
@@ -118,9 +118,8 @@ class Exchanger
 			else if (reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += requirements.get(reqKeys[i]);
 			else if ( ResourceType.isBuilding(reqKeys[i])) 
-			{
-				softs += game.player.buildings.get(reqKeys[i]).price();
-			}
+				softs += game.player.buildings.get(reqKeys[i]).price() * requirements.get(reqKeys[i]);
+
 			i ++;
 		}
 		return keyToHard(keys) + softToHard(softs) + hards ;
@@ -243,11 +242,14 @@ class Exchanger
 			}
 			
 			// random hards
-			ret.set(ResourceType.CURRENCY_HARD, Math.floor(Math.random() * (type%10) ) + 1);
+			ret.set(ResourceType.CURRENCY_HARD, Math.ceil(Math.random() * (type%10) ) * 2);
 		}
 
 		// random softs
 		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * (type % 10) * 10 ) + 1);
+
+		// random xp
+		ret.set(ResourceType.XP, Math.ceil(Math.random() * (type%10) ) * 2);
 
 		// random keys
 		if( hasKeysReward )
@@ -262,7 +264,7 @@ class Exchanger
 		if ( game.player.buildings.keys().length <= ret.keys().length )
 			return;
 		
-		var random = game.player.resources.getRandomKey();
+		var random = game.player.getRandomBuilding();
 		if ( ret.exists(random) )
 		{
 			addRandomCard(ret);

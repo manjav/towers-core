@@ -14,15 +14,15 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	
-	public var coreVersion:String = "117.0815161820";//do not change len.
-	public var noticeVersion:Int = 102;
-	public var forceVersion:Int = 100;
+	public var coreVersion:String = "123.0817010839";//do not change len.
+	public var noticeVersion:Int = 122;
+	public var forceVersion:Int = 120;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;
 	
 	
-	public var nameMinLen:Int = 4;
+	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
 	
 	public function new()
@@ -34,5 +34,17 @@ class LoginData
 		resources.set(ResourceType.KEY, 0);
 		resources.set(ResourceType.CURRENCY_SOFT, 100);
 		resources.set(ResourceType.CURRENCY_HARD, 30);
+		
+		resources.set(BuildingType.B11_BARRACKS, 1);
+		
+		buildingsLevel = new IntIntMap();
+		buildingsLevel.set(BuildingType.B11_BARRACKS, 1);
+		
+		exchanges = new IntList();
+		exchanges.push(ExchangeType.S_21_SPECIALS);
+		exchanges.push(ExchangeType.S_31_CHEST);
+		exchanges.push(ExchangeType.S_32_CHEST);
+		exchanges.push(ExchangeType.S_33_CHEST);
+		exchanges.push(ExchangeType.S_41_KEYS);
 	}
 }

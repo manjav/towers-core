@@ -5,6 +5,7 @@ import com.gt.towers.utils.GameError;
 #if java
 	import java.util.Map;
 	import java.NativeArray;
+	import com.gt.towers.utils.ValueChangeCallback;
 #elseif flash
 	import flash.Vector;
 	import flash.events.EventDispatcher;
@@ -19,6 +20,7 @@ class IntIntMap extends EventDispatcher
 {
 
 	#if java
+	public var changeCallback:ValueChangeCallback;
 	private var _map:java.util.HashMap<Int, Int>;
 	#elseif flash
 	private var _map:Map<Int, Int>;
@@ -186,7 +188,7 @@ class IntIntMap extends EventDispatcher
 			i++;
 		}
 	}
-	private function reduce(key:Int, value:Int):Void
+	public function reduce(key:Int, value:Int):Void
 	{
 		if (!exists(key))
 			throw new GameError(1, key + " not found.", key);
@@ -208,7 +210,7 @@ class IntIntMap extends EventDispatcher
 			i++;
 		}
 	}
-	private function increase(key:Int, value:Int):Void
+	public function increase(key:Int, value:Int):Void
 	{
 		//if (!exists(key))
 		//	throw new GameError(1, "key " + key + " not found.");
@@ -224,13 +226,23 @@ class IntIntMap extends EventDispatcher
 		return keis[ Math.floor( Math.random() * keis.length ) ];
 	}
 	
-		
+	
 	private function dispatchChangeEvent (key:Int, from:Int, to:Int) :Void
 	{
-		#if flash
+		if( from == to )
+			return;
+		
+	#if java
+		if ( changeCallback != null )
+		{
+			if( exists( key ) )
+				changeCallback.update( key, from, to );
+			else
+				changeCallback.insert( key, from, to );
+		}
+	#elseif flash
 		//if( hasEventListener ( CoreEvent.CHANGE ) )
-		if( from != to )
 			dispatchEvent(new CoreEvent(CoreEvent.CHANGE, key, from, to) );
-		#end
+	#end
 	}
 }
