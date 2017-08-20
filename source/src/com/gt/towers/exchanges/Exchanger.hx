@@ -203,19 +203,20 @@ class Exchanger
 	{
 		var hasKeysReward:Bool = false;
 		var ret = new IntIntMap();
-		addRandomCard(ret);
-		addRandomCard(ret);	
+		var chance = ( type % 10 ) * 2;
+		addRandomCard(ret, chance);
+		addRandomCard(ret, chance);	
 		
 		if ( type > ExchangeType.S_31_CHEST )
 		{
 			// random cards
 			if (type == ExchangeType.S_33_CHEST)
 			{
-				addRandomCard(ret);
+				addRandomCard(ret, chance);
 				
 				hasKeysReward = Math.random() < 0.1;
 				if( !hasKeysReward )
-					addRandomCard(ret);
+					addRandomCard(ret, chance);
 			}
 
 			// try to find new card
@@ -242,14 +243,14 @@ class Exchanger
 			}
 			
 			// random hards
-			ret.set(ResourceType.CURRENCY_HARD, Math.ceil(Math.random() * (type%10) ) * 2);
+			ret.set(ResourceType.CURRENCY_HARD, Math.ceil(Math.random() * Math.pow(type % 10, 3) * 0.5 ) );
 		}
 
 		// random softs
-		ret.set(ResourceType.CURRENCY_SOFT, Math.floor(Math.random() * (type % 10) * 10 ) + 1);
+		ret.set(ResourceType.CURRENCY_SOFT, Math.ceil(Math.random() * (type % 10) * 10 ));
 
 		// random xp
-		ret.set(ResourceType.XP, Math.ceil(Math.random() * (type%10) ) * 2);
+		ret.set(ResourceType.XP, Math.ceil(Math.random() * (type % 10) ) * 2);
 
 		// random keys
 		if( hasKeysReward )
@@ -259,7 +260,7 @@ class Exchanger
 	}
 	#end
 	
-	private function addRandomCard(ret:IntIntMap) : Void
+	private function addRandomCard(ret:IntIntMap, maxChance:Int) : Void
 	{
 		if ( game.player.buildings.keys().length <= ret.keys().length )
 			return;
@@ -267,9 +268,9 @@ class Exchanger
 		var random = game.player.getRandomBuilding();
 		if ( ret.exists(random) )
 		{
-			addRandomCard(ret);
+			addRandomCard(ret, maxChance);
 			return;
 		}
-		ret.set(random, Math.floor(Math.random() * 3)+1);
+		ret.set(random, Math.ceil( Math.random() * maxChance * (5 - (random % 10)) / 2 ) );
 	}
 }
