@@ -60,8 +60,8 @@ class Player
 			i++;
 		}
 		
-		if(i == 22)
-			return 21;
+		if(i == 26)
+			return 25;
 		return i;
 	}
 	
