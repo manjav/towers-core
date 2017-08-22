@@ -47,23 +47,20 @@ class Player
 			i++;
 		}
 	}
-
-	public function get_questIndex():Int 
-	{ 
-		var i:Int = 0;
-		var kies = quests.keys();
-		while (i < kies.length)
+	
+	public function get_questIndex():Int
+	{
+		var lastQuest = 0;
+		var questsKeys = quests.keys();
+		while ( lastQuest < questsKeys.length )
 		{
-			if (quests.get(kies[i]) == 0)
-				return i;
-				
-			i++;
+			if ( quests.get( questsKeys[lastQuest] ) == 0 )
+				return lastQuest;
+			lastQuest ++;
 		}
-		
-		if(i == 22)
-			return 21;
-		return i;
+		return questsKeys.length-1 ;
 	}
+	
 	
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_keys():Int { return resources.get(ResourceType.KEY); }
