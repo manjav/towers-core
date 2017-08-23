@@ -52,9 +52,6 @@ class Player
 	{
 		var lastQuest = 0;
 		var questsKeys = quests.keys();
-		if ( questsKeys.length == 0 )
-			return 0;
-			
 		while ( lastQuest < questsKeys.length )
 		{
 			if ( quests.get( questsKeys[lastQuest] ) == 0 )
