@@ -43,13 +43,14 @@ class IntIntMap extends EventDispatcher
 	**/
 	public function set(key:Int, value:Int) : Void
 	{
-		var from = exists(key) ? get(key) : 0;
+		var exists = exists(key);
+		var from = exists ? get(key) : 0;
 		#if java
 		_map.put(key, value);
 		#elseif flash
 		_map.set(key, value);
 		#end
-		dispatchChangeEvent(key, from, get(key));
+		dispatchChangeEvent(key, from, get(key), exists);
 	}
 
 	/**
@@ -227,7 +228,7 @@ class IntIntMap extends EventDispatcher
 	}
 	
 	
-	private function dispatchChangeEvent (key:Int, from:Int, to:Int) :Void
+	private function dispatchChangeEvent (key:Int, from:Int, to:Int, exists) :Void
 	{
 		if( from == to )
 			return;
@@ -235,7 +236,7 @@ class IntIntMap extends EventDispatcher
 	#if java
 		if ( changeCallback != null )
 		{
-			if( exists( key ) )
+			if( exists )
 				changeCallback.update( key, from, to );
 			else
 				changeCallback.insert( key, from, to );

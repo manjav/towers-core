@@ -47,23 +47,21 @@ class Player
 			i++;
 		}
 	}
-
-	public function get_questIndex():Int 
-	{ 
-		var i:Int = 0;
-		var kies = quests.keys();
-		while (i < kies.length)
+	
+	public function get_questIndex():Int
+	{
+		var lastQuest = 0;
+		var questsKeys = quests.keys();
+		while ( lastQuest < questsKeys.length )
 		{
-			if (quests.get(kies[i]) == 0)
-				return i;
-				
-			i++;
+			if ( quests.get( questsKeys[lastQuest] ) == 0 )
+				return lastQuest;
+			lastQuest ++;
 		}
-		
-		return i;
+		return questsKeys.length-1 ;
 	}
 	
-	public function inTutorial():Bool { return get_questIndex() < 3; }
+	
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_keys():Int { return resources.get(ResourceType.KEY); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
@@ -157,4 +155,8 @@ class Player
 			return getRandomBuilding();
 		return t;
 	}
+	
+	public function inTutorial():Bool { return get_questIndex() < 3; }
+	public function villageEnabled():Bool { return get_arena(0) > 0; }
+
 }
