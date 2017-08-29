@@ -11,7 +11,7 @@ class Heavy extends Building
 
 	public override function get_troopSpeed():Int
 	{
-		return 2500;
+		return 2900;
 	}
 	public override function get_troopPower():Float
 	{

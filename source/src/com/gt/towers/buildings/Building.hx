@@ -48,7 +48,7 @@ class Building extends AbstractBuilding
 	{
 		return BASE_EXIT_GAP;
 	}
-	public static var BASE_TROOP_SPEED:Int = 2600;
+	public static var BASE_TROOP_SPEED:Int = 2500;
 	public function get_troopSpeed():Int
 	{
 		return BASE_TROOP_SPEED;
@@ -171,7 +171,7 @@ class Building extends AbstractBuilding
 			if (_population - 1 < get_capacity())
 				_population = get_capacity();
 			else
-				_population -= 1;
+				_population -=  Math.ceil((_population - get_capacity()) * 0.3);
 		}
 		/*if ( p != _population)
 		{
