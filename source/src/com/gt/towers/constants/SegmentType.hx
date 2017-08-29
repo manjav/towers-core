@@ -1,0 +1,40 @@
+package com.gt.towers.constants;
+import com.gt.towers.utils.lists.IntList;
+
+/**
+ * ...
+ * @author Mansour Djawadi
+ */
+class SegmentType 
+{
+
+	public function new() {}
+	
+	public static var S0_SHOP:Int = 0;
+	public static var S1_MAP:Int = 1;
+	public static var S2_DECK:Int = 2;
+	
+	public static var S10_LOBBY_MAIN:Int = 10;
+	public static var S11_LOBBY_SEARCH:Int = 11;
+	public static var S12_LOBBY_CREATE:Int = 12;
+	public static var S13_FRIENDS:Int = 13;
+	
+	public static function getDashboardsSegments():IntList
+	{
+		var ret:IntList = new IntList();
+		ret.push( S0_SHOP );
+		ret.push( S1_MAP );
+		ret.push( S2_DECK );
+		return ret;
+	}
+	
+	public static function getSocialSegments(hasRoom:Bool):IntList
+	{
+		var ret:IntList = new IntList();
+		ret.push( hasRoom ? S10_LOBBY_MAIN : S11_LOBBY_SEARCH);
+		ret.push( hasRoom ? S11_LOBBY_SEARCH : S12_LOBBY_CREATE );
+		ret.push( S13_FRIENDS );
+		return ret;
+	}
+
+}
