@@ -171,7 +171,7 @@ class Building extends AbstractBuilding
 			if (_population - 1 < get_capacity())
 				_population = get_capacity();
 			else
-				_population -= 1;
+				_population -=  Math.ceil((_population - get_capacity()) * 0.3);
 		}
 		/*if ( p != _population)
 		{
