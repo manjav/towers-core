@@ -48,7 +48,7 @@ class Building extends AbstractBuilding
 	{
 		return BASE_EXIT_GAP;
 	}
-	public static var BASE_TROOP_SPEED:Int = 2600;
+	public static var BASE_TROOP_SPEED:Int = 2500;
 	public function get_troopSpeed():Int
 	{
 		return BASE_TROOP_SPEED;
