@@ -15,7 +15,7 @@ class GTimer
    // public static var timers:java.util.HashMap<Int, Timer> = new java.util.HashMap<Int, Timer>();
     public static var timers:IntTimerMap = new IntTimerMap();
     
-    public static function setInterval(func:Dynamic, milliseconds:Int, rest:Array<Dynamic>):Int
+   /* public static function setInterval(func:Dynamic, milliseconds:Int, rest:Array<Dynamic>):Int
     {
         var timer:Timer = new Timer(milliseconds);
         var id:Int = getIncreasedId();
@@ -38,7 +38,7 @@ class GTimer
         timers.get(id).stop();
         timers.set(id, null);
     }
-    
+    */
 	
     public static function setTimeout(func:Dynamic, milliseconds:Int, rest:Array<Dynamic>):Int
     {

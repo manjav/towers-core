@@ -64,6 +64,11 @@ class Building extends AbstractBuilding
 	{
 		return BASE_SPAWN_GAP;
 	}
+	/*public static var BASE_BIRTH_RATE:Float = 0.25;
+	public function get_birthRate():Float
+	{
+		return BASE_BIRTH_RATE;
+	}*/
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	public static var BASE_DAMAGE:Float = 1;
@@ -120,24 +125,20 @@ class Building extends AbstractBuilding
 			initialPopulation = get_capacity();
 		
 		_population = initialPopulation;
-
-		if(place.enabled)
-			spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
 		#end
 	}
 
 	
 	#if java
-	
 	public function improve(type:Int):Bool
 	{
 		if ( !improvable(type) )
 			return false;
 			
-		if (type != BuildingType.B01_CAMP)
-			_population -= Math.round(get_capacity() / 2);
+		if ( type != BuildingType.B01_CAMP )
+			_population -= Math.round( get_capacity() / 2 );
 		
-		if (type == BuildingType.IMPROVE)
+		if ( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 			
 		if( !equalsCategory(type) )
@@ -149,35 +150,33 @@ class Building extends AbstractBuilding
 		this.type ++;
 		improveLevel ++;
 		
-		GTimer.clearInterval(spawnIntervalId);
-		spawnIntervalId = GTimer.setInterval(calculatePopulation, get_spawnGap(), []);
-		
 		return true;
 	}
 	
-	private function calculatePopulation():Void
+	public function calculatePopulation():Void
 	{
-		//var p = _population;
-		if (_population < get_capacity())
+		if ( place==null || !place.enabled )
+			return;
+		
+		var gap = 500 / get_spawnGap() ;
+		
+		if ( _population < get_capacity() )
 		{
-			if (_population + 1 > get_capacity())
+			if (_population + gap > get_capacity())
 				_population = get_capacity();
 			else
-				_population += 1;
+				_population += gap;
 			
 		}
 		else if (_population > get_capacity())
 		{
-			if (_population - 1 < get_capacity())
+			gap = Math.ceil((_population - get_capacity()) * 0.3);
+			if (_population - gap < get_capacity())
 				_population = get_capacity();
 			else
-				_population -=  Math.ceil((_population - get_capacity()) * 0.3);
+				_population -= gap;
 		}
-		/*if ( p != _population)
-		{
-			p = _population;
-			game.tracer.log("[calculatePopulation] => index:" + index + ", population:" + _population + ", get_capacity():" + get_capacity());
-		}*/
+		//game.tracer.log(place.index + " t:" + type + " g: " + gap);
 	}
 	
 	public function popTroop():Bool
@@ -209,11 +208,6 @@ class Building extends AbstractBuilding
 		place.enabled = true;
 		if (type != BuildingType.B01_CAMP)
 			place.setBuilidng(BuildingType.B01_CAMP);
-	}
-	
-	public function dispose() 
-	{
-		GTimer.clearInterval(spawnIntervalId);
 	}
 	#end
 	

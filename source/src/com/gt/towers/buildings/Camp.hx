@@ -15,8 +15,13 @@ class Camp extends Building
 	
 	public override function get_spawnGap():Int
 	{
-		return 2000;
-	}	
+		return 2500;
+	}
+	
+	/*public override function get_birthRate():Float
+	{
+		return 0.22;
+	}*/
 	public override function get_capacity():Int
 	{
 		return 10;

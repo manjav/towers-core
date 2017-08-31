@@ -21,4 +21,10 @@ class Heavy extends Building
 	{
 		return 2500;
 	}
+	
+	/*public override function get_birthRate():Float
+	{
+		return 0.2;
+	}*/
+
 }

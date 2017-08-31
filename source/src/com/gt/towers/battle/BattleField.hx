@@ -74,17 +74,6 @@ class BattleField
 	}
 	
 	#if java
-	public function dispose():Void
-	{
-		var placesLen:Int = places.size();
-		var p:Int = 0;
-		while ( p < placesLen )
-		{
-			places.get(p).building.dispose();
-			p ++;
-		}
-	}
-	
 	public var now:Float = 0;
 	public var startAt:Float = 0;
 	public function getDuration() : Float

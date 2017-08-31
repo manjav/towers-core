@@ -81,7 +81,6 @@ class Place
 		var troopType = building.troopType;
 		var population = building.get_population();
 		
-		building.dispose();
 		building = BuildingType.instantiate(game, type, this, index);
 		
 		if (building != null)
