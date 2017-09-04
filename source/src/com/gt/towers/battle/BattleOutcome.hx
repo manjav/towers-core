@@ -26,6 +26,8 @@ class BattleOutcome
 	public static function get_outcomes(game:Game, field:FieldData, score:Int):IntIntMap
 	{
 		var ret:IntIntMap = new IntIntMap();
+		if ( game.player.inFriendlyBattle )
+			return ret;
 		
 		if ( field.isQuest )
 		{

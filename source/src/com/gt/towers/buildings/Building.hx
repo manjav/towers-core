@@ -30,7 +30,7 @@ class Building extends AbstractBuilding
 		if ( level == 0 )
 		{
 			if (getAbstract(type) != null)
-				level = getAbstract(type).level ;
+				level = getAbstract(type).get_level() ;
 			else
 				level = 1;
 		}

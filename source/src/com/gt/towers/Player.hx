@@ -23,6 +23,7 @@ class Player
 	public var resources:IntIntMap;
 	public var quests:IntIntMap;
 	public var buildings:IntBuildingMap;
+	public var inFriendlyBattle:Bool;
 	
 	private var game:Game;
 	

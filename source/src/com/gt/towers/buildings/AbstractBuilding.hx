@@ -15,24 +15,36 @@ import com.gt.towers.utils.maps.IntIntMap;
 class AbstractBuilding 
 {
 	public var type:Int;
-	public var level:Int;
 	public var improveLevel:Int;
 	
 	public var game:Game;
+
+	private var _level:Int;
 	
 	public function new(game:Game, type:Int, level:Int)
 	{
 		this.game = game;
 		this.type = type;
-		this.level = level;
+		this._level = level;
 		this.improveLevel = type % 10;
 	}
 	
+	public function get_level():Int
+	{
+		if ( game.player.inFriendlyBattle )
+			return 5;
+		else
+			return _level;
+	}	
+	public function set_level(value:Int):Void
+	{
+		_level = value;
+	}
 	
 	public function get_upgradeCost():Int
 	{
 		var costs = new IntIntMap();
-		if (level < 11)
+		if (get_level() < 11)
 		{
 			costs.set(0, 0);
 			costs.set(1, 10);
@@ -45,16 +57,16 @@ class AbstractBuilding
 			costs.set(8, 5000);
 			costs.set(9, 10000);
 			costs.set(10, 20000);
-			return costs.get(level);
+			return costs.get(get_level());
 		}
 		else
-			return Math.floor( Math.pow( 2, level - 9 ) * 10000 );
+			return Math.floor( Math.pow( 2, get_level() - 9 ) * 10000 );
 	}
 	
 	public function get_upgradeCards():Int
 	{		
 		var cards = new IntIntMap();
-		if (level < 11)
+		if (get_level() < 11)
 		{
 			cards.set(0, 0);
 			cards.set(1, 2);
@@ -67,10 +79,10 @@ class AbstractBuilding
 			cards.set(8, 400);
 			cards.set(9, 800);
 			cards.set(10, 1000);
-			return cards.get(level);
+			return cards.get(get_level());
 		}
 		else
-			return Math.floor( Math.pow( 2, level - 10 ) * 10000 );
+			return Math.floor( Math.pow( 2, get_level() - 10 ) * 10000 );
 	}
 	
 	public function get_upgradeRequirements():IntIntMap
@@ -84,7 +96,7 @@ class AbstractBuilding
 	public function get_upgradeRewards():IntIntMap 
 	{
 		var ret = new IntIntMap();
-		ret.set(ResourceType.XP, Math.round( ( Math.log(level * level) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
+		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
 		return ret;
 	}
 	
@@ -104,7 +116,7 @@ class AbstractBuilding
 		if ( !game.exchanger.exchange(ei, 0, confirmedHards) )
 			return false;
 		
-		level ++;
+		_level ++;
 		return true;
 	}	
 	public function get_unlockAt():Int 
@@ -118,6 +130,9 @@ class AbstractBuilding
 	public function unlocked(type:Int=-1):Bool 
 	{
 		if ( type == BuildingType.B01_CAMP )
+			return true;
+			
+		if ( game.player.inFriendlyBattle )
 			return true;
 			
 		if ( type == BuildingType.NONE )
