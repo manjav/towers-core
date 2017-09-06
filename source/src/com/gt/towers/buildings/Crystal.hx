@@ -15,10 +15,10 @@ class Crystal extends Building
 	}
 	public override function get_damageGap():Int
 	{
-		return 800 - Math.floor(Math.log(improveLevel) * 1.5 +  Math.log(get_level()) * 0.5 ) * 180;
+		return 850 - Math.floor(Math.log(improveLevel) * 1.5 +  Math.log(get_level()) * 0.5 ) * 180;
 	}
 	public override function get_damageRadius():Float
 	{
-		return 210 + Math.round( (Math.log(improveLevel) + Math.log(get_level())) * 30);
+		return 180 + Math.round( (Math.log(improveLevel) + Math.log(get_level())) * 30);
 	}
 }
