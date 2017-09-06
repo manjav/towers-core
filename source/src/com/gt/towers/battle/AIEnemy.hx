@@ -29,6 +29,7 @@ class AIEnemy
 	public var sources:IntList;
 	public var target:Int;
 	public var destinations:IntIntMap;
+	public var difficulty:Int = 2;
 	
 	public var accessPoint:Float;
 	
@@ -62,7 +63,7 @@ class AIEnemy
 			var singlePlace = enemyPlaces.get(0);
 			if( singlePlace.enabled && singlePlace.building.type==BuildingType.B01_CAMP && battleField.getDuration()<battleField.map.times.get(0) )
 			{
-				if ( Math.random() < 0.8 )
+				if ( Math.random() < 0.8 && difficulty >= 2)
 				{
 					singlePlace.building.improve(BuildingType.B11_BARRACKS);
 					return TYPE_IMPROVE;
@@ -126,7 +127,7 @@ class AIEnemy
 		if (battleField.places.get(target).building.get_population() > enemyPopulation )
 			return TYPE_WAIT_FOR_GROW;
 		
-		if (battleField.places.get(target).building.get_population() > enemyPopulation*0.7 )
+		if (battleField.places.get(target).building.get_population() > enemyPopulation*0.7 && difficulty >= 1)
 			return TYPE_FIGHT_DOUBLE;
 		return TYPE_FIGHT;
 	}
