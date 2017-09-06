@@ -59,16 +59,16 @@ class Building extends AbstractBuilding
 		return BASE_TROOP_POWER;
 	}
 	
-	public static var BASE_SPAWN_GAP:Int = 2300;
+	/*public static var BASE_SPAWN_GAP:Int = 2300;
 	public function get_spawnGap():Int
 	{
 		return BASE_SPAWN_GAP;
-	}
-	/*public static var BASE_BIRTH_RATE:Float = 0.25;
+	}*/
+	public static var BASE_BIRTH_RATE:Float = 0.25;
 	public function get_birthRate():Float
 	{
 		return BASE_BIRTH_RATE;
-	}*/
+	}
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	public static var BASE_DAMAGE:Float = 1;
@@ -158,7 +158,8 @@ class Building extends AbstractBuilding
 		if ( place==null || !place.enabled )
 			return;
 		
-		var gap = 500 / get_spawnGap() ;
+		//var gap = 500 / get_spawnGap() ;
+		var gap = get_birthRate() ;
 		
 		if ( _population < get_capacity() )
 		{
@@ -228,7 +229,7 @@ class Building extends AbstractBuilding
 		if ( feature == BuildingFeatureType.F01_CAPACITY )
 			return get_capacity();
 		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return get_spawnGap();
+			return get_birthRate();
 		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
 			return get_troopSpeed();
 		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
@@ -248,7 +249,7 @@ class Building extends AbstractBuilding
 		if ( feature == BuildingFeatureType.F01_CAPACITY )
 			return BASE_CAPACITY;
 		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return BASE_SPAWN_GAP;
+			return BASE_BIRTH_RATE;
 		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
 			return BASE_TROOP_SPEED;
 		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )

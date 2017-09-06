@@ -13,15 +13,15 @@ class Camp extends Building
 		super(place, index, type);
 	}*/
 	
-	public override function get_spawnGap():Int
+	/*public override function get_spawnGap():Int
 	{
 		return 2500;
-	}
+	}*/
 	
-	/*public override function get_birthRate():Float
+	public override function get_birthRate():Float
 	{
 		return 0.22;
-	}*/
+	}
 	public override function get_capacity():Int
 	{
 		return 10;
