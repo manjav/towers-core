@@ -22,7 +22,7 @@ echo %%a | findstr /C:%SEARCHTEXT% 1>nul
 )
 :exittag
 :: Concat major varsion with modified date
-set NEWNAME=%mver:~34,4%%DATE%
+set NEWNAME=%mver:~34,5%%DATE%
 
 
 :: Update core version in LoginData class
@@ -34,8 +34,8 @@ for /f "tokens=1,* delims=¶" %%A in ( '"type %OUTTEXTFILE%"') do (
 echo %%A | findstr /C:%SEARCHTEXT% 1>nul
 	if not errorlevel 1 (
 		set line=%%A
-		set NEWNAME = %line:~0,38%%DATE%
-		>> %INTEXTFILE% echo(!line:~0,38!%REPLACETEXT%
+		set NEWNAME = %line:~0,39%%DATE%
+		>> %INTEXTFILE% echo(!line:~0,39!%REPLACETEXT%
 	) ELSE (
 		>> %INTEXTFILE% echo(%%A
 	)
@@ -56,6 +56,7 @@ echo f | xcopy /f /y bin\flash\Core.swc C:\_projects\towers-projects\towers-clie
 
 echo f | xcopy /f /y bin\java\Core.jar C:\SmartFoxServer_2X\SFS2X\extensions\__lib__\core.jar
 ::C:\_softwares\server\pscp.exe -pw *** bin\java\Core.jar root@130.185.74.249:/home/babak/SmartFoxServer_2X/SFS2X/extensions/__lib__/core.jar
+pause
 
 exit
 
