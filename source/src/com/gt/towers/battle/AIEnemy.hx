@@ -124,7 +124,7 @@ class AIEnemy
 		target = keys [ Math.floor( Math.random() * keys.length ) ];
 		//destination = destinations[0];
 		
-		if (battleField.places.get(target).building.get_population() > enemyPopulation )
+		if (battleField.places.get(target).building.get_population() > enemyPopulation && difficulty >= 2 )
 			return TYPE_WAIT_FOR_GROW;
 		
 		if (battleField.places.get(target).building.get_population() > enemyPopulation*0.7 && difficulty >= 1)

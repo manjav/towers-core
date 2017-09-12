@@ -60,8 +60,8 @@ class Player
 				return lastQuest;
 			lastQuest ++;
 		}
-		if ( lastQuest == 22 )
-			return 21;
+		if ( lastQuest == 27 )
+			return 26;
 		return lastQuest ;
 	}
 	
