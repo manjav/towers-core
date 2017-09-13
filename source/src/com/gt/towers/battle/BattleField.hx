@@ -19,9 +19,9 @@ class BattleField
 	public var places:PlaceList;
 	public var map:FieldData;
 
-	public function new(game:Game, mapName:String, troopType:Int)
+	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int)
 	{
-		map = game.fieldProvider.fields.get(mapName);
+		map = game_0.fieldProvider.fields.get(mapName);
 		
 		places = new PlaceList();
 		var p = 0;
@@ -31,8 +31,8 @@ class BattleField
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
-			place = new Place(game, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
-			place.building = BuildingType.instantiate(game, placeData.type, place, placeData.index);
+			place = new Place((placeData.troopType==1&&game_1!=null)?game_1:game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
+			place.building = BuildingType.instantiate((placeData.troopType==1&&game_1!=null)?game_1:game_0, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
 			

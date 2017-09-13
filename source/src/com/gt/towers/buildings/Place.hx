@@ -26,7 +26,7 @@ class Place
 	public var building:Building;
 	
 	private var troopId:Int;
-	private var game:Game;
+	public var game:Game;
 
 	public function new(game:Game, index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{
@@ -75,7 +75,7 @@ class Place
 		troops.get(troopId).hit(damage);
 	}
 	
-	public function setBuilidng(type:Int) 
+	public function setBuilidng(type:Int, game:Game) 
 	{
 		enabled = true;
 		var troopType = building.troopType;

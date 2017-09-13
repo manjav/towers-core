@@ -143,7 +143,7 @@ class Building extends AbstractBuilding
 			
 		if( !equalsCategory(type) )
 		{
-			place.setBuilidng(type);
+			place.setBuilidng(type, game);
 			return true;
 		}
 		
@@ -207,8 +207,12 @@ class Building extends AbstractBuilding
 		_population = 0;
 		troopType = troop.type;
 		place.enabled = true;
-		if (type != BuildingType.B01_CAMP)
-			place.setBuilidng(BuildingType.B01_CAMP);
+		if ( type == BuildingType.B01_CAMP )
+		{
+			place.game = game = troop.building.game;
+			return;
+		}
+		place.setBuilidng(BuildingType.B01_CAMP, troop.building.game);
 	}
 	#end
 	
