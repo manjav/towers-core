@@ -44,6 +44,8 @@ class Game
 	
 	function init(data:InitData) 
 	{
+		appVersion = data.appVersion;
+		market = data.market;
 		player = new Player(this, data);
 		exchanger = new Exchanger(this, data);
 		fieldProvider = new FieldProvider();

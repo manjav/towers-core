@@ -56,7 +56,5 @@ echo f | xcopy /f /y bin\flash\Core.swc C:\_projects\towers-projects\towers-clie
 
 echo f | xcopy /f /y bin\java\Core.jar C:\SmartFoxServer_2X\SFS2X\extensions\__lib__\core.jar
 ::C:\_softwares\server\pscp.exe -pw *** bin\java\Core.jar root@130.185.74.249:/home/babak/SmartFoxServer_2X/SFS2X/extensions/__lib__/core.jar
-pause
 
 exit
-
