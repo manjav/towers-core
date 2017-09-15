@@ -41,7 +41,18 @@ class Building extends AbstractBuilding
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
 	{
-		return 10 + (5 * improveLevel);
+		if ( improveLevel == 1 )
+			return 14;
+		else if ( improveLevel == 2 )
+			return 17;
+		else if ( improveLevel == 3 )
+			return 20;
+		else if ( improveLevel == 4 )
+			return 22;
+		else
+			return 10;
+
+		//return 10 + (5 * improveLevel);
 	}
 	public static var BASE_EXIT_GAP:Int = 200;
 	public function get_exitGap():Int 
