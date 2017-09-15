@@ -89,9 +89,10 @@ class AIEnemy
 					if( botPlaces.get(p).links.get(m).building.troopType != 1 )
 					{
 						var building = botPlaces.get(p).links.get(m).building;
-						var dis = Math.sqrt(Math.pow(botPlaces.get(p).x-botPlaces.get(p).links.get(m).x, 2) + Math.pow((botPlaces.get(p).y-botPlaces.get(p).links.get(m).y)*1.2, 2));
-						var population = building.get_population() * building.get_troopPower() * building.get_damage();
-						population *= building.troopType == -1 ? 2 : 1;
+						var dis = difficulty<2 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x-botPlaces.get(p).links.get(m).x, 2) + Math.pow((botPlaces.get(p).y-botPlaces.get(p).links.get(m).y)*1.2, 2))/200;
+						var population = building.get_population() * building.get_troopPower() * building.get_damage() * dis;
+						population *= building.troopType == -1 ? 1.1 : 1;
+						//building.game.tracer.log(p + " ->> " + m + " dis:"+dis + "	population:"+population);
 						if( population <= minPlayerPopulation )
 						{
 							if ( population < minPlayerPopulation )
