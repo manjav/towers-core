@@ -63,7 +63,7 @@ class AIEnemy
 			var singlePlace = botPlaces.get(0);
 			if( singlePlace.enabled && singlePlace.building.type==BuildingType.B01_CAMP && battleField.getDuration()<battleField.map.times.get(0) )
 			{
-				if ( Math.random() < 0.8 && difficulty >= 2 )
+				if ( Math.random() < 0.8 && difficulty >= 1 )
 				{
 					if( improve(singlePlace.building) )
 						return TYPE_IMPROVE;
@@ -89,7 +89,7 @@ class AIEnemy
 					if( botPlaces.get(p).links.get(m).building.troopType != 1 )
 					{
 						var building = botPlaces.get(p).links.get(m).building;
-						var dis = difficulty<2 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x-botPlaces.get(p).links.get(m).x, 2) + Math.pow((botPlaces.get(p).y-botPlaces.get(p).links.get(m).y)*1.2, 2))/200;
+						var dis = difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x-botPlaces.get(p).links.get(m).x, 2) + Math.pow((botPlaces.get(p).y-botPlaces.get(p).links.get(m).y)*1.2, 2))/150;
 						var population = building.get_population() * building.get_troopPower() * building.get_damage() * dis;
 						population *= building.troopType == -1 ? 1.1 : 1;
 						//building.game.tracer.log(p + " ->> " + m + " dis:"+dis + "	population:"+population);
@@ -126,15 +126,15 @@ class AIEnemy
 		target = keys [ Math.floor( Math.random() * keys.length ) ];
 		//destination = destinations[0];
 		
-		if( getPlayerPopulation(playerPlaces) > botPopulation && playerPlaces.size() < botPlaces.size() )
+		if( getPlayerPopulation(playerPlaces) > botPopulation && playerPlaces.size() <= botPlaces.size() )
 		{
 			if ( improvePopulous(botPlaces) )
 				return TYPE_IMPROVE;
 			else
-				return TYPE_WAIT_FOR_GROW;
+				return difficulty >= 1 ? TYPE_WAIT_FOR_GROW : TYPE_FIGHT ;
 		}
 		
-		if( battleField.places.get(target).building.get_population() > botPopulation * 0.7 && difficulty >= 1)
+		if( battleField.places.get(target).building.get_population() > botPopulation * 0.7 && difficulty >= 2)
 			return TYPE_FIGHT_DOUBLE;
 			
 		return TYPE_FIGHT;
@@ -155,7 +155,7 @@ class AIEnemy
 	
 	private function improvePopulous(botPlaces:PlaceList) :Bool
 	{
-		if ( difficulty < 2 )
+		if ( difficulty < 3 )
 			return false;
 		var size = botPlaces.size();
 		var b = 0;
