@@ -21,6 +21,9 @@ class Game
 	public var loginData:LoginData = new LoginData(); 
 	
 	public var player:Player;
+	public var appVersion:Int;
+	public var market:String;
+
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
 	public var arenas:IntArenaMap;
