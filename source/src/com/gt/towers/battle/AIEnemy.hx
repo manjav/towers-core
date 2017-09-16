@@ -90,7 +90,7 @@ class AIEnemy
 					{
 						var building = botPlaces.get(p).links.get(m).building;
 						var dis = difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 200;
-						var population = building.get_population() * building.get_troopPower() * building.get_damage() * dis;
+						var population = building.get_population() * building.get_troopPower() * building.get_damage() * building.improveLevel * dis;
 						population *= building.troopType == -1 ? 1.1 : 1;
 						//building.game.tracer.log(botPlaces.get(p).index + " ->> " + botPlaces.get(p).links.get(m).index + " dis:"+dis + " difficulty:"+difficulty+" population:"+population);
 						if( population <= minPlayerPopulation )
@@ -126,20 +126,34 @@ class AIEnemy
 		target = keys [ Math.floor( Math.random() * keys.length ) ];
 		//destination = destinations[0];
 		
-		//playerPlaces.get(0).game.tracer.log(getPlayerPopulation(playerPlaces) +" > " + botPopulation  +" && " + playerPlaces.size() +" <= " + botPlaces.size()*2 );
-		if( getPlayerPopulation(playerPlaces) > botPopulation && playerPlaces.size() <= botPlaces.size() * 2 )
+		//playerPlaces.get(0).game.tracer.log(getPlayerPopulation(playerPlaces) +" > " + botPopulation  +" && " + playerPlaces.size() +" <= " + botPlaces.size() * 2 );
+		if( getPlayerPopulation(playerPlaces) > botPopulation && playerPlaces.size() <= botPlaces.size() * 2 || hasFullyBuildings(botPlaces) )
 			if( improvePopulous(botPlaces) )
 				return TYPE_IMPROVE;
 		
+		//playerPlaces.get(0).game.tracer.log(battleField.places.get(target).building.get_population() +" > " + botPopulation * 0.5  +" -- " + difficulty );
 		if ( battleField.places.get(target).building.get_population() > botPopulation * 0.5 )
 		{
 			if ( difficulty >= 2 )
-				return TYPE_FIGHT_DOUBLE;
+				return Math.random()>0.5 ? TYPE_WAIT_FOR_GROW : TYPE_FIGHT_DOUBLE;
 			else if ( difficulty >= 1 )
-				return TYPE_WAIT_FOR_GROW ;
+				return TYPE_FIGHT_DOUBLE;
 		}
 			
 		return TYPE_FIGHT;
+	}
+	
+	private function hasFullyBuildings(botPlaces:PlaceList) : Bool 
+	{
+		var b = 0;
+		var size = botPlaces.size();
+		while ( b < size )
+		{
+			if( botPlaces.get(b).building.get_capacity() == botPlaces.get(b).building.get_population() )
+				return true;
+			b ++;
+		}
+		return false;
 	}
 	
 	private function getPlayerPopulation(playerPlaces:PlaceList) :Int
@@ -159,6 +173,7 @@ class AIEnemy
 	{
 		if ( difficulty < 3 )
 			return false;
+		var ret = false;
 		var size = botPlaces.size();
 		var b = 0;
 		while ( b < size )
@@ -167,10 +182,14 @@ class AIEnemy
 			var bb = improve(building);
 			//building.game.tracer.log("index:" + building.index + " type:" + building.type + " trying to improvement ==> " + bb);
 			if ( bb )
-				return true;
+			{
+				ret = true;
+				if( difficulty < 5 )  
+					return true;
+			}
 			b ++;
 		}
-		return false;
+		return ret;
 	}
 	
 	private function improve(building:Building) : Bool
