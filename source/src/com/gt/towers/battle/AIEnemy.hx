@@ -126,7 +126,7 @@ class AIEnemy
 		target = keys [ Math.floor( Math.random() * keys.length ) ];
 		//destination = destinations[0];
 		
-		if( getPlayerPopulation(playerPlaces) > botPopulation )
+		if( getPlayerPopulation(playerPlaces) > botPopulation && playerPlaces.size() < botPlaces.size() )
 		{
 			if ( improvePopulous(botPlaces) )
 				return TYPE_IMPROVE;
@@ -136,6 +136,7 @@ class AIEnemy
 		
 		if( battleField.places.get(target).building.get_population() > botPopulation * 0.7 && difficulty >= 1)
 			return TYPE_FIGHT_DOUBLE;
+			
 		return TYPE_FIGHT;
 	}
 	
@@ -174,7 +175,7 @@ class AIEnemy
 	{
 		if ( building.type == BuildingType.B01_CAMP )
 		{
-			if ( battleField.getDuration() < battleField.map.times.get(0) )
+			if ( battleField.getDuration() < battleField.map.times.get(0)/2 )
 				return building.improve(BuildingType.B11_BARRACKS);
 			
 			var rand = Math.random();
