@@ -21,8 +21,10 @@ class Game
 	public var loginData:LoginData = new LoginData(); 
 	
 	public var player:Player;
+	
 	public var appVersion:Int;
 	public var market:String;
+	public var sessionsCount:Int;
 
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
@@ -46,6 +48,8 @@ class Game
 	{
 		appVersion = data.appVersion;
 		market = data.market;
+		sessionsCount = data.sessionsCount;
+		
 		player = new Player(this, data);
 		exchanger = new Exchanger(this, data);
 		fieldProvider = new FieldProvider();
