@@ -39,7 +39,14 @@ class FieldProvider
 		fields.set( "quest_23" , new Quest_23( 23, "quest_23", false, false, false, "100,100,100" ) );
 		fields.set( "quest_24" , new Quest_24( 24, "quest_24", false, false, false, "100,150,220" ) );
 		fields.set( "quest_25" , new Quest_24( 25, "quest_25", false, false, false, "100,150,220" ) );
-		//fields.set( "quest_26" , new Quest_26( 26, "quest_26", false, false, false, "100,150,240" ) );
+		fields.set( "quest_26" , new Quest_26( 26, "quest_26", false, false, false, "100,150,240" ) );
+		fields.set( "quest_27" , new Quest_27( 27, "quest_27", false, false, false, "100,150,240" ) );
+		fields.set( "quest_28" , new Quest_28( 28, "quest_28", false, false, false, "60,100,160" ) );
+		fields.set( "quest_29" , new Quest_29( 29, "quest_29", false, false, false, "60,100,160" ) );
+		fields.set( "quest_30" , new Quest_30( 30, "quest_30", false, false, false, "60,100,160" ) );
+		fields.set( "quest_31" , new Quest_31( 31, "quest_31", false, false, false, "60,100,160" ) );
+		fields.set( "quest_32" , new Quest_32( 32, "quest_32", false, false, false, "60,100,160" ) );
+		fields.set( "quest_33" , new Quest_33( 33, "quest_33", false, false, false, "80,120,200" ) );
 		
 		
 		
