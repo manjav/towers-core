@@ -42,13 +42,13 @@ class Building extends AbstractBuilding
 	public function get_capacity():Int 
 	{
 		if ( improveLevel == 1 )
-			return 14;
+			return 15;
 		else if ( improveLevel == 2 )
-			return 17;
+			return 18;
 		else if ( improveLevel == 3 )
-			return 20;
+			return 21;
 		else if ( improveLevel == 4 )
-			return 22;
+			return 24;
 		else
 			return 10;
 
