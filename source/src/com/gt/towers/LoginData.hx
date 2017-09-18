@@ -15,7 +15,7 @@ class LoginData
 {
 	
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1070.0917120700";//do not change len.
+	public var coreVersion:String = "1070.0918233310";//do not change len.
 	public var noticeVersion:Int = 1060;
 	public var forceVersion:Int = 150;
 	public var resources:IntIntMap;
@@ -24,6 +24,7 @@ class LoginData
 		
 	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
+	public var maxKeysPerDay:Int = 10;
 	
 	public function new()
 	{
