@@ -5,10 +5,10 @@ import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.StickerType;
 import com.gt.towers.constants.MessageTypes;
+import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
 import com.gt.towers.utils.maps.IntExchangeMap;
-import com.gt.towers.utils.maps.IntIntMap;
 
 /**
  * ...
@@ -26,6 +26,11 @@ class Player
 	public var inFriendlyBattle:Bool;
 	
 	private var game:Game;
+	
+	#if flash
+	public var prefs:com.gt.towers.utils.maps.IntStrMap;
+	#end
+
 	
 	public function new(game:Game, initData:InitData)
 	{
@@ -48,6 +53,10 @@ class Player
 			buildings.set(kies[i], BuildingType.instantiate( game, kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
 			i++;
 		}
+		#if flash
+		prefs = new com.gt.towers.utils.maps.IntStrMap();
+		prefs.set(com.gt.towers.constants.PrefsTypes.P30_OFFER_RATING, "0");
+		#end
 	}
 	
 	public function get_questIndex():Int
