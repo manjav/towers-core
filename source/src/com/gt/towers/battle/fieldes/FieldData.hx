@@ -48,11 +48,13 @@ class FieldData
 		var i = 0;
 		while (i < places.size())
 		{
-			if (places.get(i).tutorIndex > -1)
-				ret.push(places.get(i));
+			if ( places.get(i).tutorIndex > -1 )
+			{
+				if( ret.size() > 0 || places.get(i).troopType == 0 )
+					ret.push(places.get(i));
+			}
 			
-				
-				i ++;
+			i ++;
 		}
 		return ret;
 	}
@@ -62,7 +64,7 @@ class FieldData
 		var i = 0;
 		while (i < places.size())
 		{
-			if ( places.get(i).tutorIndex < 0 && places.get(i).tutorIndex != -3)
+			if ( places.get(i).tutorIndex < 0 && places.get(i).tutorIndex != -3 )
 				return places.get( i );
 				
 				i ++;
