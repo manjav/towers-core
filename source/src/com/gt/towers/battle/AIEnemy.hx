@@ -29,12 +29,12 @@ class AIEnemy
 	public var sources:IntList;
 	public var target:Int;
 	public var destinations:IntIntMap;
-	public var difficulty:Int = 2;
+	public var difficulty:Int;
+	public var maxEnemy:Int;
 	
 	public var accessPoint:Float;
 	
 	private var battleField:BattleField;
-	private var maxEnemy:Int = 7;
 	
 	public function new(battleField:BattleField)
 	{

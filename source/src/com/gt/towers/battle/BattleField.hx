@@ -21,7 +21,7 @@ class BattleField
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int)
 	{
-		map = game_0.fieldProvider.fields.get(mapName);
+		map = game_0.fieldProvider.quests.get(mapName);
 		
 		places = new PlaceList();
 		var p = 0;

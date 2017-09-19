@@ -69,9 +69,7 @@ class Player
 				return lastQuest;
 			lastQuest ++;
 		}
-		if ( lastQuest == 35 )
-			return 34;
-		return lastQuest ;
+		return game.fieldProvider.quests.keys().length - 1 ;
 	}
 	
 	

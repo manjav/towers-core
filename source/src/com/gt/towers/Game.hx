@@ -52,7 +52,6 @@ class Game
 		
 		player = new Player(this, data);
 		exchanger = new Exchanger(this, data);
-		fieldProvider = new FieldProvider();
 		
 		arenas = new IntArenaMap();
 		arenas.set(0, new Arena(0, 0,		50,		"11"    ));
@@ -65,6 +64,9 @@ class Game
 		arenas.set(7, new Arena(7, 701,		1000,	"14,33"	));
 		arenas.set(8, new Arena(8, 1001,	1400,	"24,43"	));
 		arenas.set(9, new Arena(9, 1401,	10000,	"34,44"	));
+		
+		fieldProvider = new FieldProvider(this);
+
 	}
 	
 	public function unlockedBuildingAt ( type:Int ) : Int
