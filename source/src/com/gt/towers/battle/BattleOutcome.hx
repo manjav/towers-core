@@ -61,10 +61,9 @@ class BattleOutcome
 			
 			// keys
 			var keyItem = game.exchanger.items.get(ExchangeType.S_41_KEYS);
-			var maxKeys = 10;
-			if ( keyItem.numExchanges < maxKeys )
+			if ( keyItem.numExchanges < game.loginData.maxKeysPerDay )
 			{
-				var numKeys = cast( Math.min( maxKeys-keyItem.numExchanges, Math.max(0, score) ), Int );
+				var numKeys = cast( Math.min( game.loginData.maxKeysPerDay-keyItem.numExchanges, Math.max(0, score) ), Int );
 				ret.set(ResourceType.KEY, numKeys);
 				keyItem.numExchanges += numKeys;
 			}
