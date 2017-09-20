@@ -14,7 +14,7 @@ class FieldProvider
 		quests = new StringFieldMap();
 		
 		quests.set( "quest_0" , new Quest_0( 0, "quest_0", true , true, true, "100,100,100" ) );
-		quests.set( "quest_1" , new Quest_1( 1, "quest_1", true, true, true, "100,130,150" ) );
+		quests.set( "quest_1" , new Quest_1( 1, "quest_1", true, true, false, "100,130,150" ) );
 		quests.set( "quest_2" , new Quest_2( 2, "quest_2", true, true, true, "100,130,150" ) );
 		quests.set( "quest_3" , new Quest_3( 3, "quest_3", false, false, false, "40,60,75" ) );
 		quests.set( "quest_4" , new Quest_4( 4, "quest_4", false, false, false, "40,60,75" ) );
@@ -85,6 +85,6 @@ class FieldProvider
 		
 		game.arenas.get(9).fields.set( "battle_901" , new Battle_601( 901, "battle_901", false, false, false, "150,200,300" ) );
 		game.arenas.get(9).fields.set( "battle_902" , new Battle_602( 902, "battle_902", false, false, false, "150,200,300" ) );
-		game.arenas.get(9).fields.set( "battle_903" , new Battle_101( 903, "battle_903", false, false, false, "150,200,300" ) );
+		game.arenas.get(9).fields.set( "battle_903" , new Battle_502( 903, "battle_903", false, false, false, "150,200,300" ) );
 	}
 }
