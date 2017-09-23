@@ -24,7 +24,8 @@ class BattleField
 		if( mapName.substr(0, 6) == "quest_" )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
-			map = game_0.arenas.get(game_0.player.get_arena(0)).fields.get(mapName);
+			map = game_0.fieldProvider.battles.get(mapName);
+			
 		
 		places = new PlaceList();
 		var p = 0;

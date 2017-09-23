@@ -8,6 +8,7 @@ import com.gt.towers.utils.maps.StringFieldMap;
 class FieldProvider 
 {
 	public var quests:StringFieldMap;
+	public var battles:StringFieldMap;
 	
 	public function new(game:Game) 
 	{
@@ -36,7 +37,7 @@ class FieldProvider
 		quests.set( "quest_20" , new Quest_20( 20, "quest_20", false, false, false, "100,150,220" ) );
 		quests.set( "quest_21" , new Quest_21( 21, "quest_21", false, false, false, "100,150,220" ) );
 		quests.set( "quest_22" , new Quest_22( 22, "quest_22", false, false, false, "100,150,220" ) );
-		quests.set( "quest_23" , new Quest_23( 23, "quest_23", false, false, false, "100,100,100" ) );
+		quests.set( "quest_23" , new Quest_23( 23, "quest_23", false, false, false, "100,150,200" ) );
 		quests.set( "quest_24" , new Quest_24( 24, "quest_24", false, false, false, "100,150,220" ) );
 		quests.set( "quest_25" , new Quest_24( 25, "quest_25", false, false, false, "100,150,220" ) );
 		quests.set( "quest_26" , new Quest_26( 26, "quest_26", false, false, false, "100,150,240" ) );
@@ -44,47 +45,50 @@ class FieldProvider
 		quests.set( "quest_28" , new Quest_28( 28, "quest_28", false, false, false, "100,150,240" ) );
 		quests.set( "quest_29" , new Quest_29( 29, "quest_29", false, false, false, "100,150,240" ) );
 		
-		game.arenas.get(0).fields.set( "battle_1" , new Battle_1( 1, "battle_1", false, false, false, "60,100,160" ) );
-		game.arenas.get(0).fields.set( "battle_2" , new Battle_2( 2, "battle_2", false, false, false, "60,100,160" ) );
-		game.arenas.get(0).fields.set( "battle_3" , new Battle_3( 3, "battle_3", false, false, false, "60,100,160" ) );
-		game.arenas.get(0).fields.set( "battle_4" , new Battle_4( 4, "battle_4", false, false, false, "60,100,160" ) );
-		game.arenas.get(0).fields.set( "battle_5" , new Battle_5( 5, "battle_5", false, false, false, "60,100,160" ) );
 		
-		game.arenas.get(1).fields.set( "battle_101" , new Battle_101( 101, "battle_101", false, false, false, "80,120,200" ) );
-		game.arenas.get(1).fields.set( "battle_102" , new Battle_102( 102, "battle_102", false, false, false, "80,120,200" ) );
-		game.arenas.get(1).fields.set( "battle_103" , new Battle_103( 103, "battle_103", false, false, false, "80,120,200" ) );
-		game.arenas.get(1).fields.set( "battle_104" , new Battle_2	( 104, "battle_104" , false, false, false, "80,120,200" ) );
+		battles = new StringFieldMap();
 		
-		game.arenas.get(2).fields.set( "battle_201" , new Battle_201( 201, "battle_201", false, false, false, "100,130,210" ) );
-		game.arenas.get(2).fields.set( "battle_202" , new Battle_202( 202, "battle_202", false, false, false, "100,130,210" ) );
-		game.arenas.get(2).fields.set( "battle_203" , new Battle_102( 203, "battle_203", false, false, false, "100,130,210" ) );
+		battles.set( "battle_1" , new Battle_1( 1, "battle_1", false, false, false, "60,100,160" ) );
+		battles.set( "battle_2" , new Battle_2( 2, "battle_2", false, false, false, "60,100,160" ) );
+		battles.set( "battle_3" , new Battle_3( 3, "battle_3", false, false, false, "60,100,160" ) );
+		battles.set( "battle_4" , new Battle_4( 4, "battle_4", false, false, false, "60,100,160" ) );
+		battles.set( "battle_5" , new Battle_5( 5, "battle_5", false, false, false, "60,100,160" ) );
 		
-		game.arenas.get(3).fields.set( "battle_301" , new Battle_301( 301, "battle_301", false, false, false, "100,150,250" ) );
-		game.arenas.get(3).fields.set( "battle_302" , new Battle_302( 302, "battle_302", false, false, false, "100,150,250" ) );
-		game.arenas.get(3).fields.set( "battle_303" , new Battle_202( 303, "battle_303", false, false, false, "100,150,250" ) );
+		battles.set( "battle_101" , new Battle_101( 101, "battle_101", false, false, false, "80,120,200" ) );
+		battles.set( "battle_102" , new Battle_102( 102, "battle_102", false, false, false, "80,120,200" ) );
+		battles.set( "battle_103" , new Battle_103( 103, "battle_103", false, false, false, "80,120,200" ) );
+		battles.set( "battle_104" , new Battle_2  ( 104, "battle_104" , false, false, false, "80,120,200" ) );
 		
-		game.arenas.get(4).fields.set( "battle_401" , new Battle_401( 401, "battle_401", false, false, false, "100,150,250" ) );
-		game.arenas.get(4).fields.set( "battle_402" , new Battle_402( 402, "battle_402", false, false, false, "100,150,250" ) );
-		game.arenas.get(4).fields.set( "battle_403" , new Battle_302( 403, "battle_403", false, false, false, "100,150,250" ) );
+		battles.set( "battle_201" , new Battle_201( 201, "battle_201", false, false, false, "100,130,210" ) );
+		battles.set( "battle_202" , new Battle_202( 202, "battle_202", false, false, false, "100,130,210" ) );
+		battles.set( "battle_203" , new Battle_102( 203, "battle_203", false, false, false, "100,130,210" ) );
 		
-		game.arenas.get(5).fields.set( "battle_501" , new Battle_501( 501, "battle_501", false, false, false, "100,150,250" ) );
-		game.arenas.get(5).fields.set( "battle_502" , new Battle_502( 502, "battle_502", false, false, false, "100,150,250" ) );
-		game.arenas.get(5).fields.set( "battle_503" , new Battle_402( 503, "battle_503", false, false, false, "100,150,250" ) );
+		battles.set( "battle_301" , new Battle_301( 301, "battle_301", false, false, false, "100,150,250" ) );
+		battles.set( "battle_302" , new Battle_302( 302, "battle_302", false, false, false, "100,150,250" ) );
+		battles.set( "battle_303" , new Battle_202( 303, "battle_303", false, false, false, "100,150,250" ) );
 		
-		game.arenas.get(6).fields.set( "battle_601" , new Battle_601( 601, "battle_601", false, false, false, "100,150,250" ) );
-		game.arenas.get(6).fields.set( "battle_602" , new Battle_602( 602, "battle_602", false, false, false, "100,150,250" ) );
-		game.arenas.get(6).fields.set( "battle_603" , new Battle_502( 603, "battle_603", false, false, false, "100,150,250" ) );
+		battles.set( "battle_401" , new Battle_401( 401, "battle_401", false, false, false, "100,150,250" ) );
+		battles.set( "battle_402" , new Battle_402( 402, "battle_402", false, false, false, "100,150,250" ) );
+		battles.set( "battle_403" , new Battle_302( 403, "battle_403", false, false, false, "100,150,250" ) );
 		
-		game.arenas.get(7).fields.set( "battle_701" , new Battle_601( 701, "battle_701", false, false, false, "150,200,300" ) );
-		game.arenas.get(7).fields.set( "battle_702" , new Battle_602( 702, "battle_702", false, false, false, "150,200,300" ) );
-		game.arenas.get(7).fields.set( "battle_703" , new Battle_302( 703, "battle_703", false, false, false, "150,200,300" ) );
+		battles.set( "battle_501" , new Battle_501( 501, "battle_501", false, false, false, "100,150,250" ) );
+		battles.set( "battle_502" , new Battle_502( 502, "battle_502", false, false, false, "100,150,250" ) );
+		battles.set( "battle_503" , new Battle_402( 503, "battle_503", false, false, false, "100,150,250" ) );
 		
-		game.arenas.get(8).fields.set( "battle_801" , new Battle_601( 801, "battle_801", false, false, false, "150,200,300" ) );
-		game.arenas.get(8).fields.set( "battle_802" , new Battle_602( 802, "battle_802", false, false, false, "150,200,300" ) );
-		game.arenas.get(8).fields.set( "battle_803" , new Battle_202( 803, "battle_803", false, false, false, "150,200,300" ) );
+		battles.set( "battle_601" , new Battle_601( 601, "battle_601", false, false, false, "100,150,250" ) );
+		battles.set( "battle_602" , new Battle_602( 602, "battle_602", false, false, false, "100,150,250" ) );
+		battles.set( "battle_603" , new Battle_502( 603, "battle_603", false, false, false, "100,150,250" ) );
 		
-		game.arenas.get(9).fields.set( "battle_901" , new Battle_601( 901, "battle_901", false, false, false, "150,200,300" ) );
-		game.arenas.get(9).fields.set( "battle_902" , new Battle_602( 902, "battle_902", false, false, false, "150,200,300" ) );
-		game.arenas.get(9).fields.set( "battle_903" , new Battle_502( 903, "battle_903", false, false, false, "150,200,300" ) );
+		battles.set( "battle_701" , new Battle_601( 701, "battle_701", false, false, false, "150,200,300" ) );
+		battles.set( "battle_702" , new Battle_602( 702, "battle_702", false, false, false, "150,200,300" ) );
+		battles.set( "battle_703" , new Battle_302( 703, "battle_703", false, false, false, "150,200,300" ) );
+		
+		battles.set( "battle_801" , new Battle_601( 801, "battle_801", false, false, false, "150,200,300" ) );
+		battles.set( "battle_802" , new Battle_602( 802, "battle_802", false, false, false, "150,200,300" ) );
+		battles.set( "battle_803" , new Battle_202( 803, "battle_803", false, false, false, "150,200,300" ) );
+		
+		battles.set( "battle_901" , new Battle_601( 901, "battle_901", false, false, false, "150,200,300" ) );
+		battles.set( "battle_902" , new Battle_602( 902, "battle_902", false, false, false, "150,200,300" ) );
+		battles.set( "battle_903" , new Battle_502( 903, "battle_903", false, false, false, "150,200,300" ) );
 	}
 }

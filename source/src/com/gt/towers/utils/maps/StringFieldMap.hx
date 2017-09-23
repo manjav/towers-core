@@ -109,6 +109,19 @@ class StringFieldMap
 		}
 		return ret ;
 	}
+	public function getKeyRange(min:Int, max:Int):java.util.List<String>
+	{
+		var ret = new java.util.ArrayList() ;
+		var keis = keys();
+		var i = 0;
+		while ( i < keis.length )
+		{
+			if ( get(keis[i]).index > min && get(keis[i]).index < max )
+				ret.add(keis[i]);
+			i ++;
+		}
+		return ret ;
+	}
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
@@ -126,6 +139,8 @@ class StringFieldMap
 		return ret ;
 	}
 	#end
+	
+	
 	
 	#if flash
 	/**

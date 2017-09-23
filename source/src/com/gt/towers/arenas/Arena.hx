@@ -13,7 +13,6 @@ class Arena
 	public var max:Int;
 	public var cardsStr:String;
 	public var cards:IntList;
-	public var fields:StringFieldMap;
 
 	public function new(index:Int, min:Int, max:Int, cards:String) 
 	{
@@ -32,7 +31,6 @@ class Arena
 			this.cards.push(Std.parseInt(ts[t]));
 			t ++;
 		}
-		fields = new StringFieldMap();
 	}
 	
 }
