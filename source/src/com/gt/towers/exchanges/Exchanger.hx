@@ -243,7 +243,7 @@ class Exchanger
 			}
 			
 			// random hards
-			ret.set(ResourceType.CURRENCY_HARD, Math.ceil(Math.random() * Math.pow(type % 10, 3) * 0.2 ) );
+			ret.set(ResourceType.CURRENCY_HARD, Math.ceil(Math.random() * (type % 10) ) );
 		}
 
 		// random softs
