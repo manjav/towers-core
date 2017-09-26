@@ -28,7 +28,7 @@ class FieldProvider
 		quests.set( "quest_11" , new Quest_11( 11, "quest_11", false, false, false, "70,100,120" ) );
 		quests.set( "quest_12" , new Quest_12( 12, "quest_12", false, false, false, "50,80,100" ) );
 		quests.set( "quest_13" , new Quest_13( 13, "quest_13", false, false, false, "50,80,100" ) );
-		quests.set( "quest_14" , new Quest_14( 14, "quest_14", false, false, false, "40,70,95" ) );
+		quests.set( "quest_14" , new Quest_14( 14, "quest_14", false, false, false, "50,80,100" ) );
 		quests.set( "quest_15" , new Quest_15( 15, "quest_15", false, false, false, "60,90,115" ) );
 		quests.set( "quest_16" , new Quest_16( 16, "quest_16", false, false, false, "60,90,115" ) );
 		quests.set( "quest_17" , new Quest_17( 17, "quest_17", false, false, false, "80,120,170" ) );
@@ -48,11 +48,11 @@ class FieldProvider
 		
 		battles = new StringFieldMap();
 		
-		battles.set( "battle_1" , new Battle_1( 1, "battle_1", false, false, false, "60,100,160" ) );
-		battles.set( "battle_2" , new Battle_2( 2, "battle_2", false, false, false, "60,100,160" ) );
-		battles.set( "battle_3" , new Battle_3( 3, "battle_3", false, false, false, "60,100,160" ) );
-		battles.set( "battle_4" , new Battle_4( 4, "battle_4", false, false, false, "60,100,160" ) );
-		battles.set( "battle_5" , new Battle_5( 5, "battle_5", false, false, false, "60,100,160" ) );
+		battles.set( "battle_1" , new Battle_1( 1, "battle_1", false, false, false, "70,110,160" ) );
+		battles.set( "battle_2" , new Battle_2( 2, "battle_2", false, false, false, "70,110,160" ) );
+		battles.set( "battle_3" , new Battle_3( 3, "battle_3", false, false, false, "70,110,160" ) );
+		battles.set( "battle_4" , new Battle_4( 4, "battle_4", false, false, false, "70,110,160" ) );
+		battles.set( "battle_5" , new Battle_5( 5, "battle_5", false, false, false, "70,110,160" ) );
 		
 		battles.set( "battle_101" , new Battle_101( 101, "battle_101", false, false, false, "80,120,200" ) );
 		battles.set( "battle_102" , new Battle_102( 102, "battle_102", false, false, false, "80,120,200" ) );
