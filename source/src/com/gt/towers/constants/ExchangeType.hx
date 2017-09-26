@@ -55,13 +55,13 @@ class ExchangeType
 		if (type == S_21_SPECIALS)
 			return 86400;
 		else if (type == S_31_CHEST)
-			return 21600;
+			return 36000;			// 10 hours
 		else if (type == S_32_CHEST)
-			return 43200;
+			return 72000;			// 20 hours
 		else if (type == S_33_CHEST)
-			return 86400;
+			return 108000;			// 30 hours
 		else if (type == S_41_KEYS)
-			return 86400;
+			return 108000;
 		else
 			return 0;
 	}	
