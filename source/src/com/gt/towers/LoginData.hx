@@ -15,9 +15,9 @@ class LoginData
 {
 	
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1080.0923140408";//do not change len.
+	public var coreVersion:String = "1080.0927092228";//do not change len.
 	public var noticeVersion:Int = 1080;
-	public var forceVersion:Int = 1080;
+	public var forceVersion:Int = 1070;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;

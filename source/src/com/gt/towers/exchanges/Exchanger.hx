@@ -199,6 +199,18 @@ class Exchanger
 	}
 	
 	#if java
+	public function getAdChestOutcomes(type:Int) : IntIntMap
+	{
+		var ret = new IntIntMap();
+		var numCards = ExchangeType.getRewardCount(type);
+		var chance = ( type % 10 ) * 2;
+		while ( numCards > 0 )
+		{
+			addRandomCard(ret, chance);	
+			numCards --;
+		}
+		return ret;
+	}
 	public function getChestOutcomes(type:Int) : IntIntMap
 	{
 		var hasKeysReward:Bool = false;

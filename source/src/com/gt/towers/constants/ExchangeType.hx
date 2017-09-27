@@ -66,6 +66,18 @@ class ExchangeType
 			return 0;
 	}	
 	
+	public static function getRewardCount(type:Int):Int
+	{
+		if (type == S_31_CHEST)
+			return 2;
+		else if (type == S_32_CHEST)
+			return 3;
+		else if (type == S_33_CHEST)
+			return 5;
+		else
+			return 0;
+	}	
+	
 	public static function getMaxExchanges(type:Int):Int
 	{
 		if (type == S_21_SPECIALS)
