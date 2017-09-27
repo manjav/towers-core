@@ -134,7 +134,7 @@ class Exchanger
 		var remainigHour = Math.floor(time / 3600);
 		
 		if ( remainigHour >= 24 )
-			return 350 * Math.ceil(remainigHour / 24);
+			return 350 + (10 * Math.ceil(remainigHour - 24));
 		else if ( remainigHour >= 18 )
 			return 310;
 		else if ( remainigHour >= 15 )
@@ -159,7 +159,7 @@ class Exchanger
 	}
 	public function timeToKey(time:Int):Int
 	{
-		return Math.floor(timeToHard(time) / 10);
+		return Math.floor(timeToHard(time) / 20);
 	}
 	public function keyToHard(count:Int):Int
 	{
