@@ -23,6 +23,8 @@ class AIEnemy
 	
 	public static var TYPE_FIGHT:Int = 1;
 	public static var TYPE_FIGHT_DOUBLE:Int = 2;
+	public static var TYPE_FIGHT_TRIPLE:Int = 3;
+	
 	public static var TYPE_IMPROVE:Int = 10;
 
 	public var actionType:Int = -100;
@@ -31,6 +33,8 @@ class AIEnemy
 	public var destinations:IntIntMap;
 	public var difficulty:Int;
 	public var maxEnemy:Int;
+	public var dangerousPoint:Int = -1;
+	public var numFighters:Int = 0;
 	
 	public var accessPoint:Float;
 	
@@ -45,14 +49,24 @@ class AIEnemy
 	public function tryAction():Int
 	{
 		var checkSelfPopulation = 0;
-		
-		var botPopulation:Int = 0;
+		var botPopulation = 0;
 		var minPlayerPopulation:Float = 1000;
 		var botPlaces = battleField.getAllTowers(1);
 		var playerPlaces = battleField.getAllTowers(0);
 		var botPlacesLen:Int = botPlaces.size();
 		var activeBotPlaces = new IntList();
 		destinations = new IntIntMap();
+		target = -1;
+		
+		// cover crisis point
+		if ( existsIndex(botPlaces, dangerousPoint) && botPlaces.size() <= playerPlaces.size() * 1.2 )
+		{
+			target = dangerousPoint;
+			dangerousPoint = -1;
+			//battleField.places.get(0).game.tracer.log(numFighters + " dangerousPoint "+ target );
+			return Math.ceil(Math.min( 3, numFighters / 3 ));
+		}
+		dangerousPoint = -1;
 		
 		if (botPlacesLen == 0)
 		{
@@ -65,8 +79,8 @@ class AIEnemy
 			{
 				if ( Math.random() < 0.8 && difficulty >= 1 )
 				{
-					if( improve(singlePlace.building) )
-						return TYPE_IMPROVE;
+					if( improve(singlePlace.building, true) )
+						return difficulty > 4 ? getAppropriateFight() : TYPE_IMPROVE;
 				}
 			}
 		}
@@ -80,26 +94,34 @@ class AIEnemy
 			{
 				activeBotPlaces.push(botPlaces.get(p).index);
 				botPopulation += botPlaces.get(p).building.get_population();
-				
+	
+				//if ( botPlaces.get(p).building.get_population() < botPlaces.get(p).building.get_capacity() * 0.5 )
+				//	target = botPlaces.get(p).index;
+
 				// find weakest of enemeis
 				m = 0;
 				var linksLen:Int = botPlaces.get(p).links.size();
-				while( m < linksLen )
+				while( m < linksLen && target == -1 )
 				{
 					if( botPlaces.get(p).links.get(m).building.troopType != 1 )
 					{
 						var building = botPlaces.get(p).links.get(m).building;
-						var dis = difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 200;
-						var population = building.get_population() * building.get_troopPower() * building.get_damage() * building.improveLevel * dis;
-						population *= building.troopType == -1 ? 1.1 : 1;
-						//building.game.tracer.log(botPlaces.get(p).index + " ->> " + botPlaces.get(p).links.get(m).index + " dis:"+dis + " difficulty:"+difficulty+" population:"+population);
-						if( population <= minPlayerPopulation )
+						var distance = difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 20;
+						var power = building.get_population() * (building.get_damage() / Building.BASE_DAMAGE) * (building.get_birthRate() / Building.BASE_BIRTH_RATE) + distance ;
+						power *= building.troopType == -1 ? 1.1 : 1;
+						//building.game.tracer.log(botPlaces.get(p).index + " ->> " + botPlaces.get(p).links.get(m).index + " damage:"+(building.get_damage() / Building.BASE_DAMAGE) + " birthRate:"+(building.get_birthRate() / Building.BASE_BIRTH_RATE) + " distance:" + distance + " population:"+building.get_population() + " power:"+power);
+						if( power <= minPlayerPopulation )
 						{
-							if ( population < minPlayerPopulation )
+							if ( power < minPlayerPopulation )
 								destinations = new IntIntMap();
 							
-							destinations.set(botPlaces.get(p).links.get(m).index, Math.round(population * 1000) );
-							minPlayerPopulation = population;
+							/*if ( power < building.get_capacity() * 0.3 )
+							{
+								target = building.index;
+								break;
+							}*/
+							destinations.set(botPlaces.get(p).links.get(m).index, Math.round(power * 1000) );
+							minPlayerPopulation = power;
 						}
 					}
 					m ++;
@@ -110,7 +132,7 @@ class AIEnemy
 		
 		// stop fighting when enemy loses or wins
 		var keys = destinations.keys();
-		if( keys.length == 0 || activeBotPlaces.size() == 0 )
+		if( ( keys.length == 0 && target == -1 ) || activeBotPlaces.size() == 0 )
 			return TYPE_ANY_ENABLED_ENEMY;
 		
 		//if num enemies greater than max enemies reduce to max enemies 
@@ -122,54 +144,87 @@ class AIEnemy
 			max --;
 		}
 		
-		// get random target
-		target = keys [ Math.floor( Math.random() * keys.length ) ];
-		//destination = destinations[0];
-		
-		//playerPlaces.get(0).game.tracer.log(getPlayerPopulation(playerPlaces) +" > " + botPopulation  +" && " + playerPlaces.size() +" <= " + botPlaces.size() * 2 );
-		if( getPlayerPopulation(playerPlaces) > botPopulation && playerPlaces.size() <= botPlaces.size() * 2 || hasFullyBuildings(botPlaces) )
-			if( improvePopulous(botPlaces) )
-				return TYPE_IMPROVE;
-		
-		//playerPlaces.get(0).game.tracer.log(battleField.places.get(target).building.get_population() +" > " + botPopulation * 0.5  +" -- " + difficulty );
-		if ( battleField.places.get(target).building.get_population() > botPopulation * 0.5 )
+		// remove stroge targets
+		minPlayerPopulation = Math.round(minPlayerPopulation * 1000);
+		var targetsSize = keys.length;
+		var targets = new IntList();
+		while ( targetsSize > 0 )
 		{
-			if ( difficulty >= 2 )
-				return Math.random()>0.5 ? TYPE_WAIT_FOR_GROW : TYPE_FIGHT_DOUBLE;
-			else if ( difficulty >= 1 )
-				return TYPE_FIGHT_DOUBLE;
+			//battleField.places.get(0).game.tracer.log(keys[targetsSize-1] + " minPlayerPopulation "+minPlayerPopulation + " >= " + destinations.get(keys[targetsSize-1]));
+			if( minPlayerPopulation >= destinations.get(keys[targetsSize-1]) )
+				targets.push(keys[targetsSize-1]);
+			targetsSize --;
 		}
+
+		if( target != -1 )
+			return getAppropriateFight();
 			
-		return TYPE_FIGHT;
+		//battleField.places.get(0).game.tracer.log("destinations ");
+
+		// get random target
+		targetsSize = targets.size();
+		
+		if( targetsSize == 0 )
+			return TYPE_ANY_ENABLED_ENEMY;
+			
+		target = targets.get(  Math.floor( Math.random() * targetsSize ) );
+		
+		var pc = getAllCapacities(playerPlaces);
+		var bc = getAllCapacities(botPlaces);
+	
+		var needPopulation = pc > bc ;
+		improvePopulous(botPlaces, needPopulation);
+		
+		//battleField.places.get(0).game.tracer.log(playerPlaces.size() +"<="+ botPlaces.size()*1.1);
+		if ( pc > bc && playerPlaces.size() <= botPlaces.size()*1.1 )
+			return difficulty >= 2 ? TYPE_WAIT_FOR_GROW : getAppropriateFight();
+		
+		if ( battleField.places.get(target).building.get_population() > botPopulation * 0.5 )
+			if ( difficulty >= 2 && Math.random() > 0.5 )
+				return TYPE_WAIT_FOR_GROW ;
+			
+		return getAppropriateFight();
 	}
 	
-	private function hasFullyBuildings(botPlaces:PlaceList) : Bool 
+	function existsIndex(places:PlaceList, index:Int) : Bool
 	{
-		var b = 0;
-		var size = botPlaces.size();
-		while ( b < size )
+		if ( difficulty < 6 || index == -1 || places.size() <= 1 )
+			return false;
+		var size = places.size()-1;
+		while ( size >= 0 )
 		{
-			if( botPlaces.get(b).building.get_capacity() == botPlaces.get(b).building.get_population() )
+			if ( places.get(size).index == index )
 				return true;
-			b ++;
+			size --;
 		}
 		return false;
 	}
 	
-	private function getPlayerPopulation(playerPlaces:PlaceList) :Int
+	private function getAppropriateFight() : Int
 	{
-		var size = playerPlaces.size();
+		if ( difficulty > 7 )
+			return TYPE_FIGHT_TRIPLE;
+		else if ( difficulty > 3 )
+			return TYPE_FIGHT_DOUBLE;
+		else
+			return TYPE_FIGHT;
+	}
+	
+	
+	private function getAllCapacities(places:PlaceList) :Int
+	{
+		var size = places.size();
 		var b = 0;
 		var p = 0;
 		while ( b < size )
 		{
-			p += playerPlaces.get(b).building.get_population();
+			p += places.get(b).building.get_capacity();
 			b ++;
 		}
 		return p;
 	}
 	
-	private function improvePopulous(botPlaces:PlaceList) :Bool
+	private function improvePopulous(botPlaces:PlaceList, needPopulation:Bool) :Bool
 	{
 		if ( difficulty < 3 )
 			return false;
@@ -179,7 +234,7 @@ class AIEnemy
 		while ( b < size )
 		{
 			var building = botPlaces.get(b).building;
-			var bb = improve(building);
+			var bb = improve(building, needPopulation);
 			//building.game.tracer.log("index:" + building.index + " type:" + building.type + " trying to improvement ==> " + bb);
 			if ( bb )
 			{
@@ -192,11 +247,11 @@ class AIEnemy
 		return ret;
 	}
 	
-	private function improve(building:Building) : Bool
+	private function improve(building:Building, needPopulation:Bool) : Bool
 	{
 		if ( building.type == BuildingType.B01_CAMP )
 		{
-			if ( battleField.getDuration() < battleField.map.times.get(0)/2 )
+			if ( needPopulation || battleField.getDuration() < battleField.map.times.get(0))
 				return building.improve(BuildingType.B11_BARRACKS);
 			
 			var rand = Math.random();
