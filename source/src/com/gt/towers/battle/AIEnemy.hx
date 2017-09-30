@@ -3,6 +3,7 @@ import com.gt.towers.battle.BattleField;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.lists.PlaceList;
@@ -31,7 +32,6 @@ class AIEnemy
 	public var sources:IntList;
 	public var target:Int;
 	public var destinations:IntIntMap;
-	public var difficulty:Int;
 	public var maxEnemy:Int;
 	public var dangerousPoint:Int = -1;
 	public var numFighters:Int = 0;
@@ -43,7 +43,12 @@ class AIEnemy
 	public function new(battleField:BattleField)
 	{
 		this.battleField = battleField;
-		accessPoint = Math.floor(battleField.startAt%5);
+		accessPoint = Math.floor(battleField.startAt % 5);
+		
+		var min = Math.max(1, battleField.difficulty * 0.5);
+		var max = Math.max(2, battleField.difficulty * 2.0);
+		maxEnemy = Math.floor( min < max ? Math.random() * (max-min) + min : max);
+		battleField.places.get(0).game.tracer.log("winStrike: " + battleField.places.get(0).game.player.resources.get(ResourceType.WIN_STRIKE) + " difficulty " + battleField.difficulty + " maxEnemy " + maxEnemy);
 	}
 	
 	public function tryAction():Int
@@ -77,10 +82,10 @@ class AIEnemy
 			var singlePlace = botPlaces.get(0);
 			if( singlePlace.enabled && singlePlace.building.type==BuildingType.B01_CAMP && battleField.getDuration()<battleField.map.times.get(0) )
 			{
-				if ( Math.random() < 0.8 && difficulty >= 1 )
+				if ( Math.random() < 0.8 && battleField.difficulty >= 1 )
 				{
 					if( improve(singlePlace.building, true) )
-						return difficulty > 4 ? getAppropriateFight() : TYPE_IMPROVE;
+						return battleField.difficulty > 4 ? getAppropriateFight() : TYPE_IMPROVE;
 				}
 			}
 		}
@@ -106,7 +111,7 @@ class AIEnemy
 					if( botPlaces.get(p).links.get(m).building.troopType != 1 )
 					{
 						var building = botPlaces.get(p).links.get(m).building;
-						var distance = difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 20;
+						var distance = battleField.difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 20;
 						var power = building.get_population() * (building.get_damage() / Building.BASE_DAMAGE) * (building.get_birthRate() / Building.BASE_BIRTH_RATE) + distance ;
 						power *= building.troopType == -1 ? 1.1 : 1;
 						//building.game.tracer.log(botPlaces.get(p).index + " ->> " + botPlaces.get(p).links.get(m).index + " damage:"+(building.get_damage() / Building.BASE_DAMAGE) + " birthRate:"+(building.get_birthRate() / Building.BASE_BIRTH_RATE) + " distance:" + distance + " population:"+building.get_population() + " power:"+power);
@@ -177,10 +182,10 @@ class AIEnemy
 		
 		//battleField.places.get(0).game.tracer.log(playerPlaces.size() +"<="+ botPlaces.size()*1.1);
 		if ( pc > bc && playerPlaces.size() <= botPlaces.size()*1.1 )
-			return difficulty >= 2 ? TYPE_WAIT_FOR_GROW : getAppropriateFight();
+			return battleField.difficulty >= 2 ? TYPE_WAIT_FOR_GROW : getAppropriateFight();
 		
 		if ( battleField.places.get(target).building.get_population() > botPopulation * 0.5 )
-			if ( difficulty >= 2 && Math.random() > 0.5 )
+			if ( battleField.difficulty >= 2 && Math.random() > 0.5 )
 				return TYPE_WAIT_FOR_GROW ;
 			
 		return getAppropriateFight();
@@ -188,7 +193,7 @@ class AIEnemy
 	
 	function existsIndex(places:PlaceList, index:Int) : Bool
 	{
-		if ( difficulty < 6 || index == -1 || places.size() <= 1 )
+		if ( battleField.difficulty < 6 || index == -1 || places.size() <= 1 )
 			return false;
 		var size = places.size()-1;
 		while ( size >= 0 )
@@ -202,9 +207,9 @@ class AIEnemy
 	
 	private function getAppropriateFight() : Int
 	{
-		if ( difficulty > 7 )
+		if ( battleField.difficulty > 7 )
 			return TYPE_FIGHT_TRIPLE;
-		else if ( difficulty > 3 )
+		else if ( battleField.difficulty > 3 )
 			return TYPE_FIGHT_DOUBLE;
 		else
 			return TYPE_FIGHT;
@@ -226,7 +231,7 @@ class AIEnemy
 	
 	private function improvePopulous(botPlaces:PlaceList, needPopulation:Bool) :Bool
 	{
-		if ( difficulty < 3 )
+		if ( battleField.difficulty < 3 )
 			return false;
 		var ret = false;
 		var size = botPlaces.size();
@@ -239,7 +244,7 @@ class AIEnemy
 			if ( bb )
 			{
 				ret = true;
-				if( difficulty < 5 )  
+				if( battleField.difficulty < 5 )  
 					return true;
 			}
 			b ++;

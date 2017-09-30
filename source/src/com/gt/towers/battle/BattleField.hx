@@ -5,6 +5,7 @@ import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.PlaceList;
 
@@ -18,10 +19,14 @@ class BattleField
 
 	public var places:PlaceList;
 	public var map:FieldData;
+	public var difficulty:Int;
+	public var arena:Int;
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int)
 	{
-		if( mapName.substr(0, 6) == "quest_" )
+		var isQuest = mapName.substr(0, 6) == "quest_";
+		var singleMode = game_1 == null;
+		if( isQuest )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
 			map = game_0.fieldProvider.battles.get(mapName);
@@ -32,11 +37,32 @@ class BattleField
 		var placesLen:Int = map.places.size();
 		var placeData:PlaceData = null;
 		var place:Place = null;
+		
+		if ( singleMode )
+		{
+			if ( isQuest )
+			{
+				difficulty = Math.round(map.index / 6);
+			}
+			else
+			{
+				var winStrike = game_0.player.resources.exists(ResourceType.WIN_STRIKE) ? game_0.player.resources.get(ResourceType.WIN_STRIKE) : 0;
+				arena = game_0.player.get_arena(0);
+				if ( winStrike > 2 ) // if player has 3 or more continues wins
+					difficulty = arena + winStrike - 2;
+				else if ( winStrike < -2 ) // if player has 3 or more continues losses
+					difficulty = arena + winStrike + 2;
+				else
+					difficulty = arena;
+			}
+		}
+		
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
-			place = new Place((placeData.troopType==1&&game_1!=null)?game_1:game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
-			place.building = BuildingType.instantiate((placeData.troopType==1&&game_1!=null)?game_1:game_0, placeData.type, place, placeData.index);
+			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
+			place.levelCoef = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 3 : 0;
+			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
 			

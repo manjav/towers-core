@@ -34,7 +34,11 @@ class Building extends AbstractBuilding
 			else
 				level = 1;
 		}
-		super( game, type, level );
+		super( game, type, level + (place == null ? 0 : place.levelCoef) );
+		/*#if java 
+		if(place != null)
+		game.tracer.log( " type " + type + " levelCoef " + place.levelCoef );
+		#end*/
 	}
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -218,6 +222,7 @@ class Building extends AbstractBuilding
 		_population = 0;
 		troopType = troop.type;
 		place.enabled = true;
+		place.levelCoef = troop.building.place.levelCoef;
 		if ( type == BuildingType.B01_CAMP )
 		{
 			place.game = game = troop.building.game;

@@ -60,11 +60,11 @@ class BattleOutcome
 			if ( score > 0 )
 			{
 				ret.set(ResourceType.BATTLES_WINS, 1);
-				ret.set(ResourceType.WIN_STRIKE, (winStrike < 0) ? -winStrike : 1)
+				ret.set(ResourceType.WIN_STRIKE, 1);
 			}
-			else
+			else if ( score < 0 )
 			{
-				ret.set(ResourceType.WIN_STRIKE, (winStrike > 0) ? -winStrike : -1)
+				ret.set(ResourceType.WIN_STRIKE, -1);
 			}
 			
 			// keys

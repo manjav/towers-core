@@ -27,6 +27,7 @@ class Place
 	
 	private var troopId:Int;
 	public var game:Game;
+	public var levelCoef:Int = 0;
 
 	public function new(game:Game, index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{
@@ -69,7 +70,7 @@ class Place
 
 	public function hit(troopId:Int, damage:Float) : Void
 	{
-		if (!troops.containsKey(troopId))
+		if( !troops.containsKey(troopId) )
 			return;
 		
 		troops.get(troopId).hit(damage);
@@ -83,7 +84,7 @@ class Place
 		
 		building = BuildingType.instantiate(game, type, this, index);
 		
-		if (building != null)
+		if( building != null )
 			building.createEngine(troopType, population);
 	}
 	#end
@@ -98,9 +99,9 @@ class Place
 	{
 		var len:Int = links.size();
 		var l:Int = 0;
-		while ( l < len)
+		while ( l < len )
 		{
-			if(links.get(l).building.troopType == building.troopType)
+			if( links.get(l).building.troopType == building.troopType )
 				return false;
 				
 			l ++;
