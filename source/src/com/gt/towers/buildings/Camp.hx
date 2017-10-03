@@ -8,16 +8,6 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Camp extends Building
 {
-	/*public function new(place:Place, index:Int, type:Int = 1)
-	{
-		super(place, index, type);
-	}*/
-	
-	/*public override function get_spawnGap():Int
-	{
-		return 2500;
-	}*/
-	
 	public override function get_birthRate():Float
 	{
 		return 0.2;
