@@ -41,7 +41,7 @@ class Troop
 	public function rush(source:Place):Void
 	{
 		var destination:Place = path.shift();
-		if(destination == null)
+		if( destination == null || health <= 0 )
 			return ;
 		
 		var distance:Float = Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
@@ -50,6 +50,9 @@ class Troop
 	}
 	private function onTroopArrived(destination:Place):Void
 	{
+		if( health <= 0 )
+			return ;
+			
 		var allow = destination.building.pushTroops(this);
 		if ( allow && path.size() > 0)
 		{
@@ -60,7 +63,9 @@ class Troop
 	public function hit(damage:Float):Void
 	{
 		health -= damage;
-		if(health <= 0)
+		//building.game.tracer.log("id:" + id + " damage:" + damage+ " health:" + health);
+
+		if( health <= 0 )
 			GTimer.clearTimeout(timeoutId);
 	}
 	#end
