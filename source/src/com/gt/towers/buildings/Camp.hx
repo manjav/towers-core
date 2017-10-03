@@ -20,7 +20,7 @@ class Camp extends Building
 	
 	public override function get_birthRate():Float
 	{
-		return 0.22;
+		return 0.2;
 	}
 	public override function get_capacity():Int
 	{

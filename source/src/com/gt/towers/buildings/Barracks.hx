@@ -16,6 +16,6 @@ class Barracks extends Building
 	
 	public override function get_birthRate():Float
 	{
-		return 0.25 + Math.log(get_level()) * 0.16 + Math.log(improveLevel) * 0.16;
+		return Building.BASE_BIRTH_RATE + Math.log(get_level()) * 0.10 + Math.log(improveLevel) * 0.10;
 	}
 }

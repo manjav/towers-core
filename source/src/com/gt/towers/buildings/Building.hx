@@ -79,7 +79,7 @@ class Building extends AbstractBuilding
 	{
 		return BASE_SPAWN_GAP;
 	}*/
-	public static var BASE_BIRTH_RATE:Float = 0.25;
+	public static var BASE_BIRTH_RATE:Float = 0.22;
 	public function get_birthRate():Float
 	{
 		return BASE_BIRTH_RATE;

@@ -57,14 +57,17 @@ class BattleOutcome
 			// battle stats 
 			ret.set(ResourceType.BATTLES_COUNT, 1);
 			var winStrike:Int = game.player.resources.get(ResourceType.WIN_STRIKE);
+			var arena = game.player.get_arena(0);
 			if ( score > 0 )
 			{
 				ret.set(ResourceType.BATTLES_WINS, 1);
-				ret.set(ResourceType.WIN_STRIKE, 1);
+				if( arena > 0 )
+					ret.set(ResourceType.WIN_STRIKE, 1);
 			}
 			else if ( score < 0 )
 			{
-				ret.set(ResourceType.WIN_STRIKE, -1);
+				if( arena > 0 )
+					ret.set(ResourceType.WIN_STRIKE, -1);
 			}
 			
 			// keys
