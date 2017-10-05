@@ -21,8 +21,9 @@ class BattleField
 	public var map:FieldData;
 	public var difficulty:Int;
 	public var arena:Int;
+	public var extraTime:Int = 0;
 
-	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int)
+	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
 		var isQuest = mapName.substr(0, 6) == "quest_";
 		var singleMode = game_1 == null;
@@ -30,6 +31,9 @@ class BattleField
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
 			map = game_0.fieldProvider.battles.get(mapName);
+			
+		if( hasExtraTime )
+			extraTime = map.times.get(3);
 			
 		
 		places = new PlaceList();
@@ -113,4 +117,11 @@ class BattleField
 		return now - startAt;
 	}
 	#end
+	
+	public function getTime(score:Int):Int
+	{
+		if ( map == null || score< 0 || score > 2 )
+			return 0;
+		return map.times.get(score) + extraTime;
+	}
 }
