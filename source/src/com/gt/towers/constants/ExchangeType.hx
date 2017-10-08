@@ -75,6 +75,18 @@ class ExchangeType
 			return 108000;			// 30 hours
 		else if (type == S_41_KEYS)
 			return 108000;
+		else if (type == CHESTS_51_CHROME)
+			return 10800;			// 3 hour
+		else if (type == CHESTS_52_SILVER)
+			return 21600;			// 6 hour
+		else if (type == CHESTS_53_GOLD)
+			return 32400;			// 9 hour
+		else if (type == CHESTS_54_MASTER)
+			return 32400;			// 12 hour
+		else if (type == CHESTS_55_WONDER)
+			return 32400;			// 24 hour
+		else if (type == CHESTS_56_MAGICAL)
+			return 32400;			// 36 hour
 		else
 			return 0;
 	}	
@@ -87,6 +99,18 @@ class ExchangeType
 			return 3;
 		else if (type == S_33_CHEST)
 			return 5;
+		else if (type == CHESTS_51_CHROME)
+			return 3;
+		else if (type == CHESTS_52_SILVER)
+			return 3;
+		else if (type == CHESTS_53_GOLD)
+			return 5;
+		else if (type == CHESTS_54_MASTER)
+			return 6;
+		else if (type == CHESTS_55_WONDER)
+			return 6;
+		else if (type == CHESTS_56_MAGICAL)
+			return 6;
 		else
 			return 0;
 	}	

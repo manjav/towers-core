@@ -19,6 +19,7 @@ class ResourceType
 	
 	public static var BATTLES_COUNT:Int = 1201;
 	public static var BATTLES_WINS:Int = 1202;
+	public static var NUM_BATTLE_CHEST:Int = 1203;
 	
 	public static var WIN_STRIKE:Int = 1211;
 	

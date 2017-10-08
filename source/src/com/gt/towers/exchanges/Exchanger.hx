@@ -266,6 +266,11 @@ class Exchanger
 		// random keys
 		if( hasKeysReward )
 			ret.set(ResourceType.KEY, 10 + Math.floor(Math.random() * 10) );
+			
+		/*
+		if( 54 > type && type > 50 )
+			ret.set(ResourceType.NUM_BATTLE_CHEST, 1);
+		*/
 		
 		return ret;
 	}
@@ -299,8 +304,17 @@ class Exchanger
 		return ExchangeType.CHESTS_56_MAGICAL;
 	}
 	
-	public static function getBattleChestType(numBattles:Int) : Int
+	public static function getBattleChestType(numChests:Int) : Int
 	{
-		return ExchangeType.CHESTS_52_SILVER;
+		if (numChests % 71 == 0)
+			return ExchangeType.CHESTS_56_MAGICAL;
+		else if (numChests % 47 == 0)
+			return ExchangeType.CHESTS_55_WONDER;
+		else if (numChests % 19 == 0 )
+			return ExchangeType.CHESTS_54_MASTER;
+		else if (numChests % 7 == 0)
+			return ExchangeType.CHESTS_53_GOLD;
+		else
+			return ExchangeType.CHESTS_52_SILVER;
 	}
 }
