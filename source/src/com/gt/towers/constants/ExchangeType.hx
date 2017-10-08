@@ -42,7 +42,20 @@ class ExchangeType
 	static public var S_40_OTHERS:Int = 40;
 	static public var S_41_KEYS:Int = 41;
 
+	static public var CHESTS_50:Int = 50;
+	static public var CHESTS_51_CHROME:Int = 51;
+	static public var CHESTS_52_SILVER:Int = 52;
+	static public var CHESTS_53_GOLD:Int = 53;
+	static public var CHESTS_54_MASTER:Int = 54;
+	static public var CHESTS_55_WONDER:Int = 55;
+	static public var CHESTS_56_MAGICAL:Int = 56;
 	
+	static public var CHEST_CATE_60:Int = 60;
+	static public var CHEST_CATE_61_DAILY:Int = 61;
+	static public var CHEST_CATE_62_BATTLE:Int = 62;
+	static public var CHEST_CATE_63_OFFER:Int = 63;
+
+
 	public function new() {	}
 	
 	public static function getCategory(type:Int):Int 
