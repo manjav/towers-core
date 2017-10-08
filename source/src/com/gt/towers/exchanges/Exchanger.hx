@@ -46,9 +46,9 @@ class Exchanger
 			i ++;
 		}
 
-		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 100, ExchangeType.CHESTS_54_MASTER,	1, ex.numExchanges, 0 ) );
-		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 200, ExchangeType.CHESTS_55_WONDER,	1, ex.numExchanges, 0 ) );
-		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 300, ExchangeType.CHESTS_56_MAGICAL,	1, ex.numExchanges, 0 ) );
+		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 100, ExchangeType.CHESTS_54_MASTER,	1, 0, 0 ) );
+		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 200, ExchangeType.CHESTS_55_WONDER,	1, 0, 0 ) );
+		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 300, ExchangeType.CHESTS_56_MAGICAL,	1, 0, 0 ) );
 		
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD, 20 ) );//50
