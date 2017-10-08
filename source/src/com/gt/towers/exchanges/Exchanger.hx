@@ -38,7 +38,7 @@ class Exchanger
 			var ex = exchanges.get(exchangeKeys[i]);
 			var cex = ExchangeType.getCategory( exchangeKeys[i] );
 			
-			if( cex == ExchangeType.S_20_SPECIALS || exchangeKeys[i] == ExchangeType.CHEST_CATE_62_BATTLE )
+			if( cex == ExchangeType.S_20_SPECIALS || exchangeKeys[i] == ExchangeType.CHEST_CATE_62_BATTLE  || exchangeKeys[i] == ExchangeType.CHEST_CATE_63_OFFER)
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
 			else if ( cex == ExchangeType.S_30_CHEST || cex == ExchangeType.S_40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
@@ -46,10 +46,6 @@ class Exchanger
 			i ++;
 		}
 
-		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 100, ExchangeType.CHESTS_54_MASTER,	1, 0, 0 ) );
-		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 200, ExchangeType.CHESTS_55_WONDER,	1, 0, 0 ) );
-		items.set( ExchangeType.CHEST_CATE_63_OFFER, new ExchangeItem ( ExchangeType.CHEST_CATE_63_OFFER, ResourceType.CURRENCY_HARD, 300, ExchangeType.CHESTS_56_MAGICAL,	1, 0, 0 ) );
-		
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD, 20 ) );//50
 		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, 110 ) );//300
@@ -289,12 +285,12 @@ class Exchanger
 		ret.set(random, Math.ceil( Math.random() * maxChance * (5 - (random % 10)) / 2 ) );
 	}
 	
-	public function getDailyChestType(numExchanges:Int) : Int
+	public static function getDailyChestType(numExchanges:Int) : Int
 	{
 		return ExchangeType.CHESTS_51_CHROME;
 	}
 	
-	public function getOfferChestType(index:Int) : Int
+	public static function getOfferChestType(index:Int) : Int
 	{
 		if ( index == 0 )
 			return ExchangeType.CHESTS_54_MASTER;
@@ -303,7 +299,7 @@ class Exchanger
 		return ExchangeType.CHESTS_56_MAGICAL;
 	}
 	
-	public function getBattleChestType(numExchanges:Int) : Int
+	public static function getBattleChestType(numBattles:Int) : Int
 	{
 		return ExchangeType.CHESTS_52_SILVER;
 	}
