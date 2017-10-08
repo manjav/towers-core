@@ -38,10 +38,9 @@ class Exchanger
 			var ex = exchanges.get(exchangeKeys[i]);
 			var cex = ExchangeType.getCategory( exchangeKeys[i] );
 			
-			if ( cex == ExchangeType.S_20_SPECIALS )
+			if( cex == ExchangeType.S_20_SPECIALS || exchangeKeys[i] == ExchangeType.CHEST_CATE_62_BATTLE  || exchangeKeys[i] == ExchangeType.CHEST_CATE_63_OFFER)
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
-			
-			if ( cex == ExchangeType.S_30_CHEST || cex == ExchangeType.S_40_OTHERS )
+			else if ( cex == ExchangeType.S_30_CHEST || cex == ExchangeType.S_40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
 				
 			i ++;
@@ -267,6 +266,11 @@ class Exchanger
 		// random keys
 		if( hasKeysReward )
 			ret.set(ResourceType.KEY, 10 + Math.floor(Math.random() * 10) );
+			
+		/*
+		if( 54 > type && type > 50 )
+			ret.set(ResourceType.NUM_BATTLE_CHEST, 1);
+		*/
 		
 		return ret;
 	}
@@ -284,5 +288,33 @@ class Exchanger
 			return;
 		}
 		ret.set(random, Math.ceil( Math.random() * maxChance * (5 - (random % 10)) / 2 ) );
+	}
+	
+	public static function getDailyChestType(numExchanges:Int) : Int
+	{
+		return ExchangeType.CHESTS_51_CHROME;
+	}
+	
+	public static function getOfferChestType(index:Int) : Int
+	{
+		if ( index == 0 )
+			return ExchangeType.CHESTS_54_MASTER;
+		else if ( index == 1 )
+			return ExchangeType.CHESTS_55_WONDER;
+		return ExchangeType.CHESTS_56_MAGICAL;
+	}
+	
+	public static function getBattleChestType(numChests:Int) : Int
+	{
+		if (numChests % 71 == 0)
+			return ExchangeType.CHESTS_56_MAGICAL;
+		else if (numChests % 47 == 0)
+			return ExchangeType.CHESTS_55_WONDER;
+		else if (numChests % 19 == 0 )
+			return ExchangeType.CHESTS_54_MASTER;
+		else if (numChests % 7 == 0)
+			return ExchangeType.CHESTS_53_GOLD;
+		else
+			return ExchangeType.CHESTS_52_SILVER;
 	}
 }

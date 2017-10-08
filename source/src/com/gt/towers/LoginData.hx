@@ -15,8 +15,8 @@ class LoginData
 {
 	
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1090.1003171722";//do not change len.
-	public var noticeVersion:Int = 1080;
+	public var coreVersion:String = "1100.1008104810";//do not change len.
+	public var noticeVersion:Int = 1100;
 	public var forceVersion:Int = 1070;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
@@ -43,9 +43,22 @@ class LoginData
 		
 		exchanges = new IntList();
 		exchanges.push(ExchangeType.S_21_SPECIALS);
-		exchanges.push(ExchangeType.S_31_CHEST);
-		exchanges.push(ExchangeType.S_32_CHEST);
-		exchanges.push(ExchangeType.S_33_CHEST);
 		exchanges.push(ExchangeType.S_41_KEYS);
+		if ( noticeVersion <= 1090 )
+		{
+			exchanges.push(ExchangeType.S_31_CHEST);
+			exchanges.push(ExchangeType.S_32_CHEST);
+			exchanges.push(ExchangeType.S_33_CHEST);
+		}
+		else
+		{
+			exchanges.push(ExchangeType.CHEST_CATE_61_DAILY);
+			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
+			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
+			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
+			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
+			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
+			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
+		}
 	}
 }
