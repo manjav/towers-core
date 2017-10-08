@@ -42,19 +42,23 @@ class LoginData
 		buildingsLevel.set(BuildingType.B11_BARRACKS, 1);
 		
 		exchanges = new IntList();
+		exchanges.push(ExchangeType.S_21_SPECIALS);
+		exchanges.push(ExchangeType.S_41_KEYS);
 		if ( noticeVersion <= 1090 )
 		{
-			exchanges.push(ExchangeType.S_21_SPECIALS);
 			exchanges.push(ExchangeType.S_31_CHEST);
 			exchanges.push(ExchangeType.S_32_CHEST);
 			exchanges.push(ExchangeType.S_33_CHEST);
-			exchanges.push(ExchangeType.S_41_KEYS);
 		}
 		else
 		{
+			exchanges.push(ExchangeType.CHEST_CATE_61_DAILY);
 			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
 			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
 			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
+			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
+			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
+			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
 		}
 	}
 }

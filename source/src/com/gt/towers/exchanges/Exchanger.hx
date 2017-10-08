@@ -288,4 +288,23 @@ class Exchanger
 		}
 		ret.set(random, Math.ceil( Math.random() * maxChance * (5 - (random % 10)) / 2 ) );
 	}
+	
+	public function getDailyChestType(numExchanges:Int) : Int
+	{
+		return ExchangeType.CHESTS_51_CHROME;
+	}
+	
+	public function getOfferChestType(index:Int) : Int
+	{
+		if ( index == 0 )
+			return ExchangeType.CHESTS_54_MASTER;
+		else if ( index == 1 )
+			return ExchangeType.CHESTS_55_WONDER;
+		return ExchangeType.CHESTS_56_MAGICAL;
+	}
+	
+	public function getBattleChestType(numExchanges:Int) : Int
+	{
+		return ExchangeType.CHESTS_52_SILVER;
+	}
 }
