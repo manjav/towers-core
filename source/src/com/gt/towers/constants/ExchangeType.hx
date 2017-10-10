@@ -49,11 +49,20 @@ class ExchangeType
 	static public var CHESTS_54_MASTER:Int = 54;
 	static public var CHESTS_55_WONDER:Int = 55;
 	static public var CHESTS_56_MAGICAL:Int = 56;
+	static public var CHESTS_59_ADS:Int = 59;
 	
-	static public var CHEST_CATE_60:Int = 60;
-	static public var CHEST_CATE_61_DAILY:Int = 61;
-	static public var CHEST_CATE_62_BATTLE:Int = 62;
-	static public var CHEST_CATE_63_OFFER:Int = 63;
+	static public var CHEST_CATE_100_DAILYS:Int = 100;
+	static public var CHEST_CATE_101_DAILY:Int = 101;
+	
+	static public var CHEST_CATE_110_BATTLES:Int = 110;
+	static public var CHEST_CATE_111_BATTLE:Int = 111;
+	static public var CHEST_CATE_112_BATTLE:Int = 112;
+	static public var CHEST_CATE_113_BATTLE:Int = 113;
+	
+	static public var CHEST_CATE_120_OFFERS:Int = 120;
+	static public var CHEST_CATE_121_OFFER:Int = 121;
+	static public var CHEST_CATE_122_OFFER:Int = 122;
+	static public var CHEST_CATE_123_OFFER:Int = 123;
 
 
 	public function new() {	}
@@ -78,20 +87,50 @@ class ExchangeType
 		else if (type == CHESTS_51_CHROME)
 			return 10800;			// 3 hour
 		else if (type == CHESTS_52_SILVER)
-			return 21600;			// 6 hour
+			return 10800;			// 3 hour
 		else if (type == CHESTS_53_GOLD)
-			return 32400;			// 9 hour
+			return 21600;			// 6 hour
 		else if (type == CHESTS_54_MASTER)
-			return 32400;			// 12 hour
+			return 43200;			// 12 hour
 		else if (type == CHESTS_55_WONDER)
-			return 32400;			// 24 hour
+			return 86400;			// 24 hour
 		else if (type == CHESTS_56_MAGICAL)
-			return 32400;			// 36 hour
+			return 86400;			// 36 hour
 		else
 			return 0;
+	}
+	
+	public static function getKeyRequierement(type:Int):Int
+	{
+		if (type == CHESTS_52_SILVER)
+			return 4;
+		else if (type == CHESTS_53_GOLD)
+			return 6;
+		else if (type == CHESTS_54_MASTER)
+			return 10;
+		else if (type == CHESTS_55_WONDER)
+			return 15;
+		else if (type == CHESTS_56_MAGICAL)
+			return 25;
+		return 0;
+	}
+	
+	public static function getHardRequierement(type:Int):Int
+	{
+		if (type == CHESTS_52_SILVER)
+			return 40;
+		else if (type == CHESTS_53_GOLD)
+			return 60;
+		else if (type == CHESTS_54_MASTER)
+			return 100;
+		else if (type == CHESTS_55_WONDER)
+			return 180;
+		else if (type == CHESTS_56_MAGICAL)
+			return 320;
+		return 0;
 	}	
 	
-	public static function getRewardCount(type:Int):Int
+	public static function getNumSlots(type:Int):Int
 	{
 		if (type == S_31_CHEST)
 			return 2;
@@ -102,18 +141,56 @@ class ExchangeType
 		else if (type == CHESTS_51_CHROME)
 			return 3;
 		else if (type == CHESTS_52_SILVER)
-			return 3;
+			return 4;
 		else if (type == CHESTS_53_GOLD)
-			return 5;
+			return 6;
 		else if (type == CHESTS_54_MASTER)
-			return 6;
+			return 8;
 		else if (type == CHESTS_55_WONDER)
-			return 6;
+			return 8;
 		else if (type == CHESTS_56_MAGICAL)
-			return 6;
+			return 8;
+		else if (type == CHESTS_59_ADS)
+			return 3;
+		return 0;
+	}	
+	
+	public static function getNumTotalCards(type:Int):Int
+	{
+		if( type == CHESTS_51_CHROME )
+			return 5;
+		else if( type == CHESTS_52_SILVER )
+			return 10;
+		else if( type == CHESTS_53_GOLD )
+			return 20;
+		else if( type == CHESTS_54_MASTER )
+			return 40;
+		else if( type == CHESTS_55_WONDER )
+			return 80;
+		else if( type == CHESTS_56_MAGICAL )
+			return 160;
 		else
 			return 0;
-	}	
+	}
+	
+	public static function getNumSofts(type:Int):Int
+	{
+		if( type == CHESTS_51_CHROME )
+			return 5*9;
+		else if( type == CHESTS_52_SILVER )
+			return 10*10;
+		else if( type == CHESTS_53_GOLD )
+			return 20*11;
+		else if( type == CHESTS_54_MASTER )
+			return 40*12;
+		else if( type == CHESTS_55_WONDER )
+			return 80*13;
+		else if( type == CHESTS_56_MAGICAL )
+			return 160*14;
+		else
+			return 0;
+	}
+
 	
 	public static function getMaxExchanges(type:Int):Int
 	{

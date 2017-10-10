@@ -15,7 +15,7 @@ class LoginData
 {
 	
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1100.1008104810";//do not change len.
+	public var coreVersion:String = "1100.1010094018";//do not change len.
 	public var noticeVersion:Int = 1100;
 	public var forceVersion:Int = 1070;
 	public var resources:IntIntMap;
@@ -52,13 +52,13 @@ class LoginData
 		}
 		else
 		{
-			exchanges.push(ExchangeType.CHEST_CATE_61_DAILY);
-			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
-			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
-			exchanges.push(ExchangeType.CHEST_CATE_62_BATTLE);
-			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
-			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
-			exchanges.push(ExchangeType.CHEST_CATE_63_OFFER);
+			exchanges.push(ExchangeType.CHEST_CATE_101_DAILY);
+			exchanges.push(ExchangeType.CHEST_CATE_111_BATTLE);
+			exchanges.push(ExchangeType.CHEST_CATE_112_BATTLE);
+			exchanges.push(ExchangeType.CHEST_CATE_113_BATTLE);
+			exchanges.push(ExchangeType.CHEST_CATE_121_OFFER);
+			exchanges.push(ExchangeType.CHEST_CATE_122_OFFER);
+			exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
 		}
 	}
 }
