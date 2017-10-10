@@ -306,12 +306,12 @@ class Exchanger
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
 		var totalCards = ExchangeType.getNumTotalCards(type) - 1;
-		var sloteSize = totalCards / numSlots;
+		var slotSize = totalCards / numSlots;
 		var numCards:Int = 0;
 		var accCards:Int = 0;
 		while ( numSlots > 0 )
 		{
-			numCards = numSlots > 1 ? Math.floor(sloteSize * 9 + Math.random() * sloteSize * 2) : totalCards - accCards;
+			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
 			addRandomSlot(ret, numCards);
 			numSlots --;
