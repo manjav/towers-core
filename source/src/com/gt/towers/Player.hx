@@ -82,6 +82,9 @@ class Player
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
 	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
 	public function get_hards():Int { return resources.get(ResourceType.CURRENCY_HARD); }
+	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES_COUNT); }
+	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
+	public function get_openedChests():Int { return resources.exists(ResourceType.BATTLE_CHEST_OPENED) ? resources.get(ResourceType.BATTLE_CHEST_OPENED) : 0; }
 	public function get_level():Int
 	{
 		var xp:Int = get_xp();
