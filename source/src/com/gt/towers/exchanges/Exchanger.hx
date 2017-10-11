@@ -294,7 +294,7 @@ class Exchanger
 					addRandomCard(ret, chance);
 			}
 			
-			getNewCard(ret);
+			getNewCard(ret, chance);
 
 			
 			// random hards
@@ -341,7 +341,7 @@ class Exchanger
 		return ret;
 		
 	}
-	function getNewCard(ret:IntIntMap) : Void
+	function getNewCard(ret:IntIntMap, count:Int) : Void
 	{
 		// try to find new card
 		var a = 0;
@@ -358,13 +358,17 @@ class Exchanger
 			}
 			a ++;
 		}
-		if ( allCards.size() > 0 )
+		a = 0;
+		while ( a < allCards.size() )
 		{
-			var randCard = allCards.get(Math.floor(Math.random() * allCards.size()));
-			if ( randCard % 10 > 1 && !game.player.buildings.exists(randCard - 1) )
-				randCard --;
-			ret.set( randCard, 1 );
+			var randCard = allCards.get(a);
+			if ( !game.player.buildings.exists(randCard) )
+			{
+				ret.set( randCard, 1 );
+				return;
+			}
 		}
+		addRandomSlot(ret, count);
 	}
 	function addRandomSlot(ret:IntIntMap, count:Int) : Void
 	{
@@ -374,7 +378,7 @@ class Exchanger
 		var random = game.player.getRandomBuilding();
 		if ( ret.exists(random) )
 		{
-			addRandomCard( ret, count );
+			addRandomSlot( ret, count );
 			return;
 		}
 		ret.set( random, count );
