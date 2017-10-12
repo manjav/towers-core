@@ -46,14 +46,14 @@ class Exchanger
 		}
 
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD, 20 ) );//50
+		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD,	20 ) );//50
 		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, 110 ) );//300
 		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 25000, ResourceType.CURRENCY_HARD, 300 ) );//900
 	
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MONEY -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD,  20, ResourceType.CURRENCY_SOFT, 500 ) );
-		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 75, ResourceType.CURRENCY_SOFT, 2000 ) );
-		items.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 350, ResourceType.CURRENCY_SOFT, 10000 ) );
+		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD, 20, ResourceType.CURRENCY_SOFT,	500 ) );
+		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 75, ResourceType.CURRENCY_SOFT,	2000 ) );
+		items.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 350, ResourceType.CURRENCY_SOFT,	10000 ) );
 		
 		items.set( ExchangeType.CHESTS_59_ADS, new ExchangeItem ( ExchangeType.CHESTS_59_ADS ) );
 	}
@@ -65,9 +65,8 @@ class Exchanger
 	 */
 	public function exchange (item:ExchangeItem, now:Int, confirmedHards:Int=0):Bool
 	{
-		item.outcomes = null;
 		// provide requirements
-		if( item.category == ExchangeType.S_30_CHEST || item.category == ExchangeType.CHEST_CATE_110_BATTLES || item.category == ExchangeType.CHEST_CATE_120_OFFERS )
+		if( item.isChest() )
 			item.requirements = get_chestRequierement(item, now);
 		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_SPECIALS )
 		{
@@ -80,6 +79,7 @@ class Exchanger
 		// start opening process
 		if ( item.category == ExchangeType.CHEST_CATE_110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 		{
+			item.outcomes = null;
 			if ( !readyToStartOpening(item.type, now) )
 				return false;
 				
@@ -109,7 +109,8 @@ class Exchanger
 		else if( item.category == ExchangeType.CHEST_CATE_110_BATTLES || item.category == ExchangeType.CHEST_CATE_120_OFFERS )
 			item.outcomes = get_chestOutcomes(item.outcome);
 		
-		game.player.addResources(item.outcomes);
+		if( item.outcomes != null )
+			game.player.addResources(item.outcomes);
 #end
 		// consume reqs
 		game.player.resources.reduceMap(item.requirements);
