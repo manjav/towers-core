@@ -54,6 +54,8 @@ class Exchanger
 		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD,  20, ResourceType.CURRENCY_SOFT, 500 ) );
 		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 75, ResourceType.CURRENCY_SOFT, 2000 ) );
 		items.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 350, ResourceType.CURRENCY_SOFT, 10000 ) );
+		
+		items.set( ExchangeType.CHESTS_59_ADS, new ExchangeItem ( ExchangeType.CHESTS_59_ADS ) );
 	}
 	
 	/**
@@ -65,7 +67,7 @@ class Exchanger
 	{
 		item.outcomes = null;
 		// provide requirements
-		if ( item.category == ExchangeType.S_30_CHEST || item.category == ExchangeType.CHEST_CATE_110_BATTLES || item.category == ExchangeType.CHEST_CATE_120_OFFERS )
+		if( item.category == ExchangeType.S_30_CHEST || item.category == ExchangeType.CHEST_CATE_110_BATTLES || item.category == ExchangeType.CHEST_CATE_120_OFFERS )
 			item.requirements = get_chestRequierement(item, now);
 		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_SPECIALS )
 		{
@@ -117,7 +119,7 @@ class Exchanger
 			item.numExchanges ++;
 		else if( item.category == ExchangeType.S_30_CHEST )
 			item.expiredAt = now + ExchangeType.getCooldown(item.type);
-		else if ( item.category == ExchangeType.CHEST_CATE_110_BATTLES )
+		else if( item.category == ExchangeType.CHEST_CATE_110_BATTLES )
 		{
 			var openedChests = game.player.get_openedChests();
 			openedChests ++;
@@ -228,8 +230,10 @@ class Exchanger
 			else if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 				ret.set(ResourceType.KEY, ExchangeType.getKeyRequierement(item.outcome));
 		}
-		else if( item.category == ExchangeType.CHEST_CATE_120_OFFERS )
+		else if ( item.category == ExchangeType.CHEST_CATE_120_OFFERS )
+		{
 			ret.set(ResourceType.CURRENCY_HARD, ExchangeType.getHardRequierement(item.outcome));
+		}
 		return ret;
 	}
 	
