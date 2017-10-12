@@ -298,7 +298,7 @@ class Exchanger
 					addRandomCard(ret, chance);
 			}
 			
-			getNewCard(ret, chance);
+			addNewCard(ret, chance);
 
 			
 			// random hards
@@ -336,7 +336,7 @@ class Exchanger
 			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
 			if ( numChest % 11 == 0 || numChest == 4 )
-				getNewCard(ret, 1);
+				addNewCard(ret, 1);
 			addRandomSlot(ret, numCards);
 			numSlots --;
 		}
@@ -348,7 +348,7 @@ class Exchanger
 		return ret;
 		
 	}
-	function getNewCard(ret:IntIntMap, count:Int) : Void
+	function addNewCard(ret:IntIntMap, count:Int) : Void
 	{
 		// try to find new card
 		var a = 0;
