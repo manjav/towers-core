@@ -324,7 +324,7 @@ class Exchanger
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
 		var totalCards = ExchangeType.getNumTotalCards(type) - 1;
 		var slotSize = totalCards / numSlots;
-		var numChest = game.player.get_openedChests;
+		var numChest:Int = game.player.get_openedChests();
 		var numCards:Int = 0;
 		var accCards:Int = 0;
 		while ( numSlots > 0 )
