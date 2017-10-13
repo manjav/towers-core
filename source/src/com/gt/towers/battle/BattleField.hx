@@ -93,18 +93,17 @@ class BattleField
 
 	public function getAllTowers(troopType:Int):PlaceList
 	{
-		if (troopType == TroopType.NONE)
+		if( troopType == TroopType.NONE )
 			return places;
 
 		var ret:PlaceList = new PlaceList();
-		var placesLen:Int = places.size();
-		var p:Int = 0;
-		while ( p < placesLen )
+		var p:Int = places.size() - 1;
+		while ( p >= 0 )
 		{
-			if (places.get(p).building.troopType == troopType)
+			if( places.get(p).building.troopType == troopType )
 				ret.push(places.get(p));
 
-			p ++;
+			p --;
 		}
 		return ret;
 	}
