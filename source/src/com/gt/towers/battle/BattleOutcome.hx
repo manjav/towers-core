@@ -21,7 +21,7 @@ class BattleOutcome
 	public static var MAX_XP:Int = 10;
 	public static var MAX_POINTS:Int = 30;
 	public static var MAX_CARDS:Int = 2;
-	public static var SCORE_RATIO:Int = 3;
+	public static var SCORE_RATIO:Int = 4;
 	
 	public static function get_outcomes(game:Game, field:FieldData, score:Int):IntIntMap
 	{
@@ -67,7 +67,7 @@ class BattleOutcome
 			else if ( score < 0 )
 			{
 				if( arena > 0 )
-					ret.set(ResourceType.WIN_STRIKE, -1);
+					ret.set(ResourceType.WIN_STRIKE, Math.random()>0.5 ? -1 : -2);
 			}
 			
 			// keys

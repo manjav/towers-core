@@ -97,7 +97,7 @@ class AbstractBuilding
 	{
 		var ret = new IntIntMap();
 		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
-		ret.set(ResourceType.WIN_STRIKE, -7);
+		ret.set(ResourceType.WIN_STRIKE, -9);
 		return ret;
 	}
 	

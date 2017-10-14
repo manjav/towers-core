@@ -65,7 +65,7 @@ class BattleField
 		{
 			placeData = map.places.get( p );
 			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
-			place.levelCoef = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 3 : 0;
+			place.levelCoef = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 2 : 0;
 			if ( place.levelCoef < 0 )
 				place.levelCoef = 0;
 			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
