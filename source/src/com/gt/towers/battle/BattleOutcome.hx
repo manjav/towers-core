@@ -52,7 +52,7 @@ class BattleOutcome
 		else
 		{
 			// moneis
-			ret.set(ResourceType.CURRENCY_SOFT, 4 * cast(Math.max(0, score), Int));
+			ret.set(ResourceType.CURRENCY_SOFT, 5 * cast(Math.max(0, score), Int));
 			
 			// battle stats 
 			ret.set(ResourceType.BATTLES_COUNT, 1);
