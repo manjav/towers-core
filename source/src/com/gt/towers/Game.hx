@@ -4,6 +4,7 @@ import com.gt.towers.Player;
 import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.exchanges.Exchanger;
+import com.gt.towers.socials.Lobby;
 import com.gt.towers.utils.maps.IntArenaMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
@@ -29,6 +30,7 @@ class Game
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
 	public var arenas:IntArenaMap;
+	public var lobby:Lobby;
 
 #if java
 	public var tracer:Tracer;
@@ -52,6 +54,7 @@ class Game
 		
 		player = new Player(this, data);
 		exchanger = new Exchanger(this, data);
+		lobby = new Lobby(this);
 		
 		arenas = new IntArenaMap();
 		arenas.set(0, new Arena(0, 0,		50,		"11"    ));

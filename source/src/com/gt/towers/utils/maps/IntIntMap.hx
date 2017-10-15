@@ -246,4 +246,21 @@ class IntIntMap extends EventDispatcher
 			dispatchEvent(new CoreEvent(CoreEvent.CHANGE, key, from, to) );
 	#end
 	}
+	
+	public function toSt():String
+	{
+		var keys = keys();
+		var values = values();
+		var st:String = "";
+		var i:Int = 0;
+		while (i < keys.length)
+		{
+			if ( i == 0 )
+				st = keys[i] + ": " + values[i];
+			else
+				st += ", " + keys[i] + ": " + values[i];
+			i++;
+		}
+		return st;
+	}
 }
