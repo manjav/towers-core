@@ -25,7 +25,7 @@ class Lobby
 		ret.set( ResourceType.CURRENCY_HARD, requiredGems );
 		return ret;
 	}
-	public function get_createRewards():IntIntMap
+	public function get_createOutcome():IntIntMap
 	{
 		var ret = new IntIntMap();
 		ret.set( ResourceType.XP, xpReward );
@@ -48,7 +48,7 @@ class Lobby
 		
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_createRequirements();
-		ei.outcomes = get_createRewards();
+		ei.outcomes = get_createOutcome();
 		#if java
 		game.tracer.log("resourses then: " + game.player.resources.get(ResourceType.CURRENCY_HARD));
 		#end

@@ -247,13 +247,17 @@ class IntIntMap extends EventDispatcher
 	#end
 	}
 	
-	public function toSt():String
+	#if java
+	public function toString():String
+	#elseif flash
+	public override function toString():String
+	#end
 	{
 		var keys = keys();
 		var values = values();
 		var st:String = "";
 		var i:Int = 0;
-		while (i < keys.length)
+		while ( i < keys.length )
 		{
 			if ( i == 0 )
 				st = keys[i] + ": " + values[i];

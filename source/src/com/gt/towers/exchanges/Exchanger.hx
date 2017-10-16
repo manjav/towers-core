@@ -178,7 +178,7 @@ class Exchanger
 	}
 	public function timeToHard(time:Int):Int
 	{
-		return Math.log(time / 600) * 3 + (2 * (time / 3600) ) + 2;
+		return Math.round(Math.log(time / 600) * 3 + (2 * (time / 3600) ) + 2 );
 		/*
 		var remainingHour = Math.floor(time / 3600);
 		var timeGap = Math.floor(time / 300);
@@ -273,12 +273,13 @@ class Exchanger
 	function getAdChestOutcomes() : IntIntMap
 	{
 		var ret = new IntIntMap();
-		var numSlots = ExchangeType.getNumSlots(ExchangeType.CHESTS_59_ADS) - 1;
+		var numSlots = ExchangeType.getNumSlots(ExchangeType.CHESTS_59_ADS) - 2;
 		while ( numSlots > 0 )
 		{
 			addRandomSlot(ret, game.player.get_arena(0)+1);	
 			numSlots --;
 		}
+		ret.set( ResourceType.KEY, 2 );
 		ret.set( ResourceType.CURRENCY_HARD, 1 );
 		return ret;
 	}
