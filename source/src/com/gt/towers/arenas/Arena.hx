@@ -13,13 +13,15 @@ class Arena
 	public var max:Int;
 	public var cardsStr:String;
 	public var cards:IntList;
+	public var minWinStreak:Int;
 
-	public function new(index:Int, min:Int, max:Int, cards:String) 
+	public function new(index:Int, min:Int, max:Int, minWinStreak:Int, cards:String)
 	{
 		this.index = index;
 		this.min = min;
 		this.max = max;
 		this.cardsStr  = cards;
+		this.minWinStreak = minWinStreak;
 		this.cards = new IntList();
 		if ( cardsStr == "" )
 			return;
