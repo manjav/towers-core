@@ -176,17 +176,17 @@ class ExchangeType
 	public static function getNumSofts(type:Int):Int
 	{
 		if( type == CHESTS_51_CHROME )
-			return 4*9;
+			return getNumTotalCards(type)*6;
 		else if( type == CHESTS_52_SILVER )
-			return 7*10;
+			return getNumTotalCards(type)*7;
 		else if( type == CHESTS_53_GOLD )
-			return 17*11;
+			return getNumTotalCards(type)*8;
 		else if( type == CHESTS_54_MASTER )
-			return 30*12;
+			return getNumTotalCards(type)*9;
 		else if( type == CHESTS_55_WONDER )
-			return 50*13;
+			return getNumTotalCards(type)*10;
 		else if( type == CHESTS_56_MAGICAL )
-			return 100*14;
+			return getNumTotalCards(type)*11;
 		else
 			return 0;
 	}
