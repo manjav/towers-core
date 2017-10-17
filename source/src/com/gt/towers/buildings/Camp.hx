@@ -10,7 +10,7 @@ class Camp extends Building
 {
 	public override function get_birthRate():Float
 	{
-		return 0.2 * timeScale;
+		return 0.2 * Building.TIME_SCALE;
 	}
 	public override function get_capacity():Int
 	{

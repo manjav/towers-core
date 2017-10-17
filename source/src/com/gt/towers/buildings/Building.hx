@@ -13,7 +13,7 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Building extends AbstractBuilding
 {
-	public var timeScale:Float = 0.96;
+	public static var TIME_SCALE:Float = 0.96;
 	
 	public var place:Place;
 	public var index:Int;
@@ -63,12 +63,12 @@ class Building extends AbstractBuilding
 	public static var BASE_EXIT_GAP:Int = 200;
 	public function get_exitGap():Int 
 	{
-		return Math.round(BASE_EXIT_GAP * (1/timeScale));
+		return Math.round(BASE_EXIT_GAP * (1/TIME_SCALE));
 	}
 	public static var BASE_TROOP_SPEED:Int = 2500;
 	public function get_troopSpeed():Int
 	{
-		return Math.round(BASE_TROOP_SPEED *  (1/timeScale));
+		return Math.round(BASE_TROOP_SPEED *  (1/TIME_SCALE));
 	}
 	public static var BASE_TROOP_POWER:Float = 1;
 	public function get_troopPower():Float
@@ -84,7 +84,7 @@ class Building extends AbstractBuilding
 	public static var BASE_BIRTH_RATE:Float = 0.22;
 	public function get_birthRate():Float
 	{
-		return BASE_BIRTH_RATE * timeScale;
+		return BASE_BIRTH_RATE * TIME_SCALE;
 	}
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -96,7 +96,7 @@ class Building extends AbstractBuilding
 	public static var BASE_DAMAGE_GAP:Int = 1000;
 	public function get_damageGap():Int
 	{
-		return Math.round(BASE_DAMAGE_GAP *  (1/timeScale));
+		return Math.round(BASE_DAMAGE_GAP *  (1/TIME_SCALE));
 	}
 	public static var BASE_DAMAGE_RADIUS:Float = 50;
 	public function get_damageRadius():Float
