@@ -158,17 +158,17 @@ class ExchangeType
 	public static function getNumTotalCards(type:Int):Int
 	{
 		if( type == CHESTS_51_CHROME )
-			return 5;
+			return 4;
 		else if( type == CHESTS_52_SILVER )
-			return 10;
+			return 7;
 		else if( type == CHESTS_53_GOLD )
-			return 20;
+			return 17;
 		else if( type == CHESTS_54_MASTER )
-			return 40;
+			return 30;
 		else if( type == CHESTS_55_WONDER )
-			return 80;
+			return 50;
 		else if( type == CHESTS_56_MAGICAL )
-			return 160;
+			return 100;
 		else
 			return 0;
 	}
@@ -176,17 +176,17 @@ class ExchangeType
 	public static function getNumSofts(type:Int):Int
 	{
 		if( type == CHESTS_51_CHROME )
-			return 5*9;
+			return 4*9;
 		else if( type == CHESTS_52_SILVER )
-			return 10*10;
+			return 7*10;
 		else if( type == CHESTS_53_GOLD )
-			return 20*11;
+			return 17*11;
 		else if( type == CHESTS_54_MASTER )
-			return 40*12;
+			return 30*12;
 		else if( type == CHESTS_55_WONDER )
-			return 80*13;
+			return 50*13;
 		else if( type == CHESTS_56_MAGICAL )
-			return 160*14;
+			return 100*14;
 		else
 			return 0;
 	}
