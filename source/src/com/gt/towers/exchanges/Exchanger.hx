@@ -178,7 +178,7 @@ class Exchanger
 	}
 	public function timeToHard(time:Int):Int
 	{
-		return Math.log(time / 600) * 3 + (2 * (time / 3600) ) + 2;
+		return Math.round( Math.log(time / 600) * 3 + (time / 3600) * 2 + 2 );
 		/*
 		var remainingHour = Math.floor(time / 3600);
 		var timeGap = Math.floor(time / 300);
