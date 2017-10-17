@@ -179,33 +179,6 @@ class Exchanger
 	public function timeToHard(time:Int):Int
 	{
 		return Math.round( Math.log(time / 600) * 3 + (time / 3600) * 2 + 2 );
-		/*
-		var remainingHour = Math.floor(time / 3600);
-		var timeGap = Math.floor(time / 300);
-		if ( remainingHour >= 24 )
-			return 350 + (10 * Math.ceil(remainingHour - 24));
-		else if ( remainingHour >= 18 )
-			return 310;
-		else if ( remainingHour >= 15 )
-			return 280;
-		else if ( remainingHour >= 12 )
-			return 250;
-		else if ( remainingHour >= 8 )
-			return 250 - ( (12 - remainingHour) * 25 );
-		else if ( remainingHour >= 4 )
-			return 150 - ( ( 8 - remainingHour) * 20 );
-		else if ( remainingHour >= 1 )
-			return 70 - ( ( 4 - remainingHour) * 15 );
-		else
-			if ( (time / 60) > 45 )
-				return 15;
-			else if ( (time / 60) > 30 )
-				return 10;
-			else if ( (time / 60) > 15 )
-				return 6;
-			else
-				return 3;
-		*/
 	}
 	public function timeToKey(time:Int):Int
 	{
