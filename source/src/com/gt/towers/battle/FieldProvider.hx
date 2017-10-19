@@ -1,17 +1,35 @@
 package com.gt.towers.battle;
 import com.gt.towers.battle.fieldes.*;
+import com.gt.towers.battle.shires.*;
 import com.gt.towers.utils.maps.StringFieldMap;
+
 /**
  * ...
  * @author Mansour Djawadi
  */
+
 class FieldProvider 
 {
+	public var shires:StringFieldMap;
 	public var quests:StringFieldMap;
 	public var battles:StringFieldMap;
 	
 	public function new(game:Game) 
 	{
+		shires = new StringFieldMap();
+		
+		shires.set( "shire_9" , new Shire_2( 9, "shire_9", false, false, false ) );
+		shires.set( "shire_8" , new Shire_1( 8, "shire_8", false, false, false ) );
+		shires.set( "shire_7" , new Shire_1( 7, "shire_7", false, false, false ) );
+		shires.set( "shire_6" , new Shire_1( 6, "shire_6", false, false, false ) );
+		shires.set( "shire_5" , new Shire_1( 5, "shire_5", false, false, false ) );
+		shires.set( "shire_4" , new Shire_1( 4, "shire_4", false, false, false ) );
+		shires.set( "shire_3" , new Shire_1( 3, "shire_3", false, false, false ) );
+		shires.set( "shire_2" , new Shire_1( 2, "shire_2", false, false, false ) );
+		shires.set( "shire_1" , new Shire_1( 1, "shire_1", false, false, false ) );
+		shires.set( "shire_0" , new Shire_0( 0, "shire_0", false, false, false ) );
+
+		
 		quests = new StringFieldMap();
 		
 		quests.set( "quest_0" ,  new Quest_0( 0, "quest_0",	true , true, true, "100,100,100,20" ) );
