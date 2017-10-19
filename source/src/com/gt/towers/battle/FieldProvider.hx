@@ -18,14 +18,7 @@ class FieldProvider
 	{
 		shires = new StringFieldMap();
 		
-		shires.set( "shire_9" , new Shire_2( 9, "shire_9", false, false, false ) );
-		shires.set( "shire_8" , new Shire_1( 8, "shire_8", false, false, false ) );
-		shires.set( "shire_7" , new Shire_1( 7, "shire_7", false, false, false ) );
-		shires.set( "shire_6" , new Shire_1( 6, "shire_6", false, false, false ) );
-		shires.set( "shire_5" , new Shire_1( 5, "shire_5", false, false, false ) );
-		shires.set( "shire_4" , new Shire_1( 4, "shire_4", false, false, false ) );
-		shires.set( "shire_3" , new Shire_1( 3, "shire_3", false, false, false ) );
-		shires.set( "shire_2" , new Shire_1( 2, "shire_2", false, false, false ) );
+		shires.set( "shire_2" , new Shire_2( 2, "shire_2", false, false, false ) );
 		shires.set( "shire_1" , new Shire_1( 1, "shire_1", false, false, false ) );
 		shires.set( "shire_0" , new Shire_0( 0, "shire_0", false, false, false ) );
 
@@ -108,5 +101,26 @@ class FieldProvider
 		battles.set( "battle_901" , new Battle_601( 901, "battle_901", false, false, false, "150,200,300,20" ) );
 		battles.set( "battle_902" , new Battle_602( 902, "battle_902", false, false, false, "150,200,300,20" ) );
 		battles.set( "battle_903" , new Battle_502( 903, "battle_903", false, false, false, "150,200,300,20" ) );
+	}
+	
+	public function getCurrentShire(questIndex:Int):FieldData
+	{
+		var _shires = shires.values();
+		var s:Int = _shires.length - 1;
+		var p:Int = 0;
+		
+		while ( s >= 0 )
+		{
+			p = _shires[s].places.size() - 1;
+			while ( p >= 0 )
+			{
+				if ( _shires[s].places.get(p).index == questIndex )
+					return _shires[s];
+				p --;
+			}
+
+			s --;
+		}
+		return null;
 	}
 }
