@@ -11,21 +11,21 @@ class FieldData
 {
 	public var index:Int;
 	public var name:String;
-	public var hasStart:Bool;
-	public var hasIntro:Bool;
-	public var hasFinal:Bool;
+	public var introNum:Int;
+	public var startNum:Int;
+	public var endNum:Int;
 	public var places:PlaceDataList;
 	public var images:ImageDataList;
 	public var times:IntList;
 	public var isQuest:Bool;
 
-	public function new(index:Int, name:String, hasStart:Bool = false, hasIntro:Bool = false, hasFinal:Bool = false, times:String = "") 
+	public function new(index:Int, name:String, introNum:Int = 0, startNum:Int = 0, endNum:Int = 0, times:String = "") 
 	{
 		this.index = index;
 		this.name = name;
-		this.hasStart = hasStart;
-		this.hasIntro = hasIntro;
-		this.hasFinal = hasFinal;
+		this.introNum = introNum;
+		this.startNum = startNum;
+		this.endNum = endNum;
 		this.isQuest = name.substr(0, 6) == "quest_";
 		
 		this.places = new PlaceDataList();
