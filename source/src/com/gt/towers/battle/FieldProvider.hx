@@ -18,9 +18,9 @@ class FieldProvider
 	{
 		shires = new StringFieldMap();
 		
-		shires.set( "shire_2" , new Shire_2( 2, "shire_2", false, false, false ) );
-		shires.set( "shire_1" , new Shire_1( 1, "shire_1", false, false, false ) );
-		shires.set( "shire_0" , new Shire_0( 0, "shire_0", false, false, false ) );
+		shires.set( "shire_2" , new Shire_2( 2, "shire_2", 0, 0, 0 ) );
+		shires.set( "shire_1" , new Shire_1( 1, "shire_1", 0, 0, 0 ) );
+		shires.set( "shire_0" , new Shire_0( 0, "shire_0", 0, 0, 0 ) );
 
 		
 		quests = new StringFieldMap();

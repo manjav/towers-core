@@ -202,12 +202,12 @@ class Exchanger
 		var ret = new IntIntMap();
 		if( item.category == ExchangeType.CHEST_CATE_110_BATTLES )
 		{
-			if ( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY )
+			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY )
 				ret.set(ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) );
 			else if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 				ret.set(ResourceType.KEY, ExchangeType.getKeyRequierement(item.outcome));
 		}
-		else if ( item.category == ExchangeType.CHEST_CATE_120_OFFERS )
+		else if( item.category == ExchangeType.CHEST_CATE_120_OFFERS )
 		{
 			ret.set(ResourceType.CURRENCY_HARD, ExchangeType.getHardRequierement(item.outcome));
 		}
