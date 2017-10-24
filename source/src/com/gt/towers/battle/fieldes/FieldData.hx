@@ -11,35 +11,27 @@ class FieldData
 {
 	public var index:Int;
 	public var name:String;
-	public var introNum:Int;
-	public var startNum:Int;
-	public var endNum:Int;
 	public var places:PlaceDataList;
 	public var images:ImageDataList;
+	public var introNum:IntList;
+	public var startNum:IntList;
+	public var endNum:IntList;
 	public var times:IntList;
 	public var isQuest:Bool;
 
-	public function new(index:Int, name:String, introNum:Int = 0, startNum:Int = 0, endNum:Int = 0, times:String = "") 
+	public function new(index:Int, name:String, introNum:String, startNum:String = "", endNum:String = "", times:String = "") 
 	{
 		this.index = index;
 		this.name = name;
-		this.introNum = introNum;
-		this.startNum = startNum;
-		this.endNum = endNum;
 		this.isQuest = name.substr(0, 6) == "quest_";
 		
 		this.places = new PlaceDataList();
 		this.images = new ImageDataList();
-		this.times = new IntList();
 		
-		var t = 0;
-		var ts = times.split(',');
-		while (t < ts.length)
-		{
-			this.times.push(Std.parseInt(ts[t]));
-			t ++;
-		}
-		
+		this.introNum = IntList.parse(introNum);
+		this.startNum = IntList.parse(startNum);
+		this.endNum = IntList.parse(endNum);
+		this.times = IntList.parse(times);
 	}
 	
 	public function getSwipeTutorPlaces(): PlaceDataList

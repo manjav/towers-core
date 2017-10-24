@@ -98,5 +98,16 @@ class IntList
 		
 	}
 	
-	
+	public static function parse(value:String, separator:String=","):IntList
+	{
+		var ret = new IntList();
+		var t = 0;
+		var ts = value.split(",");
+		while (t < ts.length)
+		{
+			ret.push(Std.parseInt(ts[t]));
+			t ++;
+		}
+		return ret;
+	}
 }
