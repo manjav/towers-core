@@ -13,10 +13,11 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Building extends AbstractBuilding
 {
-	public static var TIME_SCALE:Float = 0.96;
+	public static var TIME_SCALE:Float = 0.92;
 	
 	public var place:Place;
 	public var index:Int;
+	
 	
 	public var troopType:Int = -1;
 	
@@ -44,6 +45,17 @@ class Building extends AbstractBuilding
 	}
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+	#if flash
+	public function get_troopName () : String
+	{
+		return "dwarf3b-move-";
+	}
+	public function get_troopSpriteCount () : Int
+	{
+		return 12;
+	}
+	#end
+
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
 	{
