@@ -102,8 +102,9 @@ class IntList
 	{
 		var ret = new IntList();
 		var t = 0;
-		var ts = value.split(",");
-		while (t < ts.length)
+		if ( value == "" || value == null ) return ret;
+		var ts = value.split(separator);
+		while ( t < ts.length )
 		{
 			ret.push(Std.parseInt(ts[t]));
 			t ++;

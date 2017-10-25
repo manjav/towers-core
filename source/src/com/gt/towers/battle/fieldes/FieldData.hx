@@ -19,7 +19,7 @@ class FieldData
 	public var times:IntList;
 	public var isQuest:Bool;
 
-	public function new(index:Int, name:String, introNum:String, startNum:String = "", endNum:String = "", times:String = "") 
+	public function new(index:Int, name:String, introNum:String = "", startNum:String = "", endNum:String = "", times:String = "") 
 	{
 		this.index = index;
 		this.name = name;
