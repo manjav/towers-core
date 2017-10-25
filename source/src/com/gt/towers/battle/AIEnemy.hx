@@ -48,7 +48,7 @@ class AIEnemy
 		var min = Math.max(1, battleField.difficulty * 0.5);
 		var max = Math.max(2, battleField.difficulty * 2.0);
 		maxEnemy = Math.floor( min < max ? Math.random() * (max-min) + min : max);
-		battleField.places.get(0).game.tracer.log("winStrike: " + battleField.places.get(0).game.player.resources.get(ResourceType.WIN_STRIKE) + " difficulty " + battleField.difficulty + " maxEnemy " + maxEnemy);
+		battleField.places.get(0).game.tracer.log("winStreak: " + battleField.places.get(0).game.player.resources.get(ResourceType.WIN_STREAK) + " difficulty " + battleField.difficulty + " maxEnemy " + maxEnemy);
 	}
 	
 	public function tryAction():Int

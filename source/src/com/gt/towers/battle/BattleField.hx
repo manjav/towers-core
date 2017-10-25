@@ -50,12 +50,12 @@ class BattleField
 			}
 			else
 			{
-				var winStrike = game_0.player.resources.exists(ResourceType.WIN_STRIKE) ? game_0.player.resources.get(ResourceType.WIN_STRIKE) : 0;
+				var winStreak = game_0.player.resources.exists(ResourceType.WIN_STREAK) ? game_0.player.resources.get(ResourceType.WIN_STREAK) : 0;
 				arena = game_0.player.get_arena(0);
-				if ( winStrike > 2 ) // if player has 3 or more continues wins
-					difficulty = arena + winStrike - 2;
-				else if ( winStrike < -2 ) // if player has 3 or more continues losses
-					difficulty = arena + winStrike + 2;
+				if ( winStreak > 2 )
+					difficulty = arena + winStreak - 2;
+				else if ( winStreak < -2 )
+					difficulty = arena + winStreak + 2;
 				else
 					difficulty = arena;
 			}

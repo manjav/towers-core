@@ -96,8 +96,20 @@ class AbstractBuilding
 	public function get_upgradeRewards():IntIntMap 
 	{
 		var ret = new IntIntMap();
+		var arena = game.player.get_arena(game.player.get_point());
+		var minWinStreak = game.arenas.get(arena).minWinStreak;
+		var playerWinStreak = game.player.get_winStreak();
+		
+		// XP rewards
 		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
-		ret.set(ResourceType.WIN_STRIKE, -9);
+		
+		trace(playerWinStreak);
+		// reduce winStreak to make AI difficulty easier
+		if ( playerWinStreak - 9 <= minWinStreak )
+			ret.set(ResourceType.WIN_STREAK, minWinStreak - playerWinStreak);
+		else
+			ret.set(ResourceType.WIN_STREAK, -7);
+			
 		return ret;
 	}
 	
