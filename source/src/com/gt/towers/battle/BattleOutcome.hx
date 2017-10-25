@@ -56,6 +56,8 @@ class BattleOutcome
 			
 			// battle stats 
 			ret.set(ResourceType.BATTLES_COUNT, 1);
+			ret.set(ResourceType.BATTLES_COUNT_WEAKLY, 1);
+			
 			var winStreak:Int = game.player.resources.get(ResourceType.WIN_STREAK);
 			var arena = game.player.get_arena(0);
 			if ( score > 0 )
