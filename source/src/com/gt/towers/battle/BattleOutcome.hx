@@ -18,10 +18,11 @@ class BattleOutcome
 	
 	#if java
 
+	public static var MIN_POINTS:Int = 10;
+	public static var COE_POINTS:Int = 2;
 	public static var MAX_XP:Int = 10;
-	public static var MAX_POINTS:Int = 30;
 	public static var MAX_CARDS:Int = 2;
-	public static var SCORE_RATIO:Int = 4;
+
 	
 	public static function get_outcomes(game:Game, field:FieldData, score:Int):IntIntMap
 	{
@@ -85,9 +86,11 @@ class BattleOutcome
 			}
 		
 			// points
-			var point = score * SCORE_RATIO;
-			if ( point != 0 )
-				point += Math.round(Math.random() * 4) - 2;
+			var point = 0;
+			if ( score > 0 )
+				point = MIN_POINTS + score * COE_POINTS + Math.round(Math.random() * 4 - 2);
+			else if ( score < 0 )
+				point = -MIN_POINTS + score * COE_POINTS + Math.round(Math.random() * 4 - 2);
 				
 			if ( point < 0 && game.player.resources.get(ResourceType.POINT) < -point)
 				point = 0;
