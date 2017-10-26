@@ -8,7 +8,17 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Heavy extends Building 
 {
-
+	#if flash
+	public override function get_troopName () : String
+	{
+		return "corruptedknight-move-";
+	}
+	public override function get_troopSpriteCount () : Int
+	{
+		return 23;
+	}
+	#end
+	
 	public override function get_troopSpeed():Int
 	{
 		return Math.round(2900 * (1/Building.TIME_SCALE));
