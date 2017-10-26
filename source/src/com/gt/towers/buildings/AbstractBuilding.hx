@@ -103,7 +103,6 @@ class AbstractBuilding
 		// XP rewards
 		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
 		
-		trace(playerWinStreak);
 		// reduce winStreak to make AI difficulty easier
 		if ( playerWinStreak - 9 <= minWinStreak )
 			ret.set(ResourceType.WIN_STREAK, minWinStreak - playerWinStreak);
