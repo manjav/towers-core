@@ -176,6 +176,6 @@ class Player
 	}
 	
 	public function inTutorial():Bool { return get_questIndex() < 3; }
-	public function villageEnabled():Bool { return get_arena(0) > 0; }
+	public function villageEnabled():Bool { return true;/*get_arena(0) > 0;*/ }
 
 }
