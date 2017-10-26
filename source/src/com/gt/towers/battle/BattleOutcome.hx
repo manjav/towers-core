@@ -27,7 +27,10 @@ class BattleOutcome
 	{
 		var ret:IntIntMap = new IntIntMap();
 		if ( game.player.inFriendlyBattle )
+		{
+			ret.set(ResourceType.BATTLES_COUNT_WEEKLY, 1);
 			return ret;
+		}
 		
 		if ( field.isQuest )
 		{

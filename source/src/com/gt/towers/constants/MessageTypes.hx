@@ -13,6 +13,7 @@ class MessageTypes
     public static var M12_COMMENT_KICK:Int = 12;
     public static var M13_COMMENT_PROMOTE:Int = 13;
     public static var M14_COMMENT_DEMOTE:Int = 14;
+    public static var M15_COMMENT_EDIT:Int = 15;
 	
 	public static var M20_DONATE:Int = 20;
 
