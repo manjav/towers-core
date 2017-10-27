@@ -8,7 +8,7 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Heavy extends Building 
 {
-	#if flash
+	/*#if flash
 	public override function get_troopName () : String
 	{
 		return "corruptedknight-move-";
@@ -17,7 +17,7 @@ class Heavy extends Building
 	{
 		return 23;
 	}
-	#end
+	#end*/
 	
 	public override function get_troopSpeed():Int
 	{

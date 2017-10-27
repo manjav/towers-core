@@ -9,12 +9,12 @@ import com.gt.towers.utils.lists.IntList;
 class Camp extends Building
 {
 	
-	#if flash
+	/*#if flash
 	public override function get_troopName () : String
 	{
 		return "dwarfinf-move-";
 	}
-	#end
+	#end*/
 	
 	public override function get_birthRate():Float
 	{
