@@ -9,7 +9,7 @@ import com.gt.towers.utils.lists.IntList;
 class Rapid extends Building 
 {
 	
-	#if flash
+	/*#if flash
 	public override function get_troopName () : String
 	{
 		return "darkelfassassin-move-";
@@ -18,7 +18,7 @@ class Rapid extends Building
 	{
 		return 10;
 	}
-	#end
+	#end*/
 	
 	public override function get_troopSpeed():Int
 	{

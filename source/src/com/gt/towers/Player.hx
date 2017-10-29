@@ -85,6 +85,7 @@ class Player
 	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES_COUNT); }
 	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
 	public function get_openedChests():Int { return resources.exists(ResourceType.BATTLE_CHEST_OPENED) ? resources.get(ResourceType.BATTLE_CHEST_OPENED) : 0; }
+	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
 	public function get_level():Int
 	{
 		var xp:Int = get_xp();
@@ -175,6 +176,6 @@ class Player
 	}
 	
 	public function inTutorial():Bool { return get_questIndex() < 3; }
-	public function villageEnabled():Bool { return get_arena(0) > 0; }
+	public function villageEnabled():Bool { return true;/*get_arena(0) > 0;*/ }
 
 }

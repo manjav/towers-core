@@ -18,16 +18,20 @@ class BattleOutcome
 	
 	#if java
 
+	public static var MIN_POINTS:Int = 10;
+	public static var COE_POINTS:Int = 2;
 	public static var MAX_XP:Int = 10;
-	public static var MAX_POINTS:Int = 30;
 	public static var MAX_CARDS:Int = 2;
-	public static var SCORE_RATIO:Int = 4;
+
 	
 	public static function get_outcomes(game:Game, field:FieldData, score:Int):IntIntMap
 	{
 		var ret:IntIntMap = new IntIntMap();
 		if ( game.player.inFriendlyBattle )
+		{
+			ret.set(ResourceType.BATTLES_COUNT_WEEKLY, 1);
 			return ret;
+		}
 		
 		if ( field.isQuest )
 		{
@@ -56,18 +60,20 @@ class BattleOutcome
 			
 			// battle stats 
 			ret.set(ResourceType.BATTLES_COUNT, 1);
-			var winStrike:Int = game.player.resources.get(ResourceType.WIN_STRIKE);
+			ret.set(ResourceType.BATTLES_COUNT_WEEKLY, 1);
+			
+			var winStreak:Int = game.player.resources.get(ResourceType.WIN_STREAK);
 			var arena = game.player.get_arena(0);
 			if ( score > 0 )
 			{
 				ret.set(ResourceType.BATTLES_WINS, 1);
 				if ( arena > 0 )
-					ret.set(ResourceType.WIN_STRIKE, 1);
+					ret.set(ResourceType.WIN_STREAK, 1);
 			}
 			else if ( score < 0 )
 			{
-				if ( arena > 0 && winStrike >= game.arenas.get(arena).minWinStreak)
-					ret.set(ResourceType.WIN_STRIKE, Math.random() > 0.5 ? -1 : -2);
+				if ( arena > 0 && winStreak >= game.arenas.get(arena).minWinStreak)
+					ret.set(ResourceType.WIN_STREAK, Math.random() > 0.5 ? -1 : -2);
 			}
 			
 			// keys
@@ -80,9 +86,11 @@ class BattleOutcome
 			}
 		
 			// points
-			var point = score * SCORE_RATIO;
-			if ( point != 0 )
-				point += Math.round(Math.random() * 4) - 2;
+			var point = 0;
+			if ( score > 0 )
+				point = MIN_POINTS + score * COE_POINTS + Math.round(Math.random() * 4 - 2);
+			else if ( score < 0 )
+				point = -MIN_POINTS + score * COE_POINTS + Math.round(Math.random() * 4 - 2);
 				
 			if ( point < 0 && game.player.resources.get(ResourceType.POINT) < -point)
 				point = 0;
