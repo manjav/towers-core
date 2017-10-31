@@ -179,7 +179,7 @@ class Exchanger
 	}
 	public function timeToHard(time:Int):Int
 	{
-		return Math.max( Math.round( Math.log(time / 600) * 3 + (time / 3600) * 2 + 3 ), 0 );
+		return Math.round( Math.max( Math.log(time / 600) * 3 + (time / 3600) * 2 + 3 , 0) );
 	}
 	public function timeToKey(time:Int):Int
 	{
