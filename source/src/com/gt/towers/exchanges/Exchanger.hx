@@ -46,6 +46,7 @@ class Exchanger
 		}
 
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+		items.set( ExchangeType.S_0_HARD,  new ExchangeItem ( ExchangeType.S_0_HARD, ResourceType.CURRENCY_REAL, 100, ResourceType.CURRENCY_HARD,	1 ) );//50
 		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD,	20 ) );//50
 		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, 110 ) );//300
 		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 25000, ResourceType.CURRENCY_HARD, 300 ) );//900
@@ -108,10 +109,10 @@ class Exchanger
 			item.outcomes = getAdChestOutcomes();
 		else if( item.category == ExchangeType.CHEST_CATE_110_BATTLES || item.category == ExchangeType.CHEST_CATE_120_OFFERS )
 			item.outcomes = get_chestOutcomes(item.outcome);
-		
+#end
+		// add outs
 		if( item.outcomes != null )
 			game.player.addResources(item.outcomes);
-#end
 		// consume reqs
 		game.player.resources.reduceMap(item.requirements);
 		
@@ -178,7 +179,7 @@ class Exchanger
 	}
 	public function timeToHard(time:Int):Int
 	{
-		return Math.round( Math.log(time / 600) * 3 + (time / 3600) * 2 + 2 );
+		return Math.round( Math.max( Math.log(time / 600) * 3 + (time / 3600) * 2 + 3 , 0) );
 	}
 	public function timeToKey(time:Int):Int
 	{
