@@ -24,9 +24,9 @@ class FieldProvider
 		
 		quests = new StringFieldMap();
 		
-		quests.set( "quest_0" ,  new Quest_0( 0, "quest_0", "0", "0,2", "0,-1", "100,100,100,0" ) );
+		quests.set( "quest_0" ,  new Quest_0( 0, "quest_0", "1,2", "0,2", "0", "100,100,100,0" ) );
 		quests.set( "quest_1" ,  new Quest_1( 1, "quest_1", "0", "0,2", "0", "100,130,150,20" ) );
-		quests.set( "quest_2" ,  new Quest_2( 2, "quest_2", "0", "0", "0,-2,-3,-4", "100,130,150,20" ) );
+		quests.set( "quest_2" ,  new Quest_2( 2, "quest_2", "0", "0", "0,-2,-3,-4", "40,60,75,20" ) );
 		quests.set( "quest_3" ,  new Quest_3( 3, "quest_3", "", "", "", "40,60,75,20" ) );
 		quests.set( "quest_4" ,  new Quest_4( 4, "quest_4", "", "", "", "40,60,75,20" ) );
 		quests.set( "quest_5" ,  new Quest_5( 5, "quest_5", "", "", "", "50,70,100,20" ) );
