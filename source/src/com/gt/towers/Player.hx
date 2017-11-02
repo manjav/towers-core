@@ -55,7 +55,17 @@ class Player
 		}
 		#if flash
 		prefs = new com.gt.towers.utils.maps.IntStrMap();
-		prefs.set(com.gt.towers.constants.PrefsTypes.P30_OFFER_RATING, "0");
+		prefs.set(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101, "101");
+		
+		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_1_MUSIC, "true");
+		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_2_SFX, "true");
+		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_3_NOTIFICATION, "true");
+		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_4_LOCALE, "0");
+		
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_30_RATING, "20");
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_31_TELEGRAM , "30");
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_32_INSTAGRAM, "40");
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_33_FRIENDSHIP, "50");
 		#end
 	}
 	
