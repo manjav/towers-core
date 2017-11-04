@@ -88,11 +88,7 @@ class Building extends AbstractBuilding
 		return Math.round(BASE_TROOP_POWER);
 	}
 	
-	/*public static var BASE_SPAWN_GAP:Int = 2300;
-	public function get_spawnGap():Int
-	{
-		return BASE_SPAWN_GAP;
-	}*/
+
 	public static var BASE_BIRTH_RATE:Float = 0.22;
 	public function get_birthRate():Float
 	{
