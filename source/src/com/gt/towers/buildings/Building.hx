@@ -45,7 +45,7 @@ class Building extends AbstractBuilding
 	}
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-	/*#if flash
+	#if flash
 	public function get_troopName () : String
 	{
 		return "dwarf3b-move-";
@@ -54,7 +54,7 @@ class Building extends AbstractBuilding
 	{
 		return 12;
 	}
-	#end*/
+	#end
 
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
