@@ -23,39 +23,34 @@ class FieldProvider
 		shires.set( "shire_0" , new Shire_0( 0, "shire_0", "", "", "" ) );
 		
 		quests = new StringFieldMap();
-		
-		quests.set( "quest_0" ,  new Quest_0( 0, "quest_0", "1,2", "0,2", "0", "100,100,100,0" ) );
-		//quests.set( "quest_1" ,  new Quest_1( 1, "quest_1", "", "0,2", "0", "100,130,150,20" ) );
-		quests.set( "quest_1" ,  new Quest_2( 1, "quest_1", "0", "0", "0,-2,-3,-4", "40,60,75,20" ) );
-		quests.set( "quest_2" ,  new Quest_2( 2, "quest_2", "0", "0", "0,-2,-3,-4", "40,60,75,20" ) );
-		quests.set( "quest_3" ,  new Quest_3( 3, "quest_3", "", "", "", "40,60,75,20" ) );
-		quests.set( "quest_4" ,  new Quest_4( 4, "quest_4", "", "", "", "40,60,75,20" ) );
-		quests.set( "quest_5" ,  new Quest_5( 5, "quest_5", "", "", "", "50,70,100,20" ) );
-		quests.set( "quest_6" ,  new Quest_6( 6, "quest_6", "", "", "", "50,80,110,20" ) );
-		quests.set( "quest_7" ,  new Quest_7( 7, "quest_7", "", "", "", "70,100,150,20" ) );
-		quests.set( "quest_8" ,  new Quest_8( 8, "quest_8", "", "", "", "70,100,150,20" ) );
-		quests.set( "quest_9" ,	 new Quest_9( 9, "quest_9", "", "", "", "70,100,150,20" ) );
+		quests.set( "quest_0" ,  new Quest_0( 0, "quest_0", "0", "0,2", "0,-1", "100,100,100,0" ) );
+		quests.set( "quest_1" , new Quest_1( 1, "quest_1", "0", "0,2", "0", "100,100,100" ) );
+		quests.set( "quest_2" , new Quest_2( 2, "quest_2", "0", "0", "0,-2,-3,-4", "40,60,75,20" ) );
+		quests.set( "quest_3" , new Quest_3( 3, "quest_3", "", "", "", "40,60,75,20" ) );
+		quests.set( "quest_4" , new Quest_4( 4, "quest_4", "", "", "", "50,70,100,20" ) );
+		quests.set( "quest_5" , new Quest_5( 5, "quest_5", "", "", "", "50,70,100,20" ) );
+		quests.set( "quest_6" , new Quest_6( 6, "quest_6", "", "", "", "70,100,150,20" ) );
+		quests.set( "quest_7" , new Quest_7( 7, "quest_7", "", "", "", "70,100,150,20" ) );
+		quests.set( "quest_8" , new Quest_8( 8, "quest_8", "", "", "", "70,100,150,20" ) );
+		quests.set( "quest_9" , new Quest_9( 9, "quest_9", "", "", "", "40,60,80,20" ) );
 		quests.set( "quest_10" , new Quest_10( 10, "quest_10", "", "", "", "40,60,80,20" ) );
-		quests.set( "quest_11" , new Quest_11( 11, "quest_11", "", "", "", "30,40,60,20" ) );
-		quests.set( "quest_12" , new Quest_12( 12, "quest_12", "", "", "", "30,40,60,20" ) );
-		quests.set( "quest_13" , new Quest_13( 13, "quest_13", "", "", "", "30,40,60,20" ) );
-		quests.set( "quest_14" , new Quest_14( 14, "quest_14", "", "", "", "50,60,80,20" ) );
-		quests.set( "quest_15" , new Quest_15( 15, "quest_15", "", "", "", "50,60,80,20" ) );
+		quests.set( "quest_11" , new Quest_11( 11, "quest_11", "", "", "", "40,60,80,20" ) );
+		quests.set( "quest_12" , new Quest_12( 12, "quest_12", "", "", "", "40,60,80,20" ) );
+		quests.set( "quest_13" , new Quest_13( 13, "quest_13", "", "", "", "40,60,80,20" ) );
+		quests.set( "quest_14" , new Quest_14( 14, "quest_14", "", "", "", "40,60,80,20" ) );
+		quests.set( "quest_15" , new Quest_15( 15, "quest_15", "", "", "", "50,90,140,20" ) );
 		quests.set( "quest_16" , new Quest_16( 16, "quest_16", "", "", "", "50,90,140,20" ) );
 		quests.set( "quest_17" , new Quest_17( 17, "quest_17", "", "", "", "50,90,140,20" ) );
 		quests.set( "quest_18" , new Quest_18( 18, "quest_18", "", "", "", "50,90,140,20" ) );
-		quests.set( "quest_19" , new Quest_19( 19, "quest_19", "", "", "", "50,90,140,20" ) );
+		quests.set( "quest_19" , new Quest_19( 19, "quest_19", "", "", "", "50,100,160,30" ) );
 		quests.set( "quest_20" , new Quest_20( 20, "quest_20", "", "", "", "50,100,160,30" ) );
 		quests.set( "quest_21" , new Quest_21( 21, "quest_21", "", "", "", "50,100,160,30" ) );
 		quests.set( "quest_22" , new Quest_22( 22, "quest_22", "", "", "", "50,100,160,30" ) );
-		quests.set( "quest_23" , new Quest_23( 23, "quest_23", "", "", "", "50,100,160,30" ) );
-		quests.set( "quest_24" , new Quest_24( 24, "quest_24", "", "", "", "40,95,150,30" ) );
+		quests.set( "quest_23" , new Quest_23( 23, "quest_23", "", "", "", "40,95,150,30" ) );
+		quests.set( "quest_24" , new Quest_24( 24, "quest_24", "", "", "", "50,100,160,30" ) );
 		quests.set( "quest_25" , new Quest_25( 25, "quest_25", "", "", "", "50,100,160,30" ) );
-		quests.set( "quest_26" , new Quest_26( 26, "quest_26", "", "", "", "50,100,160,30" ) );
+		quests.set( "quest_26" , new Quest_26( 26, "quest_26", "", "", "", "80,130,190,30" ) );
 		quests.set( "quest_27" , new Quest_27( 27, "quest_27", "", "", "", "80,130,190,30" ) );
-		quests.set( "quest_28" , new Quest_28( 28, "quest_28", "", "", "", "60,110,170,30" ) );
-		quests.set( "quest_29" , new Quest_29( 29, "quest_29", "", "", "", "60,110,170,30" ) );
-		
 		
 		battles = new StringFieldMap();
 		
