@@ -18,8 +18,8 @@ class BattleOutcome
 	
 	#if java
 
-	public static var MIN_POINTS:Int = 10;
-	public static var COE_POINTS:Int = 2;
+	public static var MIN_POINTS:Int = 7;
+	public static var COE_POINTS:Int = 1;
 	public static var MAX_XP:Int = 10;
 	public static var MAX_CARDS:Int = 2;
 
