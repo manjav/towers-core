@@ -4,6 +4,7 @@ import com.gt.towers.Game;
 import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
@@ -328,13 +329,19 @@ class Exchanger
 	}
 	function addNewCard(ret:IntIntMap, count:Int) : Void
 	{
+		if ( game.player.inTutorial() )
+		{
+			ret.set( BuildingType.B11_BARRACKS, 2 );
+			return;
+		}
+		
 		// try to find new card
 		var a = 0;
 		var allCards = new IntList();
 		var arena = game.player.get_arena(0);
 		while ( a <= arena )
 		{
-			var cards = game.arenas.get ( a ).cards;
+			var cards = game.arenas.get (a).cards;
 			var c = 0;
 			while ( c < cards.size() )
 			{
@@ -349,7 +356,7 @@ class Exchanger
 			var randCard = allCards.get(a);
 			if ( !game.player.buildings.exists(randCard) )
 			{
-				ret.set( randCard, 1 );
+				ret.set( randCard, count );
 				return;
 			}
 			a ++;
@@ -405,7 +412,7 @@ class Exchanger
 	public static function getBattleChestType(numChests:Int) : Int
 	{
 		if( numChests == 0 )
-			return ExchangeType.CHESTS_52_SILVER;
+			return ExchangeType.CHESTS_51_CHROME;
 
 		if( numChests % 71 == 0 )
 			return ExchangeType.CHESTS_56_MAGICAL;

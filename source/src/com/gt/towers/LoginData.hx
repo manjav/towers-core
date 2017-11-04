@@ -14,9 +14,9 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "2018.1102194818";//do not change len.
-	public var noticeVersion:Int = 2015;
-	public var forceVersion:Int = 2005;
+	public var coreVersion:String = "2020.1104232519";//do not change len.
+	public var noticeVersion:Int = 2020;
+	public var forceVersion:Int = 2020;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;
@@ -35,29 +35,17 @@ class LoginData
 		resources.set(ResourceType.CURRENCY_SOFT, 100);
 		resources.set(ResourceType.CURRENCY_HARD, 30);
 		
-		resources.set(BuildingType.B11_BARRACKS, 1);
-		
 		buildingsLevel = new IntIntMap();
-		buildingsLevel.set(BuildingType.B11_BARRACKS, 1);
 		
 		exchanges = new IntList();
-		exchanges.push(ExchangeType.S_21_SPECIALS);
 		exchanges.push(ExchangeType.S_41_KEYS);
-		if ( noticeVersion <= 1090 )
-		{
-			exchanges.push(ExchangeType.S_31_CHEST);
-			exchanges.push(ExchangeType.S_32_CHEST);
-			exchanges.push(ExchangeType.S_33_CHEST);
-		}
-		else
-		{
-			exchanges.push(ExchangeType.CHEST_CATE_101_DAILY);
-			exchanges.push(ExchangeType.CHEST_CATE_111_BATTLE);
-			exchanges.push(ExchangeType.CHEST_CATE_112_BATTLE);
-			exchanges.push(ExchangeType.CHEST_CATE_113_BATTLE);
-			exchanges.push(ExchangeType.CHEST_CATE_121_OFFER);
-			exchanges.push(ExchangeType.CHEST_CATE_122_OFFER);
-			exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
-		}
+		exchanges.push(ExchangeType.CHEST_CATE_101_DAILY);
+		exchanges.push(ExchangeType.CHEST_CATE_111_BATTLE);
+		exchanges.push(ExchangeType.CHEST_CATE_112_BATTLE);
+		exchanges.push(ExchangeType.CHEST_CATE_113_BATTLE);
+		exchanges.push(ExchangeType.CHEST_CATE_121_OFFER);
+		exchanges.push(ExchangeType.CHEST_CATE_122_OFFER);
+		exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
 	}
 }
+	

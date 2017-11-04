@@ -186,6 +186,21 @@ class Player
 	}
 	
 	public function inTutorial():Bool { return get_questIndex() < 3; }
-	public function villageEnabled():Bool { return true;/*get_arena(0) > 0;*/ }
-
+	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
+	#if flash
+	public function dashboadTabEnabled(index:Int):Bool
+	{
+		if ( !inTutorial())
+			return true;
+			
+		var tuteStep = prefs.getAsInt(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101);
+		if ( index == 0 && tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_111_SELECT_EXCHANGE )
+			return true;
+		if ( index == 1 && (tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_101_START || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_115_UPGRADE_BUILDING || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_111_SELECT_EXCHANGE || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_113_SELECT_DECK) )
+			return true;
+		if ( index == 2 && tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_113_SELECT_DECK )
+			return true;
+		return false;
+	}
+	#end
 }
