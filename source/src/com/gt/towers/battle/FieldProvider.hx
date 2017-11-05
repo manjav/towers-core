@@ -24,8 +24,8 @@ class FieldProvider
 		
 		quests = new StringFieldMap();
 		quests.set( "quest_0" , new Quest_0( 0, "quest_0", "1,2", "0,2", "0", "100,100,100,0" ) );
-		quests.set( "quest_1" , new Quest_1( 1, "quest_1", "", "", "1,2", "50,70,100,20" ) );
-		quests.set( "quest_2" , new Quest_2( 2, "quest_2", "", "0,1", "", "40,60,75,20" ) );
+		quests.set( "quest_1" , new Quest_1( 1, "quest_1", "", "", "1,2", "60,80,100,20" ) );
+		quests.set( "quest_2" , new Quest_2( 2, "quest_2", "", "0,2", "", "40,60,75,20" ) );
 		quests.set( "quest_3" , new Quest_3( 3, "quest_3", "", "", "", "40,60,75,20" ) );
 		quests.set( "quest_4" , new Quest_4( 4, "quest_4", "", "", "", "50,70,100,20" ) );
 		quests.set( "quest_5" , new Quest_5( 5, "quest_5", "", "", "", "50,70,100,20" ) );
@@ -49,10 +49,10 @@ class FieldProvider
 		quests.set( "quest_23" , new Quest_23( 23, "quest_23", "", "", "", "50,100,160,30" ) );
 		quests.set( "quest_24" , new Quest_24( 24, "quest_24", "", "", "", "50,100,160,30" ) );
 		quests.set( "quest_25" , new Quest_25( 25, "quest_25", "", "", "", "80,130,190,30" ) );
-		quests.set( "quest_26" , new Quest_26( 26, "quest_26", "", "", "", "80,130,190,30" ) );
-		quests.set( "quest_27" , new Quest_27( 27, "quest_27", "", "", "", "80,130,190,30" ) );
-		quests.set( "quest_28" , new Quest_28( 28, "quest_28", "", "", "", "80,130,190,30" ) );
-		quests.set( "quest_29" , new Quest_29( 29, "quest_29", "", "", "", "80,130,190,30" ) );
+		quests.set( "quest_26" , new Quest_26( 26, "quest_26", "", "", "", "90,130,190,30" ) );
+		quests.set( "quest_27" , new Quest_27( 27, "quest_27", "", "", "", "100,130,190,30" ) );
+		quests.set( "quest_28" , new Quest_28( 28, "quest_28", "", "", "", "110,140,190,30" ) );
+		quests.set( "quest_29" , new Quest_29( 29, "quest_29", "", "", "", "120,150,190,30" ) );
 		
 		battles = new StringFieldMap();
 		
