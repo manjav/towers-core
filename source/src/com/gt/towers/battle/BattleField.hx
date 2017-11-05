@@ -46,6 +46,7 @@ class BattleField
 		{
 			if ( isQuest )
 			{
+				game_0.player.hardMode = false;
 				if ( map.index == 1 )
 				{
 					game_0.player.hardMode =  !game_0.player.buildings.exists(BuildingType.B11_BARRACKS) || game_0.player.buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ;
