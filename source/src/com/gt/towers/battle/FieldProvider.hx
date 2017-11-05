@@ -51,6 +51,7 @@ class FieldProvider
 		quests.set( "quest_25" , new Quest_25( 25, "quest_25", "", "", "", "50,100,160,30" ) );
 		quests.set( "quest_26" , new Quest_26( 26, "quest_26", "", "", "", "80,130,190,30" ) );
 		quests.set( "quest_27" , new Quest_27( 27, "quest_27", "", "", "", "80,130,190,30" ) );
+		quests.set( "quest_28" , new Quest_28( 28, "quest_28", "", "", "", "80,130,190,30" ) );
 		
 		battles = new StringFieldMap();
 		

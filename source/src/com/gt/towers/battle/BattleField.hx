@@ -46,7 +46,7 @@ class BattleField
 		{
 			if ( isQuest )
 			{
-				if ( map.index == 2 && game_0.player.buildings.get(BuildingType.B11_BARRACKS).get_level() < 2 )
+				if ( map.index == 1 && game_0.player.buildings.get(BuildingType.B11_BARRACKS).get_level() < 2 )
 					difficulty = 4;
 				else
 					difficulty = Math.round(map.index / 6);
