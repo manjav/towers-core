@@ -2,6 +2,7 @@ package com.gt.towers;
 import com.gt.towers.Game;
 import com.gt.towers.buildings.AbstractBuilding;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.StickerType;
 import com.gt.towers.constants.MessageTypes;
@@ -25,12 +26,9 @@ class Player
 	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
 	public var hardMode:Bool;
+	public var prefs:com.gt.towers.utils.maps.IntStrMap;
 	
 	private var game:Game;
-	
-	#if flash
-	public var prefs:com.gt.towers.utils.maps.IntStrMap;
-	#end
 
 	
 	public function new(game:Game, initData:InitData)
@@ -54,8 +52,8 @@ class Player
 			buildings.set(kies[i], BuildingType.instantiate( game, kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
 			i++;
 		}
-		#if flash
 		prefs = new com.gt.towers.utils.maps.IntStrMap();
+		#if flash
 		prefs.set(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101, "101");
 		
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_1_MUSIC, "true");
@@ -186,7 +184,7 @@ class Player
 		return t;
 	}
 	
-	public function inTutorial():Bool { return get_questIndex() < 3; }
+	public function inTutorial():Bool { return (get_questIndex() < 2 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
 	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
