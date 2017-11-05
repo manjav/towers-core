@@ -46,8 +46,9 @@ class BattleField
 		{
 			if ( isQuest )
 			{
-				if ( map.index == 1 && game_0.player.buildings.exists(BuildingType.B11_BARRACKS) &&  game_0.player.buildings.get(BuildingType.B11_BARRACKS) .get_level() <= 1 )
-					difficulty = 4;
+				game_0.player.hardMode = map.index == 1 && (!game_0.player.buildings.exists(BuildingType.B11_BARRACKS) || game_0.player.buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 );
+				if ( game_0.player.hardMode )
+					difficulty = 7;
 				else
 					difficulty = Math.round(map.index / 6);
 			}

@@ -146,6 +146,10 @@ class AbstractBuilding
 			
 		if ( game.player.inFriendlyBattle )
 			return true;
+		#if java
+		if ( game.player.hardMode )
+			return true;
+		#end
 			
 		if ( type == BuildingType.NONE )
 			type = this.type;

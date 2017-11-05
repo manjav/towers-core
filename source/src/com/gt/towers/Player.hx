@@ -24,6 +24,7 @@ class Player
 	public var quests:IntIntMap;
 	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
+	public var hardMode:Bool;
 	
 	private var game:Game;
 	

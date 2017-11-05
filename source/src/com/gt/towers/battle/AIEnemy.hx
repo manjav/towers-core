@@ -82,10 +82,10 @@ class AIEnemy
 			var singlePlace = botPlaces.get(0);
 			if( singlePlace.enabled && singlePlace.building.type==BuildingType.B01_CAMP && battleField.getDuration()<battleField.map.times.get(0) )
 			{
-				if ( Math.random() < 0.8 && battleField.difficulty >= 1 )
+				if ( (Math.random() < 0.8 || battleField.places.get(0).game.player.hardMode) && battleField.difficulty >= 1 )
 				{
 					if( improve(singlePlace.building, true) )
-						return battleField.difficulty > 4 ? getAppropriateFight() : TYPE_IMPROVE;
+						return TYPE_IMPROVE;
 				}
 			}
 		}

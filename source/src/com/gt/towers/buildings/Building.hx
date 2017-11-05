@@ -135,7 +135,9 @@ class Building extends AbstractBuilding
 		if ( !unlocked(type) )
 			return false;
 			
-		//return (equalsCategory(type) || this.type == BuildingType.B01_CAMP) && getAbstract(type) != null &&  _population >= get_capacity() ;
+/*	#if java
+		game.tracer.log("type "+ type + " equalsCategory " + equalsCategory(this.type+1) + " _population " + _population);
+	#end*/
 		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
 	}
 	
