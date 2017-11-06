@@ -184,12 +184,12 @@ class Player
 		return t;
 	}
 	
-	public function inTutorial():Bool { return (get_questIndex() < 2 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
+	public function inTutorial():Bool { return (nickName == "guest" || get_questIndex() < 2 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
 	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{
-		if ( !inTutorial())
+		if ( get_questIndex() >= 2 )
 			return true;
 			
 		var tuteStep = prefs.getAsInt(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101);
