@@ -9,6 +9,20 @@ import com.gt.towers.utils.lists.IntList;
 class Crystal extends Building 
 {
 
+	#if flash
+
+	public function get_crystalHeight () : Int
+	{
+		if ( type == BuildingType.B42_CRYSTAL )
+			return 60;
+		else if ( type == BuildingType.B43_CRYSTAL )
+			return 68;
+		else if ( type == BuildingType.B44_CRYSTAL )
+			return 70;
+		return 5;
+	}
+	#end
+	
 	public override function get_damage():Float
 	{
 		return 1.05 + ( Math.log(get_level()) * 0.75 + Math.log(improveLevel) ) * 0.35;

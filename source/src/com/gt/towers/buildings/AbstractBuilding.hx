@@ -15,6 +15,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class AbstractBuilding 
 {
 	public var type:Int;
+	public var category:Int;
 	public var improveLevel:Int;
 	
 	public var game:Game;
@@ -26,6 +27,7 @@ class AbstractBuilding
 		this.game = game;
 		this.type = type;
 		this._level = level;
+		this.category = BuildingType.get_category(type);
 		this.improveLevel = type % 10;
 	}
 	
