@@ -253,7 +253,7 @@ class Building extends AbstractBuilding
 	}
 	public function equalsCategory(type:Int):Bool
 	{
-		return BuildingType.get_category(this.type) == BuildingType.get_category(type);
+		return category == BuildingType.get_category(type);
 	}
  
 	public function getFeatureValue(feature:Int):Float
