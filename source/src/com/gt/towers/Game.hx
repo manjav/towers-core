@@ -60,15 +60,15 @@ class Game
 		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
 		arenas.set(0, new Arena(0, 0,		50,		-4,				"11"    ));
-		arenas.set(1, new Arena(1, 51,		120,	-3,				"21"	));
-		arenas.set(2, new Arena(2, 121,		200,	-2,				"31"	));
-		arenas.set(3, new Arena(3, 221,		300,	-1,				"12"	));
-		arenas.set(4, new Arena(4, 351,		500,	 0,				"41,22" ));
-		arenas.set(5, new Arena(5, 501,		800,	 1,				"13,32"	));
-		arenas.set(6, new Arena(6, 501,		1200,	 2,				"42,23"	));
-		arenas.set(7, new Arena(7, 701,		1800,	 3,				"14,33"	));
-		arenas.set(8, new Arena(8, 1001,	2500,	 4, 			"24,43"	));
-		arenas.set(9, new Arena(9, 1401,	10000,	 5, 			"34,44"	));
+		arenas.set(1, new Arena(1, 51,		120,	-3,				"21,31"	));
+		arenas.set(2, new Arena(2, 121,		200,	-2,				"41,12"	));
+		arenas.set(3, new Arena(3, 201,		300,	-1,				"13,22"	));
+		arenas.set(4, new Arena(4, 301,		500,	 0,				"32,42" ));
+		arenas.set(5, new Arena(5, 501,		900,	 1,				"23,33"	));
+		arenas.set(6, new Arena(6, 901,		1500,	 2,				"14,43"	));
+		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"24"	));
+		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"34"	));
+		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"44"	));
 		
 		fieldProvider = new FieldProvider(this);
 
