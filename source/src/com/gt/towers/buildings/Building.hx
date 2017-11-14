@@ -38,6 +38,7 @@ class Building extends AbstractBuilding
 				level = 1;
 		}
 		super( game, type, level + (place == null ? 0 : place.levelCoef) );
+		
 		/*#if java 
 		if(place != null)
 		game.tracer.log( " type " + type + " levelCoef " + place.levelCoef );
@@ -219,13 +220,9 @@ class Building extends AbstractBuilding
 		var ret = troopType == troop.type; // if ret true troop is mine
 		_population += (ret ? 1 : -troop.health);
 		if (_population < 0)
-		{
 			occupy(troop);
-		}
 		else if (_population == 0 && !place.enabled) 
-		{
 			occupy(troop);
-		}
 		return ret;
 	}
 	
