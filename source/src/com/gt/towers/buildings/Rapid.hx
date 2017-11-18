@@ -24,4 +24,8 @@ class Rapid extends Building
 	{
 		return Math.round( 2000 * (1/Building.TIME_SCALE) - ( Math.log(get_level()) * Math.log(get_level()) * 0.8 + 3 * (Math.log(improveLevel)) ) * 180);
 	}
+	public override function get_troopPower():Float
+	{
+		return 1.05 + ( Math.log(get_level()) * 0.2 + Math.log(improveLevel) ) * 0.1;
+	}
 }
