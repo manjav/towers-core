@@ -49,7 +49,7 @@ class BattleField
 				game_0.player.hardMode = false;
 				if ( map.index == 2 )
 				{
-					game_0.player.hardMode =  !game_0.player.buildings.exists(BuildingType.B11_BARRACKS) || game_0.player.buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ;
+					game_0.player.hardMode = game_0.player.isHardMode();
 					difficulty = game_0.player.hardMode ? 14 : 0;
 					map.places.get(3).enabled = !game_0.player.hardMode;
 					map.places.get(0).enabled = game_0.player.hardMode;
