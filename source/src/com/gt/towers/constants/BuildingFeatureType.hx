@@ -67,9 +67,15 @@ class BuildingFeatureType
 		if ( cate == BuildingType.B10_BARRACKS )
 			ret.push( F02_BIRTH_RATE );
 		else if ( cate == BuildingType.B20_RAPID )
+		{
 			ret.push( F11_TROOP_SPEED );
-		else if ( cate == BuildingType.B30_HEAVY )
 			ret.push( F12_TROOP_POWER );
+		}
+		else if ( cate == BuildingType.B30_HEAVY )
+		{
+			
+			ret.push( F12_TROOP_POWER );
+		}
 		else if ( cate == BuildingType.B40_CRYSTAL )
 		{
 			ret.push( F21_DAMAGE );

@@ -25,6 +25,9 @@ class PrefsTypes
 	public static var TUTE_115_UPGRADE_BUILDING:Int = 115;
 	public static var TUTE_116_END:Int = 116;
 	
+	public static var TUTE_118_VIEW_RANK:Int = 118;
+
+	
 	public function new()  {}
 	
 	public static function isSettings(type:Int) : Bool

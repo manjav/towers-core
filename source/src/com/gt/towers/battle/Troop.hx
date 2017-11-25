@@ -23,9 +23,9 @@ class Troop
 	public function new( id:Int, building:Building, path:PlaceList ) 
 	{
 		this.id = id;
-		this.health = building.get_troopPower();
 		this.building = building;
 		this.type = building.troopType;
+		this.health = building.get_troopPower() * (this.type==0 ? building.place.healthCoef : 1/building.place.healthCoef );
 		
 		this.path = new PlaceList();
 		var i:Int = 0;

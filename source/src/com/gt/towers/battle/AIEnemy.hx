@@ -193,9 +193,9 @@ class AIEnemy
 	
 	function existsIndex(places:PlaceList, index:Int) : Bool
 	{
-		if ( battleField.difficulty < 6 || index == -1 || places.size() <= 1 )
-			return false;
 		var size = places.size()-1;
+		if ( battleField.difficulty < 6 || index == -1 || size <= 0 )
+			return false;
 		while ( size >= 0 )
 		{
 			if ( places.get(size).index == index )
@@ -233,23 +233,14 @@ class AIEnemy
 	{
 		if ( battleField.difficulty < 3 )
 			return false;
-		var ret = false;
-		var size = botPlaces.size();
-		var b = 0;
-		while ( b < size )
+		var b = botPlaces.size()-1;
+		while ( b >= 0 )
 		{
-			var building = botPlaces.get(b).building;
-			var bb = improve(building, needPopulation);
-			//building.game.tracer.log("index:" + building.index + " type:" + building.type + " trying to improvement ==> " + bb);
-			if ( bb )
-			{
-				ret = true;
-				if( battleField.difficulty < 5 )  
+			if( improve(botPlaces.get(b).building, needPopulation) )
 					return true;
-			}
-			b ++;
+			b --;
 		}
-		return ret;
+		return false;
 	}
 	
 	private function improve(building:Building, needPopulation:Bool) : Bool

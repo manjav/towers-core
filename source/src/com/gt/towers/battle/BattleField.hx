@@ -47,9 +47,9 @@ class BattleField
 			if ( isQuest )
 			{
 				game_0.player.hardMode = false;
-				if ( map.index == 1 )
+				if ( map.index == 2 )
 				{
-					game_0.player.hardMode =  !game_0.player.buildings.exists(BuildingType.B11_BARRACKS) || game_0.player.buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ;
+					game_0.player.hardMode = game_0.player.isHardMode();
 					difficulty = game_0.player.hardMode ? 14 : 0;
 					map.places.get(3).enabled = !game_0.player.hardMode;
 					map.places.get(0).enabled = game_0.player.hardMode;
@@ -77,6 +77,13 @@ class BattleField
 			place.levelCoef = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 2 : 0;
 			if ( place.levelCoef < 0 )
 				place.levelCoef = 0;
+				
+			if ( map.isQuest && map.index < 3 )
+				place.healthCoef = 2.4;
+			if ( game_0.player.hardMode )
+				place.healthCoef = 0.4;
+			
+				
 			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);

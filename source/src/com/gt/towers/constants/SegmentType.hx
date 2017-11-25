@@ -13,6 +13,7 @@ class SegmentType
 	public static var S0_SHOP:Int = 0;
 	public static var S1_MAP:Int = 1;
 	public static var S2_DECK:Int = 2;
+	public static var S3_SOCIALS:Int = 3;
 	
 	public static var S10_LOBBY_MAIN:Int = 10;
 	public static var S11_LOBBY_SEARCH:Int = 11;
@@ -25,6 +26,7 @@ class SegmentType
 		ret.push( S0_SHOP );
 		ret.push( S1_MAP );
 		ret.push( S2_DECK );
+		ret.push( S3_SOCIALS );
 		return ret;
 	}
 	

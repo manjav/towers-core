@@ -416,11 +416,11 @@ class Exchanger
 
 		if( numChests % 71 == 0 )
 			return ExchangeType.CHESTS_56_MAGICAL;
-		else if( numChests % 47 == 0 )
+		if( numChests % 47 == 0 )
 			return ExchangeType.CHESTS_55_WONDER;
-		else if( numChests % 19 == 0 )
+		if( numChests % 19 == 0 )
 			return ExchangeType.CHESTS_54_MASTER;
-		else if( numChests % 7 == 0 || numChests == 1 )
+		if( numChests % 7 == 0 || numChests == 1 )
 			return ExchangeType.CHESTS_53_GOLD;
 		return ExchangeType.CHESTS_52_SILVER;
 	}
