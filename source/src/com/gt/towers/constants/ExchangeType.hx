@@ -118,15 +118,15 @@ class ExchangeType
 	public static function getHardRequierement(type:Int):Int
 	{
 		if (type == CHESTS_52_SILVER)
-			return 40;
+			return 20;
 		else if (type == CHESTS_53_GOLD)
-			return 60;
+			return 30;
 		else if (type == CHESTS_54_MASTER)
-			return 100;
+			return 50;
 		else if (type == CHESTS_55_WONDER)
-			return 180;
+			return 90;
 		else if (type == CHESTS_56_MAGICAL)
-			return 320;
+			return 160;
 		return 0;
 	}	
 	
