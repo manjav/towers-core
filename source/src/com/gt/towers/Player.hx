@@ -6,6 +6,7 @@ import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.StickerType;
 import com.gt.towers.constants.MessageTypes;
+import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -23,10 +24,12 @@ class Player
 	public var troopType:Int = -1;
 	public var resources:IntIntMap;
 	public var quests:IntIntMap;
+	public var newBuildings:IntIntMap;
 	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
 	public var hardMode:Bool;
-	public var prefs:com.gt.towers.utils.maps.IntStrMap;
+	public var prefs:IntStrMap;
+	public var decks:DeckList;
 	
 	private var game:Game;
 
@@ -36,22 +39,24 @@ class Player
 		this.game = game;
 		id = initData.id;
 		nickName = initData.nickName;
+		quests = initData.quests;
+		decks = initData.decks;
 		
-		// add player resources, quests data
-		resources = initData.resources;// new IntIntMap();
-		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
-		quests = initData.quests;// new IntIntMap();
-		
-		// add player buildings data
+		// add resources and buildings
+		resources = new IntIntMap();
+		newBuildings = new IntIntMap();
 		buildings = new IntBuildingMap();
-		
+		addResources(initData.resources);
+
+		// update buildings level
 		var i:Int = 0;
 		var kies = initData.buildingsLevel.keys();
-		while (i < kies.length)
+		while ( i < kies.length )
 		{
-			buildings.set(kies[i], BuildingType.instantiate( game, kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
-			i++;
+			buildings.get(kies[i]).set_level(initData.buildingsLevel.get(kies[i]));
+			i ++;
 		}
+		
 		prefs = new com.gt.towers.utils.maps.IntStrMap();
 		#if flash
 		prefs.set(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101, "101");
@@ -66,6 +71,8 @@ class Player
 		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_32_INSTAGRAM, "40");
 		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_33_FRIENDSHIP, "50");
 		#end
+		
+		decks = initData.decks;
 	}
 	
 	public function get_questIndex():Int
@@ -170,8 +177,8 @@ class Player
 		var i = 0;
 		while ( i < bundleKeys.length )
 		{
-			if ( ResourceType.isBuilding(bundleKeys[i]) && !game.player.buildings.exists(bundleKeys[i]) )
-				game.player.buildings.set(bundleKeys[i], BuildingType.instantiate( game, bundleKeys[i], null, 0, 1 ) );
+			if ( ResourceType.isBuilding(bundleKeys[i]) && !buildings.exists(bundleKeys[i]) )
+				buildings.set(bundleKeys[i], BuildingType.instantiate( game, bundleKeys[i], null, 0, 1 ) );
 			i ++;
 		}
 	}

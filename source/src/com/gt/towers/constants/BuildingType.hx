@@ -102,5 +102,11 @@ class BuildingType
 	
 		return _all;
 	}
+	
+		public static function isDefensive(type:Int):Bool
+		{
+			return get_category(type) == B40_CRYSTAL;
+		}
+
 
 }

@@ -14,12 +14,13 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "2040.1126155957";//do not change len.
-	public var noticeVersion:Int = 2020;
-	public var forceVersion:Int = 2020;
+	public var coreVersion:String = "3000.1129100849";//do not change len.
+	public var noticeVersion:Int = 3000;
+	public var forceVersion:Int = 3000;
 	public var resources:IntIntMap;
-	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;
+	public var deckSize:Int = 3;
+	public var deck:IntList;
 		
 	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
@@ -34,8 +35,16 @@ class LoginData
 		resources.set(ResourceType.KEY, 0);
 		resources.set(ResourceType.CURRENCY_SOFT, 100);
 		resources.set(ResourceType.CURRENCY_HARD, 30);
+		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
 		
-		buildingsLevel = new IntIntMap();
+		resources.set(BuildingType.B11_BARRACKS, 1);
+		resources.set(BuildingType.B12_BARRACKS, 1);
+		resources.set(BuildingType.B21_RAPID, 1);
+		resources.set(BuildingType.B31_HEAVY, 1);
+		resources.set(BuildingType.B13_BARRACKS, 1);
+		resources.set(BuildingType.B14_BARRACKS, 1);
+		resources.set(BuildingType.B22_RAPID, 1);
+		resources.set(BuildingType.B32_HEAVY, 1);		
 		
 		exchanges = new IntList();
 		exchanges.push(ExchangeType.S_41_KEYS);
@@ -46,6 +55,12 @@ class LoginData
 		exchanges.push(ExchangeType.CHEST_CATE_121_OFFER);
 		exchanges.push(ExchangeType.CHEST_CATE_122_OFFER);
 		exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
+		
+		deck = new IntList();
+		deck.push(BuildingType.B11_BARRACKS);
+		deck.push(BuildingType.B12_BARRACKS);
+		deck.push(BuildingType.B21_RAPID);
+		deck.push(BuildingType.B31_HEAVY);
 	}
 }
 	

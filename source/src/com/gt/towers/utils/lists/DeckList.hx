@@ -1,33 +1,30 @@
 package com.gt.towers.utils.lists;
-import com.gt.towers.utils.GameError;
+
 
 #if java
 	import java.util.ArrayList;
-	import java.lang.Error;
 #elseif flash
 	import flash.Vector;
-	import flash.errors.Error;
 #end
-
 /**
  * ...
  * @author Mansour Djawadi
  */
-class IntList
+class DeckList
 {
-	
+
 	#if java
-	private var _list:ArrayList<Int>;
+	private var _list:ArrayList<IntList>;
 	#elseif flash
-	private var _list:Vector<Int>;
+	private var _list:Vector<IntList>;
 	#end
 
 	public function new()
 	{
 		#if java
-		_list = new ArrayList<Int>();
+		_list = new ArrayList<IntList>();
 		#elseif flash
-		_list = new Vector<Int>();
+		_list = new Vector<IntList>();
 		#end
 	}
 
@@ -41,7 +38,7 @@ class IntList
 		return 0;
 	}
 
-	public function push(value:Int):Void
+	public function push(value:IntList):Void
 	{
 		#if java
 		_list.add(value);
@@ -59,7 +56,7 @@ class IntList
 		#end
 	}
 
-	public function set(index:Int, value:Int):Void
+	public function set(index:Int, value:IntList):Void
 	{
 		#if java
 		_list.set(index, value);
@@ -68,17 +65,20 @@ class IntList
 		#end
 	}
 
-	public function get(index:Int):Int
+	public function get(index:Int):IntList
 	{
+		if ( index >= size() )
+			return null;
+			
 		#if java
 		return _list.get(index);
 		#elseif flash
 		return _list[index];
 		#end
-		return -1;
+		return null;
 	}
 
-	public function indexOf(element:Int):Int
+	public function indexOf(element:IntList):Int
 	{
 		#if java
 		return _list.indexOf(element);
@@ -95,19 +95,6 @@ class IntList
 		#elseif flash
 		_list.splice(0, _list.length);
 		#end
-	}
-	
-	public static function parse(value:String, separator:String=","):IntList
-	{
-		var ret = new IntList();
-		var t = 0;
-		if ( value == "" || value == null ) return ret;
-		var ts = value.split(separator);
-		while ( t < ts.length )
-		{
-			ret.push(Std.parseInt(ts[t]));
-			t ++;
-		}
-		return ret;
+		
 	}
 }

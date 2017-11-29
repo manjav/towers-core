@@ -1,4 +1,5 @@
 package com.gt.towers;
+import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntExchangeMap;
 import com.gt.towers.utils.maps.IntIntMap;
@@ -19,6 +20,7 @@ class InitData
 	public var buildingsLevel:IntIntMap;
 	public var quests:IntIntMap;
 	public var exchanges:IntExchangeMap;
+	public var decks:DeckList;
 	
 	public function new() 
 	{
@@ -26,5 +28,6 @@ class InitData
 		buildingsLevel = new IntIntMap();
 		quests = new IntIntMap();
 		exchanges = new IntExchangeMap();
+		decks = new DeckList();
 	}
 }
