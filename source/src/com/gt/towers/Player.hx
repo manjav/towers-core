@@ -30,6 +30,7 @@ class Player
 	public var hardMode:Bool;
 	public var prefs:IntStrMap;
 	public var decks:DeckList;
+	public var selectedDeck:Int = 0;
 	
 	private var game:Game;
 
