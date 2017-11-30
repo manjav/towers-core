@@ -60,7 +60,7 @@ class Building extends AbstractBuilding
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
 	{
-		if ( improveLevel == 1 )
+		/*if ( improveLevel == 1 )
 			return 15;
 		else if ( improveLevel == 2 )
 			return 18;
@@ -68,7 +68,7 @@ class Building extends AbstractBuilding
 			return 21;
 		else if ( improveLevel == 4 )
 			return 24;
-		else
+		else*/
 			return 10;
 
 		//return 10 + (5 * improveLevel);
@@ -139,7 +139,8 @@ class Building extends AbstractBuilding
 /*	#if java
 		game.tracer.log("type "+ type + " equalsCategory " + equalsCategory(this.type+1) + " _population " + _population);
 	#end*/
-		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
+		return _population >= get_capacity() ;
+		//return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -163,22 +164,22 @@ class Building extends AbstractBuilding
 		if ( !improvable(type) )
 			return false;
 			
-		if ( type != BuildingType.B01_CAMP )
+		/*if ( type != BuildingType.B01_CAMP )
 			_population -= Math.round( get_capacity() / 2 );
 		
 		if ( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 			
 		if( !equalsCategory(type) )
-		{
+		{*/
 			place.setBuilidng(type, game);
 			return true;
-		}
+		/*}
 		
 		this.type ++;
 		improveLevel ++;
 		
-		return true;
+		return true;*/
 	}
 	
 	public function calculatePopulation():Void
