@@ -5,6 +5,7 @@ import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
@@ -166,7 +167,7 @@ class Exchanger
 				hards += requirements.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += requirements.get(reqKeys[i]);
-			else if( ResourceType.isBuilding(reqKeys[i])) 
+			else if( ResourceType.isCard(reqKeys[i])) 
 				softs += game.player.buildings.get(reqKeys[i]).price() * requirements.get(reqKeys[i]);
 
 			i ++;
@@ -331,7 +332,7 @@ class Exchanger
 	{
 		if ( game.player.inTutorial() )
 		{
-			ret.set( BuildingType.B11_BARRACKS, 2 );
+			ret.set( CardTypes.C101, 2 );
 			return;
 		}
 		

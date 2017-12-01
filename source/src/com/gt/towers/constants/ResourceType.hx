@@ -27,9 +27,13 @@ class ResourceType
 	
 	public function new() {	}
 	
-	static public function isBuilding(type:Int) 
+	/*static public function isBuilding(type:Int) 
 	{
-		return type < 1000 && type >= 10; 
+		return type < 100 && type >= 10; 
+	}*/
+	static public function isCard(type:Int) 
+	{
+		return type < 1000 && type >= 100; 
 	}
 	
 	static public function getName(type:Int) : String
@@ -42,4 +46,5 @@ class ResourceType
 		else if ( type == CURRENCY_REAL ) return "CURRENCY_REAL";
 		else return "TYPE_" + type;
 	}
+	
 }

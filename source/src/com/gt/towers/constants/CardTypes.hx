@@ -4,9 +4,9 @@ package com.gt.towers.constants;
  * ...
  * @author Babak Sheikh Salimi
  */
-class CardType 
+class CardTypes 
 {
-	public static var C1000:Int = 1000;
+	public static var C100:Int = 100;
 	
 	public static var C101:Int = 101;
 	public static var C102:Int = 102;

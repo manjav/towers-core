@@ -5,6 +5,7 @@ import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.socials.Lobby;
+import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntArenaMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
@@ -59,16 +60,16 @@ class Game
 		arenas = new IntArenaMap();
 		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
-		arenas.set(0, new Arena(0, 0,		50,		-4,				"101, 201, 301, 401"    ));
-		arenas.set(1, new Arena(1, 51,		120,	-3,				"102, 202, 302, 402"	));
-		arenas.set(2, new Arena(2, 121,		200,	-2,				"103, 203, 303, 403"	));
-		arenas.set(3, new Arena(3, 201,		300,	-1,				"104, 204, 304"	));
-		arenas.set(4, new Arena(4, 301,		500,	 0,				"105, 205, 305" ));
-		arenas.set(5, new Arena(5, 501,		900,	 1,				"106, 206, 306"	));
-		arenas.set(6, new Arena(6, 901,		1500,	 2,				"107, 207"	));
-		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"404, 405"	));
-		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"406, 307"	));
-		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"407"	));
+		arenas.set(0, new Arena(0, 0,		50,		-4,				"104, 105, 106" ));
+		arenas.set(1, new Arena(1, 51,		120,	-3,				"204, 205, 206" ));
+		arenas.set(2, new Arena(2, 121,		200,	-2,				"304, 305, 306" ));
+		arenas.set(3, new Arena(3, 201,		300,	-1,				"404, 405, 406"	));
+		arenas.set(4, new Arena(4, 301,		500,	 0,				"107, 108, 308" ));
+		arenas.set(5, new Arena(5, 501,		900,	 1,				"207, 309, 310"	));
+		arenas.set(6, new Arena(6, 901,		1500,	 2,				"307, 311"	));
+		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"407, 312"	));
+		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"408"	));
+		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"313"	));
 		
 		fieldProvider = new FieldProvider(this);
 

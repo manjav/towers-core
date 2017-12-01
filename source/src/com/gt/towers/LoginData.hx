@@ -1,5 +1,6 @@
 package com.gt.towers;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
@@ -14,7 +15,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "3000.1130121925";//do not change len.
+	public var coreVersion:String = "3000.1202000949";//do not change len.
 	public var noticeVersion:Int = 3000;
 	public var forceVersion:Int = 3000;
 	public var resources:IntIntMap;
@@ -35,16 +36,28 @@ class LoginData
 		resources.set(ResourceType.KEY, 0);
 		resources.set(ResourceType.CURRENCY_SOFT, 100);
 		resources.set(ResourceType.CURRENCY_HARD, 30);
-		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
 		
-		resources.set(BuildingType.B11_BARRACKS, 1);
+		resources.set(CardTypes.C101, 1);
+		resources.set(CardTypes.C201, 1);
+		resources.set(CardTypes.C301, 1);
+		resources.set(CardTypes.C401, 1);
+		resources.set(CardTypes.C102, 1);
+		resources.set(CardTypes.C202, 1);
+		resources.set(CardTypes.C302, 1);
+		resources.set(CardTypes.C402, 1);
+		resources.set(CardTypes.C103, 1);
+		resources.set(CardTypes.C203, 1);
+		resources.set(CardTypes.C303, 1);
+		resources.set(CardTypes.C403, 1);
+		
+		/*resources.set(BuildingType.B11_BARRACKS, 1);
 		resources.set(BuildingType.B12_BARRACKS, 1);
 		resources.set(BuildingType.B21_RAPID, 1);
 		resources.set(BuildingType.B31_HEAVY, 1);
 		resources.set(BuildingType.B13_BARRACKS, 1);
 		resources.set(BuildingType.B14_BARRACKS, 1);
 		resources.set(BuildingType.B22_RAPID, 1);
-		resources.set(BuildingType.B32_HEAVY, 1);		
+		resources.set(BuildingType.B32_HEAVY, 1);	*/	
 		
 		exchanges = new IntList();
 		exchanges.push(ExchangeType.S_41_KEYS);
@@ -57,10 +70,10 @@ class LoginData
 		exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
 		
 		deck = new IntList();
-		deck.push(BuildingType.B11_BARRACKS);
-		deck.push(BuildingType.B12_BARRACKS);
-		deck.push(BuildingType.B21_RAPID);
-		deck.push(BuildingType.B31_HEAVY);
+		deck.push(CardTypes.C101);
+		deck.push(CardTypes.C201);
+		deck.push(CardTypes.C301);
+		deck.push(CardTypes.C401);
 	}
 }
 	

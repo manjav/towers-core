@@ -2,11 +2,13 @@ package com.gt.towers;
 import com.gt.towers.Game;
 import com.gt.towers.buildings.AbstractBuilding;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.StickerType;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.utils.lists.DeckList;
+import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -42,12 +44,13 @@ class Player
 		nickName = initData.nickName;
 		quests = initData.quests;
 		decks = initData.decks;
-		
+
 		// add resources and buildings
 		resources = new IntIntMap();
 		newBuildings = new IntIntMap();
 		buildings = new IntBuildingMap();
 		addResources(initData.resources);
+		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
 
 		// update buildings level
 		var i:Int = 0;
@@ -103,6 +106,10 @@ class Player
 	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
 	public function get_openedChests():Int { return resources.exists(ResourceType.BATTLE_CHEST_OPENED) ? resources.get(ResourceType.BATTLE_CHEST_OPENED) : 0; }
 	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
+	public function inTutorial():Bool { return (nickName == "guest" || get_questIndex() < 3 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
+	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
+	public function isHardMode():Bool { return !buildings.exists(CardTypes.C101) || buildings.get(CardTypes.C101).get_level() <= 1 ; }
+	
 	public function get_level():Int
 	{
 		var xp:Int = get_xp();
@@ -141,6 +148,24 @@ class Player
 		}
 		return 0 ;
 	}
+		
+	public function availabledCards () : IntList
+	{
+		var ret = new IntList();
+		var arena = get_arena(0);
+		var ci = 0;
+		while ( arena >= 0 )
+		{
+			ci = game.arenas.get(arena).cards.size() - 1;
+			while ( ci >= 0 )
+			{
+				ret.push( game.arenas.get(arena).cards.get(ci) );
+				ci --;
+			}
+			arena --;
+		}
+		return ret;
+	}
 	
 	
 	public function has(IntIntMap:IntIntMap):Bool
@@ -178,7 +203,8 @@ class Player
 		var i = 0;
 		while ( i < bundleKeys.length )
 		{
-			if ( ResourceType.isBuilding(bundleKeys[i]) && !buildings.exists(bundleKeys[i]) )
+			
+			if ( ResourceType.isCard(bundleKeys[i]) && !buildings.exists(bundleKeys[i]) )
 				buildings.set(bundleKeys[i], BuildingType.instantiate( game, bundleKeys[i], null, 0, 1 ) );
 			i ++;
 		}
@@ -191,10 +217,6 @@ class Player
 			return getRandomBuilding();
 		return t;
 	}
-	
-	public function inTutorial():Bool { return (nickName == "guest" || get_questIndex() < 3 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
-	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function isHardMode():Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool

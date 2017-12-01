@@ -67,6 +67,8 @@ class BuildingType
 			return new Heavy(game, place, index, type, level);
 		else if (category == BuildingType.B40_CRYSTAL)
 			return new Crystal(game, place, index, type, level);
+		else if ( ResourceType.isCard(type) )
+			return new Building(game, place, index, type, level);
 		else 
 			return null;
 	}
