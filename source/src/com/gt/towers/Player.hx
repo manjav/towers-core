@@ -209,15 +209,7 @@ class Player
 			i ++;
 		}
 	}
-	
-	public function getRandomBuilding():Int
-	{
-		var t = resources.getRandomKey();
-		if (! ResourceType.isBuilding(t) )
-			return getRandomBuilding();
-		return t;
-	}
-	
+
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{

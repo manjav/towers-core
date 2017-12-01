@@ -369,7 +369,7 @@ class Exchanger
 		if ( game.player.buildings.keys().length <= ret.keys().length )
 			return;
 		
-		var random = game.player.getRandomBuilding();
+		var random = game.player.buildings.getRandomKey();
 		if ( ret.exists(random) )
 		{
 			addRandomSlot( ret, count );
@@ -382,7 +382,7 @@ class Exchanger
 		if ( game.player.buildings.keys().length <= ret.keys().length )
 			return;
 		
-		var random = game.player.getRandomBuilding();
+		var random = game.player.buildings.getRandomKey();
 		if ( ret.exists(random) )
 		{
 			addRandomCard(ret, maxChance);
