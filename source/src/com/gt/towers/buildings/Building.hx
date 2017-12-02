@@ -69,7 +69,7 @@ class Building extends AbstractBuilding
 		else if ( improveLevel == 4 )
 			return 24;
 		else*/
-			return 10;
+			return category == 0 ? 8 : 10;
 
 		//return 10 + (5 * improveLevel);
 	}
@@ -164,22 +164,22 @@ class Building extends AbstractBuilding
 		if ( !improvable(type) )
 			return false;
 			
-		/*if ( type != BuildingType.B01_CAMP )
+		if ( type != BuildingType.B01_CAMP )
 			_population -= Math.round( get_capacity() / 2 );
 		
 		if ( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 			
 		if( !equalsCategory(type) )
-		{*/
+		{
 			place.setBuilidng(type, game);
 			return true;
-		/*}
+		}
 		
 		this.type ++;
 		improveLevel ++;
 		
-		return true;*/
+		return true;
 	}
 	
 	public function calculatePopulation():Void
