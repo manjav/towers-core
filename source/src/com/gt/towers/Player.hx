@@ -1,7 +1,7 @@
 package com.gt.towers;
 import com.gt.towers.Game;
 import com.gt.towers.buildings.AbstractBuilding;
-import com.gt.towers.buildings.Card;
+import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
@@ -10,7 +10,6 @@ import com.gt.towers.constants.StickerType;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.IntCardMap;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -29,7 +28,7 @@ class Player
 	public var resources:IntIntMap;
 	public var quests:IntIntMap;
 	public var newBuildings:IntIntMap;
-	public var buildings:IntCardMap;
+	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
 	public var hardMode:Bool;
 	public var prefs:IntStrMap;
@@ -50,7 +49,7 @@ class Player
 		// add resources and buildings
 		resources = new IntIntMap();
 		newBuildings = new IntIntMap();
-		buildings = new IntCardMap();
+		buildings = new IntBuildingMap();
 		addResources(initData.resources);
 		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
 
@@ -207,7 +206,7 @@ class Player
 		{
 			
 			if ( ResourceType.isCard(bundleKeys[i]) && !buildings.exists(bundleKeys[i]) )
-				buildings.set(bundleKeys[i], new Card( game, null, 0, bundleKeys[i], 1 ) );
+				buildings.set(bundleKeys[i], new Building( game, null, 0, bundleKeys[i], 1 ) );
 			i ++;
 		}
 	}

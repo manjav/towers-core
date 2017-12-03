@@ -245,7 +245,7 @@ class AIEnemy
 	
 	private function improve(building:Building, needPopulation:Bool) : Bool
 	{
-		if ( building.type == BuildingType.B01_CAMP )
+		/*if ( building.type == BuildingType.B01_CAMP )
 		{
 			if ( needPopulation || battleField.getDuration() < battleField.map.times.get(0))
 				return building.improve(BuildingType.B11_BARRACKS);
@@ -259,9 +259,9 @@ class AIEnemy
 				return building.improve(BuildingType.B21_RAPID);
 				
 			return building.improve(BuildingType.B11_BARRACKS);
-		}
+		}*/
 		
-		return building.improve(BuildingType.IMPROVE);
+		return false;// building.improve(BuildingType.IMPROVE);
 	}
 	
 	public function doAction():Int

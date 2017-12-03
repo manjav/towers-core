@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.fieldes.PlaceData;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.FieldProvider;
+import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
@@ -84,7 +85,7 @@ class BattleField
 				place.healthCoef = 0.4;
 			
 				
-			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
+			place.building =new Building(place.game, place, placeData.index, placeData.type);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
 			
