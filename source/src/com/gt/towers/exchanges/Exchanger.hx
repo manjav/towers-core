@@ -393,8 +393,6 @@ class Exchanger
 	#end
 	
 	
-
-	
 	
 	public static function getDailyChestType(numExchanges:Int) : Int
 	{

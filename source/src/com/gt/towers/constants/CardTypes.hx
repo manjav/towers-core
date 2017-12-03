@@ -6,8 +6,6 @@ package com.gt.towers.constants;
  */
 class CardTypes 
 {
-	public static var C100:Int = 100;
-	
 	public static var C101:Int = 101;
 	public static var C102:Int = 102;
 	public static var C103:Int = 103;
@@ -15,6 +13,8 @@ class CardTypes
 	public static var C105:Int = 105;
 	public static var C106:Int = 106;
 	public static var C107:Int = 107;
+	public static var C108:Int = 108;
+	public static var C109:Int = 109;
 	
 	public static var C201:Int = 201;
 	public static var C202:Int = 202;
@@ -23,6 +23,8 @@ class CardTypes
 	public static var C205:Int = 205;
 	public static var C206:Int = 206;
 	public static var C207:Int = 207;
+	public static var C208:Int = 208;
+	public static var C209:Int = 209;
 	
 	public static var C301:Int = 301;
 	public static var C302:Int = 302;
@@ -31,6 +33,8 @@ class CardTypes
 	public static var C305:Int = 305;
 	public static var C306:Int = 306;
 	public static var C307:Int = 307;
+	public static var C308:Int = 308;
+	public static var C309:Int = 309;
 	
 	public static var C401:Int = 401;
 	public static var C402:Int = 402;
@@ -39,26 +43,35 @@ class CardTypes
 	public static var C405:Int = 405;
 	public static var C406:Int = 406;
 	public static var C407:Int = 407;
+	public static var C408:Int = 408;
+	public static var C409:Int = 409;
 	
 	public function new() { }
 	
 	public static function get_rarity(type:Int):Int
 	{
-		/**
-		 *  Common	= 1
-		 *  Rare	= 2
-		 * 	Epic	= 3
-		 */
-		return Math.floor(type / 100);
+		return switch(type)
+		{
+			// rare
+			case 101: 1;
+			case 102 : 1;
+			
+			// uncommon
+			case 201: 2;
+			case 203: 2; 
+				
+			default: 0; // common
+		}
+		return 0;
 	}
 	
 	/**public static function get_special_ability(type:Int):Int
 	{
 		
-		 *  Speed		= 1
-		 *  Health		= 2
-		 * 	Power		= 3
-		 * 	Generation	= 4
+		 *  Speed		= 0
+		 *  Health		= 1
+		 * 	Power		= 2
+		 * 	Generation	= 3
 		 
 		return type / 10;
 	}*/

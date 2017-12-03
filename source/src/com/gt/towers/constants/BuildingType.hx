@@ -2,6 +2,7 @@ package com.gt.towers.constants;
 import com.gt.towers.buildings.Barracks;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Camp;
+import com.gt.towers.buildings.Card;
 import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.buildings.Rapid;
@@ -68,7 +69,7 @@ class BuildingType
 		else if (category == BuildingType.B40_CRYSTAL)
 			return new Crystal(game, place, index, type, level);
 		else if ( ResourceType.isCard(type) )
-			return new Building(game, place, index, type, level);
+			return new Card(game, place, index, type, level);
 		else 
 			return null;
 	}
