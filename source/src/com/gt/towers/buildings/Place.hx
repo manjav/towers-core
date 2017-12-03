@@ -13,9 +13,9 @@ import com.gt.towers.utils.lists.PlaceList;
  */
 class Place 
 {
-	#if java
+#if java
 	var troops:java.util.HashMap<Int, Troop>;
-	#end
+#end
 
 	public var index:Int;
 	public var x:Float;
@@ -43,7 +43,7 @@ class Place
 	#end
 	}
 	
-	#if java
+#if java
 	public function fight(destination:Place, all:PlaceList):Void
 	{
 		var path:PlaceList = PathFinder.find(this, destination, all);
@@ -77,18 +77,7 @@ class Place
 		troops.get(troopId).hit(damage);
 	}
 	
-	public function setBuilidng(type:Int, game:Game) 
-	{
-		enabled = true;
-		var troopType = building.troopType;
-		var population = building.get_population();
-		
-		building = BuildingType.instantiate(game, type, this, index);
-		
-		if( building != null )
-			building.createEngine(troopType, population);
-	}
-	#end
+#end
 		
 	public function getIncreasedId() : Int
 	{

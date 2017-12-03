@@ -4,6 +4,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.lists.IntList;
 
@@ -17,12 +18,10 @@ class Building extends AbstractBuilding
 	
 	public var place:Place;
 	public var index:Int;
-	
-	
 	public var troopType:Int = -1;
+	public var rerity:Int = 0;
 	
 	var _population:Float;
-	var spawnIntervalId:Int;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
@@ -39,23 +38,18 @@ class Building extends AbstractBuilding
 		}
 		super( game, type, level + (place == null ? 0 : place.levelCoef) );
 		
-		/*#if java 
-		if(place != null)
-		game.tracer.log( " type " + type + " levelCoef " + place.levelCoef );
-		#end*/
+		setFeatures();
 	}
-
+	
+	function setFeatures():Void
+	{
+		rerity = CardTypes.get_rarity(type);
+		/*troopSpeed = get_troopSpeed();
+		troopPower = get_troopPower();
+		troopGeneration = get_birthRate();*/
+	}
+	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-	#if flash
-	public function get_troopName () : String
-	{
-		return "dwarf3b-move-";
-	}
-	public function get_troopSpriteCount () : Int
-	{
-		return 12;
-	}
-	#end
 
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
@@ -69,7 +63,7 @@ class Building extends AbstractBuilding
 		else if ( improveLevel == 4 )
 			return 24;
 		else*/
-			return category == 0 ? 8 : 10;
+			return BASE_CAPACITY;
 
 		//return 10 + (5 * improveLevel);
 	}
@@ -89,8 +83,7 @@ class Building extends AbstractBuilding
 		return Math.round(BASE_TROOP_POWER);
 	}
 	
-
-	public static var BASE_BIRTH_RATE:Float = 0.22;
+	public static var BASE_BIRTH_RATE:Float = 0.20;
 	public function get_birthRate():Float
 	{
 		return BASE_BIRTH_RATE * TIME_SCALE;
@@ -113,35 +106,12 @@ class Building extends AbstractBuilding
 		return BASE_DAMAGE_RADIUS;
 	}
 
-	public function get_options():IntList
-	{
-		var ret = new IntList();
-		if(!game.player.inTutorial())
-			ret.push( BuildingType.B01_CAMP );
-		if ( BuildingType.getAll().exists( type + 1 ) )
-			ret.push( BuildingType.IMPROVE );
-		return ret;
-	}
+
 	public function get_population():Int
 	{
 		return Math.round(_population);
 	}
-	
-	public function improvable(type:Int):Bool 
-	{
-		if (type == this.type)
-			return false;
-		if (type == BuildingType.B01_CAMP)
-			return true;
-		if ( !unlocked(type) )
-			return false;
-			
-/*	#if java
-		game.tracer.log("type "+ type + " equalsCategory " + equalsCategory(this.type+1) + " _population " + _population);
-	#end*/
-		return _population >= get_capacity() ;
-		//return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
-	}
+
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	
@@ -158,30 +128,7 @@ class Building extends AbstractBuilding
 	}
 
 	
-	#if java
-	public function improve(type:Int):Bool
-	{
-		if ( !improvable(type) )
-			return false;
-			
-		if ( type != BuildingType.B01_CAMP )
-			_population -= Math.round( get_capacity() / 2 );
-		
-		if ( type == BuildingType.IMPROVE )
-			type = this.type + 1;
-			
-		if( !equalsCategory(type) )
-		{
-			place.setBuilidng(type, game);
-			return true;
-		}
-		
-		this.type ++;
-		improveLevel ++;
-		
-		return true;
-	}
-	
+#if java
 	public function calculatePopulation():Void
 	{
 		if ( place==null || !place.enabled )
@@ -190,18 +137,18 @@ class Building extends AbstractBuilding
 		//var gap = 500 / get_spawnGap() ;
 		var gap = get_birthRate() ;
 		
-		if ( _population < get_capacity() )
+		if( _population < get_capacity() )
 		{
-			if (_population + gap > get_capacity())
+			if( _population + gap > get_capacity() )
 				_population = get_capacity();
 			else
 				_population += gap;
 			
 		}
-		else if (_population > get_capacity())
+		else if (_population > get_capacity() )
 		{
-			gap = Math.ceil((_population - get_capacity()) * 0.3);
-			if (_population - gap < get_capacity())
+			gap = Math.ceil((_population - get_capacity()) * 0.3 );
+			if( _population - gap < get_capacity() )
 				_population = get_capacity();
 			else
 				_population -= gap;
@@ -212,7 +159,7 @@ class Building extends AbstractBuilding
 	public function popTroop():Bool
 	{
 		var ret = (_population - 1 > 0);
-		if(ret)
+		if( ret )
 			_population --;
 		return ret;
 	}
@@ -230,18 +177,29 @@ class Building extends AbstractBuilding
 	function occupy(troop:Troop) 
 	{
 		_population = 0;
+		type = CardTypes.C001;
 		troopType = troop.type;
 		place.enabled = true;
 		place.levelCoef = troop.building.place.levelCoef;
-		if ( type == BuildingType.B01_CAMP )
-		{
-			place.game = game = troop.building.game;
-			return;
-		}
-		place.setBuilidng(BuildingType.B01_CAMP, troop.building.game);
+		setFeatures();
 	}
-	#end
 	
+	public function transform(type:Int, troopType:Int) : Bool
+	{
+		if ( !transformable(type, troopType) )
+			return false;
+		this.type = type;
+		setFeatures();
+		return true;
+	}
+#end
+	
+	public function transformable(type:Int, troopType:Int) : Bool
+	{
+		if ( this.troopType != troopType )
+			return false;
+		return true;
+	}
 	
 	public function getAbstract(type:Int):AbstractBuilding
 	{
@@ -254,6 +212,17 @@ class Building extends AbstractBuilding
 		return category == BuildingType.get_category(type);
 	}
  
+	override public function upgrade(confirmedHards:Int=0):Bool
+	{
+		var ret = super.upgrade(confirmedHards);
+		if ( !ret )
+			return false;
+		setFeatures();
+		return ret;
+	}
+	
+	
+#if flash	
 	public function getFeatureValue(feature:Int):Float
 	{
 		if ( feature == BuildingFeatureType.F01_CAPACITY )
@@ -293,4 +262,15 @@ class Building extends AbstractBuilding
 
 		return 0;
 	}
+
+	/*public function get_troopName () : String
+	{
+		return "dwarf3b-move-";
+	}
+	public function get_troopSpriteCount () : Int
+	{
+		return 12;
+	}*/
+	#end
+	
 }

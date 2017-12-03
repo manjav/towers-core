@@ -1,12 +1,6 @@
 package com.gt.towers.constants;
-import com.gt.towers.buildings.Barracks;
 import com.gt.towers.buildings.Building;
-import com.gt.towers.buildings.Camp;
-import com.gt.towers.buildings.Card;
-import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
-import com.gt.towers.buildings.Rapid;
-import com.gt.towers.buildings.Crystal;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntMap;
 
@@ -53,63 +47,4 @@ class BuildingType
 	{
 		return Math.floor(type / 10) * 10;
 	}
-
-	public static function instantiate(game:Game, type:Int, place:Place, index:Int, level:Int = 0):Building
-	{
-		var category = get_category( type );
-		
-		if (category == BuildingType.B00_CAMP)
-			return new Camp(game, place, index, type, level);
-		else if (category == BuildingType.B10_BARRACKS)
-			return new Barracks(game, place, index, type, level);
-		else if (category == BuildingType.B20_RAPID)
-			return new Rapid(game, place, index, type, level);
-		else if (category == BuildingType.B30_HEAVY)
-			return new Heavy(game, place, index, type, level);
-		else if (category == BuildingType.B40_CRYSTAL)
-			return new Crystal(game, place, index, type, level);
-		else if ( ResourceType.isCard(type) )
-			return new Card(game, place, index, type, level);
-		else 
-			return null;
-	}
-	
-	
-	private static var _all:IntIntMap;
-	public static function getAll():IntIntMap
-	{
-		if ( _all == null )
-		{
-			_all = new IntIntMap();
-		
-			_all.set( B11_BARRACKS, 0 );
-			_all.set( B12_BARRACKS, 0 );
-			_all.set( B13_BARRACKS, 0 );
-			_all.set( B14_BARRACKS, 0 );
-			
-			_all.set( B21_RAPID, 0 );
-			_all.set( B22_RAPID, 0 );
-			_all.set( B23_RAPID, 0 );
-			_all.set( B24_RAPID, 0 );
-			
-			_all.set( B31_HEAVY, 0 );
-			_all.set( B32_HEAVY, 0 );
-			_all.set( B33_HEAVY, 0 );
-			_all.set( B34_HEAVY, 0 );
-			
-			_all.set( B41_CRYSTAL, 0 );
-			_all.set( B42_CRYSTAL, 0 );
-			_all.set( B43_CRYSTAL, 0 );
-			_all.set( B44_CRYSTAL, 0 );
-		}
-	
-		return _all;
-	}
-	
-		public static function isDefensive(type:Int):Bool
-		{
-			return get_category(type) == B40_CRYSTAL;
-		}
-
-
 }

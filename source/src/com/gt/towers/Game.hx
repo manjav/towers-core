@@ -60,7 +60,7 @@ class Game
 		arenas = new IntArenaMap();
 		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
-		arenas.set(0, new Arena(0, 0,		50,		-4,				"104, 105, 106" ));
+		arenas.set(0, new Arena(0, 0,		50,		-4,				"101, 201, 301, 401, 102, 202, 302, 402, 103, 203, 303, 403, 104, 105, 106" ));
 		arenas.set(1, new Arena(1, 51,		120,	-3,				"204, 205, 206" ));
 		arenas.set(2, new Arena(2, 121,		200,	-2,				"304, 305, 306" ));
 		arenas.set(3, new Arena(3, 201,		300,	-1,				"404, 405, 406"	));

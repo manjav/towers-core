@@ -6,6 +6,8 @@ package com.gt.towers.constants;
  */
 class CardTypes 
 {
+	public static var C001:Int = 1;
+	
 	public static var C101:Int = 101;
 	public static var C102:Int = 102;
 	public static var C103:Int = 103;
