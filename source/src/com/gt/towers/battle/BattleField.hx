@@ -13,7 +13,6 @@ import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.lists.PlaceList;
 import com.gt.towers.utils.maps.IntBuildingMap;
-import com.gt.towers.utils.maps.IntCardMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -93,7 +92,6 @@ class BattleField
 			if ( game_0.player.hardMode )
 				place.healthCoef = 0.4;
 			
-				
 			place.building =new Building(place.game, place, placeData.index, placeData.type);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
@@ -108,7 +106,7 @@ class BattleField
 			placeData = map.places.get( p );
 			places.get(p).links = new PlaceList();
 			l = 0;
-			while (l < placeData.links.size())
+			while ( l < placeData.links.size() )
 			{
 				places.get(p).links.push( places.get( placeData.links.get( l ) ) );
 				l ++;
@@ -117,22 +115,23 @@ class BattleField
 		}
 		
 		// create decks	
-		decks_0 = getPlayerDeck(game_0);
+		decks_0 = getPlayerDeck(game_0, 0);
 		if( singleMode )		
 			decks_1 = getRandomDeck(game_0);
 		else
-			decks_1 = getPlayerDeck(game_1);
-		
+			decks_1 = getPlayerDeck(game_1, 1);
 	}
 	
-	function getPlayerDeck(game:Game) : IntBuildingMap
+	function getPlayerDeck(game:Game, troopType:Int) : IntBuildingMap
 	{
 		var ret = new IntBuildingMap();
-		var d = 0;
-		while ( d < game.player.get_current_deck().size() )
+		var i = 0;
+		while ( i < game.player.get_current_deck().size() )
 		{
-			ret.set(game.player.get_current_deck().get(d), new Building(game, null, 0, game.player.get_current_deck().get(d)));
-			d++;
+			var t = game.player.get_current_deck().get(i);
+			ret.set(t, new Building(game, null, 0, t));
+			ret.get(t).createEngine(troopType, 0);
+			i ++;
 		}
 		return ret;
 	}
@@ -141,7 +140,6 @@ class BattleField
 	{
 		var ret = new IntBuildingMap();
 		var availableCards = game.player.availabledCards();// random arena
-		
 		var i = 0;
 		while ( i < 4 )
 		{
@@ -149,14 +147,16 @@ class BattleField
 			while ( j < availableCards.size() )
 			{
 				var rand = Math.round ( Math.random() * availableCards.size() );
-				if( !ret.exists(availableCards.get(rand) ) )
-					ret.set( availableCards.get(rand), new Building(game, null, 0, availableCards.get(rand)) );
-					
-				if ( ret.keys().length >= 4)
+				if ( !ret.exists( availableCards.get(rand) ) )
+				{
+					var t = availableCards.get(rand);
+					ret.set( t, new Building(game, null, 0, t) );
+					ret.get(t).createEngine(1, 0);
+				}
+				if ( ret.keys().length >= 4 )
 					return ret;
 			}
-
-			i++;
+			i ++;
 		}
 		return ret;
 	}
