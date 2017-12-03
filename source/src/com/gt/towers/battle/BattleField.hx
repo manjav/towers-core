@@ -3,11 +3,19 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.fieldes.PlaceData;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.FieldProvider;
+import com.gt.towers.buildings.Building;
+import com.gt.towers.buildings.Card;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
+import com.gt.towers.utils.lists.DeckList;
+import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.lists.PlaceList;
+import com.gt.towers.utils.maps.IntBuildingMap;
+import com.gt.towers.utils.maps.IntCardMap;
+import com.gt.towers.utils.maps.IntIntMap;
 
 /**
  * ...
@@ -17,6 +25,9 @@ class BattleField
 {
 	private var questProvider:FieldProvider;
 
+	public var decks_0:IntBuildingMap;
+	public var decks_1:IntBuildingMap;
+	
 	public var places:PlaceList;
 	public var map:FieldData;
 	public var difficulty:Int;
@@ -105,6 +116,50 @@ class BattleField
 			}
 			p ++;
 		}
+		
+		// create decks	
+		decks_0 = getPlayerDeck(game_0);
+		if( singleMode )		
+			decks_1 = getRandomDeck(game_0);
+		else
+			decks_1 = getPlayerDeck(game_1);
+		
+	}
+	
+	function getPlayerDeck(game:Game) : IntBuildingMap
+	{
+		var ret = new IntBuildingMap();
+		var d = 0;
+		while ( d < game.player.get_current_deck().size() )
+		{
+			ret.set(game.player.get_current_deck().get(d), new Building(game, null, 0, game.player.get_current_deck().get(d)));
+			d++;
+		}
+		return ret;
+	}
+	
+	function getRandomDeck(game:Game) : IntBuildingMap
+	{
+		var ret = new IntBuildingMap();
+		var availableCards = game.player.availabledCards();// random arena
+		
+		var i = 0;
+		while ( i < 4 )
+		{
+			var j = 0;
+			while ( j < availableCards.size() )
+			{
+				var rand = Math.round ( Math.random() * availableCards.size() );
+				if( !ret.exists(availableCards.get(rand) ) )
+					ret.set( availableCards.get(rand), new Building(game, null, 0, availableCards.get(rand)) );
+					
+				if ( ret.keys().length >= 4)
+					return ret;
+			}
+
+			i++;
+		}
+		return ret;
 	}
 
 	public function getAllTowers(troopType:Int):PlaceList

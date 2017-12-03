@@ -151,10 +151,10 @@ class Player
 		return 0 ;
 	}
 		
-	public function availabledCards () : IntList
+	public function availabledCards (selectedArena:Int = -1) : IntList
 	{
 		var ret = new IntList();
-		var arena = get_arena(0);
+		var arena = selectedArena == -1 ? get_arena(0) : selectedArena;
 		var ci = 0;
 		while ( arena >= 0 )
 		{
@@ -168,7 +168,10 @@ class Player
 		}
 		return ret;
 	}
-	
+	public function get_current_deck():IntList
+	{
+		return decks.get(selectedDeck);
+	}
 	
 	public function has(IntIntMap:IntIntMap):Bool
 	{
