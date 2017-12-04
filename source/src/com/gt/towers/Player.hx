@@ -38,7 +38,8 @@ class Player
 	private var game:Game;
 
 	
-	public function new(game:Game, initData:InitData)
+	public function new() {}
+	public function init(game:Game, initData:InitData)
 	{
 		this.game = game;
 		id = initData.id;

@@ -4,6 +4,7 @@ import com.gt.towers.Player;
 import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.buildings.cals.FeatureCalculator;
+import com.gt.towers.events.CoreEventDispatcher;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.socials.Lobby;
 import com.gt.towers.utils.lists.IntList;
@@ -29,23 +30,25 @@ class Game
 	public var market:String;
 	public var sessionsCount:Int;
 
+	public var eventDispatcher:CoreEventDispatcher;
+	public var featureCaculator:FeatureCalculator;
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
 	public var arenas:IntArenaMap;
 	public var lobby:Lobby;
-	public var featureCaculator:FeatureCalculator;
 
 #if java
 	public var tracer:Tracer;
 	public function new( data:InitData, tracer:Tracer )
 	{
 		this.tracer = tracer;
+		eventDispatcher = new CoreEventDispatcher();
 		init(data);
 	}
 #else
-	public function new( data:InitData )
+	public function new()
 	{
-		init(data);
+		eventDispatcher = new CoreEventDispatcher();
 	}
 #end
 	
@@ -55,10 +58,11 @@ class Game
 		market = data.market;
 		sessionsCount = data.sessionsCount;
 		
-		player = new Player(this, data);
+		featureCaculator = new FeatureCalculator();
+		player = new Player();
+		player.init(this, data);
 		exchanger = new Exchanger(this, data);
 		lobby = new Lobby(this);
-		featureCaculator = new FeatureCalculator();
 		
 		arenas = new IntArenaMap();
 		
