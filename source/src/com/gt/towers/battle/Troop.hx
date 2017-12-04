@@ -15,6 +15,7 @@ class Troop
 	public var id:Int;
 	public var type:Int;
 	public var health:Float;
+	public var power:Float;
 	public var path:PlaceList;
 	public var building:Building;
 	
@@ -25,7 +26,8 @@ class Troop
 		this.id = id;
 		this.building = building;
 		this.type = building.troopType;
-		this.health = building.get_troopPower() * (this.type==0 ? building.place.healthCoef : 1/building.place.healthCoef );
+		this.health = building.troopHealth * (this.type == 0 ? building.place.healthCoef : 1 / building.place.healthCoef );
+		this.power = building.troopPower * (this.type == 0 ? building.place.healthCoef : 1 / building.place.healthCoef );
 		
 		this.path = new PlaceList();
 		var i:Int = 0;
@@ -45,7 +47,7 @@ class Troop
 			return ;
 		
 		var distance:Float = Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
-		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.get_troopSpeed() * distance), [destination]);
+		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.troopSpeed * distance), [destination]);
 		//building.game.tracer.log("troop-> rush id:" + id );
 	}
 	private function onTroopArrived(destination:Place):Void
@@ -56,7 +58,7 @@ class Troop
 		var allow = destination.building.pushTroops(this);
 		if ( allow && path.size() > 0)
 		{
-			timeoutId = GTimer.setTimeout(destination.rush, building.get_exitGap(), [this]);
+			timeoutId = GTimer.setTimeout(destination.rush, building.troopRushGap, [this]);
 		}
 		//building.game.tracer.log("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
 	}

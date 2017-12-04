@@ -16,11 +16,14 @@ class BuildingFeatureType
 	
 	public static var F11_TROOP_SPEED:Int = 11;
 	public static var F12_TROOP_POWER:Int = 12;
+	public static var F13_TROOP_HEALTH:Int = 13;
+	public static var F14_TROOP_RUSH_GAP:Int = 14;
 	
 	public static var F21_DAMAGE:Int = 21;
-	public static var F22_FIRE_SPEED:Int = 22;
-	public static var F23_RANGE:Int = 23;
-	public static var F24_DAMAGE_RANGE:Int = 24;
+	public static var F22_DAMAGE_GAP:Int = 22;
+	public static var F23_RANGE_RANGE_MIN:Int = 23;
+	public static var F24_RANGE_RANGE_MAX:Int = 24;
+	public static var F25_DAMAGE_AREA:Int = 25;
 	
 	private static var _all:IntList;
 	public static function getAll():IntList
@@ -34,11 +37,13 @@ class BuildingFeatureType
 			
 			_all.push( F11_TROOP_SPEED );
 			_all.push( F12_TROOP_POWER );
+			_all.push( F13_TROOP_HEALTH );
 			
 			_all.push( F21_DAMAGE );
-			_all.push( F22_FIRE_SPEED );
-			_all.push( F23_RANGE );
-		//	_all.push( F24_DAMAGE_RANGE );
+			_all.push( F22_DAMAGE_GAP );
+			_all.push( F23_RANGE_RANGE_MIN );
+			_all.push( F24_RANGE_RANGE_MAX );
+		//	_all.push( F25_DAMAGE_AREA );
 		}
 	
 		return _all;
@@ -47,15 +52,16 @@ class BuildingFeatureType
 	public static function getRelatedTo(buildingType:Int):IntList
 	{
 		var ret = new IntList();
-		ret.push( F01_CAPACITY );
+		ret.push( F01_CAPACITY);
 		ret.push( F02_BIRTH_RATE );
 		ret.push( F11_TROOP_SPEED );
 		ret.push( F12_TROOP_POWER );
+		ret.push( F13_TROOP_HEALTH );
 		if ( buildingType > BuildingType.B40_CRYSTAL )
 		{
 			ret.push( F21_DAMAGE );
-			ret.push( F22_FIRE_SPEED );
-			ret.push( F23_RANGE );
+			ret.push( F22_DAMAGE_GAP );
+			ret.push( F24_RANGE_RANGE_MAX );
 		}
 		return ret;
 	}
@@ -73,14 +79,13 @@ class BuildingFeatureType
 		}
 		else if ( cate == BuildingType.B30_HEAVY )
 		{
-			
 			ret.push( F12_TROOP_POWER );
 		}
 		else if ( cate == BuildingType.B40_CRYSTAL )
 		{
 			ret.push( F21_DAMAGE );
-			ret.push( F22_FIRE_SPEED );
-			ret.push( F23_RANGE );
+			ret.push( F22_DAMAGE_GAP );
+			ret.push( F24_RANGE_RANGE_MAX );
 		}
 		return ret;
 	}

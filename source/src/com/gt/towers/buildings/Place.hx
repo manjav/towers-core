@@ -58,7 +58,7 @@ class Place
 			var tid = getIncreasedId();
 			var troop = new Troop(tid, building, path);
 			troops.put( tid, troop );
-			GTimer.setTimeout(rush, building.get_exitGap() * i + 1, [troop]);
+			GTimer.setTimeout(rush, building.troopRushGap * i + 1, [troop]);
 			i ++;
 		}			
 	}

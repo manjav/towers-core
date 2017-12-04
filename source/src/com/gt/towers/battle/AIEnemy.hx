@@ -2,6 +2,8 @@ package com.gt.towers.battle;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
+import com.gt.towers.buildings.cals.BrithRateCalculator;
+import com.gt.towers.buildings.cals.DamageCalculator;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
@@ -112,7 +114,7 @@ class AIEnemy
 					{
 						var building = botPlaces.get(p).links.get(m).building;
 						var distance = battleField.difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 20;
-						var power = building.get_population() * (building.get_damage() / Building.BASE_DAMAGE) * (building.get_birthRate() / Building.BASE_BIRTH_RATE) + distance ;
+						var power = building.get_population() * (building.damage / DamageCalculator.BASE_VALUE) * (building.birthRate / BrithRateCalculator.BASE_VALUE) + distance ;
 						power *= building.troopType == -1 ? 1.1 : 1;
 						//building.game.tracer.log(botPlaces.get(p).index + " ->> " + botPlaces.get(p).links.get(m).index + " damage:"+(building.get_damage() / Building.BASE_DAMAGE) + " birthRate:"+(building.get_birthRate() / Building.BASE_BIRTH_RATE) + " distance:" + distance + " population:"+building.get_population() + " power:"+power);
 						if( power <= minPlayerPopulation )
@@ -223,7 +225,7 @@ class AIEnemy
 		var p = 0;
 		while ( b < size )
 		{
-			p += places.get(b).building.get_capacity();
+			p += places.get(b).building.capacity;
 			b ++;
 		}
 		return p;
