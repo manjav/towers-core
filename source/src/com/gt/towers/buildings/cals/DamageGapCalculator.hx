@@ -11,4 +11,6 @@ class DamageGapCalculator
 	{
 		return BASE_VALUE;
 	}
+
+        //return Math.round( 500 * (1/Building.TIME_SCALE) - Math.log(improveLevel) * 80 +  Math.log(get_level()) * 90 );
 }

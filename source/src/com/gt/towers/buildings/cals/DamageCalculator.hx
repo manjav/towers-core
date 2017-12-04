@@ -11,4 +11,7 @@ class DamageCalculator
 	{
 		return BASE_VALUE;
 	}
+
+      //  return 1.05 + ( Math.log(get_level()) * 0.75 + Math.log(improveLevel) ) * 0.35;
+
 }

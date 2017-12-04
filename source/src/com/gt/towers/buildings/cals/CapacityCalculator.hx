@@ -12,7 +12,7 @@ class CapacityCalculator
 		if ( type < 101 )
 			return 8;
 			
-		return BASE_VALUE;
+		return BASE_VALUE + Math.floor(level / 3);
 	}
 	
 }

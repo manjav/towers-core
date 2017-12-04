@@ -11,4 +11,6 @@ class DamageRangMaxCalculator
 	{
 		return BASE_VALUE;
 	}
+	//        return 180 + Math.round( (Math.log(improveLevel) + Math.log(get_level())) * 32);
+
 }
