@@ -191,49 +191,6 @@ class Building extends AbstractBuilding
 	
 	
 #if flash	
-	public function getFeatureValue(feature:Int):Float
-	{
-		if ( feature == BuildingFeatureType.F01_CAPACITY )
-			return capacity;
-		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return birthRate;
-		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
-			return troopSpeed;
-		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
-			return troopPower;
-		else if ( feature == BuildingFeatureType.F13_TROOP_HEALTH )
-			return troopHealth;
-		else if ( feature == BuildingFeatureType.F21_DAMAGE )
-			return damage;
-		else if ( feature == BuildingFeatureType.F22_DAMAGE_GAP )
-			return damageGap;
-		else if ( feature == BuildingFeatureType.F23_RANGE_RANGE_MIN )
-			return damageRangeMin;
-		else if ( feature == BuildingFeatureType.F24_RANGE_RANGE_MAX )
-			return damageRangeMax;
-
-		return 0;
-	}
-	
-	public function getFeatureBaseValue(feature:Int):Float
-	{
-		if ( feature == BuildingFeatureType.F01_CAPACITY )
-			return CapacityCalculator.BASE_VALUE;
-		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return BrithRateCalculator.BASE_VALUE;
-		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
-			return TroopSpeedCalculator.BASE_VALUE;
-		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
-			return TroopPowerCalculator.BASE_VALUE;
-		else if ( feature == BuildingFeatureType.F21_DAMAGE )
-			return DamageCalculator.BASE_VALUE;
-		else if ( feature == BuildingFeatureType.F22_DAMAGE_GAP )
-			return DamageGapCalculator.BASE_VALUE;
-		else if ( feature == BuildingFeatureType.F24_RANGE_RANGE_MAX )
-			return DamageRangMaxCalculator.BASE_VALUE;
-		return 0;
-	}
-
 	/*public function get_troopName () : String
 	{
 		return "dwarf3b-move-";
@@ -242,6 +199,6 @@ class Building extends AbstractBuilding
 	{
 		return 12;
 	}*/
-	#end
+#end
 	
 }
