@@ -21,7 +21,7 @@ class Building extends AbstractBuilding
 	public var troopType:Int = -1;
 	public var rerity:Int = 0;
 	
-	var _population:Float;
+	var _population:Float = 0;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
@@ -54,18 +54,7 @@ class Building extends AbstractBuilding
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
 	{
-		/*if ( improveLevel == 1 )
-			return 15;
-		else if ( improveLevel == 2 )
-			return 18;
-		else if ( improveLevel == 3 )
-			return 21;
-		else if ( improveLevel == 4 )
-			return 24;
-		else*/
-			return BASE_CAPACITY;
-
-		//return 10 + (5 * improveLevel);
+		return BASE_CAPACITY;
 	}
 	public static var BASE_EXIT_GAP:Int = 200;
 	public function get_exitGap():Int 
@@ -134,26 +123,25 @@ class Building extends AbstractBuilding
 		if ( place==null || !place.enabled )
 			return;
 		
-		//var gap = 500 / get_spawnGap() ;
-		var gap = get_birthRate() ;
+		var br = get_birthRate() ;
 		
 		if( _population < get_capacity() )
 		{
-			if( _population + gap > get_capacity() )
+			if( _population + br > get_capacity() )
 				_population = get_capacity();
 			else
-				_population += gap;
+				_population += br;
 			
 		}
 		else if (_population > get_capacity() )
 		{
-			gap = Math.ceil((_population - get_capacity()) * 0.3 );
-			if( _population - gap < get_capacity() )
+			br = Math.ceil((_population - get_capacity()) * 0.3 );
+			if( _population - br < get_capacity() )
 				_population = get_capacity();
 			else
-				_population -= gap;
+				_population -= br;
 		}
-		//game.tracer.log(place.index + " t:" + type + " g: " + gap);
+		//game.tracer.log(place.index + " t:" + type + " br: " + br + " p:" + _population);
 	}
 	
 	public function popTroop():Bool
@@ -179,24 +167,29 @@ class Building extends AbstractBuilding
 		_population = 0;
 		type = CardTypes.C001;
 		troopType = troop.type;
+		place.game = game = troop.building.game;
 		place.enabled = true;
 		place.levelCoef = troop.building.place.levelCoef;
 		setFeatures();
 	}
 	
-	public function transform(type:Int, troopType:Int) : Bool
+	public function transform(card:Building) : Bool
 	{
-		if ( !transformable(type, troopType) )
+		if ( !transformable(card) )
 			return false;
-		this.type = type;
+		
+		trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
+		this.type = card.type;
+		this._population = card._population;
+		card._population = 0;
 		setFeatures();
 		return true;
 	}
 #end
 	
-	public function transformable(type:Int, troopType:Int) : Bool
+	public function transformable(card:Building) : Bool
 	{
-		if ( this.troopType != troopType )
+		if ( this.troopType != card.troopType )
 			return false;
 		return true;
 	}

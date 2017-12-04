@@ -22,15 +22,13 @@ import com.gt.towers.utils.maps.IntIntMap;
 class BattleField
 {
 	private var questProvider:FieldProvider;
-
-	public var decks_0:IntBuildingMap;
-	public var decks_1:IntBuildingMap;
-	
+	public var deckBuildings:PlaceList;
 	public var places:PlaceList;
 	public var map:FieldData;
 	public var difficulty:Int;
 	public var arena:Int;
 	public var extraTime:Int = 0;
+	
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
@@ -115,50 +113,44 @@ class BattleField
 		}
 		
 		// create decks	
-		decks_0 = getPlayerDeck(game_0, 0);
+		deckBuildings = new PlaceList();
+		addPlayerDeck(game_0, 0);
 		if( singleMode )		
-			decks_1 = getRandomDeck(game_0);
+			addRandomDeck(game_0);
 		else
-			decks_1 = getPlayerDeck(game_1, 1);
+			addPlayerDeck(game_0, 1);
 	}
 	
-	function getPlayerDeck(game:Game, troopType:Int) : IntBuildingMap
+	function addPlayerDeck(game:Game, troopType:Int) : Void
 	{
-		var ret = new IntBuildingMap();
+		var startIndex = troopType == 0 ? 0 : 4;
 		var i = 0;
 		while ( i < game.player.get_current_deck().size() )
 		{
-			var t = game.player.get_current_deck().get(i);
-			ret.set(t, new Building(game, null, 0, t));
-			ret.get(t).createEngine(troopType, 0);
+			var p = new Place(game, i + startIndex, 0, 0, true);
+			p.building = new Building(game, p, i + startIndex, game.player.get_current_deck().get(i));
+			p.building.createEngine(troopType, 0);
+			deckBuildings.push(p);
 			i ++;
 		}
-		return ret;
 	}
 	
-	function getRandomDeck(game:Game) : IntBuildingMap
+	function addRandomDeck(game:Game) : Void
 	{
-		var ret = new IntBuildingMap();
 		var availableCards = game.player.availabledCards();// random arena
 		var i = 0;
 		while ( i < 4 )
 		{
-			var j = 0;
-			while ( j < availableCards.size() )
+			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
+			if ( randType > (i*100 + 100) && randType < (i*100 + 200) )
 			{
-				var rand = Math.round ( Math.random() * availableCards.size() );
-				if ( !ret.exists( availableCards.get(rand) ) )
-				{
-					var t = availableCards.get(rand);
-					ret.set( t, new Building(game, null, 0, t) );
-					ret.get(t).createEngine(1, 0);
-				}
-				if ( ret.keys().length >= 4 )
-					return ret;
+				var p = new Place(game, i+4, 0, 0, true);
+				p.building = new Building(game, p, i+4, randType);
+				p.building.createEngine(1, 0);
+				deckBuildings.push(p);
+				i ++;
 			}
-			i ++;
 		}
-		return ret;
 	}
 
 	public function getAllTowers(troopType:Int):PlaceList
