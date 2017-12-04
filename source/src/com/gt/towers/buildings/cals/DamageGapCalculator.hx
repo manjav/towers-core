@@ -7,7 +7,7 @@ package com.gt.towers.buildings.cals;
 class DamageGapCalculator 
 {
 	public static var BASE_VALUE:Int = 1200;
-	public static function get(type:Int):Int 
+	public static function get(type:Int, level:Int):Int 
 	{
 		return BASE_VALUE;
 	}

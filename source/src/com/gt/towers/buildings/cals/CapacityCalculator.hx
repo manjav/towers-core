@@ -7,7 +7,7 @@ package com.gt.towers.buildings.cals;
 class CapacityCalculator 
 {
 	public static var BASE_VALUE:Int = 10;
-	public static function get(type:Int):Int 
+	public static function get(type:Int, level:Int):Int 
 	{
 		if ( type < 101 )
 			return 8;

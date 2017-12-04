@@ -56,20 +56,20 @@ class Building extends AbstractBuilding
 	function setFeatures():Void
 	{
 		rerity = CardTypes.get_rarity(type);
-		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type);
-		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type);
+		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, get_level());
+		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type, get_level());
 		
 		// troops data
-		troopSpeed = game.featureCaculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type);
-		troopPower = game.featureCaculator.get(BuildingFeatureType.F12_TROOP_POWER, type);
-		troopHealth = game.featureCaculator.get(BuildingFeatureType.F13_TROOP_HEALTH, type);
-		troopRushGap = game.featureCaculator.getInt(BuildingFeatureType.F14_TROOP_RUSH_GAP, type);
+		troopSpeed = game.featureCaculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level());
+		troopPower = game.featureCaculator.get(BuildingFeatureType.F12_TROOP_POWER, type, get_level());
+		troopHealth = game.featureCaculator.get(BuildingFeatureType.F13_TROOP_HEALTH, type, get_level());
+		troopRushGap = game.featureCaculator.getInt(BuildingFeatureType.F14_TROOP_RUSH_GAP, type, get_level());
 		
 		// defensive data
-		damage = game.featureCaculator.get(BuildingFeatureType.F21_DAMAGE, type);
-		damageGap = game.featureCaculator.getInt(BuildingFeatureType.F22_DAMAGE_GAP, type);
-		damageRangeMin = game.featureCaculator.get(BuildingFeatureType.F23_RANGE_RANGE_MIN, type);
-		damageRangeMax = game.featureCaculator.get(BuildingFeatureType.F24_RANGE_RANGE_MAX, type);
+		damage = game.featureCaculator.get(BuildingFeatureType.F21_DAMAGE, type, get_level());
+		damageGap = game.featureCaculator.getInt(BuildingFeatureType.F22_DAMAGE_GAP, type, get_level());
+		damageRangeMin = game.featureCaculator.get(BuildingFeatureType.F23_RANGE_RANGE_MIN, type, get_level());
+		damageRangeMax = game.featureCaculator.get(BuildingFeatureType.F24_RANGE_RANGE_MAX, type, get_level());
 	}
 
 	public function get_population():Int
