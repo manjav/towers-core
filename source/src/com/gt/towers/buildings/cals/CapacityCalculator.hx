@@ -10,7 +10,7 @@ class CapacityCalculator
 	public static function get(type:Int, level:Int):Int 
 	{
 		if ( type < 101 )
-			return 8;
+			return 7;
 			
 		return BASE_VALUE + Math.floor(level / 3);
 	}

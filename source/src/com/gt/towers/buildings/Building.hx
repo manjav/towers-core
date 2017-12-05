@@ -19,7 +19,7 @@ class Building extends AbstractBuilding
 	public var index:Int;
 	public var troopType:Int = -1;
 	
-	public var rerity:Int = 0;
+	public var rarity:Int = 0;
 	public var capacity:Int = 10;
 	public var birthRate:Float = 0.15;
 	
@@ -55,7 +55,7 @@ class Building extends AbstractBuilding
 
 	function setFeatures():Void
 	{
-		rerity = CardTypes.get_rarity(type);
+		rarity = CardTypes.get_rarity(type);
 		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, get_level());
 		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type, get_level());
 		
