@@ -129,7 +129,7 @@ class Building extends AbstractBuilding
 	public function pushTroops(troop:Troop) : Bool
 	{
 		var ret = troopType == troop.type; // if ret true troop is mine
-		_population += (ret ? 1 : -troop.health);
+		_population += (ret ? 1 : -troop.power);
 		if ( _population < 0 )
 			occupy(troop);
 		else if ( _population == 0 && !place.enabled ) 
@@ -155,8 +155,8 @@ class Building extends AbstractBuilding
 		
 		trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
 		this.type = card.type;
-		this._population = card._population;
-		card._population = 0;
+		//this._population = card._population;
+		_population /= 2;
 		setFeatures();
 		return true;
 	}
@@ -164,7 +164,7 @@ class Building extends AbstractBuilding
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( this.troopType != card.troopType )
+		if ( this.troopType != card.troopType || _population < capacity )
 			return false;
 		return true;
 	}

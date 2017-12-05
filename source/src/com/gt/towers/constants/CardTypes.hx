@@ -56,6 +56,7 @@ class CardTypes
 	public static var C501:Int = 501;
 	public static var C502:Int = 502;
 	public static var C503:Int = 503;
+	public static var C504:Int = 504;
 	
 	public function new() { }
 	
