@@ -9,7 +9,9 @@ import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.lists.PlaceList;
+import com.gt.towers.utils.maps.IntBuildingMap;
 import com.gt.towers.utils.maps.IntIntMap;
+import com.gt.towers.constants.CardTypes;
 
 /**
  * ...
@@ -263,7 +265,24 @@ class AIEnemy
 			return building.improve(BuildingType.B11_BARRACKS);
 		}*/
 		
-		return false;// building.improve(BuildingType.IMPROVE);
+		var aiDeck:IntBuildingMap;
+		var maxPop = 0;
+		var maxPopKey = 0;
+		var d = 0;
+		while ( d < battleField.decks_1.keys().length )
+		{
+			if( maxPop < battleField.decks_1.get( battleField.decks_1.keys()[d] ).get_population() )
+				{
+					maxPop = battleField.decks_1.get( battleField.decks_1.keys()[d] ).get_population();
+					maxPopKey =  battleField.decks_1.keys()[d];
+				}
+			d++;
+		}
+		var rand = Math.random();
+		if ( rand > 0.3 )
+			return building.transform( battleField.decks_1.get(maxPopKey).type, 1);
+		else 
+			return false;
 	}
 	
 	public function doAction():Int
