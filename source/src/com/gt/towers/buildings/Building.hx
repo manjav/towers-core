@@ -13,8 +13,6 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Building extends AbstractBuilding
 {
-	public static var TIME_SCALE:Float = 1;
-	
 	public var place:Place;
 	public var index:Int;
 	public var troopType:Int = -1;
@@ -28,10 +26,10 @@ class Building extends AbstractBuilding
 	public var troopSpeed:Int = 4000;
 	public var troopRushGap:Int = 250;
 	
-	public var damage:Float = 1;
-	public var damageGap:Int = 1200;
-	public var damageRangeMin:Float = 30;
-	public var damageRangeMax:Float = 50;
+	public var damage:Float = 1.05;
+	public var damageGap:Int = 800;
+	public var damageRangeMin:Float = 50;
+	public var damageRangeMax:Float = 180;
 	
 	var _population:Float = 0;
 	
@@ -112,7 +110,7 @@ class Building extends AbstractBuilding
 		}
 		else if ( _population > capacity )
 		{
-			br = Math.ceil((_population - capacity) * 0.3 );
+			br = Math.ceil((_population - capacity) * 0.2 );
 			if( _population - br < capacity )
 				_population = capacity;
 			else
@@ -155,9 +153,8 @@ class Building extends AbstractBuilding
 		if ( !transformable(card) )
 			return false;
 		
-		trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
+		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
 		this.type = card.type;
-		//this._population = card._population;
 		_population /= 2;
 		setFeatures();
 		place.enabled = true;

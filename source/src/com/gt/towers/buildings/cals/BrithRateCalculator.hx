@@ -12,7 +12,7 @@ class BrithRateCalculator
 	public function get(type:Int, level:Int):Float 
 	{
 		if( CardTypes.get_category( type ) == CardTypes.C100 ) // gen
-			return ( BASE_VALUE + 0.05 + Math.log(level) * 0.1 + type % 400 * 0.02 );
+			return ( BASE_VALUE + 0.05 + Math.log(level) * 0.1 + type % 100 * 0.01 );
 			
 		if ( type % 100 == 1 )
 			return BASE_VALUE;

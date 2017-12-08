@@ -6,7 +6,7 @@ package com.gt.towers.buildings.cals;
  */
 class DamageRangMinCalculator 
 {
-	public var BASE_VALUE:Float = 30;
+	public var BASE_VALUE:Float = 80;
 	public function new () {}
 	public function get(type:Int, level:Int):Float 
 	{
