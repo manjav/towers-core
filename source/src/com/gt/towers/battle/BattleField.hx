@@ -59,7 +59,7 @@ class BattleField
 					game_0.player.hardMode = game_0.player.isHardMode();
 					difficulty = game_0.player.hardMode ? 14 : 0;
 					map.places.get(3).enabled = !game_0.player.hardMode;
-					map.places.get(0).enabled = game_0.player.hardMode;
+					//map.places.get(0).enabled = game_0.player.hardMode;
 				}
 				else
 					difficulty = Math.round(map.index / 6);
@@ -90,7 +90,7 @@ class BattleField
 			if ( game_0.player.hardMode )
 				place.healthCoef = 0.4;
 			
-			place.building =new Building(place.game, place, placeData.index, placeData.type);
+			place.building =new Building(place.game, place, placeData.index, CardTypes.getAlter(placeData.type));
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
 			

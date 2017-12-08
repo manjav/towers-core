@@ -4,6 +4,7 @@ import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.buildings.cals.BrithRateCalculator;
 import com.gt.towers.buildings.cals.DamageCalculator;
+import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
@@ -88,7 +89,7 @@ class AIEnemy
 			{
 				if ( (Math.random() < 0.8 || battleField.places.get(0).game.player.hardMode) && battleField.difficulty >= 1 )
 				{
-					if( improve(singlePlace.building, true) )
+					if( transform(singlePlace.building, true) )
 						return TYPE_IMPROVE;
 				}
 			}
@@ -116,7 +117,7 @@ class AIEnemy
 					{
 						var building = botPlaces.get(p).links.get(m).building;
 						var distance = battleField.difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 20;
-						var power = building.get_population() * (building.damage / DamageCalculator.BASE_VALUE) * (building.birthRate / BrithRateCalculator.BASE_VALUE) + distance ;
+						var power = building.get_population() * (building.damage / building.game.featureCaculator.getBaseline(BuildingFeatureType.F21_DAMAGE)) * (building.birthRate / building.game.featureCaculator.getBaseline(BuildingFeatureType.F02_BIRTH_RATE)) + distance ;
 						power *= building.troopType == -1 ? 1.1 : 1;
 						//building.game.tracer.log(botPlaces.get(p).index + " ->> " + botPlaces.get(p).links.get(m).index + " damage:"+(building.get_damage() / Building.BASE_DAMAGE) + " birthRate:"+(building.get_birthRate() / Building.BASE_BIRTH_RATE) + " distance:" + distance + " population:"+building.get_population() + " power:"+power);
 						if( power <= minPlayerPopulation )
@@ -240,49 +241,31 @@ class AIEnemy
 		var b = botPlaces.size()-1;
 		while ( b >= 0 )
 		{
-			if( improve(botPlaces.get(b).building, needPopulation) )
+			if( transform(botPlaces.get(b).building, needPopulation) )
 					return true;
 			b --;
 		}
 		return false;
 	}
 	
-	private function improve(building:Building, needPopulation:Bool) : Bool
+	private function transform(building:Building, needPopulation:Bool) : Bool
 	{
-		/*if ( building.type == BuildingType.B01_CAMP )
+		if ( building.type == CardTypes.C001 )
 		{
 			if ( needPopulation || battleField.getDuration() < battleField.map.times.get(0))
-				return building.improve(BuildingType.B11_BARRACKS);
+				return building.transform(battleField.deckBuildings.get(4).building);
 			
 			var rand = Math.random();
 			if ( rand > 0.9 )
-				return building.improve(BuildingType.B41_CRYSTAL);
+				return building.transform(battleField.deckBuildings.get(7).building);
 			else if ( rand > 0.8 )
-				return building.improve(BuildingType.B31_HEAVY);
+				return building.transform(battleField.deckBuildings.get(6).building);
 			else if ( rand > 0.7 )
-				return building.improve(BuildingType.B21_RAPID);
+				return building.transform(battleField.deckBuildings.get(5).building);
 				
-			return building.improve(BuildingType.B11_BARRACKS);
-		}*/
-		
-		var aiDeck:IntBuildingMap;
-		var maxPop = 0;
-		var maxPopKey = 0;
-		var d = 0;
-		while ( d < battleField.decks_1.keys().length )
-		{
-			if( maxPop < battleField.decks_1.get( battleField.decks_1.keys()[d] ).get_population() )
-				{
-					maxPop = battleField.decks_1.get( battleField.decks_1.keys()[d] ).get_population();
-					maxPopKey =  battleField.decks_1.keys()[d];
-				}
-			d++;
+			return building.transform(battleField.deckBuildings.get(4).building);
 		}
-		var rand = Math.random();
-		if ( rand > 0.3 )
-			return building.transform( battleField.decks_1.get(maxPopKey).type, 1);
-		else 
-			return false;
+		return false;
 	}
 	
 	public function doAction():Int
