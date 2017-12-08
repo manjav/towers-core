@@ -55,7 +55,9 @@ class Building extends AbstractBuilding
 
 	function setFeatures():Void
 	{
+		category = CardTypes.get_category(type);
 		rarity = CardTypes.get_rarity(type);
+		
 		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, get_level());
 		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type, get_level());
 		

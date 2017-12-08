@@ -89,7 +89,7 @@ class BattleField
 			if ( game_0.player.hardMode )
 				place.healthCoef = 0.4;
 			
-			place.building =new Building(place.game, place, placeData.index, CardTypes.getAlter(placeData.type));
+			place.building =new Building(place.game, place, placeData.index, CardTypes.migrate(placeData.type));
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
 			

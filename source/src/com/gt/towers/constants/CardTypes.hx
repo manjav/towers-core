@@ -9,6 +9,7 @@ class CardTypes
     public static var IMPROVE:Int = -2;
     public static var NONE:Int = -1;
 	
+	public static var C000:Int = 0;
 	public static var C001:Int = 1;
 	
 	public static var C100:Int = 100;
@@ -80,24 +81,36 @@ class CardTypes
 		return 0;
 	}
 	
-	public static function getAlter( oldType:Int ) : Int
+	public static function migrate( oldType:Int ) : Int
 	{
-		return switch( get_old_category(oldType) )
+		return switch( oldType )
 		{
-			case 0 : 1;
-			case 10 : 401;
-			case 20 : 101;
-			case 30 : 201;
-			case 40 : 501;
+			case 10 : 100;
+			case 11 : 101;
+			case 12 : 102;
+			case 13 : 103;
+			case 14 : 104;
+			case 20 : 200;
+			case 21 : 201;
+			case 22 : 202;
+			case 23 : 203;
+			case 24 : 204;
+			case 30 : 300;
+			case 31 : 301;
+			case 32 : 302;
+			case 33 : 303;
+			case 34 : 304;
+			case 40 : 500;
+			case 41 : 501;
+			case 42 : 502;
+			case 43 : 503;
+			case 44 : 504;
 
-			default: 401;
+			default: oldType;
 		}
 	}
 	
-	public static function get_old_category(type:Int):Int
-	{
-		return Math.floor(type / 10) * 10;
-	}	
+
 	public static function get_category(type:Int):Int
 	{
 		return Math.floor(type / 100) * 100;
