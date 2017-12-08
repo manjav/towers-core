@@ -1,6 +1,7 @@
 package com.gt.towers.buildings;
 import com.gt.towers.Game;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.exchanges.ExchangeItem;
@@ -27,7 +28,7 @@ class AbstractBuilding
 		this.game = game;
 		this.type = type;
 		this._level = level;
-		this.category = BuildingType.get_category(type);
+		this.category = CardTypes.get_category(type);
 		this.improveLevel = type % 10;
 	}
 	

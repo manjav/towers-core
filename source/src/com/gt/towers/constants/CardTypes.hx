@@ -77,6 +77,26 @@ class CardTypes
 		return 0;
 	}
 	
+	public static function getAlter( oldType:Int ) : Int
+	{
+		return switch( BuildingType.get_category(oldType) )
+		{
+			case 0 : 1;
+			case 10 : 401;
+			case 20 : 101;
+			case 30 : 201;
+			case 40 : 501;
+
+			default: 401;
+		}
+	}
+	
+	
+	public static function get_category(type:Int):Int
+	{
+		return Math.floor(type / 100) * 100;
+	}
+	
 	/**public static function get_special_ability(type:Int):Int
 	{
 		
