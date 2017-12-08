@@ -25,8 +25,8 @@ class Building extends AbstractBuilding
 	
 	public var troopHealth:Float = 1;
 	public var troopPower:Float = 1;
-	public var troopSpeed:Int = 1;
-	public var troopRushGap:Int = 200;
+	public var troopSpeed:Int = 4000;
+	public var troopRushGap:Int = 250;
 	
 	public var damage:Float = 1;
 	public var damageGap:Int = 1200;
@@ -158,6 +158,7 @@ class Building extends AbstractBuilding
 		//this._population = card._population;
 		_population /= 2;
 		setFeatures();
+		place.enabled = true;
 		return true;
 	}
 #end

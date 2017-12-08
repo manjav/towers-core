@@ -7,50 +7,79 @@ import com.gt.towers.constants.BuildingFeatureType;
  */
 class FeatureCalculator 
 {
-	public function new(){}
+	public var TIME_SCALE:Float = 1;
+	
+	public var capacity:CapacityCalculator;
+	public var birthRate:BrithRateCalculator;
+	
+	public var troopSpeed:TroopSpeedCalculator;
+	public var troopPower:TroopPowerCalculator;
+	public var troopHealth:TroopHealthCalculator;
+	public var troopRushGap:TroopRushGapCalculator;
+	
+	public var damage:DamageCalculator;
+	public var damageGap:DamageGapCalculator;
+	public var damageRangeMin:DamageRangMinCalculator;
+	public var damageRangeMax:DamageRangMaxCalculator;
+
+	public function new()
+	{
+		capacity = new CapacityCalculator();
+		birthRate = new BrithRateCalculator();
+		
+		troopSpeed = new TroopSpeedCalculator();
+		troopPower = new TroopPowerCalculator();
+		troopHealth = new TroopHealthCalculator();
+		troopRushGap = new TroopRushGapCalculator();
+		
+		damage = new DamageCalculator();
+		damageGap = new DamageGapCalculator();
+		damageRangeMin = new DamageRangMinCalculator();
+		damageRangeMax = new DamageRangMaxCalculator();
+	}
 	
 	public function get(featureType:Int, buildingType:Int, level:Int ) : Float
 	{
 		return switch( featureType )
 		{
-			case 1 : CapacityCalculator.get(buildingType, level);
-			case 2 : BrithRateCalculator.get(buildingType, level);
+			case 1 : capacity.get(buildingType, level);
+			case 2 : birthRate.get(buildingType, level) * TIME_SCALE;
 			
-			case 11: TroopSpeedCalculator.get(buildingType, level);
-			case 12: TroopPowerCalculator.get(buildingType, level);
-			case 13: TroopHealthCalculator.get(buildingType, level);
-			case 14: TroopRushGapCalculator.get(buildingType, level);
+			case 11: troopSpeed.get(buildingType, level) / TIME_SCALE;
+			case 12: troopPower.get(buildingType, level);
+			case 13: troopHealth.get(buildingType, level);
+			case 14: troopRushGap.get(buildingType, level) / TIME_SCALE;
 			
-			case 21: DamageCalculator.get(buildingType, level);
-			case 22: DamageGapCalculator.get(buildingType, level);
-			case 23: DamageRangMinCalculator.get(buildingType, level);
-			case 24: DamageRangMaxCalculator.get(buildingType, level);
+			case 21: damage.get(buildingType, level);
+			case 22: damageGap.get(buildingType, level) / TIME_SCALE;
+			case 23: damageRangeMin.get(buildingType, level);
+			case 24: damageRangeMax.get(buildingType, level);
 			
 			default: 0;
 		}
 	}
 	
-	public function getInt(featureType:Int, buildingType:Int, level:Int) 
+	public function getInt(featureType:Int, buildingType:Int, level:Int) : Int
 	{
-		return cast (get( featureType, buildingType, level), Int);
+		return Math.round( get( featureType, buildingType, level) );
 	}
 	
 	public function getBaseline(featureType:Int) : Float
 	{
 		return switch( featureType )
 		{
-			case 1 : CapacityCalculator.BASE_VALUE;
-			case 2 : BrithRateCalculator.BASE_VALUE;
+			case 1 : capacity.BASE_VALUE;
+			case 2 : birthRate.BASE_VALUE;
 			
-			case 11: TroopSpeedCalculator.BASE_VALUE;
-			case 12: TroopPowerCalculator.BASE_VALUE;
-			case 13: TroopHealthCalculator.BASE_VALUE;
-			case 14: TroopRushGapCalculator.BASE_VALUE;
+			case 11: troopSpeed.BASE_VALUE;
+			case 12: troopPower.BASE_VALUE;
+			case 13: troopHealth.BASE_VALUE;
+			case 14: troopRushGap.BASE_VALUE;
 			
-			case 21: DamageCalculator.BASE_VALUE;
-			case 22: DamageGapCalculator.BASE_VALUE;
-			case 23: DamageRangMinCalculator.BASE_VALUE;
-			case 24: DamageRangMaxCalculator.BASE_VALUE;
+			case 21: damage.BASE_VALUE;
+			case 22: damageGap.BASE_VALUE;
+			case 23: damageRangeMin.BASE_VALUE;
+			case 24: damageRangeMax.BASE_VALUE;
 			
 			default: 0;
 		}
