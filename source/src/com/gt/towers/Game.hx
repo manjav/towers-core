@@ -45,7 +45,7 @@ class Game
 		eventDispatcher = new CoreEventDispatcher();
 		init(data);
 	}
-#else
+#elseif flash
 	public function new()
 	{
 		eventDispatcher = new CoreEventDispatcher();
@@ -68,15 +68,15 @@ class Game
 		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
 		arenas.set(0, new Arena(0, 0,		50,		-4,				"101, 201, 301, 401, 501, 102, 202, 302, 402, 502" ));
-		arenas.set(1, new Arena(1, 51,		120,	-3,				"103, 203, 303, 403, 503" ));
-		arenas.set(2, new Arena(2, 121,		200,	-2,				"104, 204, 304, 404, 504" ));
+		arenas.set(1, new Arena(1, 51,		120,	-3,				"103, 203, 303, 403" ));
+		arenas.set(2, new Arena(2, 121,		200,	-2,				"104, 204, 304, 404" ));
 		arenas.set(3, new Arena(3, 201,		300,	-1,				"105, 205, 305, 405" ));
 		arenas.set(4, new Arena(4, 301,		500,	 0,				"106, 206, 306" ));
-		arenas.set(5, new Arena(5, 501,		900,	 1,				"107, 207" ));
-		arenas.set(6, new Arena(6, 901,		1500,	 2,				"307, 407" ));
-		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"108, 208" ));
+		arenas.set(5, new Arena(5, 501,		900,	 1,				"107, 207, 503" ));
+		arenas.set(6, new Arena(6, 901,		1500,	 2,				"307, 407, 504" ));
+		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"108, 208, 109" ));
 		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"308, 408, 406" ));
-		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"109, 209, 309, 409" ));
+		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"209, 309, 409" ));
 		
 		fieldProvider = new FieldProvider(this);
 
