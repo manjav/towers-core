@@ -6,8 +6,9 @@ package com.gt.towers.buildings.cals;
  */
 class CapacityCalculator 
 {
-	public static var BASE_VALUE:Int = 10;
-	public static function get(type:Int, level:Int):Int 
+	public var BASE_VALUE:Float = 10;
+	public function new () {}
+	public function get(type:Int, level:Int):Float 
 	{
 		if ( type < 101 )
 			return 7;

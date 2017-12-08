@@ -1,4 +1,5 @@
 package com.gt.towers.buildings.cals;
+import com.gt.towers.constants.CardTypes;
 
 /**
  * ...
@@ -6,9 +7,13 @@ package com.gt.towers.buildings.cals;
  */
 class TroopRushGapCalculator 
 {
-	public static var BASE_VALUE:Int = 250;
-	public static function get(type:Int, level:Int):Int 
+	public var BASE_VALUE:Float = 250;
+	public function new () {}
+	public function get(type:Int, level:Int):Float 
 	{
-		return Math.round(BASE_VALUE * (1/Building.TIME_SCALE));
+		if( CardTypes.get_category( type ) == CardTypes.C200 )// rapids
+			return BASE_VALUE - 50 - Math.log(level) * 20 ;
+
+		return BASE_VALUE ;
 	}
 }
