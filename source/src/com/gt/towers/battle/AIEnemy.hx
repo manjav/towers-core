@@ -5,7 +5,6 @@ import com.gt.towers.buildings.Place;
 import com.gt.towers.buildings.cals.BrithRateCalculator;
 import com.gt.towers.buildings.cals.DamageCalculator;
 import com.gt.towers.constants.BuildingFeatureType;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
@@ -85,7 +84,7 @@ class AIEnemy
 		else if ( botPlacesLen == 1 )
 		{
 			var singlePlace = botPlaces.get(0);
-			if( singlePlace.enabled && singlePlace.building.type==BuildingType.B01_CAMP && battleField.getDuration()<battleField.map.times.get(0) )
+			if( singlePlace.enabled && singlePlace.building.type==CardTypes.C001 && battleField.getDuration()<battleField.map.times.get(0) )
 			{
 				if ( (Math.random() < 0.8 || battleField.places.get(0).game.player.hardMode) && battleField.difficulty >= 1 )
 				{

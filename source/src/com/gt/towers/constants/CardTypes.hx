@@ -6,6 +6,9 @@ package com.gt.towers.constants;
  */
 class CardTypes 
 {
+    public static var IMPROVE:Int = -2;
+    public static var NONE:Int = -1;
+	
 	public static var C001:Int = 1;
 	
 	public static var C100:Int = 100;
@@ -79,7 +82,7 @@ class CardTypes
 	
 	public static function getAlter( oldType:Int ) : Int
 	{
-		return switch( BuildingType.get_category(oldType) )
+		return switch( get_old_category(oldType) )
 		{
 			case 0 : 1;
 			case 10 : 401;
@@ -91,7 +94,10 @@ class CardTypes
 		}
 	}
 	
-	
+	public static function get_old_category(type:Int):Int
+	{
+		return Math.floor(type / 10) * 10;
+	}	
 	public static function get_category(type:Int):Int
 	{
 		return Math.floor(type / 100) * 100;

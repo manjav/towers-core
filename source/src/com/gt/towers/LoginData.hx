@@ -1,5 +1,4 @@
 package com.gt.towers;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;

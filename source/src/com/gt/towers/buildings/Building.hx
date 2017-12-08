@@ -178,7 +178,7 @@ class Building extends AbstractBuilding
 	}
 	public function equalsCategory(type:Int):Bool
 	{
-		return category == BuildingType.get_category(type);
+		return category == CardTypes.get_category(type);
 	}
  
 	override public function upgrade(confirmedHards:Int=0):Bool

@@ -5,7 +5,6 @@ import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;

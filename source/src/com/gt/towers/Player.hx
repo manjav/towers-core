@@ -2,7 +2,6 @@ package com.gt.towers;
 import com.gt.towers.Game;
 import com.gt.towers.buildings.AbstractBuilding;
 import com.gt.towers.buildings.Building;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;

@@ -2,7 +2,6 @@ package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.Player;
 import com.gt.towers.battle.fieldes.FieldData;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.IntIntMap;

@@ -1,6 +1,5 @@
 package com.gt.towers.buildings;
 import com.gt.towers.Game;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.BuildingFeatureType;
@@ -144,7 +143,7 @@ class AbstractBuilding
 	}
 	public function unlocked(type:Int=-1):Bool 
 	{
-		if ( type == BuildingType.B01_CAMP )
+		if ( type == CardTypes.C001 )
 			return true;
 			
 		if ( game.player.inFriendlyBattle )
@@ -154,9 +153,9 @@ class AbstractBuilding
 			return true;
 		#end
 			
-		if ( type == BuildingType.NONE )
+		if ( type == CardTypes.NONE )
 			type = this.type;
-		else if ( type == BuildingType.IMPROVE )
+		else if ( type == CardTypes.IMPROVE )
 			type = this.type + 1;
 			
 		return game.player.resources.exists(type);
