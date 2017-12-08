@@ -305,6 +305,7 @@ class Exchanger
 	function get_chestOutcomes(type:Int) : IntIntMap
 	{
 		var ret = new IntIntMap();
+		var arena = game.player.get_arena(0) + 1;
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
 		var totalCards = ExchangeType.getNumTotalCards(type) - 1;
 		var slotSize = totalCards / numSlots;
@@ -315,9 +316,10 @@ class Exchanger
 		{
 			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
-			if ( numChest % 11 == 0 || numChest == 4 )
+			if ( numChest == 0 || numChest == 4 || numChest % arena*5 == 0 )
 				addNewCard(ret, 1);
-			addRandomSlot(ret, numCards);
+			else
+				addRandomSlot(ret, numCards);
 			numSlots --;
 		}
 		
