@@ -21,5 +21,12 @@ class TroopSpeedCalculator
 			return BASE_VALUE + 500 - Math.log(level) * 100;
 
 		return BASE_VALUE - Math.log(level) * 200 ;
+		
+		/*return switch( type )
+		{
+		case 201 : BASE_VALUE - 2000 - Math.log(level) * 100;
+		case 202 : BASE_VALUE - 2040 - Math.log(level) * 120;
+		default : BASE_VALUE - Math.log(level) * 200;
+		}*/
 	}
 }
