@@ -40,7 +40,7 @@ class LoginData
 		resources.set(CardTypes.C201, 1);
 		resources.set(CardTypes.C301, 1);
 		resources.set(CardTypes.C401, 1);
-		resources.set(CardTypes.C501, 1);
+		resources.set(CardTypes.C102, 1);
 		
 		/*resources.set(BuildingType.B11_BARRACKS, 1);
 		resources.set(BuildingType.B12_BARRACKS, 1);
