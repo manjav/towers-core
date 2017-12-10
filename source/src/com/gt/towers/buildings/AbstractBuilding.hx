@@ -28,7 +28,7 @@ class AbstractBuilding
 		this.type = type;
 		this._level = level;
 		this.category = CardTypes.get_category(type);
-		this.improveLevel = type % 10;
+		this.improveLevel = 1;
 	}
 	
 	public function get_level():Int

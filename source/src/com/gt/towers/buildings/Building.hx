@@ -56,7 +56,7 @@ class Building extends AbstractBuilding
 		category = CardTypes.get_category(type);
 		rarity = CardTypes.get_rarity(type);
 		
-		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, get_level());
+		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, improveLevel);
 		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type, get_level());
 		
 		// troops data
@@ -154,6 +154,10 @@ class Building extends AbstractBuilding
 			return false;
 		
 		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
+		if ( this.type == card.type )
+			improveLevel ++;
+		else
+			improveLevel = 1;
 		this.type = card.type;
 		_population /= 2;
 		setFeatures();
@@ -164,7 +168,7 @@ class Building extends AbstractBuilding
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( this.troopType != card.troopType || _population < capacity )
+		if ( this.troopType != card.troopType || _population < capacity || improveLevel > 3)
 			return false;
 		return true;
 	}
