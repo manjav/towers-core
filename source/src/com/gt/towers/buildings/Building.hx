@@ -13,7 +13,7 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Building extends AbstractBuilding
 {
-	public static var TIME_SCALE:Float = 0.88;
+	public static var TIME_SCALE:Float = 0.80;
 	
 	public var place:Place;
 	public var index:Int;
