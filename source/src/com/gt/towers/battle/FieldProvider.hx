@@ -65,10 +65,10 @@ class FieldProvider
 		
 		battles = new StringFieldMap();
 		
-		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "", "", "", "70,110,160,20" ) );
+		battles.set( "battle_1" , new Battle_2( 1, "battle_1", "", "", "", "70,110,160,20" ) );
 		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "", "", "", "70,110,160,20" ) );
-		battles.set( "battle_3" , new Battle_3( 3, "battle_3", "", "", "", "70,110,160,20" ) );
-		battles.set( "battle_4" , new Battle_4( 4, "battle_4", "", "", "", "70,110,160,20" ) );
+		battles.set( "battle_3" , new Battle_2( 3, "battle_3", "", "", "", "70,110,160,20" ) );
+		battles.set( "battle_4" , new Battle_2( 4, "battle_4", "", "", "", "70,110,160,20" ) );
 		
 		
 		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "", "", "", "80,120,200,20" ) );
