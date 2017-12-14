@@ -73,7 +73,7 @@ class Building extends AbstractBuilding
 
 		//return 10 + (5 * improveLevel);
 	}
-	public static var BASE_EXIT_GAP:Int = 200;
+	public static var BASE_EXIT_GAP:Int = 400;
 	public function get_exitGap():Int 
 	{
 		return Math.round(BASE_EXIT_GAP * (1/TIME_SCALE));
