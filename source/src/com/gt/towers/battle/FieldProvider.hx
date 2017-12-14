@@ -70,6 +70,7 @@ class FieldProvider
 		battles.set( "battle_3" , new Battle_3( 3, "battle_3", "", "", "", "70,110,160,20" ) );
 		battles.set( "battle_4" , new Battle_4( 4, "battle_4", "", "", "", "70,110,160,20" ) );
 		battles.set( "battle_5" , new Battle_5( 5, "battle_5", "", "", "", "70,110,160,20" ) );
+		battles.set( "battle_6" , new Battle_6( 6, "battle_6", "", "", "", "70,110,160,20" ) );
 		
 		
 		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "", "", "", "80,120,200,20" ) );
