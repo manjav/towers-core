@@ -60,8 +60,8 @@ class Game
 		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
 		arenas.set(0, new Arena(0, 0,		20,		-4,				"11"    ));
-		arenas.set(1, new Arena(1, 21,		120,	-3,				"21,31"	));
-		arenas.set(2, new Arena(2, 121,		200,	-2,				"41,12"	));
+		arenas.set(1, new Arena(1, 21,		100,	-3,				"21,31"	));
+		arenas.set(2, new Arena(2, 101,		200,	-2,				"41,12"	));
 		arenas.set(3, new Arena(3, 201,		300,	-1,				"13,22"	));
 		arenas.set(4, new Arena(4, 301,		500,	 0,				"32,42" ));
 		arenas.set(5, new Arena(5, 501,		900,	 1,				"23,33"	));

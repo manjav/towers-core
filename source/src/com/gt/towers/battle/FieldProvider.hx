@@ -58,24 +58,14 @@ class FieldProvider
 		
 		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "", "", "", "70,110,160,20" ) );
 		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "", "", "", "70,110,160,20" ) );
-	  /*battles.set( "battle_3" , new Battle_3( 3, "battle_3", "", "", "", "70,110,160,20" ) );
-		battles.set( "battle_4" , new Battle_4( 4, "battle_4", "", "", "", "70,110,160,20" ) );
-		battles.set( "battle_5" , new Battle_5( 5, "battle_5", "", "", "", "70,110,160,20" ) );
-		battles.set( "battle_6" , new Battle_6( 6, "battle_6", "", "", "", "70,110,160,20" ) );*/
-		
 		
 		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "", "", "", "80,120,200,20" ) );
 		battles.set( "battle_102" , new Battle_102( 102, "battle_102", "", "", "", "80,120,200,20" ) );
 		battles.set( "battle_103" , new Battle_103( 103, "battle_103", "", "", "", "80,120,200,20" ) );
-		battles.set( "battle_104" , new Battle_2( 104, "battle_104", "", "", "", "80,120,200,20" ) );
-		/*if ( game.appVersion > 2030 )
-		{
-			battles.set( "battle_105" , new Battle_105( 105, "battle_105", "", "", "", "80,120,200,20" ) );
-			battles.set( "battle_106" , new Battle_106( 106, "battle_106", "", "", "", "80,120,200,20" ) );
-			battles.set( "battle_107" , new Battle_107( 107, "battle_107", "", "", "", "80,120,200,20" ) );
-			battles.set( "battle_108" , new Battle_108( 108, "battle_108", "", "", "", "80,100,120,100" ) );
-		}*/
-		
+		battles.set( "battle_104" , new Battle_104( 104, "battle_104", "", "", "", "80,120,200,20" ) );
+		battles.set( "battle_105" , new Battle_105( 105, "battle_105", "", "", "", "80,120,200,20" ) );
+		battles.set( "battle_106" , new Battle_106( 106, "battle_106", "", "", "", "80,120,200,20" ) );
+		battles.set( "battle_107" , new Battle_107( 107, "battle_107", "", "", "", "90,130,210,20" ) );
 		
 		battles.set( "battle_201" , new Battle_201( 201, "battle_201", "", "", "", "100,130,210,20" ) );
 		battles.set( "battle_202" , new Battle_202( 202, "battle_202", "", "", "", "100,130,210,20" ) );
