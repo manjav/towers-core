@@ -274,7 +274,7 @@ class AIEnemy
 			return actionType = tryAction();
 			
 			
-		if ( Math.random() < 0.005 && !stickerStarted )
+		if ( !battleField.map.isQuest && Math.random() < 0.005 && !stickerStarted )
 		{
 			stickerStarted = true;
 			return actionType = TYPE_START_STICKER;
