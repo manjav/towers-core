@@ -17,6 +17,7 @@ class FieldProvider
 	{
 		shires = new StringFieldMap();
 #if flash
+		shires.set( "shire_3" , new com.gt.towers.battle.shires.Shire_3( 3, "shire_3", "", "", "" ) );
 		shires.set( "shire_2" , new com.gt.towers.battle.shires.Shire_2( 2, "shire_2", "", "", "" ) );
 		shires.set( "shire_1" , new com.gt.towers.battle.shires.Shire_1( 1, "shire_1", "", "", "" ) );
 		shires.set( "shire_0" , new com.gt.towers.battle.shires.Shire_0( 0, "shire_0", "", "", "" ) );
@@ -32,12 +33,12 @@ class FieldProvider
 		quests.set( "quest_6" , new Quest_6( 6, "quest_6", "", "", "", "70,100,150,20" ) );
 		quests.set( "quest_7" , new Quest_7( 7, "quest_7", "", "", "", "70,100,150,20" ) );
 		quests.set( "quest_8" , new Quest_8( 8, "quest_8", "", "", "", "70,100,150,20" ) );
-		quests.set( "quest_9" , new Quest_9( 9, "quest_9", "", "", "", "40,70,100,20" ) );
+		quests.set( "quest_9" , new Quest_9( 9, "quest_9", "", "", "", "60,90,150,20" ) );
 		quests.set( "quest_10" , new Quest_10( 10, "quest_10", "", "", "", "50,70,100,20" ) );
-		quests.set( "quest_11" , new Quest_11( 11, "quest_11", "", "", "", "50,70,100,20" ) );
-		quests.set( "quest_12" , new Quest_12( 12, "quest_12", "", "", "", "60,80,100,20" ) );
-		quests.set( "quest_13" , new Quest_13( 13, "quest_13", "", "", "", "60,80,100,20" ) );
-		quests.set( "quest_14" , new Quest_14( 14, "quest_14", "", "", "", "60,80,100,20" ) );
+		quests.set( "quest_11" , new Quest_11( 11, "quest_11", "", "", "", "50,70,120,20" ) );
+		quests.set( "quest_12" , new Quest_12( 12, "quest_12", "", "", "", "60,90,130,20" ) );
+		quests.set( "quest_13" , new Quest_13( 13, "quest_13", "", "", "", "60,90,130,20" ) );
+		quests.set( "quest_14" , new Quest_14( 14, "quest_14", "", "", "", "60,90,130,20" ) );
 		quests.set( "quest_15" , new Quest_15( 15, "quest_15", "", "", "", "70,100,150,20" ) );
 		quests.set( "quest_16" , new Quest_16( 16, "quest_16", "", "", "", "70,100,150,20" ) );
 		quests.set( "quest_17" , new Quest_17( 17, "quest_17", "", "", "", "70,100,150,20" ) );
@@ -46,30 +47,40 @@ class FieldProvider
 		quests.set( "quest_20" , new Quest_20( 20, "quest_20", "", "", "", "70,110,170,30" ) );
 		quests.set( "quest_21" , new Quest_21( 21, "quest_21", "", "", "", "80,130,190,30" ) );
 		quests.set( "quest_22" , new Quest_22( 22, "quest_22", "", "", "", "80,130,190,30" ) );
-		quests.set( "quest_23" , new Quest_23( 23, "quest_23", "", "", "", "80,130,190,30" ) );
+		quests.set( "quest_23" , new Quest_23( 23, "quest_23", "", "", "", "80,120,180,30" ) );
 		quests.set( "quest_24" , new Quest_24( 24, "quest_24", "", "", "", "80,130,190,30" ) );
 		quests.set( "quest_25" , new Quest_25( 25, "quest_25", "", "", "", "110,150,220,30" ) );
 		quests.set( "quest_26" , new Quest_26( 26, "quest_26", "", "", "", "110,150,220,30" ) );
 		quests.set( "quest_27" , new Quest_27( 27, "quest_27", "", "", "", "110,150,220,30" ) );
-		quests.set( "quest_28" , new Quest_28( 28, "quest_28", "", "", "", "140,170,210,30" ) );
-		quests.set( "quest_29" , new Quest_29( 29, "quest_29", "", "", "", "150,180,220,30" ) );
+		quests.set( "quest_28" , new Quest_28( 28, "quest_28", "", "", "", "120,160,200,30" ) );
+		quests.set( "quest_29" , new Quest_29( 29, "quest_29", "", "", "", "130,170,200,30" ) );
+		quests.set( "quest_30" , new Quest_30( 30, "quest_30", "", "", "", "100,130,150,30" ) );
+		quests.set( "quest_31" , new Quest_31( 31, "quest_31", "", "", "", "140,170,190,30" ) );
+		quests.set( "quest_32" , new Quest_32( 32, "quest_32", "", "", "", "140,170,220,30" ) );
+		quests.set( "quest_33" , new Quest_33( 33, "quest_33", "", "", "", "140,180,220,30" ) );
+		quests.set( "quest_34" , new Quest_34( 34, "quest_34", "", "", "", "120,130,200,30" ) );
+		quests.set( "quest_35" , new Quest_35( 35, "quest_35", "", "", "", "110,150,220,30" ) );
+		quests.set( "quest_36" , new Quest_36( 36, "quest_36", "", "", "", "110,160,240,30" ) );
+		quests.set( "quest_37" , new Quest_37( 37, "quest_37", "", "", "", "100,140,210,30" ) );
+		quests.set( "quest_38" , new Quest_38( 38, "quest_38", "", "", "", "130,160,200,30" ) );
+		quests.set( "quest_39" , new Quest_39( 39, "quest_39", "", "", "", "150,180,220,30" ) );
 		
 		battles = new StringFieldMap();
 		
-		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "", "", "", "70,110,160,20" ) );
-		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "", "", "", "70,110,160,20" ) );
+		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "", "", "", "70,120,180,0" ) );
+		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "", "", "", "70,120,180,0" ) );
 		
-		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "", "", "", "80,120,200,20" ) );
-		battles.set( "battle_102" , new Battle_102( 102, "battle_102", "", "", "", "80,120,200,20" ) );
-		battles.set( "battle_103" , new Battle_103( 103, "battle_103", "", "", "", "80,120,200,20" ) );
-		battles.set( "battle_104" , new Battle_104( 104, "battle_104", "", "", "", "80,120,200,20" ) );
-		battles.set( "battle_105" , new Battle_105( 105, "battle_105", "", "", "", "80,120,200,20" ) );
-		battles.set( "battle_106" , new Battle_106( 106, "battle_106", "", "", "", "80,120,200,20" ) );
-		battles.set( "battle_107" , new Battle_107( 107, "battle_107", "", "", "", "90,130,210,20" ) );
+		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "", "", "", "80,120,220,0" ) );
+		battles.set( "battle_102" , new Battle_102( 102, "battle_102", "", "", "", "80,120,220,0" ) );
+		battles.set( "battle_103" , new Battle_103( 103, "battle_103", "", "", "", "80,120,220,0" ) );
+		battles.set( "battle_104" , new Battle_104( 104, "battle_104", "", "", "", "80,120,220,0" ) );
+		battles.set( "battle_105" , new Battle_105( 105, "battle_105", "", "", "", "80,120,220,0" ) );
+		battles.set( "battle_106" , new Battle_106( 106, "battle_106", "", "", "", "80,120,220,0" ) );
+		battles.set( "battle_107" , new Battle_107( 107, "battle_107", "", "", "", "90,130,220,0" ) );
 		
-		battles.set( "battle_201" , new Battle_201( 201, "battle_201", "", "", "", "100,130,210,20" ) );
-		battles.set( "battle_202" , new Battle_202( 202, "battle_202", "", "", "", "100,130,210,20" ) );
-		battles.set( "battle_203" , new Battle_102( 203, "battle_203", "", "", "", "75,90,110,100" ) );
+		battles.set( "battle_201" , new Battle_201( 201, "battle_201", "", "", "", "100,130,210,0" ) );
+		battles.set( "battle_202" , new Battle_202( 202, "battle_202", "", "", "", "100,130,210,0" ) );
+		battles.set( "battle_203" , new Battle_102( 203, "battle_203", "", "", "", "75,90,110,0" ) );
 		/*if ( game.appVersion > 2030 )
 		{
 			battles.set( "battle_204" , new Battle_204( 204, "battle_204", "", "", "", "75,90,110,100" ) );
@@ -155,7 +166,7 @@ class FieldProvider
 		}*/
 	}
 	
-	public function getCurrentShire(questIndex:Int):FieldData
+	/*public function getCurrentShire(questIndex:Int):FieldData
 	{
 		var _shires = shires.values();
 		var s:Int = _shires.length - 1;
@@ -166,7 +177,7 @@ class FieldProvider
 			p = _shires[s].places.size() - 1;
 			while ( p >= 0 )
 			{
-				if ( _shires[s].places.get(p).index == questIndex )
+				if ( ( _shires[s].places.get(p).index + s * 10 ) == questIndex )
 					return _shires[s];
 				p --;
 			}
@@ -174,5 +185,5 @@ class FieldProvider
 			s --;
 		}
 		return null;
-	}
+	}*/
 }
