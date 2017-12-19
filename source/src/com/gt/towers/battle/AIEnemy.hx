@@ -27,6 +27,8 @@ class AIEnemy
 	public static var TYPE_FIGHT_TRIPLE:Int = 3;
 	
 	public static var TYPE_IMPROVE:Int = 10;
+	
+	public static var TYPE_START_STICKER:Int = 21;
 
 	public var actionType:Int = -100;
 	public var sources:IntList;
@@ -39,6 +41,7 @@ class AIEnemy
 	public var accessPoint:Float;
 	
 	private var battleField:BattleField;
+	var stickerStarted:Bool;
 	
 	public function new(battleField:BattleField)
 	{
@@ -267,8 +270,15 @@ class AIEnemy
 	public function doAction():Int
 	{
 		var seed:Int = Math.floor(battleField.now%5);
-		if ( seed == accessPoint && ( actionType == TYPE_NO_CHANCE ||  actionType == -100 ) )
+		if ( seed == accessPoint && ( actionType == TYPE_NO_CHANCE || actionType == -100 ) )
 			return actionType = tryAction();
+			
+			
+		if ( Math.random() < 0.005 && !stickerStarted )
+		{
+			stickerStarted = true;
+			return actionType = TYPE_START_STICKER;
+		}
 		return actionType = TYPE_NO_CHANCE;
 	}
 	

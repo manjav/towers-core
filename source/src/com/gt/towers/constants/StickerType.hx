@@ -37,6 +37,15 @@ class StickerType
 	}
 
 	
+	private static function getRandomStart():Int
+	{
+		var ret = Math.floor( Math.random() * 9 );
+		if ( ret == S1_THANKS || ret == S7_REVENGE )
+			return getRandomStart();
+		return ret;
+	}
+
+	
 	private static function getAnswers(sticker:Int):IntList
 	{
 		var ret:IntList = new IntList();
