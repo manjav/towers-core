@@ -74,7 +74,7 @@ class Building extends AbstractBuilding
 
 	public function get_population():Int
 	{
-		return Math.round(_population);
+		return Math.floor(_population);
 	}
 
 	
