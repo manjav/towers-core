@@ -1,4 +1,5 @@
 package com.gt.towers.constants;
+import com.gt.towers.utils.lists.IntList;
 
 /**
  * ...
@@ -126,4 +127,44 @@ class CardTypes
 		 
 		return type / 10;
 	}*/
+	
+	public static function getAll():IntList
+	{
+		var ret:IntList = new IntList();
+		
+		ret.push(101);
+		ret.push(102);
+		ret.push(103);
+		ret.push(104);
+		ret.push(105);
+		ret.push(106);
+
+		ret.push(201);
+		ret.push(202);
+		ret.push(203);
+		ret.push(204);
+		ret.push(205);
+		ret.push(206);
+
+		ret.push(301);
+		ret.push(302);
+		ret.push(303);
+		ret.push(304);
+		ret.push(305);
+		ret.push(306);
+
+		ret.push(401);
+		ret.push(402);
+		ret.push(403);
+		ret.push(404);
+		ret.push(405);
+		ret.push(406);
+
+		ret.push(501);
+		ret.push(502);
+		ret.push(503);
+		ret.push(504);
+
+		return ret;
+	}
 }
