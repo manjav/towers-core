@@ -12,7 +12,6 @@ import com.gt.towers.utils.maps.IntArenaMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 #if java
-import com.gt.towers.utils.Tracer;
 import com.gt.towers.battle.AIEnemy;
 #end
 
@@ -37,20 +36,11 @@ class Game
 	public var arenas:IntArenaMap;
 	public var lobby:Lobby;
 
-#if java
-	public var tracer:Tracer;
-	public function new( data:InitData, tracer:Tracer )
-	{
-		this.tracer = tracer;
-		eventDispatcher = new CoreEventDispatcher();
-		init(data);
-	}
-#elseif flash
+
 	public function new()
 	{
 		eventDispatcher = new CoreEventDispatcher();
 	}
-#end
 	
 	function init(data:InitData) 
 	{
