@@ -46,7 +46,7 @@ class Building extends AbstractBuilding
 			else
 				level = 1;
 		}
-		super( game, type, level + (place == null ? 0 : place.levelCoef) );
+		super( game, type, level + (place == null ? 0 : place.levelOffset) );
 		setFeatures();
 	}
 
@@ -139,13 +139,14 @@ class Building extends AbstractBuilding
 	
 	function occupy(troop:Troop) 
 	{
-		_population = 0;
 		type = CardTypes.C001;
 		troopType = troop.type;
 		place.game = game = troop.building.game;
-		place.enabled = true;
-		place.levelCoef = troop.building.place.levelCoef;
-		setFeatures();
+		place.enabled = true; 
+		place.levelOffset = troop.building.place.levelOffset;
+		place.powerCoef = troop.building.place.powerCoef;
+		setFeatures(); 
+		_population = place.powerCoef > 1 ? Math.min(capacity, place.powerCoef) : 0;
 	}
 	
 	public function transform(card:Building) : Bool

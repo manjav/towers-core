@@ -26,8 +26,8 @@ class Troop
 		this.id = id;
 		this.building = building;
 		this.type = building.troopType;
-		this.health = building.troopHealth * (this.type == 0 ? building.place.healthCoef : 1 / building.place.healthCoef );
-		this.power = building.troopPower * (this.type == 0 ? building.place.healthCoef : 1 / building.place.healthCoef );
+		this.health = building.troopHealth * (this.type == 0 ? building.place.powerCoef : 1 / building.place.powerCoef );
+		this.power = building.troopPower * (this.type == 0 ? building.place.powerCoef : 1 / building.place.powerCoef );
 		
 		this.path = new PlaceList();
 		var i:Int = 0;
