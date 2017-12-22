@@ -67,16 +67,16 @@ class FieldProvider
 		
 		battles = new StringFieldMap();
 		
-		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "", "", "", "70,120,180,0" ) );
-		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "", "", "", "70,120,180,0" ) );
+		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "", "", "", "80,150,240,0" ) );
+		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "", "", "", "80,150,240,0" ) );
 		
-		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "", "", "", "80,120,220,0" ) );
-		battles.set( "battle_102" , new Battle_102( 102, "battle_102", "", "", "", "80,120,220,0" ) );
-		battles.set( "battle_103" , new Battle_103( 103, "battle_103", "", "", "", "80,120,220,0" ) );
-		battles.set( "battle_104" , new Battle_104( 104, "battle_104", "", "", "", "80,120,220,0" ) );
-		battles.set( "battle_105" , new Battle_105( 105, "battle_105", "", "", "", "80,120,220,0" ) );
-		battles.set( "battle_106" , new Battle_106( 106, "battle_106", "", "", "", "80,120,220,0" ) );
-		battles.set( "battle_107" , new Battle_107( 107, "battle_107", "", "", "", "90,130,220,0" ) );
+		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "", "", "", "80,160,260,0" ) );
+		battles.set( "battle_102" , new Battle_102( 102, "battle_102", "", "", "", "80,160,260,0" ) );
+		battles.set( "battle_103" , new Battle_103( 103, "battle_103", "", "", "", "80,160,260,0" ) );
+		battles.set( "battle_104" , new Battle_104( 104, "battle_104", "", "", "", "80,160,260,0" ) );
+		battles.set( "battle_105" , new Battle_105( 105, "battle_105", "", "", "", "80,160,260,0" ) );
+		battles.set( "battle_106" , new Battle_106( 106, "battle_106", "", "", "", "80,160,260,0" ) );
+		battles.set( "battle_107" , new Battle_107( 107, "battle_107", "", "", "", "90,160,260,0" ) );
 		
 		battles.set( "battle_201" , new Battle_201( 201, "battle_201", "", "", "", "100,130,210,0" ) );
 		battles.set( "battle_202" , new Battle_202( 202, "battle_202", "", "", "", "100,130,210,0" ) );
