@@ -53,7 +53,9 @@ class LoginData
 		
 		exchanges = new IntList();
 		exchanges.push(ExchangeType.S_41_KEYS);
-		exchanges.push(ExchangeType.CHEST_CATE_101_DAILY);
+		exchanges.push(ExchangeType.CHEST_CATE_101_FREE);
+		exchanges.push(ExchangeType.CHEST_CATE_102_FREE);
+		exchanges.push(ExchangeType.CHEST_CATE_103_FREE);
 		exchanges.push(ExchangeType.CHEST_CATE_111_BATTLE);
 		exchanges.push(ExchangeType.CHEST_CATE_112_BATTLE);
 		exchanges.push(ExchangeType.CHEST_CATE_113_BATTLE);

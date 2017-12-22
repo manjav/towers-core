@@ -41,6 +41,6 @@ class ExchangeItem extends Exchange
 	}
 	public function isChest():Bool
 	{
-		return category == ExchangeType.S_30_CHEST || category == ExchangeType.CHEST_CATE_110_BATTLES || category == ExchangeType.CHEST_CATE_120_OFFERS || category == ExchangeType.CHESTS_50 ;
+		return category >= 100;
 	}
 }
