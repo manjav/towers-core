@@ -232,7 +232,7 @@ class Building extends AbstractBuilding
 		place.enabled = true;
 		place.levelCoef = troop.building.place.levelCoef;
 		place.healthCoef = troop.building.place.healthCoef;
-		_population = place.healthCoef > 1 ? Math.min(capacity, place.healthCoef) : 0;
+		_population = place.healthCoef > 1 ? Math.min(get_capacity(), place.healthCoef) : 0;
 		if ( type == BuildingType.B01_CAMP )
 		{
 			place.game = game = troop.building.game;
