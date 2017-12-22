@@ -38,9 +38,9 @@ class Exchanger
 			var ex = initData.exchanges.get(exchangeKeys[i]);
 			var cex = ExchangeType.getCategory( exchangeKeys[i] );
 			
-			if( cex == ExchangeType.S_20_SPECIALS || cex == ExchangeType.CHEST_CATE_110_BATTLES || cex == ExchangeType.CHEST_CATE_120_OFFERS )
+			if( cex == ExchangeType.CHEST_CATE_100_FREE || cex == ExchangeType.CHEST_CATE_110_BATTLES || cex == ExchangeType.CHEST_CATE_120_OFFERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
-			else if ( cex == ExchangeType.S_30_CHEST || cex == ExchangeType.S_40_OTHERS )
+			else if ( cex == ExchangeType.S_40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
 				
 			i ++;
@@ -57,7 +57,9 @@ class Exchanger
 		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 75, ResourceType.CURRENCY_SOFT,	2000 ) );
 		items.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 350, ResourceType.CURRENCY_SOFT,	10000 ) );
 		
-		items.set( ExchangeType.CHESTS_59_ADS, new ExchangeItem ( ExchangeType.CHESTS_59_ADS ) );
+		var ads = new ExchangeItem (ExchangeType.CHEST_CATE_131_ADS, -1, -1, -1, -1, 1, 1);
+		ads.outcome = ExchangeType.CHESTS_57_CHROME;
+		items.set( ExchangeType.CHEST_CATE_131_ADS, ads );
 	}
 	
 	/**
@@ -69,14 +71,7 @@ class Exchanger
 	{
 		// provide requirements
 		if( item.isChest() )
-			item.requirements = get_chestRequierement(item, now);
-		else if ( ExchangeType.getCategory(item.type) == ExchangeType.S_20_SPECIALS )
-		{
-			if ( item.numExchanges > ExchangeType.getMaxExchanges(item.type) )
-				return false;
-				
-			item.requirements = getSpecialRequierments(item);
-		}
+			item.requirements = getChestRequierement(item, now);
 		
 		// start opening process
 		if ( item.category == ExchangeType.CHEST_CATE_110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
@@ -104,12 +99,8 @@ class Exchanger
 		
 #if java
 		// provide and earn outcomes 
-		if( item.category == ExchangeType.S_30_CHEST )
-			item.outcomes = getChestOutcomes(item.type);
-		else if( item.type == ExchangeType.CHESTS_59_ADS )
-			item.outcomes = getAdChestOutcomes();
-		else if( item.category == ExchangeType.CHEST_CATE_110_BATTLES || item.category == ExchangeType.CHEST_CATE_120_OFFERS )
-			item.outcomes = get_chestOutcomes(item.outcome);
+		if( item.isChest() )
+			item.outcomes = getChestOutcomes(item.outcome);
 #end
 		// add outs
 		if( item.outcomes != null )
@@ -118,10 +109,11 @@ class Exchanger
 		game.player.resources.reduceMap(item.requirements);
 		
 		// reset item
-		if( item.category == ExchangeType.S_20_SPECIALS )
-			item.numExchanges ++;
-		else if( item.category == ExchangeType.S_30_CHEST )
-			item.expiredAt = now + ExchangeType.getCooldown(item.type);
+		if ( item.category == ExchangeType.CHEST_CATE_100_FREE )
+		{
+			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
+			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);
+		}
 		else if( item.category == ExchangeType.CHEST_CATE_110_BATTLES )
 		{
 			var openedChests = game.player.get_openedChests();
@@ -149,7 +141,6 @@ class Exchanger
 		}
 		return game.player.get_keys() >= ExchangeType.getKeyRequierement(item.outcome);
 	}
-	
 	
 	public function toHard(requirements:IntIntMap):Int
 	{
@@ -196,13 +187,10 @@ class Exchanger
 			return Math.round( count * 8 ) ;
 	}	
 	
-	function get_chestRequierement(item:ExchangeItem, now:Int) : IntIntMap
+	function getChestRequierement(item:ExchangeItem, now:Int) : IntIntMap
 	{
-		if ( item.category == ExchangeType.S_30_CHEST )
-			return getChestRequierement(item.expiredAt - now );
-			
 		var ret = new IntIntMap();
-		if( item.category == ExchangeType.CHEST_CATE_110_BATTLES )
+		if( item.category == ExchangeType.CHEST_CATE_100_FREE || item.category == ExchangeType.CHEST_CATE_110_BATTLES )
 		{
 			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY )
 				ret.set(ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) );
@@ -216,92 +204,8 @@ class Exchanger
 		return ret;
 	}
 	
-	// v.1090
-	public function getChestRequierement(time:Int) : IntIntMap
-	{
-		var ret = new IntIntMap();
-		ret.set(ResourceType.KEY, timeToKey(time) );
-		return ret;
-	}
-	public function getSpecialRequierments(item:ExchangeItem):IntIntMap
-	{
-		var ret = new IntIntMap();
-
-		var outKeys = item.outcomes.keys();
-		var i = 0;
-		var softs = 0;
-		while ( i < outKeys.length )
-		{
-			if ( game.player.buildings.exists(outKeys[i]) )
-			{
-				var count = Math.round(game.player.buildings.get(outKeys[i]).price() * 0.5);
-				var ratio = Std.int(Math.pow(2, cast(item.numExchanges, Float)));
-				softs += count * ratio ;
-			}
-			i++;
-		}
-		ret.set( ResourceType.CURRENCY_SOFT, softs );
-		return ret;
-	}
-	
 	#if java
-	function getAdChestOutcomes() : IntIntMap
-	{
-		var ret = new IntIntMap();
-		var numSlots = ExchangeType.getNumSlots(ExchangeType.CHESTS_59_ADS) - 1;
-		while ( numSlots > 0 )
-		{
-			addRandomSlot(ret, game.player.get_arena(0)+1);	
-			numSlots --;
-		}
-		ret.set( ResourceType.CURRENCY_HARD, 1 );
-		return ret;
-	}
 	function getChestOutcomes(type:Int) : IntIntMap
-	{
-		var hasKeysReward:Bool = false;
-		var ret = new IntIntMap();
-		var chance = ( type % 10 ) * 2;
-		addRandomCard(ret, chance);
-		addRandomCard(ret, chance);	
-		
-		if ( type > ExchangeType.S_31_CHEST )
-		{
-			// random cards
-			if (type == ExchangeType.S_33_CHEST)
-			{
-				addRandomCard(ret, chance);
-				
-				hasKeysReward = Math.random() < 0.1;
-				if( !hasKeysReward )
-					addRandomCard(ret, chance);
-			}
-			
-			addNewCard(ret, chance);
-
-			
-			// random hards
-			ret.set(ResourceType.CURRENCY_HARD, Math.ceil(Math.random() * (type % 10) ) );
-		}
-
-		// random softs
-		ret.set(ResourceType.CURRENCY_SOFT, Math.ceil(Math.random() * (type % 10) * 10 ));
-
-		// random xp
-		ret.set(ResourceType.XP, Math.ceil(Math.random() * (type % 10) ) * 2);
-
-		// random keys
-		if( hasKeysReward )
-			ret.set(ResourceType.KEY, 10 + Math.floor(Math.random() * 10) );
-			
-		/*
-		if( 54 > type && type > 50 )
-			ret.set(ResourceType.NUM_BATTLE_CHEST, 1);
-		*/
-		
-		return ret;
-	}
-	function get_chestOutcomes(type:Int) : IntIntMap
 	{
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
@@ -319,6 +223,10 @@ class Exchanger
 			addRandomSlot(ret, numCards);
 			numSlots --;
 		}
+		
+		// hards
+		if ( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD )
+			ret.set( ResourceType.CURRENCY_HARD, type-56 );
 		
 		// softs
 		var softDec = ExchangeType.getNumSofts(type) / 10;
@@ -400,29 +308,40 @@ class Exchanger
 		return ExchangeType.CHESTS_51_CHROME;
 	}
 	
-	public static function getOfferChestType(category:Int) : Int
+	public static function getChestType(category:Int) : Int
 	{
+		if ( category == ExchangeType.CHEST_CATE_101_FREE )
+			return ExchangeType.CHESTS_57_CHROME;
+		if ( category == ExchangeType.CHEST_CATE_102_FREE )
+			return ExchangeType.CHESTS_58_SILVER;
+		if ( category == ExchangeType.CHEST_CATE_103_FREE )
+			return ExchangeType.CHESTS_59_GOLD;
+
 		if ( category == ExchangeType.CHEST_CATE_121_OFFER )
-			return ExchangeType.CHESTS_54_MASTER;
+			return ExchangeType.CHESTS_54_CHROME;
 		if ( category == ExchangeType.CHEST_CATE_122_OFFER )
-			return ExchangeType.CHESTS_55_WONDER;
-		return ExchangeType.CHESTS_56_MAGICAL;
+			return ExchangeType.CHESTS_55_SILVER;
+		if ( category == ExchangeType.CHEST_CATE_123_OFFER )
+			return ExchangeType.CHESTS_56_GOLD;
+		
+		return ExchangeType.CHEST_CATE_101_FREE ;
 	}
 	
-	public static function getBattleChestType(numChests:Int) : Int
+	private static function getBattleChestType(numChests:Int) : Int
 	{
 		if( numChests == 0 )
 			return ExchangeType.CHESTS_51_CHROME;
-
-		if( numChests % 71 == 0 )
-			return ExchangeType.CHESTS_56_MAGICAL;
-		if( numChests % 47 == 0 )
-			return ExchangeType.CHESTS_55_WONDER;
-		if( numChests % 19 == 0 )
-			return ExchangeType.CHESTS_54_MASTER;
+		if( numChests % 3 == 0 )
+			return ExchangeType.CHESTS_52_SILVER;
 		if( numChests % 7 == 0 || numChests == 1 )
 			return ExchangeType.CHESTS_53_GOLD;
-		return ExchangeType.CHESTS_52_SILVER;
+		if( numChests % 19 == 0 )
+			return ExchangeType.CHESTS_54_CHROME;
+		if( numChests % 47 == 0 )
+			return ExchangeType.CHESTS_55_SILVER;
+		if( numChests % 71 == 0 )
+			return ExchangeType.CHESTS_56_GOLD;
+			
+		return ExchangeType.CHESTS_51_CHROME;
 	}
-	
 }
