@@ -26,8 +26,8 @@ class Place
 	
 	private var troopId:Int;
 	public var game:Game;
-	public var levelCoef:Int = 0;
-	public var healthCoef:Float = 1;
+	public var levelOffset:Int = 0;
+	public var powerCoef:Float = 1;
 
 	public function new(game:Game, index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{

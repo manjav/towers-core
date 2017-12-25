@@ -40,23 +40,17 @@ class Lobby
 	{
 		if (!creatable())
 		{				
-			#if java
-			game.tracer.log("Lobby is not creatable!");
-			#end
+			trace("Lobby is not creatable!");
 			return false;
 		}
 		
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_createRequirements();
 		ei.outcomes = get_createOutcome();
-		#if java
-		game.tracer.log("resourses then: " + game.player.resources.get(ResourceType.CURRENCY_HARD));
-		#end
+		trace("resourses then: " + game.player.resources.get(ResourceType.CURRENCY_HARD));
 		game.exchanger.exchange(ei, 0, 0);
-		#if java
-		game.tracer.log("resourses now: " +  game.player.resources.get(ResourceType.CURRENCY_HARD));
-		game.tracer.log("Lobby Created!");
-		#end
+		trace("resourses now: " +  game.player.resources.get(ResourceType.CURRENCY_HARD));
+		trace("Lobby Created!");
 		return true;
 	}
 }
