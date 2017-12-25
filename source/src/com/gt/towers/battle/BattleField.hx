@@ -88,8 +88,10 @@ class BattleField
 				place.powerCoef = 0.5;
 			else if ( map.isQuest && map.index < 3 )
 				place.powerCoef = 2.1;
-			
-			place.building =new Building(place.game, place, placeData.index, CardTypes.migrate(placeData.type));
+			else
+				place.powerCoef = 1
+				
+			place.building = new Building(place.game, place, placeData.index, CardTypes.migrate(placeData.type));
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
 			
