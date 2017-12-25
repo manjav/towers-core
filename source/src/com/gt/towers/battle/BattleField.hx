@@ -82,6 +82,8 @@ class BattleField
 				place.healthCoef = 0.5;
 			else if ( map.isQuest && map.index < 3 )
 				place.healthCoef = 2.1;
+			else
+				place.healthCoef = 1;
 				
 			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
