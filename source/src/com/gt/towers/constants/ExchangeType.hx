@@ -189,23 +189,23 @@ class ExchangeType
 	public static function getNumSofts(type:Int):Int
 	{
 		if( type == CHESTS_51_CHROME )
-			return getNumTotalCards(type) * 6;
+			return getNumTotalCards(type) * 3;
 		else if( type == CHESTS_52_SILVER )
-			return getNumTotalCards(type) * 7;
+			return getNumTotalCards(type) * 3;
 		else if( type == CHESTS_53_GOLD )
-			return getNumTotalCards(type) * 8;
+			return getNumTotalCards(type) * 4;
 		else if( type == CHESTS_54_CHROME )
-			return getNumTotalCards(type) * 9;
+			return getNumTotalCards(type) * 4;
 		else if( type == CHESTS_55_SILVER )
-			return getNumTotalCards(type) * 10;
+			return getNumTotalCards(type) * 5;
 		else if ( type == CHESTS_56_GOLD )
-			return getNumTotalCards(type) * 11;
+			return getNumTotalCards(type) * 6;
 		else if (type == CHESTS_57_CHROME)
 			return getNumTotalCards(type) * 3;
 		else if (type == CHESTS_58_SILVER)
-			return getNumTotalCards(type) * 4;
+			return getNumTotalCards(type) * 3;
 		else if (type == CHESTS_59_GOLD)
-			return getNumTotalCards(type) * 5;
+			return getNumTotalCards(type) * 4;
 		else
 			return 0;
 	}
