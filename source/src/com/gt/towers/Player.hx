@@ -22,6 +22,7 @@ import com.gt.towers.utils.maps.IntExchangeMap;
 class Player
 {
 	public var id:Int;
+	public var invitationCode:String;
 	public var nickName:String = "no_nickName";
 	public var troopType:Int = -1;
 	public var resources:IntIntMap;
