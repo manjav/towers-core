@@ -57,16 +57,16 @@ class Game
 		arenas = new IntArenaMap();
 		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
-		arenas.set(0, new Arena(0, 0,		30,		-4,				"101, 201, 301, 401, 102, 202, 302, 402" ));
-		arenas.set(1, new Arena(1, 31,		100,	-3,				"103, 203, 303, 403" ));
-		arenas.set(2, new Arena(2, 101,		180,	-2,				"104, 204, 304, 404" ));
-		arenas.set(3, new Arena(3, 181,		300,	-1,				"105, 205, 305, 405" ));
-		arenas.set(4, new Arena(4, 301,		500,	 0,				"106, 206, 306, 501" ));
-		arenas.set(5, new Arena(5, 501,		900,	 1,				"107, 207, 406, 502" ));
-		arenas.set(6, new Arena(6, 901,		1500,	 2,				"307, 407, 503" ));
-		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"108, 208, 109" ));
-		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"308, 408, 504" ));
-		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"209, 309, 409" ));
+		arenas.set(0, new Arena(0, 0,		30,		-4,				"201, 301, 401, 501, 202, 302, 402, 502" ));
+		arenas.set(1, new Arena(1, 31,		100,	-3,				"203, 303, 403, 503" ));
+		arenas.set(2, new Arena(2, 101,		180,	-2,				"204, 304, 404, 504" ));
+		arenas.set(3, new Arena(3, 181,		300,	-1,				"205, 305, 405, 505" ));
+		arenas.set(4, new Arena(4, 301,		500,	 0,				"206, 306, 406, 506" ));
+		arenas.set(5, new Arena(5, 501,		900,	 1,				"207, 307, 407" ));
+		arenas.set(6, new Arena(6, 901,		1500,	 2,				"208, 308, 507" ));
+		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"209, 408, 508" ));
+		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"309, 409" ));
+		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"509" ));
 		
 		fieldProvider = new FieldProvider(this);
 
