@@ -141,7 +141,7 @@ class Building extends AbstractBuilding
 		else
 		{
 			type = CardTypes.C001;
-			reset(troopType);
+			//reset(troopType);
 		}
 		return ret;
 	}
