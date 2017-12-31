@@ -230,5 +230,9 @@ class Player
 			return true;
 		return false;
 	}
+	public function colorIndex(troopType:Int):Int
+	{
+		return troopType ==-1 ? -1 : (this.troopType == troopType ? 0 : 1);
+	}
 	#end
 }
