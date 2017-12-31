@@ -11,9 +11,10 @@ class SegmentType
 	public function new() {}
 	
 	public static var S0_SHOP:Int = 0;
-	public static var S1_MAP:Int = 1;
-	public static var S2_DECK:Int = 2;
+	public static var S1_DECK:Int = 1;
+	public static var S2_MAIN:Int = 2;
 	public static var S3_SOCIALS:Int = 3;
+	public static var S4_EVENTS:Int = 4;
 	
 	public static var S10_LOBBY_MAIN:Int = 10;
 	public static var S11_LOBBY_SEARCH:Int = 11;
@@ -24,9 +25,10 @@ class SegmentType
 	{
 		var ret:IntList = new IntList();
 		ret.push( S0_SHOP );
-		ret.push( S1_MAP );
-		ret.push( S2_DECK );
+		ret.push( S1_DECK );
+		ret.push( S2_MAIN );
 		ret.push( S3_SOCIALS );
+		ret.push( S4_EVENTS );
 		return ret;
 	}
 	
@@ -38,5 +40,4 @@ class SegmentType
 		ret.push( S13_FRIENDS );
 		return ret;
 	}
-
 }

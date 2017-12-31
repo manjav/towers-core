@@ -157,8 +157,8 @@ class Exchanger
 				hards += requirements.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += requirements.get(reqKeys[i]);
-			else if( ResourceType.isCard(reqKeys[i])) 
-				softs += game.player.buildings.get(reqKeys[i]).price() * requirements.get(reqKeys[i]);
+			//else if( ResourceType.isCard(reqKeys[i])) 
+			//	softs += game.player.buildings.get(reqKeys[i]).price() * requirements.get(reqKeys[i]);
 
 			i ++;
 		}

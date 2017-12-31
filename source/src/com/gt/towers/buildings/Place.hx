@@ -1,7 +1,9 @@
 package com.gt.towers.buildings;
 import com.gt.towers.Game;
+import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
@@ -20,21 +22,26 @@ class Place
 	public var x:Float;
 	public var y:Float;
 	public var enabled:Bool;
+	public var health:Float;
 	public var owner:Place;
 	public var links:PlaceList;
 	public var building:Building;
+	public var fightable:Bool;
 	
 	private var troopId:Int;
 	public var game:Game;
 	public var levelOffset:Int = 0;
 	public var powerCoef:Float = 1;
+	public var battlefield:BattleField;
 
-	public function new(game:Game, index:Int, x:Float, y:Float, botEnabled:Bool) 
+	public function new(game:Game, battlefield:BattleField, index:Int, x:Float, y:Float, health:Float, botEnabled:Bool) 
 	{
 		this.game = game;
+		this.battlefield = battlefield;
 		this.index = index;
 		this.x = x;
 		this.y = y;
+		this.health = health;
 		this.enabled = botEnabled;
 		this.troopId = index * 10000;
 	#if java
@@ -47,11 +54,11 @@ class Place
 	{
 		var path:PlaceList = PathFinder.find(this, destination, all);
 
-		if(path == null || destination.building == building)
+		if( path == null || destination.building == building )
 			return;
 		
 		var i:Int = 0;
-		var len:Int = Math.floor(building.get_population() / 2);
+		var len:Int = building.get_population() + 1;
 		while( i < len )
 		{
 			var tid = getIncreasedId();
@@ -60,12 +67,15 @@ class Place
 			GTimer.setTimeout(rush, building.troopRushGap * i + 1, [troop]);
 			i ++;
 		}			
+		fightable = false;
 	}
 	
 	public function rush(troop:Troop):Void
 	{
-		if (building.popTroop())
-			troop.rush(this);
+		if ( !building.popTroop() ) 
+			return;
+		
+		troop.rush(this);
 	}
 
 	public function hit(troopId:Int, damage:Float) : Void

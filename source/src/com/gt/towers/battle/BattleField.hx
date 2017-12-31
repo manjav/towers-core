@@ -20,14 +20,18 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class BattleField
 {
+	public static var POPULATION_MAX:Int = 20;
+	public static var POPULATION_INIT:Int = 10;
+	
 	private var questProvider:FieldProvider;
+	
+	public var populationBar:IntList;
 	public var deckBuildings:PlaceList;
 	public var places:PlaceList;
 	public var map:FieldData;
 	public var difficulty:Int;
 	public var arena:Int;
 	public var extraTime:Int = 0;
-	
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
@@ -67,7 +71,7 @@ class BattleField
 			{
 				var winStreak = game_0.player.resources.exists(ResourceType.WIN_STREAK) ? game_0.player.resources.get(ResourceType.WIN_STREAK) : 0;
 				arena = game_0.player.get_arena(0);
-				if ( winStreak > 2 )
+				if( winStreak > 2 )
 					difficulty = arena + winStreak - 2;
 				else if ( winStreak < -2 )
 					difficulty = arena + winStreak + 2;
@@ -79,12 +83,12 @@ class BattleField
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
-			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
+			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, this, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), 10, placeData.enabled);
 			place.levelOffset = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 2 : 0;
-			if ( place.levelOffset < 0 )
+			if( place.levelOffset < 0 )
 				place.levelOffset = 0;
 				
-			if ( game_0.player.hardMode )
+			if( game_0.player.hardMode )
 				place.powerCoef = 0.5;
 			else if ( map.isQuest && map.index < 3 )
 				place.powerCoef = 2.1;
@@ -92,7 +96,7 @@ class BattleField
 				place.powerCoef = 1;
 				
 			place.building = new Building(place.game, place, placeData.index, CardTypes.migrate(placeData.type));
-			place.building.createEngine(placeData.troopType);
+			place.building.reset(placeData.troopType);
 			places.push(place);
 			
 			p ++;
@@ -120,6 +124,10 @@ class BattleField
 			addRandomDeck(game_0);
 		else
 			addPlayerDeck(game_0, 1);
+			
+		populationBar = new IntList();
+		populationBar.push(POPULATION_INIT);
+		populationBar.push(POPULATION_INIT);
 	}
 	
 	function addPlayerDeck(game:Game, troopType:Int) : Void
@@ -128,9 +136,9 @@ class BattleField
 		var i = 0;
 		while ( i < game.player.get_current_deck().size() )
 		{
-			var p = new Place(game, i + startIndex, 0, 0, true);
+			var p = new Place(game, this, i + startIndex, 0, 0, 10, true);
 			p.building = new Building(game, p, i + startIndex, game.player.get_current_deck().get(i));
-			p.building.createEngine(troopType, 0);
+			p.building.reset(troopType);
 			deckBuildings.push(p);
 			i ++;
 		}
@@ -138,16 +146,16 @@ class BattleField
 	
 	function addRandomDeck(game:Game) : Void
 	{
-		var availableCards = game.player.availabledCards();// random arena
+		var availableCards = game.player.availabledCards(); // random arena
 		var i = 0;
 		while ( i < 4 )
 		{
 			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
-			if ( randType > (i*100 + 100) && randType < (i*100 + 200) )
+			if( randType > (i*100 + 100) && randType < (i*100 + 200) )
 			{
-				var p = new Place(game, i+4, 0, 0, true);
+				var p = new Place(game, this, i+4, 0, 0, 10, true);
 				p.building = new Building(game, p, i+4, randType);
-				p.building.createEngine(1, 0);
+				p.building.reset(1);
 				deckBuildings.push(p);
 				i ++;
 			}

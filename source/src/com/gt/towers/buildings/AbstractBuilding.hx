@@ -16,7 +16,7 @@ class AbstractBuilding
 {
 	public var type:Int;
 	public var category:Int;
-	public var improveLevel:Int;
+	//public var improveLevel:Int;
 	
 	public var game:Game;
 
@@ -28,7 +28,7 @@ class AbstractBuilding
 		this.type = type;
 		this._level = level;
 		this.category = CardTypes.get_category(type);
-		this.improveLevel = 1;
+		//this.improveLevel = 1;
 	}
 	
 	public function get_level():Int
@@ -103,7 +103,7 @@ class AbstractBuilding
 		var playerWinStreak = game.player.get_winStreak();
 		
 		// XP rewards
-		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
+		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(1 * 1) ) * 30 ) + 4);
 		
 		// reduce winStreak to make AI difficulty easier
 		if ( playerWinStreak - 9 <= minWinStreak )
@@ -117,7 +117,7 @@ class AbstractBuilding
 	
 	public function upgradable(confirmedHards:Int=0):Bool 
 	{
-		return confirmedHards >= game.exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
+		return game.player.has(get_upgradeRequirements());
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
@@ -160,15 +160,4 @@ class AbstractBuilding
 			
 		return game.player.resources.exists(type);
 	}
-
-	
-	public function price(count:Int = 1):Int
-	{
-		return   Math.round( (improveLevel * 10) + 10 ); 
-	}
-	public function toGem(count:Int = 1):Int
-	{
-		return game.exchanger.softToHard( price(count) );
-	}
-
 }

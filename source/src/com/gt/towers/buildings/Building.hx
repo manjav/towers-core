@@ -20,6 +20,7 @@ class Building extends AbstractBuilding
 	public var rarity:Int = 0;
 	public var capacity:Int = 10;
 	public var birthRate:Float = 0.15;
+	public var healRate:Float = 0.15;
 	
 	public var troopHealth:Float = 1;
 	public var troopPower:Float = 1;
@@ -31,12 +32,15 @@ class Building extends AbstractBuilding
 	public var damageRangeMin:Float = 50;
 	public var damageRangeMax:Float = 180;
 	
+	var _health:Float = 10;
 	var _population:Float = 0;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
 		this.game = game;
 		this.place = place;
+		if( place != null )
+			this._health = place.health;
 		this.index = index;
 		
 		if ( level == 0 )
@@ -56,7 +60,7 @@ class Building extends AbstractBuilding
 		category = CardTypes.get_category(type);
 		rarity = CardTypes.get_rarity(type);
 		
-		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, improveLevel);
+		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, 1);
 		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type, get_level());
 		
 		// troops data
@@ -76,25 +80,25 @@ class Building extends AbstractBuilding
 	{
 		return Math.floor(_population);
 	}
+	public function get_health():Int
+	{
+		return Math.floor(_health);
+	}
 
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	
-	public function createEngine(troopType:Int, initialPopulation:Int = -1):Void
+	public function reset(troopType:Int):Void
 	{
 		this.troopType = troopType;
-		
 		#if java
-		if (initialPopulation == -1)
-			initialPopulation = capacity;
-		
-		_population = initialPopulation;
+		_health = place.health * 0.5;
 		#end
 	}
 
 	
 #if java
-	public function calculatePopulation():Void
+	/*public function calculatePopulation():Void
 	{
 		if ( place==null || !place.enabled )
 			return;
@@ -118,21 +122,43 @@ class Building extends AbstractBuilding
 		}
 		//trace(place.index + " t:" + type + " br: " + br + " p:" + _population);
 	}
+	*/
+	
+	public function heal():Void
+	{
+		if ( place==null || !place.enabled )
+			return;
+		_health = Math.min(_health + healRate, place.health);
+	}
 	
 	public function popTroop():Bool
 	{
-		var ret = (_population - 1 > 0);
-		if( ret )
+		var ret = get_population() >= 1;
+		if ( ret )
+		{
 			_population --;
+		}
+		else
+		{
+			type = CardTypes.C001;
+			reset(troopType);
+		}
 		return ret;
 	}
 	public function pushTroops(troop:Troop) : Bool
 	{
 		var ret = troopType == troop.type; // if ret true troop is mine
-		_population += (ret ? 1 : -troop.power);
-		if ( _population < 0 )
+		if( ret )
+			_population = Math.min(capacity, _population + 1 );
+		else
+			_health -= troop.power;
+		
+		//if( get_population() > 0 && type == CardTypes.C001 )
+		//	type = troop.building.type;
+		
+		if( _health <= 0 )
 			occupy(troop);
-		else if ( _population == 0 && !place.enabled ) 
+		else if ( _health == 0 && !place.enabled ) 
 			occupy(troop);
 		return ret;
 	}
@@ -140,13 +166,12 @@ class Building extends AbstractBuilding
 	function occupy(troop:Troop) 
 	{
 		type = CardTypes.C001;
-		troopType = troop.type;
+		reset(troop.type);
 		place.game = game = troop.building.game;
 		place.enabled = true; 
 		place.levelOffset = troop.building.place.levelOffset;
 		place.powerCoef = troop.building.place.powerCoef;
 		setFeatures(); 
-		_population = place.powerCoef > 1 ? Math.min(capacity, place.powerCoef) : 0;
 	}
 	
 	public function transform(card:Building) : Bool
@@ -155,21 +180,23 @@ class Building extends AbstractBuilding
 			return false;
 		
 		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
-		if ( this.type == card.type )
+		/*if ( this.type == card.type )
 			improveLevel ++;
 		else
-			improveLevel = 1;
+			improveLevel = 1;*/
 		this.type = card.type;
-		_population /= 2;
+		//reset(card.troopType);
 		setFeatures();
-		place.enabled = true;
+		_population = capacity;
+		place.fightable = place.enabled = true;
+		place.battlefield.populationBar.set(troopType, place.battlefield.populationBar.get(troopType) - card.capacity );
 		return true;
 	}
 #end
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( this.troopType != card.troopType || _population < capacity || improveLevel > 3)
+		if ( troopType != card.troopType || place.battlefield.populationBar.get(troopType) < card.capacity )
 			return false;
 		return true;
 	}
