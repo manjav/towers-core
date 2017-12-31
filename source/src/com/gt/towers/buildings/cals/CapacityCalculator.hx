@@ -13,6 +13,16 @@ class CapacityCalculator
 		if ( type < 101 )
 			return 7;
 			
+		if ( CardTypes.get_category( type ) == CardTypes.C300 )
+			if ( type < 304)
+				return BASE_VALUE - 3;
+			else if ( type < 307 )
+				return BASE_VALUE - 5;
+			else if ( type < 309 )
+				return BASE_VALUE - 6;
+			else if ( type == 309 )
+				return BASE_VALUE - 7
+			
 		return BASE_VALUE + ( level - 1 ) * 2;// + Math.floor(level / 3);
 	}
 	
