@@ -12,7 +12,7 @@ class TroopSpeedCalculator
 	public function get(type:Int, level:Int):Float 
 	{
 		if( CardTypes.get_category( type ) == CardTypes.C200 )// rapids
-			return BASE_VALUE - 2000 - Math.log(level) * 100 - Math.log(type-200) * 100;
+			return BASE_VALUE - 2000 - Math.log(level) * 100 - Math.log(type-200) * 200;
 			
 		if ( type % 100 == 1 )
 			return BASE_VALUE;
