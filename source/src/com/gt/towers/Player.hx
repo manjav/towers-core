@@ -110,7 +110,7 @@ class Player
 	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
 	public function inTutorial():Bool { return (nickName == "guest" || get_questIndex() < 3 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
 	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function isHardMode():Bool { return !buildings.exists(CardTypes.C101) || buildings.get(CardTypes.C101).get_level() <= 1 ; }
+	public function isHardMode():Bool { return !buildings.exists(CardTypes.INITIAL) || buildings.get(CardTypes.INITIAL).get_level() <= 1 ; }
 	
 	public function get_level():Int
 	{

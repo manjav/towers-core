@@ -241,7 +241,7 @@ class Exchanger
 	{
 		if ( game.player.inTutorial() )
 		{
-			ret.set( CardTypes.C101, 2 );
+			ret.set( CardTypes.INITIAL, 2 );
 			return;
 		}
 		

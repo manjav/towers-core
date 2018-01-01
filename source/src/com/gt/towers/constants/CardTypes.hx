@@ -7,13 +7,15 @@ import com.gt.towers.utils.lists.IntList;
  */
 class CardTypes 
 {
+    public static var INITIAL:Int = 401;
+	
     public static var IMPROVE:Int = -2;
     public static var NONE:Int = -1;
 	
 	public static var C000:Int = 0;
 	public static var C001:Int = 1;
 	
-	public static var C100:Int = 100;
+	/*public static var C100:Int = 100;
 	public static var C101:Int = 101;
 	public static var C102:Int = 102;
 	public static var C103:Int = 103;
@@ -23,7 +25,7 @@ class CardTypes
 	public static var C107:Int = 107;
 	public static var C108:Int = 108;
 	public static var C109:Int = 109;
-	
+	*/
 	public static var C200:Int = 200;
 	public static var C201:Int = 201;
 	public static var C202:Int = 202;
@@ -70,8 +72,8 @@ class CardTypes
 		return switch(type)
 		{
 			// rare
-			case 101: 1;
-			case 102 : 1;
+			case 301: 1;
+			case 302 : 1;
 			
 			// uncommon
 			case 201: 2;
@@ -86,11 +88,11 @@ class CardTypes
 	{
 		return switch( oldType )
 		{
-			case 10 : 100;
-			case 11 : 101;
-			case 12 : 102;
-			case 13 : 103;
-			case 14 : 104;
+			case 10 : 400;
+			case 11 : 401;
+			case 12 : 402;
+			case 13 : 403;
+			case 14 : 404;
 			case 20 : 200;
 			case 21 : 201;
 			case 22 : 202;
@@ -131,13 +133,6 @@ class CardTypes
 	public static function getAll():IntList
 	{
 		var ret:IntList = new IntList();
-		
-		ret.push(101);
-		ret.push(102);
-		ret.push(103);
-		ret.push(104);
-		ret.push(105);
-		ret.push(106);
 
 		ret.push(201);
 		ret.push(202);
@@ -145,6 +140,9 @@ class CardTypes
 		ret.push(204);
 		ret.push(205);
 		ret.push(206);
+		ret.push(207);
+		ret.push(208);
+		ret.push(209);
 
 		ret.push(301);
 		ret.push(302);
@@ -152,6 +150,9 @@ class CardTypes
 		ret.push(304);
 		ret.push(305);
 		ret.push(306);
+		ret.push(307);
+		ret.push(308);
+		ret.push(309);
 
 		ret.push(401);
 		ret.push(402);
@@ -159,11 +160,19 @@ class CardTypes
 		ret.push(404);
 		ret.push(405);
 		ret.push(406);
+		ret.push(407);
+		ret.push(408);
+		ret.push(409);
 
 		ret.push(501);
 		ret.push(502);
 		ret.push(503);
 		ret.push(504);
+		ret.push(505);
+		ret.push(506);
+		ret.push(507);
+		ret.push(508);
+		ret.push(509);
 
 		return ret;
 	}
