@@ -27,6 +27,7 @@ class Place
 	public var links:PlaceList;
 	public var building:Building;
 	public var fightable:Bool;
+	public var mode:Int;
 	
 	private var troopId:Int;
 	public var game:Game;
@@ -34,7 +35,7 @@ class Place
 	public var powerCoef:Float = 1;
 	public var battlefield:BattleField;
 
-	public function new(game:Game, battlefield:BattleField, index:Int, x:Float, y:Float, health:Float, botEnabled:Bool) 
+	public function new(game:Game, battlefield:BattleField, index:Int, x:Float, y:Float, health:Float, botEnabled:Bool, mode:Int) 
 	{
 		this.game = game;
 		this.battlefield = battlefield;
@@ -43,6 +44,7 @@ class Place
 		this.y = y;
 		this.health = health;
 		this.enabled = botEnabled;
+		this.mode = mode;
 		this.troopId = index * 10000;
 	#if java
 		this.troops = new java.util.HashMap<Int, Troop>();

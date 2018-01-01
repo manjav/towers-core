@@ -83,7 +83,7 @@ class BattleField
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
-			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, this, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), 10, placeData.enabled);
+			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, this, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.health, placeData.enabled, placeData.mode);
 			place.levelOffset = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 2 : 0;
 			if( place.levelOffset < 0 )
 				place.levelOffset = 0;
@@ -136,7 +136,7 @@ class BattleField
 		var i = 0;
 		while ( i < game.player.get_current_deck().size() )
 		{
-			var p = new Place(game, this, i + startIndex, 0, 0, 10, true);
+			var p = new Place(game, this, i + startIndex, 0, 0, 10, true, 0);
 			p.building = new Building(game, p, i + startIndex, game.player.get_current_deck().get(i));
 			p.building.reset(troopType);
 			deckBuildings.push(p);
@@ -153,7 +153,7 @@ class BattleField
 			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
 			if( randType > (i*100 + 100) && randType < (i*100 + 200) )
 			{
-				var p = new Place(game, this, i+4, 0, 0, 10, true);
+				var p = new Place(game, this, i+4, 0, 0, 10, true, 0);
 				p.building = new Building(game, p, i+4, randType);
 				p.building.reset(1);
 				deckBuildings.push(p);

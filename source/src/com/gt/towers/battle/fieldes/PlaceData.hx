@@ -15,9 +15,10 @@ class PlaceData
 	public var links:IntList;
 	public var enabled:Bool;
 	public var tutorIndex:Int;
-	public var impLevel:Int;
+	public var mode:Int;
+	public var health:Int;
 	
-	public function new(index:Int, x:Float, y:Float, type:Int, troopType:Int, links:String, enabled:Bool = true, tutorIndex:Int = -3, impLevel:Int = 1) 
+	public function new(index:Int, x:Float, y:Float, type:Int, troopType:Int, links:String, enabled:Bool = true, tutorIndex:Int = -3, mode:Int = 0, health:Int = 10) 
 	{
 		this.index = index;
 		this.x = x;
@@ -26,7 +27,8 @@ class PlaceData
 		this.troopType = troopType;
 		this.enabled = enabled;
 		this.tutorIndex = tutorIndex;
-		this.impLevel = impLevel;
+		this.mode = mode;
+		this.health = health;
 		
 		var ls = links.split(',');
 		this.links = new IntList();
