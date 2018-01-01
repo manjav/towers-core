@@ -1,4 +1,5 @@
 package com.gt.towers.buildings.cals;
+import com.gt.towers.constants.CardTypes;
 
 /**
  * ...
@@ -21,7 +22,7 @@ class CapacityCalculator
 			else if ( type < 309 )
 				return BASE_VALUE - 6;
 			else if ( type == 309 )
-				return BASE_VALUE - 7
+				return BASE_VALUE - 7;
 			
 		return BASE_VALUE + ( level - 1 ) * 2;// + Math.floor(level / 3);
 	}
