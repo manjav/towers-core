@@ -92,7 +92,7 @@ class Building extends AbstractBuilding
 	{
 		this.troopType = troopType;
 		#if java
-		_health = place.health * 0.5;
+		_health = place.health * 1;
 		#end
 	}
 
@@ -128,7 +128,7 @@ class Building extends AbstractBuilding
 	{
 		if ( place==null || !place.enabled )
 			return;
-		_health = Math.min(_health + healRate, place.health);
+	//	_health = Math.min(_health + healRate, place.health);
 	}
 	
 	public function popTroop():Bool
@@ -148,8 +148,13 @@ class Building extends AbstractBuilding
 	public function pushTroops(troop:Troop) : Bool
 	{
 		var ret = troopType == troop.type; // if ret true troop is mine
-		if( ret )
-			_population = Math.min(capacity, _population + 1 );
+		if ( ret )
+		{
+			if ( _health >= place.health )
+				_population = Math.min(_population + 0.5, capacity);
+			else
+				_health += Math.min(_health + 0.5, place.health);
+		}
 		else
 		{
 			if ( _population > 0 )
@@ -201,7 +206,7 @@ class Building extends AbstractBuilding
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( troopType != card.troopType || place.battlefield.populationBar.get(troopType) < card.capacity )
+		if ( troopType != card.troopType || place.battlefield.populationBar.get(troopType) < card.capacity || get_health() < place.health )
 			return false;
 		return true;
 	}
