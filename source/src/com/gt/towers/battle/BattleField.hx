@@ -125,7 +125,7 @@ class BattleField
 		if( singleMode )		
 			addRandomDeck(game_0);
 		else
-			addPlayerDeck(game_0, 1);
+			addPlayerDeck(game_1, 1);
 			
 		populationBar = new IntList();
 		populationBar.push(POPULATION_INIT);
