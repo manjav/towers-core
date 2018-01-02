@@ -37,6 +37,7 @@ class BattleField
 	{
 		var isQuest = mapName.substr(0, 6) == "quest_";
 		var singleMode = game_1 == null;
+		trace(mapName);
 		if( isQuest )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
@@ -45,6 +46,7 @@ class BattleField
 		if( hasExtraTime )
 			extraTime = map.times.get(3);
 			
+		trace("extraTime", extraTime);
 		
 		places = new PlaceList();
 		var p = 0;
@@ -147,8 +149,8 @@ class BattleField
 	function addRandomDeck(game:Game) : Void
 	{
 		var availableCards = game.player.availabledCards(); // random arena
-		var i = 0;
-		while ( i < 4 )
+		var i = 1;
+		while ( i < 5 )
 		{
 			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
 			if( randType > (i*100 + 100) && randType < (i*100 + 200) )
