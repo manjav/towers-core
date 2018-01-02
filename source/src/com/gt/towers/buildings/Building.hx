@@ -151,7 +151,12 @@ class Building extends AbstractBuilding
 		if( ret )
 			_population = Math.min(capacity, _population + 1 );
 		else
-			_health -= troop.power;
+		{
+			if ( _population > 0 )
+				_population = Math.max(_population - troop.power, 0);
+			else
+				_health -= troop.power;
+		}
 		
 		//if( get_population() > 0 && type == CardTypes.C001 )
 		//	type = troop.building.type;
