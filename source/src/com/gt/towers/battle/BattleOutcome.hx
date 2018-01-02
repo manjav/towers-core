@@ -23,7 +23,7 @@ class BattleOutcome
 	public static var MAX_CARDS:Int = 2;
 
 	
-	public static function get_outcomes(game:Game, field:FieldData, score:Int):IntIntMap
+	public static function get_outcomes(game:Game, field:FieldData, earnedScore:Int, earnedKeys:Int):IntIntMap
 	{
 		var ret:IntIntMap = new IntIntMap();
 		if ( game.player.inFriendlyBattle )
@@ -34,7 +34,7 @@ class BattleOutcome
 		
 		if ( field.isQuest )
 		{
-			var diffScore = score - game.player.quests.get(field.index);
+			var diffScore = earnedScore - game.player.quests.get(field.index);
 			var newRecord = diffScore > 0;
 			
 			if ( game.player.inTutorial() )
@@ -43,19 +43,19 @@ class BattleOutcome
 			if ( newRecord )
 			{
 				// xp
-				ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (score > 0 ? score : -3) / 3 ), Int ) );
+				ret.set(ResourceType.XP, cast( Math.max(0, MAX_XP * (earnedScore > 0 ? earnedScore : -3) / 3 ), Int ) );
 				
 				// keys
 				ret.set(ResourceType.KEY, diffScore);
 	
-				// moneis
+				// softs
 				ret.set(ResourceType.CURRENCY_SOFT, 10 * diffScore);
 			}
 		}
 		else
 		{
-			// moneis
-			ret.set(ResourceType.CURRENCY_SOFT, 5 * cast(Math.max(0, score), Int));
+			// softs
+			ret.set(ResourceType.CURRENCY_SOFT, 5 * cast(Math.max(0, earnedKeys), Int));
 			
 			// battle stats 
 			ret.set(ResourceType.BATTLES_COUNT, 1);
@@ -63,13 +63,13 @@ class BattleOutcome
 			
 			var winStreak:Int = game.player.resources.get(ResourceType.WIN_STREAK);
 			var arena = game.player.get_arena(0);
-			if ( score > 0 )
+			if ( earnedScore > 0 )
 			{
 				ret.set(ResourceType.BATTLES_WINS, 1);
 				if ( arena > 0 )
 					ret.set(ResourceType.WIN_STREAK, 1);
 			}
-			else if ( score < 0 )
+			else if ( earnedScore < 0 )
 			{
 				if ( arena > 0 && winStreak >= game.arenas.get(arena).minWinStreak)
 					ret.set(ResourceType.WIN_STREAK, Math.random() > 0.5 ? -1 : -2);
@@ -79,17 +79,17 @@ class BattleOutcome
 			var keyItem = game.exchanger.items.get(ExchangeType.S_41_KEYS);
 			if ( keyItem.numExchanges < game.loginData.maxKeysPerDay )
 			{
-				var numKeys = cast( Math.min( game.loginData.maxKeysPerDay-keyItem.numExchanges, Math.max(0, score) ), Int );
+				var numKeys = cast( Math.min( game.loginData.maxKeysPerDay-keyItem.numExchanges, Math.max(0, earnedKeys) ), Int );
 				ret.set(ResourceType.KEY, numKeys);
 				keyItem.numExchanges += numKeys;
 			}
 		
 			// points
 			var point = 0;
-			if ( score > 0 )
-				point = MIN_POINTS + score * COE_POINTS + Math.round(Math.random() * 4 - 2);
-			else if ( score < 0 )
-				point = -MIN_POINTS + score * COE_POINTS + Math.round(Math.random() * 4 - 2);
+			if ( earnedScore > 0 )
+				point = MIN_POINTS + earnedScore * COE_POINTS + Math.round(Math.random() * 4 - 2);
+			else if ( earnedScore < 0 )
+				point = -MIN_POINTS + earnedScore * COE_POINTS + Math.round(Math.random() * 4 - 2);
 				
 			if ( point < 0 && game.player.resources.get(ResourceType.POINT) < -point)
 				point = 0;
