@@ -69,19 +69,9 @@ class CardTypes
 	
 	public static function get_rarity(type:Int):Int
 	{
-		return switch(type)
-		{
-			// rare
-			case 301: 1;
-			case 302 : 1;
-			
-			// uncommon
-			case 201: 2;
-			case 203: 2; 
-				
-			default: 0; // common
-		}
-		return 0;
+		if 		( (type % 10) > 8 ) 	return 2;// rare
+		else if ( (type % 10) > 6 ) 	return 1;// uncommon
+		else							return 0;// common
 	}
 	
 	public static function migrate( oldType:Int ) : Int
