@@ -160,4 +160,8 @@ class AbstractBuilding
 			
 		return game.player.resources.exists(type);
 	}
+	
+	public function dispose():Void
+	{
+	}
 }

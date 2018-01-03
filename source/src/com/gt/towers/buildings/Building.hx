@@ -37,6 +37,7 @@ class Building extends AbstractBuilding
 	
 	var _health:Float = 10;
 	var _population:Float = 0;
+	var transfromTimeoutId:Int;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
@@ -197,23 +198,24 @@ class Building extends AbstractBuilding
 			return false;
 		
 		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
-		/*if ( this.type == card.type )
-			improveLevel ++;
-		else
-			improveLevel = 1;*/
-		this.type = card.type;
+		place.enabled = place.fightable = false;
+		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.elixirSize );
+		transfromTimeoutId = GTimer.setTimeout(activeFighters, Math.floor(card.deployTime * 1000), [card]);
+		return true;
+	}
+	private function activeFighters(card:Building):Void
+	{
+		place.enabled = place.fightable = true;
 		//reset(card.troopType);
+		this.type = card.type;
 		setFeatures();
 		_population = capacity;
-		place.fightable = place.enabled = true;
-		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.elixirSize );
-		return true;
 	}
 #end
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.capacity || get_health() < place.health )
+		if ( troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.elixirSize || get_health() < place.health )
 			return false;
 		return true;
 	}
@@ -249,5 +251,10 @@ class Building extends AbstractBuilding
 		return 12;
 	}*/
 #end
+	override public function dispose():Void
+	{
+		super.dispose();
+		GTimer.clearTimeout(transfromTimeoutId);
+	}
 	
 }
