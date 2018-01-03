@@ -1,5 +1,6 @@
 package com.gt.towers.buildings.cals;
 import com.gt.towers.constants.CardTypes;
+import com.gt.towers.utils.maps.IntIntMap;
 
 /**
  * ...
@@ -11,50 +12,49 @@ class ElixirSizeCalculator
 	public function new () {}
 	public function get(type:Int):Float 
 	{
-		switch( type )
+		return switch( type )
 		{
-			case 201:
-			case 207:
-			case 508:
-				return 2;
-			case 204:
-			case 401:
-			case 409:
-				return 3;
-			case 202:
-			case 206:
-			case 208:
-			case 302:
-			case 304:
-			case 305:
-			case 404:
-			case 406:
-				return 4;
-			case 203:
-			case 209:
-			case 301:
-			case 306:
-			case 307:
-			case 403:
-			case 407:
-			case 503:
-			case 507:
-				return 5;
-			case 205:
-			case 308:
-			case 309:
-				return 6;
-			case 303:
-			case 402:
-			case 405:
-			case 504:
-			case 505:
-				return 7;
-			case 408:
-			case 506:
-				return 8;
-			default:
-				return 4;
+			case 201 : 2;
+			case 207 : 2;
+			case 508 : 2;
+			
+			case 204 : 3;
+			case 401 : 3;
+			case 409 : 3;
+			
+			case 202 : 4;
+			case 206 : 4;
+			case 208 : 4;
+			case 302 : 4;
+			case 304 : 4;
+			case 305 : 4;
+			case 404 : 4;
+			case 406 : 4;
+			
+			case 203 : 5;
+			case 209 : 5;
+			case 301 : 5;
+			case 306 : 5;
+			case 307 : 5;
+			case 403 : 5;
+			case 407 : 5;
+			case 503 : 5;
+			case 507 : 5;
+			
+			case 205 : 6;
+			case 308 : 6;
+			case 309 : 6;
+			
+			case 303 : 7;
+			case 402 : 7;
+			case 405 : 7;
+			case 504 : 7;
+			case 505 : 7;
+			
+			case 408 : 8;
+			case 506 : 8;
+			
+			default : 4;
 		}
 		/*
 		if ( CardTypes.get_category( type ) == CardTypes.C200 )
