@@ -124,11 +124,13 @@ class Building extends AbstractBuilding
 	}
 	*/
 	
-	public function heal():Void
+	public function interval():Void
 	{
-		if ( place==null || !place.enabled )
-			return;
+	//	if ( place==null || !place.enabled )
+	//		return;
 	//	_health = Math.min(_health + healRate, place.health);
+		if( troopType > -1 )
+		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + Math.floor((place.mode + 1) * 0.1) );
 	}
 	
 	public function popTroop():Bool
@@ -199,14 +201,14 @@ class Building extends AbstractBuilding
 		setFeatures();
 		_population = capacity;
 		place.fightable = place.enabled = true;
-		place.battlefield.populationBar.set(troopType, place.battlefield.populationBar.get(troopType) - card.capacity );
+		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.capacity );
 		return true;
 	}
 #end
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( troopType != card.troopType || place.battlefield.populationBar.get(troopType) < card.capacity || get_health() < place.health )
+		if ( troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.capacity || get_health() < place.health )
 			return false;
 		return true;
 	}

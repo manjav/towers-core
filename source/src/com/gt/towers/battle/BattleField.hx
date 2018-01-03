@@ -25,7 +25,7 @@ class BattleField
 	
 	private var questProvider:FieldProvider;
 	
-	public var populationBar:IntList;
+	public var elixirBar:IntList;
 	public var deckBuildings:PlaceList;
 	public var places:PlaceList;
 	public var map:FieldData;
@@ -127,9 +127,9 @@ class BattleField
 		else
 			addPlayerDeck(game_1, 1);
 			
-		populationBar = new IntList();
-		populationBar.push(POPULATION_INIT);
-		populationBar.push(POPULATION_INIT);
+		elixirBar = new IntList();
+		elixirBar.push(POPULATION_INIT);
+		elixirBar.push(POPULATION_INIT);
 	}
 	
 	function addPlayerDeck(game:Game, troopType:Int) : Void
