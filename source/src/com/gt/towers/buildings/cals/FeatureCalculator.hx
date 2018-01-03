@@ -78,6 +78,8 @@ class FeatureCalculator
 		{
 			case 1 : capacity.BASE_VALUE;
 			case 2 : birthRate.BASE_VALUE;
+			case 3 : elixirSize.BASE_VALUE;
+			case 4 : deployTime.BASE_VALUE;
 			
 			case 11: troopSpeed.BASE_VALUE;
 			case 12: troopPower.BASE_VALUE;

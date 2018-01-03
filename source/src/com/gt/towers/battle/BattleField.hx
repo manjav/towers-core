@@ -9,6 +9,7 @@ import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.DeckList;
+import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.lists.PlaceList;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -20,12 +21,12 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class BattleField
 {
-	public static var POPULATION_MAX:Int = 20;
-	public static var POPULATION_INIT:Int = 10;
+	public static var POPULATION_MAX:Int = 10;
+	public static var POPULATION_INIT:Int = 5;
 	
 	private var questProvider:FieldProvider;
 	
-	public var elixirBar:IntList;
+	public var elixirBar:FloatList;
 	public var deckBuildings:PlaceList;
 	public var places:PlaceList;
 	public var map:FieldData;
@@ -127,7 +128,7 @@ class BattleField
 		else
 			addPlayerDeck(game_1, 1);
 			
-		elixirBar = new IntList();
+		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
 		elixirBar.push(POPULATION_INIT);
 	}
