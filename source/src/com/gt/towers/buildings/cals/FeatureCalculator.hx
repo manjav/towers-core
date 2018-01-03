@@ -1,4 +1,6 @@
 package com.gt.towers.buildings.cals;
+import com.gt.towers.buildings.cals.DeployTimeCalculator;
+import com.gt.towers.buildings.cals.ElixirSizeCalculator;
 import com.gt.towers.constants.BuildingFeatureType;
 
 /**
@@ -11,6 +13,8 @@ class FeatureCalculator
 	
 	public var capacity:CapacityCalculator;
 	public var birthRate:BrithRateCalculator;
+	public var elixirSize:ElixirSizeCalculator;
+	public var deployTime:DeployTimeCalculator;
 	
 	public var troopSpeed:TroopSpeedCalculator;
 	public var troopPower:TroopPowerCalculator;
@@ -26,6 +30,8 @@ class FeatureCalculator
 	{
 		capacity = new CapacityCalculator();
 		birthRate = new BrithRateCalculator();
+		elixirSize = new ElixirSizeCalculator();
+		deployTime = new DeployTimeCalculator();
 		
 		troopSpeed = new TroopSpeedCalculator();
 		troopPower = new TroopPowerCalculator();
@@ -44,6 +50,8 @@ class FeatureCalculator
 		{
 			case 1 : capacity.get(buildingType, level);
 			case 2 : birthRate.get(buildingType, level) * TIME_SCALE;
+			case 3 : elixirSize.get(buildingType);
+			case 4 : deployTime.get(buildingType, level) * TIME_SCALE;
 			
 			case 11: troopSpeed.get(buildingType, level) / TIME_SCALE;
 			case 12: troopPower.get(buildingType, level);

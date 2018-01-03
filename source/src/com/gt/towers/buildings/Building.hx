@@ -32,6 +32,9 @@ class Building extends AbstractBuilding
 	public var damageRangeMin:Float = 50;
 	public var damageRangeMax:Float = 180;
 	
+	public var elixirSize:Int = 5;
+	public var deployTime:Float = 0.5;
+	
 	var _health:Float = 10;
 	var _population:Float = 0;
 	
@@ -62,6 +65,8 @@ class Building extends AbstractBuilding
 		
 		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, 1);
 		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type, get_level());
+		elixirSize = game.featureCaculator.getInt(BuildingFeatureType.F03_ELIXIR_SIZE, type, get_level());
+		deployTime = game.featureCaculator.get(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
 		
 		// troops data
 		troopSpeed = game.featureCaculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level());
@@ -130,7 +135,7 @@ class Building extends AbstractBuilding
 	//		return;
 	//	_health = Math.min(_health + healRate, place.health);
 		if( troopType > -1 )
-		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + Math.floor((place.mode + 1) * 0.1) );
+			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + Math.floor((place.mode + 1) * 0.1) );
 	}
 	
 	public function popTroop():Bool
@@ -201,7 +206,7 @@ class Building extends AbstractBuilding
 		setFeatures();
 		_population = capacity;
 		place.fightable = place.enabled = true;
-		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.capacity );
+		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.elixirSize );
 		return true;
 	}
 #end

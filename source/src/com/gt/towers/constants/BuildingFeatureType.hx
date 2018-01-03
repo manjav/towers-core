@@ -14,6 +14,8 @@ class BuildingFeatureType
 	
 	public static var F01_CAPACITY:Int = 1;
 	public static var F02_BIRTH_RATE = 2;
+	public static var F03_ELIXIR_SIZE = 3;
+	public static var F04_DEPLOY_TIME = 4;
 	
 	public static var F11_TROOP_SPEED:Int = 11;
 	public static var F12_TROOP_POWER:Int = 12;
