@@ -37,7 +37,7 @@ class Building extends AbstractBuilding
 	
 	var _health:Float = 10;
 	var _population:Float = 0;
-	var transfromTimeoutId:Int;
+	var transfromTimeoutId:Int = -1;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
@@ -136,7 +136,7 @@ class Building extends AbstractBuilding
 	//		return;
 	//	_health = Math.min(_health + healRate, place.health);
 		if( troopType > -1 )
-			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + Math.floor((place.mode + 1) * 0.1) );
+			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + ((place.mode + 1) * 0.025) );
 	}
 	
 	public function popTroop():Bool
@@ -215,7 +215,7 @@ class Building extends AbstractBuilding
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.elixirSize || get_health() < place.health )
+		if ( !place.enabled || troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.elixirSize || get_health() < place.health )
 			return false;
 		return true;
 	}
@@ -254,7 +254,9 @@ class Building extends AbstractBuilding
 	override public function dispose():Void
 	{
 		super.dispose();
+#if java
 		GTimer.clearTimeout(transfromTimeoutId);
+#end
 	}
 	
 }
