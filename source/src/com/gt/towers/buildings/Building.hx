@@ -183,6 +183,7 @@ class Building extends AbstractBuilding
 	
 	function occupy(troop:Troop) 
 	{
+		GTimer.clearTimeout(transfromTimeoutId);
 		type = CardTypes.C001;
 		reset(troop.type);
 		place.game = game = troop.building.game;
