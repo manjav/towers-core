@@ -19,7 +19,6 @@ class ElixirSizeCalculator
 			case 508 : 2;
 			
 			case 204 : 3;
-			case 401 : 3;
 			case 409 : 3;
 			
 			case 202 : 4;
@@ -36,6 +35,7 @@ class ElixirSizeCalculator
 			case 301 : 5;
 			case 306 : 5;
 			case 307 : 5;
+			case 401 : 5;
 			case 403 : 5;
 			case 407 : 5;
 			case 503 : 5;
