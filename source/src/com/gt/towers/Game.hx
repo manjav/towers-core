@@ -65,8 +65,8 @@ class Game
 		arenas.set(5, new Arena(5, 501,		900,	 1,				"207, 307, 407" ));
 		arenas.set(6, new Arena(6, 901,		1500,	 2,				"208, 308, 507" ));
 		arenas.set(7, new Arena(7, 1501,	2500,	 3,				"209, 408, 508" ));
-		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"309, 409" ));
-		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"509" ));
+		arenas.set(8, new Arena(8, 2501,	4000,	 4, 			"309, 509" ));
+		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"409" ));
 		
 		fieldProvider = new FieldProvider(this);
 
