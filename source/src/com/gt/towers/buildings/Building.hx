@@ -216,7 +216,7 @@ class Building extends AbstractBuilding
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( !place.enabled || troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.elixirSize || get_health() < place.health )
+		if ( !place.enabled || troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.elixirSize || (get_health() < place.health && place.mode < 2 ) )
 			return false;
 		return true;
 	}
