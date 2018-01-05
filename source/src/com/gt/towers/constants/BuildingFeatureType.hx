@@ -57,7 +57,7 @@ class BuildingFeatureType
 	public static function getRelatedTo(buildingType:Int):IntList
 	{
 		var ret = new IntList();
-		//ret.push( F01_CAPACITY);
+		ret.push( F01_CAPACITY);
 		ret.push( F02_BIRTH_RATE );
 		ret.push( F11_TROOP_SPEED );
 		ret.push( F12_TROOP_POWER );
