@@ -138,11 +138,11 @@ class Building extends AbstractBuilding
 		if( troopType > -1 )
 			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + ((place.mode + 1) * 0.025) );
 			
-		if ( _population > capacity )
+		if ( _population > place.health )
 		{
-			var br = Math.ceil((_population - capacity) * 0.2 );
-			if( _population - br < capacity )
-				_population = capacity;
+			var br = Math.ceil((_population - place.health) * 0.2 );
+			if( _population - br < place.health )
+				_population = place.health;
 			else
 				_population -= br;
 		}
