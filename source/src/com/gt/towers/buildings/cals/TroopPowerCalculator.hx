@@ -27,17 +27,14 @@ class TroopPowerCalculator
 		case 307 : BASE_VALUE + 0.6 + Math.log(level) * 0.25;
 		
 		case 201 : BASE_VALUE + 0.4 + Math.log(level) * 0.25;// 4
-		case 201 : BASE_VALUE + 0.4 + Math.log(level) * 0.25;
 		
 		case 205 : BASE_VALUE + 0.2 + Math.log(level) * 0.25;// 3
 		case 206 : BASE_VALUE + 0.2 + Math.log(level) * 0.30;
 		case 208 : BASE_VALUE + 0.2 + Math.log(level) * 0.30;
 		case 209 : BASE_VALUE + 0.2 + Math.log(level) * 0.25;
-		case 301 : BASE_VALUE + 0.2 + Math.log(level) * 0.25;
 		case 302 : BASE_VALUE + 0.2 + Math.log(level) * 0.30;
 		case 305 : BASE_VALUE + 0.2 + Math.log(level) * 0.30;
 		
-		case 201 : BASE_VALUE + 0.1 + Math.log(level) * 0.25;// 2
 		case 204 : BASE_VALUE + 0.1 + Math.log(level) * 0.25;
 		case 207 : BASE_VALUE + 0.1 + Math.log(level) * 0.35;
 		case 406 : BASE_VALUE + 0.1 + Math.log(level) * 0.25;
