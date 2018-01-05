@@ -137,6 +137,15 @@ class Building extends AbstractBuilding
 	//	_health = Math.min(_health + healRate, place.health);
 		if( troopType > -1 )
 			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + ((place.mode + 1) * 0.025) );
+			
+		if ( _population > capacity )
+		{
+			var br = Math.ceil((_population - capacity) * 0.2 );
+			if( _population - br < capacity )
+				_population = capacity;
+			else
+				_population -= br;
+		}
 	}
 	
 	public function popTroop():Bool
@@ -159,7 +168,7 @@ class Building extends AbstractBuilding
 		if ( ret )
 		{
 			if ( _health >= place.health )
-				_population = Math.min(_population + 0.5, capacity);
+				_population += 1;
 			else
 				_health += Math.min(_health + 0.5, place.health);
 		}
