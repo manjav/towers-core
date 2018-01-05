@@ -11,53 +11,50 @@ class TroopHealthCalculator
 	public function new () {}
 	public function get(type:Int, level:Int):Float 
 	{	
-		return switch( type )
+		var factor:Float = switch( type )
 		{
-		case 401 : BASE_VALUE + 0.3 + Math.log(level) * 0.25;// 5
-		case 408 : BASE_VALUE + 0.3 + Math.log(level) * 0.35;
-		
-		case 402 : BASE_VALUE + 0.2 + Math.log(level) * 0.25;// 4
-		case 403 : BASE_VALUE + 0.2 + Math.log(level) * 0.30;
-		case 404 : BASE_VALUE + 0.2 + Math.log(level) * 0.30;
-		case 405 : BASE_VALUE + 0.2 + Math.log(level) * 0.35;
-		case 406 : BASE_VALUE + 0.2 + Math.log(level) * 0.25;
-		case 407 : BASE_VALUE + 0.2 + Math.log(level) * 0.30;
-		case 409 : BASE_VALUE + 0.2 + Math.log(level) * 0.25;
-		
-		case 204 : BASE_VALUE + 0.0 + Math.log(level) * 0.25;// 3
-		case 207 : BASE_VALUE + 0.0 + Math.log(level) * 0.35;
-		case 209 : BASE_VALUE + 0.0 + Math.log(level) * 0.25;
-		case 302 : BASE_VALUE + 0.0 + Math.log(level) * 0.30;
-		case 303 : BASE_VALUE + 0.0 + Math.log(level) * 0.25;
-		case 304 : BASE_VALUE + 0.0 + Math.log(level) * 0.35;
-		case 309 : BASE_VALUE + 0.0 + Math.log(level) * 0.25;
-		
-		case 201 : BASE_VALUE - 0.2 + Math.log(level) * 0.25;// 2
-		case 203 : BASE_VALUE - 0.2 + Math.log(level) * 0.30;
-		case 205 : BASE_VALUE - 0.2 + Math.log(level) * 0.25;
-		case 206 : BASE_VALUE - 0.2 + Math.log(level) * 0.30;
-		case 208 : BASE_VALUE - 0.2 + Math.log(level) * 0.30;
-		case 301 : BASE_VALUE - 0.2 + Math.log(level) * 0.25;
-		case 305 : BASE_VALUE - 0.2 + Math.log(level) * 0.30;
-		case 306 : BASE_VALUE - 0.2 + Math.log(level) * 0.25;
-		case 307 : BASE_VALUE - 0.2 + Math.log(level) * 0.25;
-		case 308 : BASE_VALUE - 0.2 + Math.log(level) * 0.35;
-		
-		case 202 : BASE_VALUE - 0.4 + Math.log(level) * 0.25;// 1
-		
-		default : BASE_VALUE;
-		}
-		/*
-		if( CardTypes.get_category( type ) == CardTypes.C400 )
-			return BASE_VALUE + 0.1 + Math.log(level) * 0.25;
-			
-		if ( type % 100 == 1 )
-			return BASE_VALUE;
-		
-		if ( CardTypes.get_category( type ) == CardTypes.C200 )// rapids
-			return BASE_VALUE - Math.log(type-200 + 1) * 0.5;
+			case	201	:	0.9	;
+			case	202	:	1.1	;
+			case	203	:	0.65;
+			case	204	:	0.5	;
+			case	205	:	1.4	;
+			case	206	:	1.3	;
+			case	207	:	0.75;
+			case	208	:	1.3	;
+			case	209	:	0.9	;
 
-		return BASE_VALUE + Math.log(level) * 0.10;	
-		*/
+			case	301	:	1.3	;
+			case	302	:	1.1	;
+			case	303	:	1.2	;
+			case	304	:	1	;
+			case	305	:	2	;
+			case	306	:	1.1	;
+			case	307	:	0.9	;
+			case	308	:	1.5	;
+			case	309	:	1.2	;
+
+			case	401	:	2	;
+			case	402	:	2.1	;
+			case	403	:	1.7	;
+			case	404	:	1.5	;
+			case	405	:	1.1	;
+			case	406	:	3.1	;
+			case	407	:	2.5	;
+			case	408	:	3.1	;
+			case	409	:	3.4	;
+
+			case	501	:	1	;
+			case	502	:	1	;
+			case	503	:	1	;
+			case	504	:	1	;
+			case	505	:	1	;
+			case	506	:	1	;
+			case	507	:	1	;
+			case	508	:	1	;
+			case	509	:	1	;
+		
+			default : BASE_VALUE;
+		}
+		return BASE_VALUE * factor + Math.log(level) * 0.25;
 	}
 }
