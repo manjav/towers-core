@@ -14,7 +14,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "3000.0101173951";//do not change len.
+	public var coreVersion:String = "3000.0106180904";//do not change len.
 	public var noticeVersion:Int = 3000;
 	public var forceVersion:Int = 3000;
 	public var resources:IntIntMap;
@@ -36,20 +36,10 @@ class LoginData
 		resources.set(ResourceType.CURRENCY_SOFT, 100);
 		resources.set(ResourceType.CURRENCY_HARD, 30);
 		
-		//resources.set(CardTypes.C101, 1);
 		resources.set(CardTypes.C201, 1);
 		resources.set(CardTypes.C301, 1);
 		resources.set(CardTypes.C401, 1);
 		resources.set(CardTypes.C501, 1);
-		
-		/*resources.set(BuildingType.B11_BARRACKS, 1);
-		resources.set(BuildingType.B12_BARRACKS, 1);
-		resources.set(BuildingType.B21_RAPID, 1);
-		resources.set(BuildingType.B31_HEAVY, 1);
-		resources.set(BuildingType.B13_BARRACKS, 1);
-		resources.set(BuildingType.B14_BARRACKS, 1);
-		resources.set(BuildingType.B22_RAPID, 1);
-		resources.set(BuildingType.B32_HEAVY, 1);	*/	
 		
 		exchanges = new IntList();
 		exchanges.push(ExchangeType.S_41_KEYS);
