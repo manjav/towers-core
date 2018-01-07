@@ -13,7 +13,7 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Building extends AbstractBuilding
 {
-	public static var TIME_SCALE:Float = 0.80;
+	public static var TIME_SCALE:Float = 0.90;
 	
 	public var place:Place;
 	public var index:Int;
@@ -73,12 +73,12 @@ class Building extends AbstractBuilding
 
 		//return 10 + (5 * improveLevel);
 	}
-	public static var BASE_EXIT_GAP:Int = 400;
+	public static var BASE_EXIT_GAP:Int = 350;
 	public function get_exitGap():Int 
 	{
 		return Math.round(BASE_EXIT_GAP * (1/TIME_SCALE));
 	}
-	public static var BASE_TROOP_SPEED:Int = 2500;
+	public static var BASE_TROOP_SPEED:Int = 2300;
 	public function get_troopSpeed():Int
 	{
 		return Math.round(BASE_TROOP_SPEED *  (1/TIME_SCALE));
