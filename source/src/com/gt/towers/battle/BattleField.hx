@@ -47,7 +47,7 @@ class BattleField
 			if ( isQuest )
 			{
 				game_0.player.hardMode = false;
-				if ( map.index == 2 )
+				if( map.index == 2 )
 				{
 					game_0.player.hardMode = game_0.player.isHardMode();
 					difficulty = game_0.player.hardMode ? 14 : 0;
@@ -61,7 +61,7 @@ class BattleField
 			{
 				var winStreak = game_0.player.resources.exists(ResourceType.WIN_STREAK) ? game_0.player.resources.get(ResourceType.WIN_STREAK) : 0;
 				arena = game_0.player.get_arena(0);
-				if ( winStreak > 2 )
+				if( winStreak > 2 )
 					difficulty = arena + winStreak - 2;
 				else if ( winStreak < -2 )
 					difficulty = arena + winStreak + 2;
@@ -74,11 +74,11 @@ class BattleField
 		{
 			placeData = map.places.get( p );
 			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
-			place.levelCoef = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 2 : 0;
-			if ( place.levelCoef < 0 )
+			place.levelCoef = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 1 : 0;
+			if( place.levelCoef < 0 )
 				place.levelCoef = 0;
 				
-			if ( game_0.player.hardMode )
+			if( game_0.player.hardMode )
 				place.healthCoef = 0.5;
 			else if ( map.isQuest && map.index < 3 )
 				place.healthCoef = 2.1;
@@ -99,7 +99,7 @@ class BattleField
 			placeData = map.places.get( p );
 			places.get(p).links = new PlaceList();
 			l = 0;
-			while (l < placeData.links.size())
+			while ( l < placeData.links.size() )
 			{
 				places.get(p).links.push( places.get( placeData.links.get( l ) ) );
 				l ++;

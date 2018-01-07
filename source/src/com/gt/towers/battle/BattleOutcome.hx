@@ -73,7 +73,7 @@ class BattleOutcome
 			else if ( score < 0 )
 			{
 				if ( arena > 0 && winStreak >= game.arenas.get(arena).minWinStreak)
-					ret.set(ResourceType.WIN_STREAK, Math.random() > 0.5 ? -1 : -2);
+					ret.set(ResourceType.WIN_STREAK, Math.random() > 0.5 ? -2 : -3);
 			}
 			
 			// keys
