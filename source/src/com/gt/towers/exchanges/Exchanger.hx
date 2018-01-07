@@ -225,7 +225,7 @@ class Exchanger
 		}
 		
 		// hards
-		if ( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD )
+		if ( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD && Math.random() > 0.2 )
 			ret.set( ResourceType.CURRENCY_HARD, type-56 );
 		
 		// softs

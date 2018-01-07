@@ -96,9 +96,9 @@ class ExchangeType
 		else if (type == CHESTS_56_GOLD)
 			return 86400;			// 36 hour
 		else if (type == CHESTS_57_CHROME)
-			return 14400;			// 4 hour
+			return 9000;			// 2.5 hour
 		else if (type == CHESTS_58_SILVER)
-			return 43200;			// 12 hour
+			return 28800;			// 8 hour
 		else if (type == CHESTS_59_GOLD)
 			return 86400;			// 24 hour
 		else
