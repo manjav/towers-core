@@ -219,10 +219,13 @@ class Exchanger
 		{
 			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
-			if ( numChest == 0 || numChest == 4 || numChest % ((arena + 1) * 5) == 0 )
+
+			var canNew = numSlots == 1 && (numChest == 0 || numChest == 4 || (numChest % (arena * 3) == 0 && type < ExchangeType.CHESTS_57_CHROME) );
+            if (canNew) 
 				addNewCard(ret, 1);
 			else
 				addRandomSlot(ret, numCards);
+			
 			numSlots --;
 		}
 		

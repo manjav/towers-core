@@ -213,6 +213,7 @@ class Player
 		resources.increaseMap ( bundle );
 	}
 
+	
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{
