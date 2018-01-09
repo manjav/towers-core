@@ -214,11 +214,13 @@ class Exchanger
 		var numChest:Int = game.player.get_openedChests();
 		var numCards:Int = 0;
 		var accCards:Int = 0;
+		var arena = game.player.get_arena(0) + 1;
 		while ( numSlots > 0 )
 		{
 			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
-			if ( numChest % 11 == 0 || numChest == 4 )
+			//trace(numChest, arena, numChest % (arena * 5));
+            if ( numChest == 0 || numChest == 4 || (numChest % (arena * 3) == 0 && type < ExchangeType.CHESTS_57_CHROME) )
 				addNewCard(ret, 1);
 			addRandomSlot(ret, numCards);
 			numSlots --;
