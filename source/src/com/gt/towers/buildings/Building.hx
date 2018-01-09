@@ -49,7 +49,7 @@ class Building extends AbstractBuilding
 		
 		if ( level == 0 )
 		{
-			if (getAbstract(type) != null)
+			if( getAbstract(type) != null )
 				level = getAbstract(type).get_level() ;
 			else
 				level = 1;
@@ -64,10 +64,10 @@ class Building extends AbstractBuilding
 		category = CardTypes.get_category(type);
 		rarity = CardTypes.get_rarity(type);
 		
-		capacity = game.featureCaculator.getInt(BuildingFeatureType.F01_CAPACITY, type, 1);
-		birthRate = game.featureCaculator.get(BuildingFeatureType.F02_BIRTH_RATE, type, get_level());
-		elixirSize = game.featureCaculator.getInt(BuildingFeatureType.F03_ELIXIR_SIZE, type, get_level());
+		elixirSize = game.featureCaculator.getInt(BuildingFeatureType.F02_ELIXIR_SIZE, type, 1);
+		capacity = game.featureCaculator.getInt(BuildingFeatureType.F03_TROOPS_COUNT, type, 1);
 		deployTime = game.featureCaculator.get(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
+		birthRate = game.featureCaculator.get(BuildingFeatureType.F05_BIRTH_RATE, type, get_level());
 		
 		// troops data
 		troopSpeed = game.featureCaculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level());

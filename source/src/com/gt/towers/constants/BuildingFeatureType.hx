@@ -12,10 +12,11 @@ class BuildingFeatureType
 
 	public function new() {}
 	
-	public static var F01_CAPACITY:Int = 1;
-	public static var F02_BIRTH_RATE = 2;
-	public static var F03_ELIXIR_SIZE = 3;
+	public static var F01_UNLOCKED_AT:Int = 1;
+	public static var F02_ELIXIR_SIZE = 2;
+	public static var F03_TROOPS_COUNT = 3;
 	public static var F04_DEPLOY_TIME = 4;
+	public static var F05_BIRTH_RATE = 5;
 	
 	public static var F11_TROOP_SPEED:Int = 11;
 	public static var F12_TROOP_POWER:Int = 12;
@@ -36,8 +37,7 @@ class BuildingFeatureType
 		{
 			_all = new IntList();
 		
-			_all.push( F01_CAPACITY );
-			_all.push( F02_BIRTH_RATE );
+			_all.push( F03_TROOPS_COUNT );
 			
 			_all.push( F11_TROOP_SPEED );
 			_all.push( F12_TROOP_POWER );
@@ -57,8 +57,8 @@ class BuildingFeatureType
 	public static function getRelatedTo(buildingType:Int):IntList
 	{
 		var ret = new IntList();
-		ret.push( F01_CAPACITY);
-		ret.push( F02_BIRTH_RATE );
+		ret.push( F01_UNLOCKED_AT);
+		ret.push( F03_TROOPS_COUNT );
 		ret.push( F11_TROOP_SPEED );
 		ret.push( F12_TROOP_POWER );
 		ret.push( F13_TROOP_HEALTH );

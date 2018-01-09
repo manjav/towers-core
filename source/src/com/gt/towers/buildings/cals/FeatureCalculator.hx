@@ -11,10 +11,10 @@ class FeatureCalculator
 {
 	public var TIME_SCALE:Float = 1;
 	
-	public var capacity:CapacityCalculator;
-	public var birthRate:BrithRateCalculator;
 	public var elixirSize:ElixirSizeCalculator;
+	public var capacity:CapacityCalculator;
 	public var deployTime:DeployTimeCalculator;
+	public var birthRate:BrithRateCalculator;
 	
 	public var troopSpeed:TroopSpeedCalculator;
 	public var troopPower:TroopPowerCalculator;
@@ -28,10 +28,10 @@ class FeatureCalculator
 
 	public function new()
 	{
-		capacity = new CapacityCalculator();
-		birthRate = new BrithRateCalculator();
 		elixirSize = new ElixirSizeCalculator();
+		capacity = new CapacityCalculator();
 		deployTime = new DeployTimeCalculator();
+		birthRate = new BrithRateCalculator();
 		
 		troopSpeed = new TroopSpeedCalculator();
 		troopPower = new TroopPowerCalculator();
@@ -48,10 +48,10 @@ class FeatureCalculator
 	{
 		return switch( featureType )
 		{
-			case 1 : capacity.get(buildingType, level);
-			case 2 : birthRate.get(buildingType, level) * TIME_SCALE;
-			case 3 : elixirSize.get(buildingType);
+			case 2 : elixirSize.get(buildingType);
+			case 3 : capacity.get(buildingType);
 			case 4 : deployTime.get(buildingType, level) * TIME_SCALE;
+			case 5 : birthRate.get(buildingType, level) * TIME_SCALE;
 			
 			case 11: troopSpeed.get(buildingType, level) / TIME_SCALE;
 			case 12: troopPower.get(buildingType, level);
@@ -76,10 +76,10 @@ class FeatureCalculator
 	{
 		return switch( featureType )
 		{
-			case 1 : capacity.BASE_VALUE;
-			case 2 : birthRate.BASE_VALUE;
-			case 3 : elixirSize.BASE_VALUE;
+			case 2 : elixirSize.BASE_VALUE;
+			case 3 : capacity.BASE_VALUE;
 			case 4 : deployTime.BASE_VALUE;
+			case 5 : birthRate.BASE_VALUE;
 			
 			case 11: troopSpeed.BASE_VALUE;
 			case 12: troopPower.BASE_VALUE;

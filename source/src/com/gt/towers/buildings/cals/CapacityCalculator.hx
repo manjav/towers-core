@@ -9,7 +9,7 @@ class CapacityCalculator
 {
 	public var BASE_VALUE:Float = 4;
 	public function new () {}
-	public function get(type:Int, level:Int):Float 
+	public function get(type:Int):Float 
 	{
 		return switch( type )
 		{
@@ -56,5 +56,4 @@ class CapacityCalculator
 			default : 4;
 		}
 	}
-	
 }
