@@ -123,7 +123,7 @@ class AbstractBuilding
 	{
 		if ( _level == -1 )
 		{
-			level = 1;
+			_level = 1;
 			return true;
 		}
 		if ( !upgradable(confirmedHards) )
