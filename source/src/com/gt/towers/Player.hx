@@ -27,7 +27,6 @@ class Player
 	public var troopType:Int = -1;
 	public var resources:IntIntMap;
 	public var quests:IntIntMap;
-	public var newBuildings:IntIntMap;
 	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
 	public var hardMode:Bool;
@@ -49,7 +48,6 @@ class Player
 
 		// add resources and buildings
 		resources = new IntIntMap();
-		newBuildings = new IntIntMap();
 		buildings = new IntBuildingMap();
 		addResources(initData.resources);
 		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
@@ -203,16 +201,16 @@ class Player
 	
 	public function addResources(bundle:IntIntMap) : Void
 	{
-		resources.increaseMap ( bundle );
 		var bundleKeys = bundle.keys();
 		var i = 0;
 		while ( i < bundleKeys.length )
 		{
 			
 			if ( ResourceType.isCard(bundleKeys[i]) && !buildings.exists(bundleKeys[i]) )
-				buildings.set(bundleKeys[i], new Building( game, null, 0, bundleKeys[i], 1 ) );
+				buildings.set(bundleKeys[i], new Building( game, null, 0, bundleKeys[i], -1 ) );
 			i ++;
 		}
+		resources.increaseMap ( bundle );
 	}
 
 	#if flash

@@ -117,13 +117,21 @@ class AbstractBuilding
 	
 	public function upgradable(confirmedHards:Int=0):Bool 
 	{
+		if ( _level == -1 )
+			return true;
 		return game.player.has(get_upgradeRequirements());
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
 		if ( !upgradable(confirmedHards) )
 			return false;
-			
+		
+		if ( _level == -1 )
+		{
+			_level = 1;
+			return true;
+		}
+		
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_upgradeRequirements();
 		ei.outcomes = get_upgradeRewards();
