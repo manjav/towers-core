@@ -219,7 +219,7 @@ class Exchanger
 		{
 			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
-			if ( numChest == 0 || numChest == 4 || numChest % arena*5 == 0 )
+			if ( numChest == 0 || numChest == 4 || numChest % ((arena + 1) * 5) == 0 )
 				addNewCard(ret, 1);
 			else
 				addRandomSlot(ret, numCards);
