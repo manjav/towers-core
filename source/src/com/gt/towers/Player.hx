@@ -166,7 +166,6 @@ class Player
 	
 	public function addResources(bundle:IntIntMap) : Void
 	{
-		resources.increaseMap ( bundle );
 		var bundleKeys = bundle.keys();
 		var i = 0;
 		while ( i < bundleKeys.length )
@@ -175,6 +174,7 @@ class Player
 				game.player.buildings.set(bundleKeys[i], BuildingType.instantiate( game, bundleKeys[i], null, 0, -1 ) );
 			i ++;
 		}
+		resources.increaseMap ( bundle );
 	}
 	
 	public function getRandomBuilding():Int
