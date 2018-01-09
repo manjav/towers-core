@@ -117,10 +117,15 @@ class AbstractBuilding
 	
 	public function upgradable(confirmedHards:Int=0):Bool 
 	{
-		return confirmedHards >= game.exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
+		return _level == -1 || confirmedHards >= game.exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
+		if ( _level == -1 )
+		{
+			level = 1;
+			return true;
+		}
 		if ( !upgradable(confirmedHards) )
 			return false;
 			
