@@ -119,7 +119,7 @@ class AIEnemy
 					{
 						var building = botPlaces.get(p).links.get(m).building;
 						var distance = battleField.difficulty < 4 ? 1 : Math.sqrt(Math.pow(botPlaces.get(p).x - botPlaces.get(p).links.get(m).x, 2) + Math.pow(botPlaces.get(p).y - botPlaces.get(p).links.get(m).y, 2)) / 20;
-						var power = building.get_population() * (building.damage / building.game.featureCaculator.getBaseline(BuildingFeatureType.F21_DAMAGE)) * (building.birthRate / building.game.featureCaculator.getBaseline(BuildingFeatureType.F03_TROOPS_COUNT)) + distance ;
+						var power = building.get_population() * (building.damage / building.game.featureCaculator.getBaseline(BuildingFeatureType.F21_DAMAGE)) * (building.troopPower / building.game.featureCaculator.getBaseline(BuildingFeatureType.F03_TROOPS_COUNT)) + distance ;
 						power *= building.troopType == -1 ? 1.1 : 1;
 						//building.game.tracer.log(botPlaces.get(p).index + " ->> " + botPlaces.get(p).links.get(m).index + " damage:"+(building.get_damage() / Building.BASE_DAMAGE) + " birthRate:"+(building.get_birthRate() / Building.BASE_BIRTH_RATE) + " distance:" + distance + " population:"+building.get_population() + " power:"+power);
 						if( power <= minPlayerPopulation )
