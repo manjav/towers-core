@@ -11,28 +11,15 @@ class Arena
 	public var index:Int;
 	public var min:Int;
 	public var max:Int;
-	public var cardsStr:String;
-	public var cards:IntList;
 	public var minWinStreak:Int;
+	public var cards:IntList;
 
-	public function new(index:Int, min:Int, max:Int, minWinStreak:Int, cards:String)
+	public function new(index:Int, min:Int, max:Int, minWinStreak:Int, cards:IntList)
 	{
 		this.index = index;
 		this.min = min;
 		this.max = max;
-		this.cardsStr  = cards;
 		this.minWinStreak = minWinStreak;
-		this.cards = new IntList();
-		if ( cardsStr == "" )
-			return;
-			
-		var t = 0;
-		var ts = cardsStr.split(',');
-		while (t < ts.length)
-		{
-			this.cards.push(Std.parseInt(ts[t]));
-			t ++;
-		}
+		this.cards = cards;
 	}
-	
 }
