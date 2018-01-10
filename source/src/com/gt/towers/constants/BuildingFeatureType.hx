@@ -12,7 +12,8 @@ class BuildingFeatureType
 
 	public function new() {}
 	
-	public static var F01_UNLOCKED_AT:Int = 1;
+	public static var F00_RARITY:Int = 0;
+	public static var F01_AVAILABLE_AT:Int = 1;
 	public static var F02_ELIXIR_SIZE = 2;
 	public static var F03_TROOPS_COUNT = 3;
 	public static var F04_DEPLOY_TIME = 4;
@@ -57,7 +58,6 @@ class BuildingFeatureType
 	public static function getRelatedTo(buildingType:Int):IntList
 	{
 		var ret = new IntList();
-		ret.push( F01_UNLOCKED_AT);
 		ret.push( F03_TROOPS_COUNT );
 		ret.push( F11_TROOP_SPEED );
 		ret.push( F12_TROOP_POWER );

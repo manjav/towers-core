@@ -16,10 +16,6 @@ class Building extends AbstractBuilding
 	public var place:Place;
 	public var index:Int;
 	public var troopType:Int = -1;
-	
-	public var rarity:Int = 0;
-	public var capacity:Int = 10;
-	public var birthRate:Float = 0.15;
 	public var healRate:Float = 0.15;
 	
 	public var troopHealth:Float = 1;
@@ -32,8 +28,6 @@ class Building extends AbstractBuilding
 	public var damageRangeMin:Float = 50;
 	public var damageRangeMax:Float = 180;
 	
-	public var elixirSize:Int = 5;
-	public var deployTime:Float = 0.5;
 	
 	var _health:Float = 10;
 	var _population:Float = 0;
@@ -55,19 +49,12 @@ class Building extends AbstractBuilding
 				level = 1;
 		}
 		super( game, type, level + (place == null ? 0 : place.levelOffset) );
-		setFeatures();
 	}
 
 
-	function setFeatures():Void
+	override private function setFeatures():Void
 	{
-		category = CardTypes.get_category(type);
-		rarity = CardTypes.get_rarity(type);
-		
-		elixirSize = game.featureCaculator.getInt(BuildingFeatureType.F02_ELIXIR_SIZE, type, 1);
-		capacity = game.featureCaculator.getInt(BuildingFeatureType.F03_TROOPS_COUNT, type, 1);
-		deployTime = game.featureCaculator.get(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
-		birthRate = game.featureCaculator.get(BuildingFeatureType.F05_BIRTH_RATE, type, get_level());
+		super.setFeatures();
 		
 		// troops data
 		troopSpeed = game.featureCaculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level());

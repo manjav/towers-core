@@ -16,7 +16,12 @@ class AbstractBuilding
 {
 	public var type:Int;
 	public var category:Int;
-	//public var improveLevel:Int;
+	
+	public var rarity:Int = 0;
+	public var availableAt:Int = 0;
+	public var elixirSize:Int = 5;
+	public var capacity:Int = 10;
+	public var deployTime:Float = 0.5;
 	
 	public var game:Game;
 
@@ -27,8 +32,18 @@ class AbstractBuilding
 		this.game = game;
 		this.type = type;
 		this._level = level;
-		this.category = CardTypes.get_category(type);
-		//this.improveLevel = 1;
+		setFeatures();
+	}
+
+
+	private function setFeatures():Void
+	{
+		category = CardTypes.get_category(type);
+		rarity = game.featureCaculator.getInt(BuildingFeatureType.F00_RARITY, type);
+		availableAt = game.featureCaculator.getInt(BuildingFeatureType.F01_AVAILABLE_AT, type);
+		elixirSize = game.featureCaculator.getInt(BuildingFeatureType.F02_ELIXIR_SIZE, type);
+		capacity = game.featureCaculator.getInt(BuildingFeatureType.F03_TROOPS_COUNT, type);
+		deployTime = game.featureCaculator.get(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
 	}
 	
 	public function get_level():Int
@@ -141,13 +156,10 @@ class AbstractBuilding
 		_level ++;
 		return true;
 	}	
-	public function get_unlockAt():Int 
-	{
-		return game.unlockedBuildingAt(type);
-	}
+
 	public function availabled():Bool 
 	{
-		return get_unlockAt() <= game.player.get_arena(0);
+		return availableAt <= game.player.get_arena(0);
 	}
 	public function unlocked(type:Int=-1):Bool 
 	{

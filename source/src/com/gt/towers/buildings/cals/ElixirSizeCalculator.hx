@@ -54,7 +54,7 @@ class ElixirSizeCalculator
 			case 508 : 2;
 			case 509 : 6;
 			
-			default : 4;
+			default : BASE_VALUE;
 		}
 	}
 }

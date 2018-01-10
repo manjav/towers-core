@@ -65,14 +65,7 @@ class CardTypes
 	public static var C503:Int = 503;
 	public static var C504:Int = 504;
 	
-	public function new() { }
-	
-	public static function get_rarity(type:Int):Int
-	{
-		if 		( (type % 10) > 8 ) 	return 2;// rare
-		else if ( (type % 10) > 6 ) 	return 1;// uncommon
-		else							return 0;// common
-	}
+	public function new() {}
 	
 	public static function migrate( oldType:Int ) : Int
 	{

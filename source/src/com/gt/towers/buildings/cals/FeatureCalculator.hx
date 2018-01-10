@@ -11,10 +11,12 @@ class FeatureCalculator
 {
 	public var TIME_SCALE:Float = 1;
 	
+	public var rarity:RarityCalculator;
+	public var availableAt:AvailableAtCalculator;
 	public var elixirSize:ElixirSizeCalculator;
 	public var capacity:CapacityCalculator;
 	public var deployTime:DeployTimeCalculator;
-	public var birthRate:BrithRateCalculator;
+	//public var birthRate:BrithRateCalculator;
 	
 	public var troopSpeed:TroopSpeedCalculator;
 	public var troopPower:TroopPowerCalculator;
@@ -28,10 +30,12 @@ class FeatureCalculator
 
 	public function new()
 	{
+		rarity = new RarityCalculator();
+		availableAt = new AvailableAtCalculator();
 		elixirSize = new ElixirSizeCalculator();
 		capacity = new CapacityCalculator();
 		deployTime = new DeployTimeCalculator();
-		birthRate = new BrithRateCalculator();
+		//birthRate = new BrithRateCalculator();
 		
 		troopSpeed = new TroopSpeedCalculator();
 		troopPower = new TroopPowerCalculator();
@@ -48,12 +52,14 @@ class FeatureCalculator
 	{
 		return switch( featureType )
 		{
+			case 0 : rarity.get(buildingType);
+			case 1 : availableAt.get(buildingType);
 			case 2 : elixirSize.get(buildingType);
 			case 3 : capacity.get(buildingType);
-			case 4 : deployTime.get(buildingType, level) * TIME_SCALE;
-			case 5 : birthRate.get(buildingType, level) * TIME_SCALE;
+			case 4 : deployTime.get(buildingType) * TIME_SCALE;
+			//case 5 : birthRate.get(buildingType, level) * TIME_SCALE;
 			
-			case 11: troopSpeed.get(buildingType, level) / TIME_SCALE;
+			case 11: troopSpeed.get(buildingType, level) / TIME_SCALE * 0.7;
 			case 12: troopPower.get(buildingType, level);
 			case 13: troopHealth.get(buildingType, level);
 			case 14: troopRushGap.get(buildingType, level) / TIME_SCALE;
@@ -67,7 +73,7 @@ class FeatureCalculator
 		}
 	}
 	
-	public function getInt(featureType:Int, buildingType:Int, level:Int) : Int
+	public function getInt(featureType:Int, buildingType:Int, level:Int = 1) : Int
 	{
 		return Math.round( get( featureType, buildingType, level) );
 	}
@@ -76,10 +82,12 @@ class FeatureCalculator
 	{
 		return switch( featureType )
 		{
+			case 0 : rarity.BASE_VALUE;
+			case 1 : availableAt.BASE_VALUE;
 			case 2 : elixirSize.BASE_VALUE;
 			case 3 : capacity.BASE_VALUE;
 			case 4 : deployTime.BASE_VALUE;
-			case 5 : birthRate.BASE_VALUE;
+			//case 5 : birthRate.BASE_VALUE;
 			
 			case 11: troopSpeed.BASE_VALUE;
 			case 12: troopPower.BASE_VALUE;
