@@ -6,10 +6,10 @@ import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.buildings.cals.FeatureCalculator;
 import com.gt.towers.events.CoreEventDispatcher;
 import com.gt.towers.exchanges.Exchanger;
+import com.gt.towers.constants.MessageTypes;
+import com.gt.towers.constants.StickerType;
 import com.gt.towers.socials.Lobby;
-import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntArenaMap;
-import com.gt.towers.utils.maps.IntIntMap;
 
 #if java
 import com.gt.towers.battle.AIEnemy;

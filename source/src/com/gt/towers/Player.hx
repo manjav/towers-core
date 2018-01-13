@@ -1,18 +1,14 @@
 package com.gt.towers;
 import com.gt.towers.Game;
-import com.gt.towers.buildings.AbstractBuilding;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.constants.StickerType;
-import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
-import com.gt.towers.utils.maps.IntExchangeMap;
 
 /**
  * ...

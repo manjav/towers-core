@@ -2,10 +2,7 @@ package com.gt.towers;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
-import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.IntExchangeMap;
-import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 /**
  * ...
@@ -14,7 +11,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "3000.0106180904";//do not change len.
+	public var coreVersion:String = "3000.0113011925";//do not change len.
 	public var noticeVersion:Int = 3000;
 	public var forceVersion:Int = 3000;
 	public var resources:IntIntMap;

@@ -5,7 +5,6 @@ import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.cals.*;
 import com.gt.towers.constants.*;
 import com.gt.towers.utils.GTimer;
-import com.gt.towers.utils.lists.IntList;
 
 /**
  * ...

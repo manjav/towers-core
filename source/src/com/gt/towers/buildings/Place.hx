@@ -3,7 +3,6 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
-import com.gt.towers.constants.CardTypes;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
