@@ -60,7 +60,6 @@ class AIEnemy
 	
 	public function tryAction():Int
 	{
-		var checkSelfPopulation = 0;
 		var botPopulation = 0;
 		var minPlayerPopulation:Float = 1000;
 		var botPlaces = battleField.getAllTowers(1);
@@ -80,10 +79,9 @@ class AIEnemy
 		}
 		dangerousPoint = -1;
 		
-		if (botPlacesLen == 0)
-		{
+		if( botPlacesLen == 0 )
 			return TYPE_ANY_ENEMY;
-		}
+		
 		else if ( botPlacesLen == 1 )
 		{
 			var singlePlace = botPlaces.get(0);
@@ -152,7 +150,9 @@ class AIEnemy
 		sources = new IntList();
 		while ( max >= 0 )
 		{
-			sources.push(activeBotPlaces.get(max));
+			var plc = battleField.getPlace(activeBotPlaces.get(max));
+			if( plc != null && plc.hasTroop() )
+				sources.push(activeBotPlaces.get(max));
 			max --;
 		}
 		
@@ -240,7 +240,7 @@ class AIEnemy
 	{
 		if ( battleField.difficulty < 3 )
 			return false;
-		var b = botPlaces.size()-1;
+		var b = botPlaces.size() - 1;
 		while ( b >= 0 )
 		{
 			if( transform(botPlaces.get(b).building, needPopulation) )
@@ -272,7 +272,7 @@ class AIEnemy
 	
 	public function doAction():Int
 	{
-		var seed:Int = Math.floor(battleField.now%5);
+		var seed:Int = Math.floor(battleField.now % 5);
 		if ( seed == accessPoint && ( actionType == TYPE_NO_CHANCE || actionType == -100 ) )
 			return actionType = tryAction();
 			

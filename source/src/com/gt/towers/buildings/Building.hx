@@ -26,8 +26,7 @@ class Building extends AbstractBuilding
 	public var damageGap:Int = 800;
 	public var damageRangeMin:Float = 50;
 	public var damageRangeMax:Float = 180;
-	
-	
+		
 	var _health:Float = 10;
 	var _population:Float = 0;
 	var transfromTimeoutId:Int = -1;
@@ -49,7 +48,6 @@ class Building extends AbstractBuilding
 		}
 		super( game, type, level + (place == null ? 0 : place.levelOffset) );
 	}
-
 
 	override private function setFeatures():Void
 	{
@@ -76,7 +74,6 @@ class Building extends AbstractBuilding
 	{
 		return Math.floor(_health);
 	}
-
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	
@@ -84,38 +81,11 @@ class Building extends AbstractBuilding
 	{
 		this.troopType = troopType;
 		#if java
-		_health = place.health * 1;
+		_health = place.health * 0.5;
 		#end
 	}
 
-	
 #if java
-	/*public function calculatePopulation():Void
-	{
-		if ( place==null || !place.enabled )
-			return;
-		
-		var br = birthRate;
-		if( _population < capacity )
-		{
-			if( _population + br > capacity )
-				_population = capacity;
-			else
-				_population += br;
-			
-		}
-		else if ( _population > capacity )
-		{
-			br = Math.ceil((_population - capacity) * 0.2 );
-			if( _population - br < capacity )
-				_population = capacity;
-			else
-				_population -= br;
-		}
-		//trace(place.index + " t:" + type + " br: " + br + " p:" + _population);
-	}
-	*/
-	
 	public function interval():Void
 	{
 	//	if ( place==null || !place.enabled )
@@ -123,10 +93,13 @@ class Building extends AbstractBuilding
 	//	_health = Math.min(_health + healRate, place.health);
 		if( troopType > -1 )
 			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + ((place.mode + 1) * 0.025) );
-			
+		
+		if ( _health < place.health )
+			_health = Math.min(_health + 0.1, place.health);
+
 		if ( _population > place.health )
 		{
-			var br = Math.ceil((_population - place.health) * 0.2 );
+			var br = Math.ceil((_population - place.health) * 0.1 );
 			if( _population - br < place.health )
 				_population = place.health;
 			else
@@ -137,26 +110,23 @@ class Building extends AbstractBuilding
 	public function popTroop():Bool
 	{
 		var ret = get_population() >= 1;
-		if ( ret )
-		{
+		if( ret )
 			_population --;
-		}
-		else
-		{
+			
+		if( get_population() <= 0 )
 			type = CardTypes.C001;
-			//reset(troopType);
-		}
+		
 		return ret;
 	}
-	public function pushTroops(troop:Troop) : Bool
+	
+	public function pushTroops(troop:Troop) : Void
 	{
-		var ret = troopType == troop.type; // if ret true troop is mine
-		if ( ret )
+		if ( troopType == troop.type )
 		{
-			if ( _health >= place.health )
+			//if ( _health >= place.health )
 				_population += 1;
-			else
-				_health += Math.min(_health + 0.5, place.health);
+			//else
+			//	_health = Math.min(_health + 1, place.health);
 		}
 		else
 		{
@@ -165,15 +135,9 @@ class Building extends AbstractBuilding
 			else
 				_health -= troop.power;
 		}
-		
-		//if( get_population() > 0 && type == CardTypes.C001 )
-		//	type = troop.building.type;
-		
+		trace(index, _health);
 		if( _health <= 0 )
 			occupy(troop);
-		else if ( _health == 0 && !place.enabled ) 
-			occupy(troop);
-		return ret;
 	}
 	
 	function occupy(troop:Troop) 
@@ -194,14 +158,14 @@ class Building extends AbstractBuilding
 			return false;
 		
 		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
-		place.enabled = place.fightable = false;
+		place.enabled = false;
 		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.elixirSize );
 		transfromTimeoutId = GTimer.setTimeout(activeFighters, Math.floor(card.deployTime * 1000), [card]);
 		return true;
 	}
 	private function activeFighters(card:Building):Void
 	{
-		place.enabled = place.fightable = true;
+		place.enabled = true;
 		//reset(card.troopType);
 		this.type = card.type;
 		setFeatures();
@@ -211,7 +175,7 @@ class Building extends AbstractBuilding
 	
 	public function transformable(card:Building) : Bool
 	{
-		if ( !place.enabled || troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.elixirSize || (get_health() < place.health && place.mode < 2 ) )
+		if ( !place.enabled || troopType != card.troopType || place.battlefield.elixirBar.get(troopType) < card.elixirSize/* || (get_health() < place.health && place.mode < 2 )*/ )
 			return false;
 		return true;
 	}

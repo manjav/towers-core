@@ -25,7 +25,6 @@ class Place
 	public var owner:Place;
 	public var links:PlaceList;
 	public var building:Building;
-	public var fightable:Bool;
 	public var mode:Int;
 	
 	private var troopId:Int;
@@ -50,6 +49,13 @@ class Place
 	#end
 	}
 	
+	public function hasTroop():Bool
+	{
+		if ( building == null )
+			return false;
+		return building.get_population() > 0;
+	}
+	
 #if java
 	public function fight(destination:Place, all:PlaceList):Void
 	{
@@ -59,7 +65,7 @@ class Place
 			return;
 		
 		var i:Int = 0;
-		var len:Int = building.get_population() + 1;
+		var len:Int = building.get_population();
 		while( i < len )
 		{
 			var tid = getIncreasedId();
@@ -68,7 +74,6 @@ class Place
 			GTimer.setTimeout(rush, building.troopRushGap * i + 1, [troop]);
 			i ++;
 		}			
-		fightable = false;
 	}
 	
 	public function rush(troop:Troop):Void

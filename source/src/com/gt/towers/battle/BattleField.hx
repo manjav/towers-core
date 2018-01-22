@@ -197,4 +197,17 @@ class BattleField
 			return 0;
 		return map.times.get(score) + extraTime;
 	}
+	
+	public function getPlace(index:Int) : Place
+	{
+		var p:Int = places.size() - 1;
+		while ( p >= 0 )
+		{
+			if( places.get(p).index == index )
+				return places.get(p);		
+			p --;
+		}
+		return null;
+	}
+
 }

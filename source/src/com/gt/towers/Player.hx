@@ -31,7 +31,6 @@ class Player
 	public var selectedDeck:Int = 0;
 	
 	private var game:Game;
-
 	
 	public function new() {}
 	public function init(game:Game, initData:InitData)
