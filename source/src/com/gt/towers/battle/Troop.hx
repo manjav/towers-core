@@ -54,13 +54,11 @@ class Troop
 	{
 		if( health <= 0 )
 			return ;
-			
-		var allow = destination.building.pushTroops(this);
-		if ( allow && path.size() > 0)
-		{
+		
+		destination.building.pushTroops(this);
+		if( path.size() > 0)
 			timeoutId = GTimer.setTimeout(destination.rush, building.troopRushGap, [this]);
-		}
-		//building.game.tracer.log("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
+		//trace("troop-> onTroopArrived id:" + id + path.size():" + path.size());
 	}
 	public function hit(damage:Float):Void
 	{

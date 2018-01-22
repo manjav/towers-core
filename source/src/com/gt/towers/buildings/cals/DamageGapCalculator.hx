@@ -7,7 +7,7 @@ import com.gt.towers.constants.CardTypes;
  */
 class DamageGapCalculator 
 {
-	public var BASE_VALUE:Float = 800;
+	public var BASE_VALUE:Float = 1300;
 	public function new () {}
 	public function get(type:Int, level:Int):Float 
 	{
