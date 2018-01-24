@@ -135,7 +135,7 @@ class Building extends AbstractBuilding
 			else
 				_health -= troop.power;
 		}
-		trace(index, _health);
+
 		if( _health <= 0 )
 			occupy(troop);
 	}
@@ -169,7 +169,7 @@ class Building extends AbstractBuilding
 		//reset(card.troopType);
 		this.type = card.type;
 		setFeatures();
-		_population = capacity;
+		_population = troopsCount;
 	}
 #end
 	
@@ -199,7 +199,7 @@ class Building extends AbstractBuilding
 		setFeatures();
 		return ret;
 	}
-	
+
 	
 #if flash	
 	/*public function get_troopName () : String

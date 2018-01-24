@@ -18,7 +18,7 @@ class AbstractBuilding
 	public var rarity:Int = 0;
 	public var availableAt:Int = 0;
 	public var elixirSize:Int = 5;
-	public var capacity:Int = 10;
+	public var troopsCount:Int = 10;
 	public var deployTime:Float = 0.5;
 	
 	public var game:Game;
@@ -40,7 +40,7 @@ class AbstractBuilding
 		rarity = game.featureCaculator.getInt(BuildingFeatureType.F00_RARITY, type);
 		availableAt = game.featureCaculator.getInt(BuildingFeatureType.F01_AVAILABLE_AT, type);
 		elixirSize = game.featureCaculator.getInt(BuildingFeatureType.F02_ELIXIR_SIZE, type);
-		capacity = game.featureCaculator.getInt(BuildingFeatureType.F03_TROOPS_COUNT, type);
+		troopsCount = game.featureCaculator.getInt(BuildingFeatureType.F03_TROOPS_COUNT, type);
 		deployTime = game.featureCaculator.get(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
 	}
 	
