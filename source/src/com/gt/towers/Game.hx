@@ -12,7 +12,7 @@ import com.gt.towers.socials.Lobby;
 import com.gt.towers.utils.maps.IntArenaMap;
 
 #if java
-import com.gt.towers.battle.AIEnemy;
+import com.gt.towers.battle.Bot;
 #end
 
 /**

@@ -165,22 +165,7 @@ class BattleField
 		}
 	}
 
-	public function getAllTowers(troopType:Int):PlaceList
-	{
-		if( troopType == TroopType.NONE )
-			return places;
 
-		var ret:PlaceList = new PlaceList();
-		var p:Int = places.size() - 1;
-		while ( p >= 0 )
-		{
-			if( places.get(p).building.troopType == troopType )
-				ret.push(places.get(p));
-
-			p --;
-		}
-		return ret;
-	}
 	
 	#if java
 	public var now:Float = 0;
@@ -190,7 +175,6 @@ class BattleField
 		return now - startAt;
 	}
 	#end
-	
 	public function getTime(score:Int):Int
 	{
 		if ( map == null || score< 0 || score > 2 )
@@ -198,7 +182,38 @@ class BattleField
 		return map.times.get(score) + extraTime;
 	}
 	
-	public function getPlace(index:Int) : Place
+	public function getPlacesByTroopType(troopType:Int, onlyLinked:Bool = false ):PlaceList
+	{
+		if( troopType == TroopType.NONE && !onlyLinked )
+			return places;
+
+		var ret:PlaceList = new PlaceList();
+		var p:Int = places.size() - 1;
+		while ( p >= 0 )
+		{
+			//trace(p, troopType,  places.get(p).building.troopType, linked, places.get(p).links.size());
+			if( places.get(p).building.troopType == troopType || troopType == TroopType.NONE )
+				if( !onlyLinked || places.get(p).links.size() > 0 )
+					ret.push(places.get(p));
+			p --;
+		}
+		return ret;
+	}
+	
+	public function getPlacesByMode(mode:Int, troopType:Int) : PlaceList
+	{
+		var ret:PlaceList = new PlaceList();
+		var p:Int = places.size() - 1;
+		while ( p >= 0 )
+		{
+			if( places.get(p).mode == mode && places.get(p).building.troopType == troopType  )
+				ret.push(places.get(p));		
+			p --;
+		}
+		return ret;
+	}
+	
+	public function getPlaceByIndex(index:Int) : Place
 	{
 		var p:Int = places.size() - 1;
 		while ( p >= 0 )
@@ -209,5 +224,4 @@ class BattleField
 		}
 		return null;
 	}
-
 }

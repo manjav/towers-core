@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
@@ -54,6 +55,24 @@ class Place
 		if ( building == null )
 			return false;
 		return building.get_population() > 0;
+	}
+	
+	public function getLinks(troopType:Int):PlaceList
+	{
+		if( troopType == TroopType.NONE )
+			return links;
+
+		var ret:PlaceList = new PlaceList();
+		var p:Int = links.size() - 1;
+		while ( p >= 0 )
+		{
+		//	trace(p, links.get(p).building.troopType, troopType);
+			if( links.get(p).building.troopType == troopType )
+				ret.push(links.get(p));
+
+			p --;
+		}
+		return ret;
 	}
 	
 #if java
