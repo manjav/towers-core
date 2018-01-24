@@ -36,7 +36,8 @@ class PlaceData
 		var i = 0;
 		while (i < ls.length)
 		{
-			this.links.push( Std.parseInt(ls[i]) );
+			if( ls[i] != "" )
+				this.links.push( Std.parseInt(ls[i]) );
 			i++;
 		}
 	}
