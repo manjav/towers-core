@@ -1,8 +1,6 @@
 package com.gt.towers.battle;
 import com.gt.towers.battle.BattleField;
-import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
-import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
@@ -62,23 +60,15 @@ class Bot
 		var ret:Int = ACTION_NO_CHANCE;
 		
 		/**
-		 * try to fight neighbors of casle
-		 
-		var castleLinks = robatCastle.getLinks(TroopType.T_NPC);
-		var step = castleLinks.size() - 1;
-		var placeTargetIndex = -1;
-		while ( step >= 0 )
+		 * transform for defence main places
+		 */
+		if ( dangerousPoint > -1 )
 		{
-			if( placeTargetIndex == -1 || estimateHealth(castleLinks.get(step)) < estimateHealth(castleLinks.get(placeTargetIndex)) )
-				placeTargetIndex = step;
-			step --;
-		}		
-
-		if ( placeTargetIndex > -1 )
-			ret = fightToPlace(castleLinks.get(placeTargetIndex));
-			
-		if ( ret != ACTION_NO_CHANCE )
-			return ret;*/
+			var dangerousPlace = battleField.getPlaceByIndex(dangerousPoint);
+			if( dangerousPlace.mode > 0 )
+				dangerousPlace.building.transform(battleField.deckBuildings.get(4).building);
+			dangerousPoint = -1;
+		}
 
 		/**
 		 * transform and fight troops to empty places
@@ -130,7 +120,7 @@ class Bot
 	
 	function addFighters(place:Place, fightersList:IntList, estimaestimatedTargetHealth:Float) : Void
 	{
-		if ( fightersList.indexOf(place.index) > -1 || sourcesPowers >= estimaestimatedTargetHealth / 0.8 )
+		if ( fightersList.indexOf(place.index) > -1 || sourcesPowers >= estimaestimatedTargetHealth / 0.6 )
 			return;
 		
 		fightersList.push(place.index);

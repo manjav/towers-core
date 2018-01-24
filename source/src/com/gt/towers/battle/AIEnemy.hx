@@ -62,8 +62,8 @@ class AIEnemy
 	{
 		var botPopulation = 0;
 		var minPlayerPopulation:Float = 1000;
-		var botPlaces = battleField.getAllTowers(1);
-		var playerPlaces = battleField.getAllTowers(0);
+		var botPlaces = battleField.getPlacesByTroopType(1);
+		var playerPlaces = battleField.getPlacesByTroopType(0);
 		var botPlacesLen:Int = botPlaces.size();
 		var activeBotPlaces = new IntList();
 		destinations = new IntIntMap();
