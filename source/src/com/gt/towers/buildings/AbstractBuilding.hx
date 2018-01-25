@@ -25,6 +25,10 @@ class AbstractBuilding
 
 	private var _level:Int;
 	
+#if java
+	public var eventCallback:com.gt.towers.events.EventCallback;
+#end
+
 	public function new(game:Game, type:Int, level:Int)
 	{
 		this.game = game;
@@ -32,7 +36,6 @@ class AbstractBuilding
 		this._level = level;
 		setFeatures();
 	}
-
 
 	private function setFeatures():Void
 	{
@@ -177,6 +180,16 @@ class AbstractBuilding
 			type = this.type + 1;
 			
 		return game.player.resources.exists(type);
+	}
+	
+	private function dispatchEvent (dispatcherId:Int, type:Int, data:Any) :Void
+	{
+	#if java
+		if ( eventCallback != null )
+			eventCallback.dispatch( dispatcherId, type, data );
+	//#elseif flash
+			//dispatchEvent(new CoreEvent(CoreEvent.CHANGE, key, from, to) );
+	#end
 	}
 	
 	public function dispose():Void

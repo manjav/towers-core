@@ -5,7 +5,7 @@ import com.gt.towers.utils.GameError;
 #if java
 	import java.util.Map;
 	import java.NativeArray;
-	import com.gt.towers.utils.ValueChangeCallback;
+	import com.gt.towers.events.ValueChangeCallback;
 #elseif flash
 	import flash.Vector;
 	import flash.events.EventDispatcher;

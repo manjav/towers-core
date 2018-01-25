@@ -1,7 +1,7 @@
 package com.gt.towers.events;
 
 #if java
-	import com.gt.towers.utils.ValueChangeCallback;
+	import com.gt.towers.events.ValueChangeCallback;
 #elseif flash
 	import flash.events.EventDispatcher;
 	import com.gt.towers.events.CoreEvent;

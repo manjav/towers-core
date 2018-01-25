@@ -1,4 +1,4 @@
-package com.gt.towers.utils;
+package com.gt.towers.events;
 
 /**
  * @author Mansour Djawadi

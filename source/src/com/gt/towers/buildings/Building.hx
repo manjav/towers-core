@@ -4,6 +4,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.cals.*;
 import com.gt.towers.constants.*;
+import com.gt.towers.events.BuildingEvent;
 import com.gt.towers.utils.GTimer;
 
 /**
@@ -26,7 +27,7 @@ class Building extends AbstractBuilding
 	public var damageGap:Int = 800;
 	public var damageRangeMin:Float = 50;
 	public var damageRangeMax:Float = 180;
-		
+	
 	var _health:Float = 10;
 	var _population:Float = 0;
 	var transfromTimeoutId:Int = -1;
@@ -150,6 +151,7 @@ class Building extends AbstractBuilding
 		place.levelOffset = troop.building.place.levelOffset;
 		place.powerCoef = troop.building.place.powerCoef;
 		setFeatures(); 
+		dispatchEvent(place.index, BuildingEvent.OCCUPIED, null);
 	}
 	
 	public function transform(card:Building) : Bool
@@ -158,18 +160,20 @@ class Building extends AbstractBuilding
 			return false;
 		
 		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
+		dispatchEvent(place.index, BuildingEvent.TRANSFORM_STARTED, null);
 		place.enabled = false;
 		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.elixirSize );
 		transfromTimeoutId = GTimer.setTimeout(activeFighters, Math.floor(card.deployTime * 1000), [card]);
 		return true;
 	}
-	private function activeFighters(card:Building):Void
+	function activeFighters(card:Building) : Void
 	{
 		place.enabled = true;
 		//reset(card.troopType);
 		this.type = card.type;
 		setFeatures();
 		_population = troopsCount;
+		dispatchEvent(place.index, BuildingEvent.TRANSFORM_COMPLETE, null);
 	}
 #end
 	
