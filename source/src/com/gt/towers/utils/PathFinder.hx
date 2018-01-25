@@ -45,7 +45,7 @@ class PathFinder
 		return ret;
 	}
 
-	private static function sreach(source:Place, destination:Place):Bool
+	static function sreach(source:Place, destination:Place):Bool
 	{
 		// Creating our Open List
 		var openList:PlaceList = new PlaceList();
@@ -88,4 +88,21 @@ class PathFinder
 		}
 		return false;
 	}
+	
+	public static function getTotalDistances(path:PlaceList) : Float
+	{
+		var ret : Float = 0;
+		var step = path.size() - 1;
+		while ( step > 0 )
+		{
+			ret += getDistance(path.get(step), path.get(step - 1));
+			step --;
+		}
+		return ret;
+	}
+	public static function getDistance(source:Place, destination:Place) : Float
+	{
+		return Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
+	}
+	
 }

@@ -3,6 +3,7 @@ import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.utils.GTimer;
+import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
 import haxe.Timer;
 
@@ -46,8 +47,7 @@ class Troop
 		if( destination == null || health <= 0 )
 			return ;
 		
-		var distance:Float = Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
-		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.troopSpeed * distance), [destination]);
+		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.troopSpeed * PathFinder.getDistance(source, destination)), [destination]);
 		//building.game.tracer.log("troop-> rush id:" + id );
 	}
 	private function onTroopArrived(destination:Place):Void
