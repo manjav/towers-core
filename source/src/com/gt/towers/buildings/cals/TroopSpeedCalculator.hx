@@ -1,5 +1,4 @@
 package com.gt.towers.buildings.cals;
-import com.gt.towers.constants.CardTypes;
 
 /**
  * ...
@@ -13,7 +12,6 @@ class TroopSpeedCalculator
 	{
 		var factor:Float = switch( type )
 		{
-		
 			case	201	:	1.4	;
 			case	202	:	1.2	;
 			case	203	:	1.3	;

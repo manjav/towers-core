@@ -7,12 +7,12 @@ import com.gt.towers.constants.CardTypes;
  */
 class DeployTimeCalculator 
 {
-	public var BASE_VALUE:Float = 1;
+	public var BASE_VALUE:Int = 1000;
 	public function new () {}
-	public function get(type:Int):Float 
+	public function get(type:Int):Int 
 	{
 		if ( CardTypes.get_category( type ) == CardTypes.C200 )
-			return  BASE_VALUE * 0.5;
+			return  Math.floor(BASE_VALUE * 0.5);
 			
 		if ( CardTypes.get_category( type ) == CardTypes.C300 )
 			return  BASE_VALUE ;

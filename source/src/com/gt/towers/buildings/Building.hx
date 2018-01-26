@@ -160,10 +160,11 @@ class Building extends AbstractBuilding
 			return false;
 		
 		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
+		deployTime = game.featureCaculator.getInt(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
 		dispatchEvent(place.index, BuildingEvent.TRANSFORM_STARTED, null);
 		place.enabled = false;
 		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.elixirSize );
-		transfromTimeoutId = GTimer.setTimeout(activeFighters, Math.floor(card.deployTime * 1000), [card]);
+		transfromTimeoutId = GTimer.setTimeout(activeFighters, card.deployTime, [card]);
 		return true;
 	}
 	function activeFighters(card:Building) : Void
