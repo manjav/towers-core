@@ -95,7 +95,7 @@ class PathFinder
 		var step = path.size() - 1;
 		while ( step > 0 )
 		{
-			ret += getDistance(path.get(step), path.get(step - 1));
+			ret += getDistance(path.get(step), path.get(step - 1)) + path.get(step).building.troopRushGap;
 			step --;
 		}
 		return ret;
