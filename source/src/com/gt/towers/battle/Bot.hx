@@ -64,7 +64,7 @@ class Bot
 		 */
 		if ( dangerousPoint > -1 )
 		{
-			var dangerousPlace = battleField.getPlaceByIndex(dangerousPoint);
+			var dangerousPlace = battleField.places.get(dangerousPoint);
 			if( dangerousPlace.mode > 0 )
 				dangerousPlace.building.transform(battleField.deckBuildings.get(4).building);
 			dangerousPoint = -1;
