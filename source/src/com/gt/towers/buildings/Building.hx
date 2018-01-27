@@ -98,14 +98,14 @@ class Building extends AbstractBuilding
 		if ( _health < place.health )
 			_health = Math.min(_health + 0.1, place.health);
 
-		if ( _population > place.health )
+		/*if ( _population > place.health )
 		{
 			var br = Math.ceil((_population - place.health) * 0.1 );
 			if( _population - br < place.health )
 				_population = place.health;
 			else
 				_population -= br;
-		}
+		}*/
 	}
 	
 	public function popTroop():Bool
@@ -173,7 +173,7 @@ class Building extends AbstractBuilding
 		//reset(card.troopType);
 		this.type = card.type;
 		setFeatures();
-		_population = troopsCount;
+		_population += troopsCount;
 		dispatchEvent(place.index, BuildingEvent.TRANSFORM_COMPLETE, null);
 	}
 #end
