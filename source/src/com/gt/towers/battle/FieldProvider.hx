@@ -64,16 +64,16 @@ class FieldProvider
 		quests.set( "quest_29" , new Quest_29( 29, "quest_29", "", "", "", "150,180,220,30" ) );
 		
 		battles = new StringFieldMap();
-		battles.set( "battle_1" ,	new Battle_02 ( 1,	   "battle_1", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_101" , new Battle_02 ( 101, "battle_101", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_201" , new Battle_02 ( 201, "battle_201", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_301" , new Battle_02 ( 301, "battle_301", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_401" , new Battle_02 ( 401, "battle_401", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_501" , new Battle_02 ( 501, "battle_501", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_601" , new Battle_02 ( 601, "battle_601", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_701" , new Battle_02 ( 701, "battle_701", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_801" , new Battle_02 ( 801, "battle_801", "", "", "", "110,150,220,30" ) );
-		battles.set( "battle_901" , new Battle_02 ( 901, "battle_901", "", "", "", "110,150,220,30" ) );
+		battles.set( "battle_1" ,	new Battle_02 ( 1,	   "battle_1", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_101" , new Battle_02 ( 101, "battle_101", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_201" , new Battle_02 ( 201, "battle_201", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_301" , new Battle_02 ( 301, "battle_301", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_401" , new Battle_02 ( 401, "battle_401", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_501" , new Battle_02 ( 501, "battle_501", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_601" , new Battle_02 ( 601, "battle_601", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_701" , new Battle_02 ( 701, "battle_701", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_801" , new Battle_02 ( 801, "battle_801", "", "", "", "60,120,180,240" ) );
+		battles.set( "battle_901" , new Battle_02 ( 901, "battle_901", "", "", "", "60,120,180,240" ) );
 	}
 	
 	public function getCurrentShire(questIndex:Int):FieldData
