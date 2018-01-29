@@ -8,12 +8,8 @@ import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
-import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.lists.FloatList;
-import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.lists.PlaceList;
-import com.gt.towers.utils.maps.IntBuildingMap;
-import com.gt.towers.utils.maps.IntIntMap;
 
 /**
  * ...
@@ -33,12 +29,16 @@ class BattleField
 	public var difficulty:Int;
 	public var arena:Int;
 	public var extraTime:Int = 0;
+	
+	#if java
+	public var fighters:java.util.Map<Int, Troop>;
+	#end
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
 		var isQuest = mapName.substr(0, 6) == "quest_";
 		var singleMode = game_1 == null;
-		trace(mapName);
+		
 		if( isQuest )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
@@ -87,7 +87,7 @@ class BattleField
 		{
 			placeData = map.places.get( p );
 			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, this, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.health, placeData.enabled, placeData.mode);
-			place.levelOffset = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 2 : 0;
+			place.levelOffset = 0;//(placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 2 : 0;
 			if( place.levelOffset < 0 )
 				place.levelOffset = 0;
 				
@@ -131,6 +131,10 @@ class BattleField
 		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
 		elixirBar.push(POPULATION_INIT);
+		
+	#if java
+		fighters = new java.util.HashMap<Int, Troop>();
+	#end
 	}
 	
 	function addPlayerDeck(game:Game, troopType:Int) : Void
@@ -165,6 +169,17 @@ class BattleField
 		}
 	}
 
+	public function getPlaceInDeck(buildingType:Int, troopType:Int) : Place
+	{
+		var step:Int = deckBuildings.size() - 1; // random arena
+		while ( step >= 0 )
+		{
+			if ( deckBuildings.get(step).building.type == buildingType && deckBuildings.get(step).building.troopType == troopType )
+				return deckBuildings.get(step);
+			step --;
+		}
+		return null;
+	}
 
 	
 	#if java
@@ -173,6 +188,14 @@ class BattleField
 	public function getDuration() : Float
 	{
 		return now - startAt;
+	}
+	
+	public function hit(fighterId:Int, damage:Float) : Void
+	{
+		if( !fighters.containsKey(fighterId) )
+			return;
+		
+		fighters.get(fighterId).hit(damage);
 	}
 	#end
 	public function getTime(score:Int):Int

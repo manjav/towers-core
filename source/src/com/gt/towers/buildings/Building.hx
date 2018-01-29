@@ -27,9 +27,12 @@ class Building extends AbstractBuilding
 	public var damageGap:Int = 800;
 	public var damageRangeMin:Float = 50;
 	public var damageRangeMax:Float = 180;
-	
+#if java
+	public var troops:java.util.ArrayDeque<Troop>;
+	#end
+
 	var _health:Float = 10;
-	var _population:Float = 0;
+	//var _population:Float = 0;
 	var transfromTimeoutId:Int = -1;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
@@ -48,6 +51,9 @@ class Building extends AbstractBuilding
 				level = 1;
 		}
 		super( game, type, level + (place == null ? 0 : place.levelOffset) );
+	#if java
+		this.troops = new java.util.ArrayDeque<Troop>();
+	#end	
 	}
 
 	override private function setFeatures():Void
@@ -67,10 +73,6 @@ class Building extends AbstractBuilding
 		damageRangeMax = game.featureCaculator.get(BuildingFeatureType.F24_RANGE_RANGE_MAX, type, get_level());
 	}
 
-	public function get_population():Int
-	{
-		return Math.floor(_population);
-	}
 	public function get_health():Int
 	{
 		return Math.floor(_health);
@@ -87,6 +89,11 @@ class Building extends AbstractBuilding
 	}
 
 #if java
+	public function get_population():Int
+	{
+		return troops.size();
+	}
+	
 	public function interval():Void
 	{
 	//	if ( place==null || !place.enabled )
@@ -108,11 +115,14 @@ class Building extends AbstractBuilding
 		}*/
 	}
 	
-	public function popTroop():Bool
+	public function popTroop(troop:Troop):Bool
 	{
 		var ret = get_population() >= 1;
-		if( ret )
-			_population --;
+		if ( ret )
+		{
+			troops.removeFirst();
+			place.battlefield.fighters.put(troop.id, troop);
+		}
 			
 		if( get_population() <= 0 )
 			type = CardTypes.C001;
@@ -122,17 +132,19 @@ class Building extends AbstractBuilding
 	
 	public function pushTroops(troop:Troop) : Void
 	{
+		place.battlefield.fighters.remove(troop.id);
 		if ( troopType == troop.type )
 		{
+			
 			//if ( _health >= place.health )
-				_population += 1;
+				troops.offerLast(troop);
 			//else
 			//	_health = Math.min(_health + 1, place.health);
 		}
 		else
 		{
-			if ( _population > 0 )
-				_population = Math.max(_population - troop.power, 0);
+			if ( get_population() > 0 )
+				troops.removeLast(); //_population = Math.max(_population - troop.power, 0);
 			else
 				_health -= troop.power;
 		}
@@ -146,10 +158,10 @@ class Building extends AbstractBuilding
 		GTimer.clearTimeout(transfromTimeoutId);
 		type = CardTypes.C001;
 		reset(troop.type);
-		place.game = game = troop.building.game;
+		//place.game = game = troop.building.game;
 		place.enabled = true; 
-		place.levelOffset = troop.building.place.levelOffset;
-		place.powerCoef = troop.building.place.powerCoef;
+		//place.levelOffset = troop.building.place.levelOffset;
+		//place.powerCoef = troop.building.place.powerCoef;
 		setFeatures(); 
 		dispatchEvent(place.index, BuildingEvent.OCCUPIED, null);
 	}
@@ -159,7 +171,7 @@ class Building extends AbstractBuilding
 		if ( !transformable(card) )
 			return false;
 		
-		//trace(" type:" + type + " _population:" + _population + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
+		//trace(" type:" + type + " population:" + get_population() + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
 		deployTime = game.featureCaculator.getInt(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
 		dispatchEvent(place.index, BuildingEvent.TRANSFORM_STARTED, null);
 		place.enabled = false;
@@ -173,9 +185,28 @@ class Building extends AbstractBuilding
 		//reset(card.troopType);
 		this.type = card.type;
 		setFeatures();
-		_population += troopsCount;
+		
+		var i = 0;
+		while( i < troopsCount )
+		{
+			var tid = place.getIncreasedId();
+			troops.addLast( new Troop(tid, this) );
+			i ++;
+		}
 		dispatchEvent(place.index, BuildingEvent.TRANSFORM_COMPLETE, null);
 	}
+	
+	public function getPower():Float
+	{
+		var ret:Float = 0;
+		var itr = troops.iterator();
+		while ( itr.hasNext() )
+		{
+			ret += itr.next().power;
+		}
+		return ret;
+	}
+	
 #end
 	
 	public function transformable(card:Building) : Bool
@@ -204,7 +235,6 @@ class Building extends AbstractBuilding
 		setFeatures();
 		return ret;
 	}
-
 	
 #if flash	
 	/*public function get_troopName () : String
@@ -223,5 +253,7 @@ class Building extends AbstractBuilding
 		GTimer.clearTimeout(transfromTimeoutId);
 #end
 	}
+	
+
 	
 }

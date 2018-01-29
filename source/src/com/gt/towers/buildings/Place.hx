@@ -14,10 +14,6 @@ import com.gt.towers.utils.lists.PlaceList;
  */
 class Place 
 {
-#if java
-	var troops:java.util.HashMap<Int, Troop>;
-#end
-
 	public var index:Int;
 	public var x:Float;
 	public var y:Float;
@@ -45,18 +41,8 @@ class Place
 		this.enabled = botEnabled;
 		this.mode = mode;
 		this.troopId = index * 10000;
-	#if java
-		this.troops = new java.util.HashMap<Int, Troop>();
-	#end
 	}
-	
-	public function hasTroop():Bool
-	{
-		if ( building == null )
-			return false;
-		return building.get_population() > 0;
-	}
-	
+
 	public function getLinks(troopType:Int):PlaceList
 	{
 		if( troopType == TroopType.NONE )
@@ -82,37 +68,26 @@ class Place
 
 		if( path == null || destination.building == building )
 			return;
-		
-		var i:Int = 0;
-		var len:Int = building.get_population();
-		while( i < len )
+
+		var i = 0;
+		var itr = building.troops.iterator();
+		while ( itr.hasNext() )
 		{
-			var tid = getIncreasedId();
-			var troop = new Troop(tid, building, path);
-			troops.put( tid, troop );
+			var entry = itr.next();
+			var troop:Troop = entry.initPath(path);
 			GTimer.setTimeout(rush, building.troopRushGap * i + 1, [troop]);
 			i ++;
-		}			
+		}
 	}
 	
 	public function rush(troop:Troop):Void
 	{
-		if ( !building.popTroop() ) 
+		if ( !building.popTroop(troop) ) 
 			return;
-		
 		troop.rush(this);
 	}
-
-	public function hit(troopId:Int, damage:Float) : Void
-	{
-		if( !troops.containsKey(troopId) )
-			return;
-		
-		troops.get(troopId).hit(damage);
-	}
-	
 #end
-		
+
 	public function getIncreasedId() : Int
 	{
 		troopId ++;
