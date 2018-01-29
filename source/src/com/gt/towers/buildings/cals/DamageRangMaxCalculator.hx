@@ -1,5 +1,4 @@
 package com.gt.towers.buildings.cals;
-import com.gt.towers.constants.CardTypes;
 
 /**
  * ...
@@ -7,14 +6,18 @@ import com.gt.towers.constants.CardTypes;
  */
 class DamageRangMaxCalculator 
 {
-	public var BASE_VALUE:Float = 180;
+	public var BASE_VALUE:Float = 370;
 	public function new () {}
 	public function get(type:Int, level:Int):Float 
 	{
-		if( type < CardTypes.C500 )
-			return BASE_VALUE ;
+		return switch( type )
+		{
+			/*case 501 : 135;
+			case 502 : 180;
+			case 503 : 255;
+			case 504 : 160;*/
 		
-		return BASE_VALUE + Math.log(level) * ( type == CardTypes.C502 ? 50 : 30 );
+			default : 370;
+		}
 	}
-
 }

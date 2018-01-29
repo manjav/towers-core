@@ -1,5 +1,4 @@
 package com.gt.towers.buildings.cals;
-import com.gt.towers.constants.CardTypes;
 
 /**
  * ...
@@ -7,7 +6,7 @@ import com.gt.towers.constants.CardTypes;
  */
 class TroopPowerCalculator 
 {
-	public var BASE_VALUE:Float = 1.5;
+	public var BASE_VALUE:Float = 1.7;
 	public function new () {}
 	public function get(type:Int, level:Int):Float 
 	{
