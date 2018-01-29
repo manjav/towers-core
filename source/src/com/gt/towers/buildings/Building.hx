@@ -99,8 +99,8 @@ class Building extends AbstractBuilding
 	//	if ( place==null || !place.enabled )
 	//		return;
 	//	_health = Math.min(_health + healRate, place.health);
-		if( troopType > -1 )
-			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + ((place.mode + 1) * 0.025) );
+		if( troopType > -1 && place.mode == 1 )
+			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + 0.02 );
 		
 		if ( _health < place.health )
 			_health = Math.min(_health + 0.1, place.health);
