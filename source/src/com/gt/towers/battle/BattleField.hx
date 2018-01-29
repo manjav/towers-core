@@ -200,7 +200,7 @@ class BattleField
 	#end
 	public function getTime(score:Int):Int
 	{
-		if ( map == null || score< 0 || score > 2 )
+		if ( map == null || score< 0 || score > 3 )
 			return 0;
 		return map.times.get(score) + extraTime;
 	}
