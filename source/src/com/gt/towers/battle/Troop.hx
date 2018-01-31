@@ -50,6 +50,8 @@ class Troop
 	}
 	public function rush(source:Place):Void
 	{
+		if( path.size() == 0 )
+			return;
 		var destination:Place = path.shift();
 		if( destination == null || health <= 0 )
 			return ;
