@@ -116,9 +116,9 @@ class FieldProvider
 		}*/
 		
 		
-		battles.set( "battle_501" , new Battle_501( 501, "battle_501", "", "", "", "100,150,250,20" ) );
-		battles.set( "battle_502" , new Battle_502( 502, "battle_502", "", "", "", "100,150,250,20" ) );
-		battles.set( "battle_503" , new Battle_402( 503, "battle_503", "", "", "", "100,150,250,20" ) );
+		battles.set( "battle_501" , new Battle_501( 501, "battle_501", "", "", "", "100,150,300,20" ) );
+		battles.set( "battle_502" , new Battle_502( 502, "battle_502", "", "", "", "100,150,300,20" ) );
+		battles.set( "battle_503" , new Battle_402( 503, "battle_503", "", "", "", "100,150,300,20" ) );
 		/*if ( game.appVersion > 2030 )
 		{
 			battles.set( "battle_504" , new Battle_407( 504, "battle_504", "", "", "", "100,150,250,20" ) );
@@ -126,9 +126,9 @@ class FieldProvider
 		}
 		*/
 		
-		battles.set( "battle_601" , new Battle_601( 601, "battle_601", "", "", "", "100,150,250,20" ) );
-		battles.set( "battle_602" , new Battle_602( 602, "battle_602", "", "", "", "100,150,250,20" ) );
-		battles.set( "battle_603" , new Battle_502( 603, "battle_603", "", "", "", "100,150,250,20" ) );
+		battles.set( "battle_601" , new Battle_601( 601, "battle_601", "", "", "", "100,150,320,20" ) );
+		battles.set( "battle_602" , new Battle_602( 602, "battle_602", "", "", "", "100,150,320,20" ) );
+		battles.set( "battle_603" , new Battle_502( 603, "battle_603", "", "", "", "100,150,320,20" ) );
 		/*if ( game.appVersion > 2030 )
 		{
 			battles.set( "battle_604" , new Battle_309( 604, "battle_604", "", "", "", "100,150,250,20" ) );
@@ -136,9 +136,9 @@ class FieldProvider
 		}*/
 		
 		
-		battles.set( "battle_701" , new Battle_601( 701, "battle_701", "", "", "", "150,200,300,20" ) );
-		battles.set( "battle_702" , new Battle_602( 702, "battle_702", "", "", "", "150,200,300,20" ) );
-		battles.set( "battle_703" , new Battle_310( 703, "battle_703", "", "", "", "150,200,300,20" ) );
+		battles.set( "battle_701" , new Battle_601( 701, "battle_701", "", "", "", "150,200,360,20" ) );
+		battles.set( "battle_702" , new Battle_602( 702, "battle_702", "", "", "", "150,200,360,20" ) );
+		battles.set( "battle_703" , new Battle_310( 703, "battle_703", "", "", "", "150,200,360,20" ) );
 		/*if ( game.appVersion > 2030 )
 		{
 			battles.set( "battle_704" , new Battle_403( 704, "battle_704", "", "", "", "150,200,300,20" ) );
@@ -146,9 +146,9 @@ class FieldProvider
 		}*/
 		
 		
-		battles.set( "battle_801" , new Battle_601( 801, "battle_801", "", "", "", "150,200,300,20" ) );
-		battles.set( "battle_802" , new Battle_602( 802, "battle_802", "", "", "", "150,200,300,20" ) );
-		battles.set( "battle_803" , new Battle_202( 803, "battle_803", "", "", "", "150,200,300,20" ) );
+		battles.set( "battle_801" , new Battle_601( 801, "battle_801", "", "", "", "150,200,360,20" ) );
+		battles.set( "battle_802" , new Battle_602( 802, "battle_802", "", "", "", "150,200,360,20" ) );
+		battles.set( "battle_803" , new Battle_202( 803, "battle_803", "", "", "", "150,200,360,20" ) );
 		/*if ( game.appVersion > 2030 )
 		{
 			battles.set( "battle_804" , new Battle_305( 804, "battle_804", "", "", "", "150,200,300,20" ) );
@@ -156,9 +156,9 @@ class FieldProvider
 		}*/
 		
 		
-		battles.set( "battle_901" , new Battle_601( 901, "battle_901", "", "", "", "150,200,300,20" ) );
-		battles.set( "battle_902" , new Battle_602( 902, "battle_902", "", "", "", "150,200,300,20" ) );
-		battles.set( "battle_903" , new Battle_502( 903, "battle_903", "", "", "", "150,200,300,20" ) );
+		battles.set( "battle_901" , new Battle_601( 901, "battle_901", "", "", "", "150,200,360,20" ) );
+		battles.set( "battle_902" , new Battle_602( 902, "battle_902", "", "", "", "150,200,360,20" ) );
+		battles.set( "battle_903" , new Battle_502( 903, "battle_903", "", "", "", "150,200,360,20" ) );
 		/*if ( game.appVersion > 2030 )
 		{
 			battles.set( "battle_904" , new Battle_205( 904, "battle_904", "", "", "", "150,200,300,20" ) );
