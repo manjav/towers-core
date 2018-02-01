@@ -19,6 +19,7 @@ class SegmentType
 	public static var S11_LOBBY_SEARCH:Int = 11;
 	public static var S12_LOBBY_CREATE:Int = 12;
 	public static var S13_FRIENDS:Int = 13;
+	public static var S14_LOBBY_PUBLIC:Int = 14;
 	
 	public static function getDashboardsSegments():IntList
 	{
@@ -36,6 +37,7 @@ class SegmentType
 		ret.push( hasRoom ? S10_LOBBY_MAIN : S11_LOBBY_SEARCH);
 		ret.push( hasRoom ? S11_LOBBY_SEARCH : S12_LOBBY_CREATE );
 		ret.push( S13_FRIENDS );
+		ret.push( S14_LOBBY_PUBLIC );
 		return ret;
 	}
 
