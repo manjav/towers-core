@@ -71,38 +71,66 @@ class FieldProvider
 		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "80,150,240,0" ) );
 		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "80,150,240,0" ) );
 	
-	/*	battles.set( "battle_101" , new Battle_101( 101, "battle_101", "80,160,260,0" ) );
+		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "80,160,260,0" ) );
 		battles.set( "battle_102" , new Battle_102( 102, "battle_102", "80,160,260,0" ) );
 		battles.set( "battle_103" , new Battle_103( 103, "battle_103", "80,160,260,0" ) );
 		battles.set( "battle_104" , new Battle_104( 104, "battle_104", "80,160,260,0" ) );
 		battles.set( "battle_105" , new Battle_105( 105, "battle_105", "80,160,260,0" ) );
-		battles.set( "battle_106" , new Battle_106( 106, "battle_106", "80,160,260,0" ) );
-		battles.set( "battle_107" , new Battle_107( 107, "battle_107", "90,160,260,0" ) );
-	
+		
 		battles.set( "battle_201" , new Battle_201( 201, "battle_201", "100,130,210,0" ) );
 		battles.set( "battle_202" , new Battle_202( 202, "battle_202", "100,130,210,0" ) );
-		battles.set( "battle_203" , new Battle_102( 203, "battle_203", "75,90,110,0" ) );
+		battles.set( "battle_203" , new Battle_203( 203, "battle_203", "100,130,210,0" ) );
+		battles.set( "battle_204" , new Battle_204( 204, "battle_204", "100,130,210,0" ) );
 	
 		battles.set( "battle_301" , new Battle_301( 301, "battle_301", "100,150,250,20" ) );
 		battles.set( "battle_302" , new Battle_302( 302, "battle_302", "100,150,250,20" ) );
-		battles.set( "battle_303" , new Battle_202( 303, "battle_303", "100,150,250,20" ) );
+		battles.set( "battle_303" , new Battle_303( 303, "battle_303", "100,150,250,20" ) );
+		battles.set( "battle_304" , new Battle_304( 304, "battle_304", "100,150,250,20" ) );
+		battles.set( "battle_305" , new Battle_305( 305, "battle_305", "100,150,250,20" ) );
 
 		
 		battles.set( "battle_401" , new Battle_401( 401, "battle_401", "100,150,250,20" ) );
 		battles.set( "battle_402" , new Battle_402( 402, "battle_402", "100,150,250,20" ) );
-		battles.set( "battle_403" , new Battle_302( 403, "battle_403", "100,150,250,20" ) );
+		battles.set( "battle_403" , new Battle_303( 403, "battle_403", "100,150,250,20" ) );
+		battles.set( "battle_404" , new Battle_404( 404, "battle_404", "100,150,250,20" ) );
+		battles.set( "battle_405" , new Battle_405( 405, "battle_405", "100,150,250,20" ) );
+		battles.set( "battle_406" , new Battle_406( 406, "battle_406", "100,150,250,20" ) );
+		battles.set( "battle_407" , new Battle_407( 407, "battle_407", "100,150,250,20" ) );
+		battles.set( "battle_408" , new Battle_408( 408, "battle_408", "100,150,250,20" ) );
 	
 		battles.set( "battle_501" , new Battle_501( 501, "battle_501", "100,150,300,20" ) );
 		battles.set( "battle_502" , new Battle_502( 502, "battle_502", "100,150,300,20" ) );
-		battles.set( "battle_503" , new Battle_402( 503, "battle_503", "100,150,300,20" ) );
+		battles.set( "battle_503" , new Battle_503( 503, "battle_503", "100,150,300,20" ) );
+		battles.set( "battle_504" , new Battle_504( 504, "battle_504", "100,150,300,20" ) );
+		battles.set( "battle_505" , new Battle_505( 505, "battle_505", "100,150,300,20" ) );
 
 		battles.set( "battle_601" , new Battle_601( 601, "battle_601", "100,150,320,20" ) );
 		battles.set( "battle_602" , new Battle_602( 602, "battle_602", "100,150,320,20" ) );
-		battles.set( "battle_603" , new Battle_502( 603, "battle_603", "100,150,320,20" ) );
+		battles.set( "battle_603" , new Battle_603( 603, "battle_603", "100,150,320,20" ) );
+		battles.set( "battle_604" , new Battle_604( 604, "battle_604", "100,150,320,20" ) );
+		battles.set( "battle_605" , new Battle_605( 605, "battle_605", "100,150,320,20" ) );
+		battles.set( "battle_606" , new Battle_606( 606, "battle_606", "100,150,320,20" ) );
+		battles.set( "battle_607" , new Battle_607( 607, "battle_607", "100,150,320,20" ) );
+		battles.set( "battle_608" , new Battle_608( 608, "battle_608", "100,150,320,20" ) );
+		battles.set( "battle_609" , new Battle_609( 609, "battle_609", "100,150,320,20" ) );
+		battles.set( "battle_610" , new Battle_610( 610, "battle_610", "100,150,320,20" ) );
+		battles.set( "battle_611" , new Battle_611( 611, "battle_611", "100,150,320,20" ) );
+		battles.set( "battle_612" , new Battle_612( 612, "battle_612", "100,150,320,20" ) );
+		battles.set( "battle_613" , new Battle_613( 613, "battle_613", "100,150,320,20" ) );
 	
-		battles.set( "battle_701" , new Battle_601( 701, "battle_701", "150,200,360,20" ) );
-		battles.set( "battle_702" , new Battle_602( 702, "battle_702", "150,200,360,20" ) );
-		battles.set( "battle_703" , new Battle_310( 703, "battle_703", "150,200,360,20" ) );*/
+		battles.set( "battle_701" , new Battle_701( 701, "battle_701", "150,200,360,20" ) );
+		battles.set( "battle_702" , new Battle_702( 702, "battle_702", "150,200,360,20" ) );
+		battles.set( "battle_703" , new Battle_703( 703, "battle_703", "150,200,360,20" ) );
+		battles.set( "battle_704" , new Battle_704( 704, "battle_704", "150,200,360,20" ) );
+		battles.set( "battle_705" , new Battle_705( 705, "battle_705", "150,200,360,20" ) );
+		battles.set( "battle_706" , new Battle_706( 706, "battle_706", "150,200,360,20" ) );
+		battles.set( "battle_707" , new Battle_707( 707, "battle_707", "150,200,360,20" ) );
+		battles.set( "battle_708" , new Battle_708( 708, "battle_708", "150,200,360,20" ) );
+		battles.set( "battle_709" , new Battle_709( 709, "battle_709", "150,200,360,20" ) );
+		battles.set( "battle_710" , new Battle_710( 710, "battle_710", "150,200,360,20" ) );
+		battles.set( "battle_711" , new Battle_711( 711, "battle_711", "150,200,360,20" ) );
+		battles.set( "battle_712" , new Battle_712( 712, "battle_712", "150,200,360,20" ) );
+		battles.set( "battle_713" , new Battle_713( 713, "battle_713", "150,200,360,20" ) );
 	
 		battles.set( "battle_801" , new Battle_801( 801, "battle_801", "150,200,360,20" ) );
 		battles.set( "battle_802" , new Battle_802( 802, "battle_802", "150,200,360,20" ) );
