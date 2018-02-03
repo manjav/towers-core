@@ -71,7 +71,7 @@ class FieldProvider
 		battles.set( "battle_1" , new Battle_1( 1, "battle_1", "80,150,240,0" ) );
 		battles.set( "battle_2" , new Battle_2( 2, "battle_2", "80,150,240,0" ) );
 	
-		battles.set( "battle_101" , new Battle_101( 101, "battle_101", "80,160,260,0" ) );
+	/*	battles.set( "battle_101" , new Battle_101( 101, "battle_101", "80,160,260,0" ) );
 		battles.set( "battle_102" , new Battle_102( 102, "battle_102", "80,160,260,0" ) );
 		battles.set( "battle_103" , new Battle_103( 103, "battle_103", "80,160,260,0" ) );
 		battles.set( "battle_104" , new Battle_104( 104, "battle_104", "80,160,260,0" ) );
@@ -110,6 +110,6 @@ class FieldProvider
 	
 		battles.set( "battle_901" , new Battle_601( 901, "battle_901", "150,200,360,20" ) );
 		battles.set( "battle_902" , new Battle_602( 902, "battle_902", "150,200,360,20" ) );
-		battles.set( "battle_903" , new Battle_502( 903, "battle_903", "150,200,360,20" ) );
+		battles.set( "battle_903" , new Battle_502( 903, "battle_903", "150,200,360,20" ) );*/
 	}
 }
