@@ -27,6 +27,7 @@ class BattleField
 	{
 		var isQuest = mapName.substr(0, 6) == "quest_";
 		var singleMode = game_1 == null;
+		trace(mapName, troopType, hasExtraTime);
 		if( isQuest )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
@@ -34,7 +35,6 @@ class BattleField
 			
 		if( hasExtraTime )
 			extraTime = map.times.get(3);
-			
 		
 		places = new PlaceList();
 		var p = 0;
