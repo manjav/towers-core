@@ -81,6 +81,10 @@ class FieldProvider
 		battles.set( "battle_202", new Battle_202( 202, "battle_202", "100,130,210,0" ) );
 		battles.set( "battle_203", new Battle_203( 203, "battle_203", "100,130,210,0" ) );
 		battles.set( "battle_204", new Battle_204( 204, "battle_204", "100,130,210,0" ) );
+		battles.set( "battle_205", new Battle_205( 205, "battle_205", "100,130,210,0" ) );
+		battles.set( "battle_206", new Battle_206( 206, "battle_206", "100,130,210,0" ) );
+		battles.set( "battle_207", new Battle_207( 207, "battle_207", "100,130,210,0" ) );
+		battles.set( "battle_208", new Battle_208( 208, "battle_208", "100,130,210,0" ) );
 	
 		battles.set( "battle_301", new Battle_301( 301, "battle_301", "100,150,250,20" ) );
 		battles.set( "battle_302", new Battle_302( 302, "battle_302", "100,150,250,20" ) );
