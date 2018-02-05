@@ -124,17 +124,16 @@ class Player
 		if ( point == 0 )
 			point = get_point();
 			
-		var arena = 0;
 		var arenaKeys = game.arenas.keys();
-		while ( arena < arenaKeys.length )
+		var arena = arenaKeys.length - 1;
+		while ( arena >= 0)
 		{
-			if ( point < game.arenas.get( arenaKeys[arena] ).max )
+			if ( point > game.arenas.get( arenaKeys[arena] ).max )
 				return arena;
-			arena ++;
+			arena --;
 		}
 		return 0 ;
 	}
-	
 	
 	public function has(IntIntMap:IntIntMap):Bool
 	{
