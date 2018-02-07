@@ -119,23 +119,23 @@ class Player
 		}
 	}
 	
-	public function get_arena(point:Int):Int
+	public function get_arena(point:Int) : Int
 	{
 		if ( point == 0 )
 			point = get_point();
 			
 		var arenaKeys = game.arenas.keys();
 		var arena = arenaKeys.length - 1;
-		while ( arena >= 0)
+		while ( arena >= 0 )
 		{
 			if ( point > game.arenas.get( arenaKeys[arena] ).max )
-				return arena;
+				break;
 			arena --;
 		}
-		return 0 ;
+		return cast(Math.min(arena + 1, arenaKeys.length-1), Int);
 	}
 	
-	public function has(IntIntMap:IntIntMap):Bool
+	public function has(IntIntMap:IntIntMap) : Bool
 	{
 		var i:Int = 0;
 		var keis = IntIntMap.keys();
