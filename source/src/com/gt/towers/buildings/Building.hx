@@ -37,7 +37,7 @@ class Building extends AbstractBuilding
 			else
 				level = 1;
 		}
-		super( game, type, level + (place == null ? 0 : place.levelCoef) );
+		super( game, type, level );
 		
 		/*#if java 
 		if(place != null)
@@ -208,7 +208,7 @@ class Building extends AbstractBuilding
 		//game.tracer.log(place.index + " t:" + type + " g: " + gap);
 	}
 	
-	public function popTroop():Bool
+	public function popTroop() : Bool
 	{
 		var ret = (_population - 1 > 0);
 		if(ret)
@@ -226,13 +226,11 @@ class Building extends AbstractBuilding
 		return ret;
 	}
 	
-	function occupy(troop:Troop) 
+	function occupy(troop:Troop) : Void
 	{
 		troopType = troop.type;
 		place.enabled = true;
-		place.levelCoef = troop.building.place.levelCoef;
-		place.healthCoef = troop.building.place.healthCoef;
-		_population = place.healthCoef > 1 ? Math.min(get_capacity(), place.healthCoef) : 0;
+		_population = 0;
 		if ( type == BuildingType.B01_CAMP )
 		{
 			place.game = game = troop.building.game;
@@ -241,9 +239,8 @@ class Building extends AbstractBuilding
 		place.setBuilidng(BuildingType.B01_CAMP, troop.building.game);
 	}
 	#end
-	
-	
-	public function getAbstract(type:Int):AbstractBuilding
+
+	public function getAbstract(type:Int) : AbstractBuilding
 	{
 		if ( !game.player.buildings.exists(type) )
 			return null;

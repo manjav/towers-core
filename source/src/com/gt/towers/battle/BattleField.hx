@@ -73,18 +73,7 @@ class BattleField
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
-			place = new Place((placeData.troopType == 1 && game_1 != null) ? game_1 : game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
-			place.levelCoef = (placeData.troopType == 1 && game_1 == null && !isQuest) ? (difficulty - arena) * 1 : 0;
-			if( place.levelCoef < 0 )
-				place.levelCoef = 0;
-				
-			if( game_0.player.hardMode )
-				place.healthCoef = 0.5;
-			else if ( map.isQuest && map.index < 3 )
-				place.healthCoef = 2.1;
-			else
-				place.healthCoef = 1;
-				
+			place = new Place(placeData.troopType == 1 ? game_1 : game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
 			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);

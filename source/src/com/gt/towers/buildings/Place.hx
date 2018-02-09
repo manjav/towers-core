@@ -27,8 +27,6 @@ class Place
 	
 	private var troopId:Int;
 	public var game:Game;
-	public var levelCoef:Int = 0;
-	public var healthCoef:Float = 1;
 
 	public function new(game:Game, index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{
@@ -48,7 +46,7 @@ class Place
 	{
 		var path:PlaceList = PathFinder.find(this, destination, all);
 
-		if(path == null || destination.building == building)
+		if( path == null || destination.building == building )
 			return;
 		
 		var i:Int = 0;
