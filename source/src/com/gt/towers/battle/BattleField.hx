@@ -26,8 +26,8 @@ class BattleField
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
 		var isQuest = mapName.substr(0, 6) == "quest_";
-		var singleMode = game_1 == null;
-		trace(mapName, troopType, hasExtraTime);
+		var singleMode = game_1.player.buildings.keys().length == 0;
+
 		if( isQuest )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
@@ -42,11 +42,11 @@ class BattleField
 		var placeData:PlaceData = null;
 		var place:Place = null;
 		
+		game_0.player.hardMode = false;
 		if ( singleMode )
 		{
 			if ( isQuest )
 			{
-				game_0.player.hardMode = false;
 				if( map.index == 2 )
 				{
 					game_0.player.hardMode = game_0.player.isHardMode();
@@ -67,9 +67,15 @@ class BattleField
 					difficulty = arena + winStreak + 2;
 				else
 					difficulty = arena;
+				
+				game_1.player.resources.set(ResourceType.POINT, game_0.player.get_point() + difficulty * 10 * game_0.player.get_arena(0));
 			}
 		}
 		
+		if( singleMode )
+			game_1.fillAllBuildings();
+		
+		// create places and buildings
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
@@ -77,10 +83,11 @@ class BattleField
 			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
-			
+		
 			p ++;
 		}
 
+		// create links of places
 		p = 0;
 		var l = 0;
 		while ( p < placesLen )

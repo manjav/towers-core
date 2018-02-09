@@ -3,9 +3,12 @@ import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
+import com.gt.towers.buildings.Building;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.socials.Lobby;
 import com.gt.towers.utils.maps.IntArenaMap;
+import com.gt.towers.utils.maps.IntBuildingMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 #if java
@@ -31,9 +34,7 @@ class Game
 	public var arenas:IntArenaMap;
 	public var lobby:Lobby;
 
-	public function new()
-	{
-	}
+	public function new(){}
 	
 	function init(data:InitData) 
 	{
@@ -60,7 +61,6 @@ class Game
 		arenas.set(9, new Arena(9, 4001,	10000,	 5, 			"44"	));
 		
 		fieldProvider = new FieldProvider(this);
-
 	}
 	
 	public function unlockedBuildingAt ( type:Int ) : Int
@@ -79,7 +79,35 @@ class Game
 			}
 			arenaIndex ++;
 		}
-		
 		return 100;
+	}
+	
+	public function fillAllBuildings() : Void
+	{
+		var baseLevel:Int = Math.round(Math.max(1, Math.log(player.get_point() / 250) * 4) + 2);
+		var arenaIndex = 0;
+		player.buildings = new IntBuildingMap();
+		while ( arenaIndex < arenas.keys().length )
+		{
+			var arena = arenas.get(arenaIndex);
+			if ( player.get_point() < arena.min )
+				break;
+
+			var cardsLen:Int = arena.cards.size() - 1;
+			while ( cardsLen >= 0 )
+			{
+				var type = arena.cards.get(cardsLen);
+				var level = baseLevel + 4 - BuildingType.get_improve(type);
+				trace("bot building " + type + ", level: " + level );
+				player.buildings.set(type, BuildingType.instantiate( this, type, null, 0, level ) );
+				cardsLen --;
+			}
+			arenaIndex ++;
+		}
+	}
+	
+	public function isBot() : Bool
+	{
+		return player.id < 10000;
 	}
 }
