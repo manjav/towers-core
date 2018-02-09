@@ -26,8 +26,6 @@ class Place
 	
 	private var troopId:Int;
 	public var game:Game;
-	public var levelOffset:Int = 0;
-	public var powerCoef:Float = 1;
 	public var battlefield:BattleField;
 
 	public function new(game:Game, battlefield:BattleField, index:Int, x:Float, y:Float, health:Float, botEnabled:Bool, mode:Int) 
@@ -52,7 +50,6 @@ class Place
 		var p:Int = links.size() - 1;
 		while ( p >= 0 )
 		{
-		//	trace(p, links.get(p).building.troopType, troopType);
 			if( links.get(p).building.troopType == troopType )
 				ret.push(links.get(p));
 

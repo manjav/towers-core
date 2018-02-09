@@ -29,8 +29,8 @@ class Troop
 		this.buildingType = building.type;
 		//this.building = building;
 		this.type = building.troopType;
-		this.health = building.troopHealth * (this.type == 0 ? building.place.powerCoef : 1 / building.place.powerCoef );
-		this.power = building.troopPower * (this.type == 0 ? building.place.powerCoef : 1 / building.place.powerCoef );
+		this.health = building.troopHealth;
+		this.power = building.troopPower;
 		this.speed = building.troopSpeed;
 		this.rushDelay =  building.troopRushGap;
 	}

@@ -50,7 +50,7 @@ class Building extends AbstractBuilding
 			else
 				level = 1;
 		}
-		super( game, type, level + (place == null ? 0 : place.levelOffset) );
+        super( game, type, level );
 	#if java
 		this.troops = new java.util.ArrayDeque<Troop>();
 	#end	
@@ -160,8 +160,6 @@ class Building extends AbstractBuilding
 		reset(troop.type);
 		//place.game = game = troop.building.game;
 		place.enabled = true; 
-		//place.levelOffset = troop.building.place.levelOffset;
-		//place.powerCoef = troop.building.place.powerCoef;
 		setFeatures(); 
 		dispatchEvent(place.index, BuildingEvent.OCCUPIED, null);
 	}
