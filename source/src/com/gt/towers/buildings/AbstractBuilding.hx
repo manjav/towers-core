@@ -28,7 +28,7 @@ class AbstractBuilding
 		this.type = type;
 		this._level = level;
 		this.category = BuildingType.get_category(type);
-		this.improveLevel = type % 10;
+		this.improveLevel = BuildingType.get_improve(type);
 	}
 	
 	public function get_level():Int

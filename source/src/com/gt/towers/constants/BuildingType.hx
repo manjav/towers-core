@@ -52,7 +52,10 @@ class BuildingType
 	{
 		return Math.floor(type / 10) * 10;
 	}
-
+	public static function get_improve(type:Int):Int
+	{
+		return type % 10;
+	}
 	public static function instantiate(game:Game, type:Int, place:Place, index:Int, level:Int = 0):Building
 	{
 		var category = get_category( type );
