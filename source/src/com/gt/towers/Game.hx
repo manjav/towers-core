@@ -66,4 +66,9 @@ class Game
 		
 		fieldProvider = new FieldProvider(this);
 	}
+	
+	public function isBot() : Bool
+    {
+        return player.id < 10000;
+    }
 }
