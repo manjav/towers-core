@@ -109,6 +109,7 @@ class CardTypes
 		 *  Health		= 1
 		 * 	Power		= 2
 		 * 	Generation	= 3
+		 * 	Defencive	= 4
 		 
 		return type / 10;
 	}*/

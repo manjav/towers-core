@@ -1,6 +1,7 @@
 package com.gt.towers;
 import com.gt.towers.Game;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.buildings.cals.RarityCalculator;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
@@ -229,4 +230,59 @@ class Player
 		return troopType ==-1 ? -1 : (this.troopType == troopType ? 0 : 1);
 	}
 	#end
+	
+	public function get_donationLimit(game:Game, cardType:Int):Int
+	{
+		var r:RarityCalculator = new RarityCalculator();
+		var rarity:Int = r.get(cardType);
+		
+		switch( game.player.get_arena(0) )
+		{
+			case 1:
+				if ( rarity == 0 ) 		return 30;
+				else if ( rarity == 1 )	return 6;
+				else if ( rarity == 2 )	return 1;
+				
+			case 2:
+				if ( rarity == 0 ) 		return 30;
+				else if ( rarity == 1 )	return 6;
+				else if ( rarity == 2 )	return 1;
+				
+			case 3:
+				if ( rarity == 0 ) 		return 30;
+				else if ( rarity == 1 )	return 6;
+				else if ( rarity == 2 )	return 1;
+				
+			case 4:
+				if ( rarity == 0 ) 		return 60;
+				else if ( rarity == 1 )	return 12;
+				else if ( rarity == 2 )	return 2;
+				
+			case 5:
+				if ( rarity == 0 ) 		return 60;
+				else if ( rarity == 1 )	return 12;
+				else if ( rarity == 2 )	return 2;
+				
+			case 6:
+				if ( rarity == 0 ) 		return 90;
+				else if ( rarity == 1 )	return 18;
+				else if ( rarity == 2 )	return 3;
+				
+			case 7:
+				if ( rarity == 0 ) 		return 110;
+				else if ( rarity == 1 )	return 22;
+				else if ( rarity == 2 )	return 3;
+				
+			case 8:
+				if ( rarity == 0 ) 		return 130;
+				else if ( rarity == 1 )	return 25;
+				else if ( rarity == 2 )	return 4;
+				
+			case 9:
+				if ( rarity == 0 ) 		return 140;
+				else if ( rarity == 1 )	return 27;
+				else if ( rarity == 2 )	return 5;
+		}
+		return 0;
+	}
 }
