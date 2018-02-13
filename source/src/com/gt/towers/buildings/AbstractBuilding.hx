@@ -163,7 +163,7 @@ class AbstractBuilding
 		else if ( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 			
-		return game.player.resources.exists(type);
+		return game.player.buildings.exists(type);
 	}
 
 	
