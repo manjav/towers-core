@@ -88,4 +88,10 @@ class PathFinder
 		}
 		return false;
 	}
+	
+	public static function getDistance(source:Place, destination:Place) : Float
+	{
+		return Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
+	}
+	
 }

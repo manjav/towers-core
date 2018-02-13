@@ -1,10 +1,9 @@
 package com.gt.towers.battle;
 import com.gt.towers.buildings.Building;
-import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.utils.GTimer;
+import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
-import haxe.Timer;
 
 /**
  * ...
@@ -44,9 +43,8 @@ class Troop
 		if( destination == null || health <= 0 )
 			return ;
 		
-		var distance:Float = Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
-		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.get_troopSpeed() * distance), [destination]);
-		//building.game.tracer.log("troop-> rush id:" + id );
+		timeoutId = GTimer.setTimeout(onTroopArrived, Math.round(building.get_troopSpeed() * PathFinder.getDistance(source, destination)), [destination]);
+		//trace("troop-> rush id:" + id );
 	}
 	private function onTroopArrived(destination:Place):Void
 	{
@@ -54,16 +52,16 @@ class Troop
 			return ;
 			
 		var allow = destination.building.pushTroops(this);
-		if ( allow && path.size() > 0)
+		if( allow && path.size() > 0 )
 		{
 			timeoutId = GTimer.setTimeout(destination.rush, building.get_exitGap(), [this]);
 		}
-		//building.game.tracer.log("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
+		//trace("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
 	}
 	public function hit(damage:Float):Void
 	{
 		health -= damage;
-		//building.game.tracer.log("id:" + id + " damage:" + damage+ " health:" + health);
+		//trace("id:" + id + " damage:" + damage+ " health:" + health);
 
 		if( health <= 0 )
 			GTimer.clearTimeout(timeoutId);
