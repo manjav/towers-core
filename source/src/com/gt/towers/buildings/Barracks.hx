@@ -1,6 +1,4 @@
 package com.gt.towers.buildings;
-import com.gt.towers.constants.BuildingType;
-import com.gt.towers.utils.lists.IntList;
 
 /**
  * ...
@@ -10,6 +8,6 @@ class Barracks extends Building
 {
 	public override function get_birthRate():Float
 	{
-		return Building.BASE_BIRTH_RATE + Math.log(get_level()) * 0.10 + Math.log(improveLevel) * 0.10;
+		return Building.BASE_BIRTH_RATE + Math.log(get_level()) * 0.08 + Math.log(improveLevel) * 0.08;
 	}
 }

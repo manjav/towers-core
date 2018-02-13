@@ -4,7 +4,6 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
-import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.lists.IntList;
 
 /**
@@ -13,7 +12,7 @@ import com.gt.towers.utils.lists.IntList;
  */
 class Building extends AbstractBuilding
 {
-	public static var TIME_SCALE:Float = 0.90;
+	public static var TIME_SCALE:Float = 1;
 	
 	public var place:Place;
 	public var index:Int;
@@ -76,12 +75,12 @@ class Building extends AbstractBuilding
 	public static var BASE_EXIT_GAP:Int = 350;
 	public function get_exitGap():Int 
 	{
-		return Math.round(BASE_EXIT_GAP * (1/TIME_SCALE));
+		return Math.round(BASE_EXIT_GAP * (1 / TIME_SCALE));
 	}
-	public static var BASE_TROOP_SPEED:Int = 2300;
+	public static var BASE_TROOP_SPEED:Int = 2000;
 	public function get_troopSpeed():Int
 	{
-		return Math.round(BASE_TROOP_SPEED *  (1/TIME_SCALE));
+		return Math.round(BASE_TROOP_SPEED *  (1 / TIME_SCALE));
 	}
 	public static var BASE_TROOP_POWER:Float = 1;
 	public function get_troopPower():Float
@@ -90,7 +89,7 @@ class Building extends AbstractBuilding
 	}
 	
 
-	public static var BASE_BIRTH_RATE:Float = 0.22;
+	public static var BASE_BIRTH_RATE:Float = 0.2;
 	public function get_birthRate():Float
 	{
 		return BASE_BIRTH_RATE * TIME_SCALE;
@@ -105,7 +104,7 @@ class Building extends AbstractBuilding
 	public static var BASE_DAMAGE_GAP:Int = 1000;
 	public function get_damageGap():Int
 	{
-		return Math.round(BASE_DAMAGE_GAP *  (1/TIME_SCALE));
+		return Math.round(BASE_DAMAGE_GAP *  (1 / TIME_SCALE));
 	}
 	public static var BASE_DAMAGE_RADIUS:Float = 50;
 	public function get_damageRadius():Float
@@ -116,9 +115,9 @@ class Building extends AbstractBuilding
 	public function get_options():IntList
 	{
 		var ret = new IntList();
-		if(!game.player.inTutorial())
+		if( !game.player.inTutorial() )
 			ret.push( BuildingType.B01_CAMP );
-		if ( BuildingType.getAll().exists( type + 1 ) )
+		if( BuildingType.getAll().exists( type + 1 ) )
 			ret.push( BuildingType.IMPROVE );
 		return ret;
 	}
@@ -129,17 +128,15 @@ class Building extends AbstractBuilding
 	
 	public function improvable(type:Int):Bool 
 	{
-		if (type == this.type)
+		if( type == this.type)
 			return false;
-		if (type == BuildingType.B01_CAMP)
+		if( type == BuildingType.B01_CAMP)
 			return true;
-		if ( !unlocked(type) )
+		if( !unlocked(type) )
 			return false;
-			
-/*	#if java
-		game.tracer.log("type "+ type + " equalsCategory " + equalsCategory(this.type+1) + " _population " + _population);
-	#end*/
-		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type%10==1)) &&  _population >= get_capacity() ;
+		
+		//trace("type "+ type ,this.type, " equalsCategory " + equalsCategory(this.type+1) , " _population " + _population , " get_capacity " + get_capacity());
+		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type % 10 == 1)) &&  _population >= get_capacity();
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -160,16 +157,17 @@ class Building extends AbstractBuilding
 	#if java
 	public function improve(type:Int):Bool
 	{
-		if ( !improvable(type) )
+		if( !improvable(type) )
 			return false;
 			
-		if ( type != BuildingType.B01_CAMP )
+		if( type != BuildingType.B01_CAMP )
 			_population -= Math.round( get_capacity() / 2 );
 		
-		if ( type == BuildingType.IMPROVE )
+		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
-			
-		if( !equalsCategory(type) )
+		
+		//trace("improved", index, type);
+	if( !equalsCategory(type) )
 		{
 			place.setBuilidng(type, game);
 			return true;

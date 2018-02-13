@@ -1,6 +1,4 @@
 package com.gt.towers.buildings;
-import com.gt.towers.constants.BuildingType;
-import com.gt.towers.utils.lists.IntList;
 
 /**
  * ...
@@ -22,7 +20,7 @@ class Rapid extends Building
 	
 	public override function get_troopSpeed():Int
 	{
-		return Math.round( (2000 - ( Math.log(get_level()) * Math.log(get_level()) * 0.8 + 3 * (Math.log(improveLevel)) ) * 180) * (1/Building.TIME_SCALE) );
+		return Math.round( (Building.BASE_TROOP_SPEED - 300 - ( Math.log(get_level()) * Math.log(get_level()) * 0.7 + 3 * (Math.log(improveLevel)) ) * 120) * (1/Building.TIME_SCALE) );
 	}
 	public override function get_troopPower():Float
 	{
