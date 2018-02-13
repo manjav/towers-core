@@ -179,7 +179,7 @@ class AbstractBuilding
 		else if ( type == CardTypes.IMPROVE )
 			type = this.type + 1;
 			
-		return game.player.resources.exists(type);
+		return game.player.buildings.exists(type);
 	}
 	
 	private function dispatchEvent (dispatcherId:Int, type:Int, data:Any) :Void
