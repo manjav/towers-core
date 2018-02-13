@@ -1,7 +1,6 @@
 package;
 import com.gt.towers.Game;
 import com.gt.towers.battle.BattleField;
-import com.gt.towers.battle.BattleOutcome;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.SegmentType;
 
