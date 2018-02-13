@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
@@ -14,6 +15,7 @@ import com.gt.towers.utils.lists.PlaceList;
 class Place 
 {
 	#if java
+	public var fightTime:Int = -1;
 	var troops:java.util.HashMap<Int, Troop>;
 	#end
 
@@ -42,15 +44,15 @@ class Place
 	}
 	
 	#if java
-	public function fight(destination:Place, all:PlaceList):Void
+	public function fight(destination:Place, all:PlaceList, troopsDivision:Float):Void
 	{
 		var path:PlaceList = PathFinder.find(this, destination, all);
-
+		
 		if( path == null || destination.building == building )
 			return;
 		
 		var i:Int = 0;
-		var len:Int = Math.floor(building.get_population() / 2);
+		var len:Int = Math.floor(building.get_population() * troopsDivision);
 		while( i < len )
 		{
 			var tid = getIncreasedId();
@@ -87,7 +89,24 @@ class Place
 			building.createEngine(troopType, population);
 	}
 	#end
-		
+	
+	public function getLinks(troopType:Int):PlaceList
+	{
+		if( troopType == TroopType.NONE )
+			return links;
+
+		var ret:PlaceList = new PlaceList();
+		var p:Int = links.size() - 1;
+		while ( p >= 0 )
+		{
+			if( links.get(p).building.troopType == troopType )
+				ret.push(links.get(p));
+			
+			p --;
+		}
+		return ret;
+	}
+	
 	public function getIncreasedId() : Int
 	{
 		troopId ++;

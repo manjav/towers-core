@@ -236,6 +236,11 @@ class Building extends AbstractBuilding
 		}
 		place.setBuilidng(BuildingType.B01_CAMP, troop.building.game);
 	}
+	
+	public function getPower() : Float
+	{
+		return _population * get_troopPower();
+	}
 	#end
 
 	public function getAbstract(type:Int) : AbstractBuilding

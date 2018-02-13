@@ -55,7 +55,7 @@ class BattleField
 					map.places.get(0).enabled = game_0.player.hardMode;
 				}
 				else
-					difficulty = Math.round(map.index / 6);
+					difficulty = Math.round(map.index / 5) - 1;
 			}
 			else
 			{
@@ -68,7 +68,8 @@ class BattleField
 				else
 					difficulty = arena;
 				
-				game_1.player.resources.set(ResourceType.POINT, game_0.player.get_point() + difficulty * 10 * game_0.player.get_arena(0));
+				if( difficulty != 0 )
+					game_1.player.resources.set(ResourceType.POINT, game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) );
 			}
 		}
 		
@@ -104,23 +105,24 @@ class BattleField
 		}
 	}
 
-	public function getAllTowers(troopType:Int):PlaceList
+	public function getPlacesByTroopType(troopType:Int, onlyLinked:Bool = false ):PlaceList
 	{
-		if( troopType == TroopType.NONE )
+		if( troopType == TroopType.NONE && !onlyLinked )
 			return places;
 
 		var ret:PlaceList = new PlaceList();
 		var p:Int = places.size() - 1;
 		while ( p >= 0 )
 		{
-			if( places.get(p).building.troopType == troopType )
-				ret.push(places.get(p));
-
+			//trace(p, troopType,  places.get(p).building.troopType, linked, places.get(p).links.size());
+			if( places.get(p).building.troopType == troopType || troopType == TroopType.NONE )
+				if( !onlyLinked || places.get(p).links.size() > 0 )
+					ret.push(places.get(p));
 			p --;
 		}
 		return ret;
 	}
-	
+		
 	#if java
 	public var now:Float = 0;
 	public var startAt:Float = 0;
