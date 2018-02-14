@@ -36,17 +36,37 @@ class StickerType
 		return ret;
 	}
 
-	
-	private static function getRandomStart():Int
+	public static function getCompatitionStickers(ratio:Float) : IntList
 	{
-		var ret = Math.floor( Math.random() * 9 );
-		if ( ret == S1_THANKS || ret == S7_REVENGE )
-			return getRandomStart();
+		var ret = new IntList();
+		if( ratio < 0 )
+		{
+			ret.push( S0_LUCKKY );
+			ret.push( S4_OOPS );
+			ret.push( S8_CURSED );
+		}
+		else if( ratio > 0 )
+		{
+			ret.push( S2_THREAT );
+			ret.push( S5_ALL_YOU_GOT );
+			ret.push( S6_HAHAHA );
+		}
+		else
+		{
+			ret.push( S1_THANKS );
+			ret.push( S3_WELL_PLAYED );
+		}
 		return ret;
+	}
+	
+	private static function getRandomStart(ratio:Float) : Int
+	{
+		var stks = getCompatitionStickers(ratio);
+		return stks.get(Math.floor( Math.random() * stks.size() ));
 	}
 
 	
-	private static function getAnswers(sticker:Int):IntList
+	private static function getAnswers(sticker:Int) : IntList
 	{
 		var ret:IntList = new IntList();
 		
