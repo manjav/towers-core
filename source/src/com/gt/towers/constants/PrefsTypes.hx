@@ -16,6 +16,10 @@ class PrefsTypes
     public static var OFFER_32_INSTAGRAM:Int = 32;
     public static var OFFER_33_FRIENDSHIP:Int = 33;
 	
+	public static var AUTH_41_GOOGLE:Int = 41;
+	public static var AUTH_42_GAMECENTER:Int = 42;
+	public static var AUTH_43_TELEGRAM:Int = 43;
+	
 	public static var TUTE_STEP_101:Int = 101;
 	public static var TUTE_101_START:Int = 101;
 	public static var TUTE_111_SELECT_EXCHANGE:Int = 111;
