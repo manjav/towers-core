@@ -4,6 +4,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
 
 /**
@@ -16,8 +17,6 @@ class Building extends AbstractBuilding
 	
 	public var place:Place;
 	public var index:Int;
-	
-	
 	public var troopType:Int = -1;
 	
 	var _population:Float;
@@ -29,19 +28,14 @@ class Building extends AbstractBuilding
 		this.place = place;
 		this.index = index;
 		
-		if ( level == 0 )
+		if( level == 0 )
 		{
-			if (getAbstract(type) != null)
+			if( getAbstract(type) != null)
 				level = getAbstract(type).get_level() ;
 			else
 				level = 1;
 		}
 		super( game, type, level );
-		
-		/*#if java 
-		if(place != null)
-		game.tracer.log( " type " + type + " levelCoef " + place.levelCoef );
-		#end*/
 	}
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -161,7 +155,7 @@ class Building extends AbstractBuilding
 			return false;
 			
 		if( type != BuildingType.B01_CAMP )
-			_population -= Math.round( get_capacity() / 2 );
+			_population -= Math.round( get_capacity() * ( game.player.inTutorial() && !game.player.hardMode ? 0.3 : 0.5) );
 		
 		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
@@ -228,7 +222,7 @@ class Building extends AbstractBuilding
 	{
 		troopType = troop.type;
 		place.enabled = true;
-		_population = 0;
+		_population = ( game.player.inTutorial() && !game.player.hardMode) ? get_capacity() * 0.3 : 0;
 		if ( type == BuildingType.B01_CAMP )
 		{
 			place.game = game = troop.building.game;

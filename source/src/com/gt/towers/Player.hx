@@ -184,10 +184,9 @@ class Player
 		return t;
 	}
 	
-	public function inTutorial():Bool { return (nickName == "guest" || get_questIndex() < 3 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
-	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function isHardMode():Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
-	
+	public function inTutorial() : Bool { return ((nickName == "guest" || get_questIndex() < 3) && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END && !isBot()); }
+	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
+	public function isHardMode() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool

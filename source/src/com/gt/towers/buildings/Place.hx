@@ -47,9 +47,11 @@ class Place
 	public function fight(destination:Place, all:PlaceList, troopsDivision:Float):Void
 	{
 		var path:PlaceList = PathFinder.find(this, destination, all);
-		
 		if( path == null || destination.building == building )
 			return;
+		
+		if( game.player.inTutorial() && !game.player.hardMode )
+			troopsDivision = 0.8;
 		
 		var i:Int = 0;
 		var len:Int = Math.floor(building.get_population() * troopsDivision);
