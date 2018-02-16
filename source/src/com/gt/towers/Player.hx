@@ -188,6 +188,7 @@ class Player
 	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function isHardMode():Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	
+	public function isBot() : Bool { return id < 10000; }
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{
