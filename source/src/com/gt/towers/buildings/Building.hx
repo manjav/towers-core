@@ -19,7 +19,7 @@ class Building extends AbstractBuilding
 	public var index:Int;
 	public var troopType:Int = -1;
 	
-	var _population:Float;
+	public var _population:Float;
 	var spawnIntervalId:Int;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
