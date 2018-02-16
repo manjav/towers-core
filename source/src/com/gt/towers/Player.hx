@@ -209,6 +209,7 @@ class Player
 	}
 
 	
+	public function isBot() : Bool { return id < 10000; }
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{
