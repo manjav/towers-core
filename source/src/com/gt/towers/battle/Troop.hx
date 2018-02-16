@@ -4,6 +4,7 @@ import com.gt.towers.buildings.Place;
 import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
+import haxe.Int64;
 
 /**
  * ...
@@ -21,7 +22,9 @@ class Troop
 	public var rushDelay:Int;
 	//public var building:Building;
 	
-	private var timeoutId:Int;
+	var timeoutId:Int;
+	var arrivenTime:Int64;
+	var lastHost:Building;
 
 	public function new( id:Int, building:Building ) 
 	{
@@ -64,6 +67,8 @@ class Troop
 		if( health <= 0 )
 			return ;
 		
+		arrivenTime = java.lang.System.currentTimeMillis();
+		lastHost = destination.building;
 		destination.building.pushTroops(this);
 		if( path.size() > 0)
 			timeoutId = GTimer.setTimeout(destination.rush, rushDelay, [this]);
@@ -71,11 +76,23 @@ class Troop
 	}
 	public function hit(damage:Float):Void
 	{
+		var recovered = false;
+		// recover network lags
+		if( java.lang.System.currentTimeMillis() - arrivenTime < 300 )
+		{
+			recovered = lastHost != null && lastHost.troopType != type;
+			if( recovered )
+			{
+				lastHost.popTroop(this);
+				trace("recovered missed hit => id:" + id + " damage:" + damage+ " health:" + health);
+			}
+		}
+		
 		health -= damage;
-		//building.game.tracer.log("id:" + id + " damage:" + damage+ " health:" + health);
-
 		if( health <= 0 )
 			dispose();
+		else if( recovered )
+			lastHost.pushTroops(this);
 	}
 	public function dispose():Void
 	{

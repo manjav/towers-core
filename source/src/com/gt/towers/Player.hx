@@ -101,7 +101,7 @@ class Player
 	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
 	public function get_openedChests():Int { return resources.exists(ResourceType.BATTLE_CHEST_OPENED) ? resources.get(ResourceType.BATTLE_CHEST_OPENED) : 0; }
 	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
-	public function inTutorial():Bool { return (nickName == "guest" || get_questIndex() < 3 && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END); }
+    public function inTutorial():Bool { return ((nickName == "guest" || get_questIndex() < 3) && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END && !isBot()); }
 	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function isHardMode():Bool { return !buildings.exists(CardTypes.INITIAL) || buildings.get(CardTypes.INITIAL).get_level() <= 1 ; }
 	
