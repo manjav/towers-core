@@ -27,7 +27,13 @@ class MessageTypes
 	public static var M50_URL:Int = 50;
 
 	
-	public function new()  { }
+	public static var JOIN_LOBBY_REQUEST_SENT:Int = 1;
+    public static var JOIN_LOBBY_SUCCEED:Int = 0;
+    public static var JOIN_LOBBY_NOT_ALLOWED:Int = -1;
+    public static var JOIN_LOBBY_MULTI_LOBBY_ILLEGAL:Int = -2;
+	public static var JOIN_LOBBY_REQUEST_ALREADY_SENT:Int = -3;
+	
+	public function new(){}
 	
 	public static function isComment(type:Int) : Bool
 	{
