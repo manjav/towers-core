@@ -59,6 +59,7 @@ class Place
 	}
 	
 #if java
+    public var fightTime:Int = -1;
 	public function fight(destination:Place, all:PlaceList):Void
 	{
 		var path:PlaceList = PathFinder.find(this, destination, all);
@@ -99,7 +100,6 @@ class Place
 		{
 			if( links.get(l).building.troopType == building.troopType )
 				return false;
-				
 			l ++;
 		}
 		return true;
