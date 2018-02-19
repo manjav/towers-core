@@ -73,8 +73,15 @@ class BattleField
 			}
 		}
 		
-		if( singleMode )
+		if ( singleMode )
+		{
 			game_1.fillAllBuildings();
+			if ( difficulty != 0 )
+			{
+				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
+				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
+			}
+		}
 		
 		// create places and buildings
 		while ( p < placesLen )
@@ -84,10 +91,10 @@ class BattleField
 			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
-		
+			
 			p ++;
 		}
-
+	
 		// create links of places
 		p = 0;
 		var l = 0;
@@ -109,7 +116,7 @@ class BattleField
 	{
 		if( troopType == TroopType.NONE && !onlyLinked )
 			return places;
-
+		
 		var ret:PlaceList = new PlaceList();
 		var p:Int = places.size() - 1;
 		while ( p >= 0 )
