@@ -99,6 +99,8 @@ class PlaceList
 	
 	public function shift() : Place
 	{
+		if( size() == 0 )
+			return null;
 		#if java
 		return _list.remove(0);
 		#elseif flash
