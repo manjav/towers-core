@@ -84,10 +84,17 @@ class BattleField
 			game_1.player.resources.set(ResourceType.POINT, game_0.player.get_point() + difficulty * 10 * game_0.player.get_arena(0));
 		}
 		
-        //if( singleMode )
-        //    game_1.fillAllBuildings();
-        
-        // create places and buildings
+        // return to normal bot point
+		if ( singleMode )
+		{
+			// game_1.fillAllBuildings();
+			if ( difficulty != 0 )
+			{
+				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
+				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
+			}
+		}
+		
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
@@ -98,7 +105,7 @@ class BattleField
 			
 			p ++;
 		}
-
+		
         // create links of places
 		p = 0;
 		var l = 0;
