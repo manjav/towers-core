@@ -129,13 +129,22 @@ class BattleField
 		}
 		return ret;
 	}
-		
+	
 	#if java
 	public var now:Float = 0;
 	public var startAt:Float = 0;
 	public function getDuration() : Float
 	{
 		return now - startAt;
+	}
+	public function dispose() 
+	{
+		var p:Int = places.size() - 1;
+		while ( p >= 0 )
+		{
+			places.get(p).dispose();
+			p --;
+		}
 	}
 	#end
 	

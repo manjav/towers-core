@@ -146,7 +146,6 @@ class Building extends AbstractBuilding
 		_population = initialPopulation;
 		#end
 	}
-
 	
 	#if java
 	public function improve(type:Int):Bool
@@ -175,15 +174,15 @@ class Building extends AbstractBuilding
 	
 	public function calculatePopulation():Void
 	{
-		if ( place==null || !place.enabled )
+		if( place == null || !place.enabled )
 			return;
 		
 		//var gap = 500 / get_spawnGap() ;
 		var gap = get_birthRate() ;
 		
-		if ( _population < get_capacity() )
+		if( _population < get_capacity() )
 		{
-			if (_population + gap > get_capacity())
+			if( _population + gap > get_capacity())
 				_population = get_capacity();
 			else
 				_population += gap;
@@ -192,7 +191,7 @@ class Building extends AbstractBuilding
 		else if (_population > get_capacity())
 		{
 			gap = Math.ceil((_population - get_capacity()) * 0.3);
-			if (_population - gap < get_capacity())
+			if( _population - gap < get_capacity() )
 				_population = get_capacity();
 			else
 				_population -= gap;
@@ -203,17 +202,16 @@ class Building extends AbstractBuilding
 	public function popTroop() : Bool
 	{
 		var ret = (_population - 1 > 0);
-		if(ret)
+		if( ret )
 			_population --;
 		return ret;
 	}
 	public function pushTroops(troop:Troop) : Bool
 	{
+		//trace(index, "type", troop.type, troopType, "id", troop.id, "health", troop.health, "_population", _population);
 		var ret = troopType == troop.type; // if ret true troop is mine
 		_population += (ret ? 1 : -troop.health);
-		if (_population < 0)
-			occupy(troop);
-		else if (_population == 0 && !place.enabled) 
+		if( _population < 0 || (_population == 0 && !place.enabled ) ) 
 			occupy(troop);
 		return ret;
 	}
@@ -264,7 +262,7 @@ class Building extends AbstractBuilding
 			return get_damageGap();
 		else if ( feature == BuildingFeatureType.F23_RANGE )
 			return get_damageRadius();
-
+		
 		return 0;
 	}
 	
