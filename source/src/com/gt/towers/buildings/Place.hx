@@ -6,7 +6,7 @@ import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
-import haxe.Timer;
+import haxe.Int64;
 
 /**
  * ...
@@ -16,10 +16,10 @@ class Place
 {
 	#if java
 	public var fightTime:Int = -1;
-	var troops:java.util.HashMap<Int, Troop>;
-	var timer:haxe.Timer;
-	var numTroops:Int = 0;
 	var path:PlaceList;
+	var numTroops:Int = 0;
+	var lastRushTime:Int64;
+	var troops:java.util.HashMap<Int, Troop>;
 	#end
 
 	public var index:Int;
@@ -72,7 +72,7 @@ class Place
 		{
 			if( links.get(l).building.troopType == building.troopType )
 				return false;
-				
+			
 			l ++;
 		}
 		return true;
@@ -83,6 +83,25 @@ class Place
 	
 	
 	#if java
+	public function update( currentTimeMillis:Int64 ) : Void
+	{
+		building.update(currentTimeMillis);
+		
+		if( numTroops > 0 && currentTimeMillis > (lastRushTime + building.get_exitGap()) && path != null )
+		{
+			lastRushTime = currentTimeMillis;
+			instantiateTroop(path, currentTimeMillis);
+			numTroops --;
+		}
+		
+		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
+        while( iterator.hasNext() )
+        {
+            var troop:Troop = iterator.next().getValue();
+			troop.update(currentTimeMillis);
+		}
+	}
+	
 	public function fight(destination:Place, all:PlaceList, troopsDivision:Float) : Void
 	{
 		//trace(index, "fight", "destination", destination.index);
@@ -95,23 +114,11 @@ class Place
 		
 		numTroops = Math.floor(building.get_population() * troopsDivision);
 		//trace(index, "population", building.get_population(), "numTroops", numTroops);
-		if ( timer == null )
-		{
-			timer = new Timer(building.get_exitGap());
-			timer.run = function() 
-			{
-				if ( numTroops > 0 && path != null )
-				{
-					instantiateTroop(path);
-					numTroops --;
-				}
-			}
-		}
 	}
-	private function instantiateTroop(path:PlaceList) : Void
+	private function instantiateTroop(path:PlaceList, currentTimeMillis:Int64) : Void
 	{
 		var tid = getIncreasedId();
-		var troop = new Troop(tid, building, path);
+		var troop = new Troop(tid, building, path, currentTimeMillis);
 		troops.put( tid, troop );
 		rush(troop);
 	}
@@ -136,9 +143,6 @@ class Place
 		var population = building.get_population();
 		
 		building = BuildingType.instantiate(game, type, this, index);
-		if( timer != null )
-			timer.stop();
-		timer = null;
 		if( building != null )
 			building.createEngine(troopType, population);
 	}
@@ -151,10 +155,6 @@ class Place
 
 	public function dispose() 
 	{
-		if( timer != null )
-			timer.stop();
-		timer = null;
-		
 		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
         while( iterator.hasNext() )
         {
@@ -170,4 +170,5 @@ class Place
 		troopId ++;
 		return troopId;
 	}
+
 }
