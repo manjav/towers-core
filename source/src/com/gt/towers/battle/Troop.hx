@@ -4,7 +4,6 @@ import com.gt.towers.buildings.Place;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
 import haxe.Int64;
-import haxe.Timer;
 
 /**
  * ...
@@ -17,17 +16,24 @@ class Troop
 	public var health:Float;
 	public var path:PlaceList;
 	public var building:Building;
-	private var timer:Timer;
+	public var disposed:Bool;
+	
+	var interval:Int;
+	var rushTime:Int64 = 0;
+	var arrivenTime:Int64 = 0;
+	var currentTimeMillis:Int64;
+	var destination:Place;
 	
 	//var arrivenTime:Int64;
 	//var lastHost:Building;
 
-	public function new( id:Int, building:Building, path:PlaceList ) 
+	public function new( id:Int, building:Building, path:PlaceList, currentTimeMillis:Int64) 
 	{
 		this.id = id;
 		this.building = building;
 		this.type = building.troopType;
 		this.health = building.get_troopPower();
+		this.currentTimeMillis = currentTimeMillis;
 		
 		this.path = new PlaceList();
 		var i:Int = 0;
@@ -40,25 +46,40 @@ class Troop
 	}
 	
 	#if java
-	public function rush(source:Place):Void
+	public function update( currentTimeMillis:Int64 ) : Void
 	{
-		var destination:Place = path.shift();
-		//trace("troop -> rush id:" + id, "health", health, "destination", destination);
-		if( destination == null || health <= 0 )
-			return ;
+		if( disposed )
+			return;
 		
-		var dis = Math.round(building.get_troopSpeed() * PathFinder.getDistance(source, destination));
-		timer = new Timer(dis);
-        timer.run = function() 
-        {
-			timer.stop();
-			timer = null;
-            onTroopArrived(destination);
+		this.currentTimeMillis = currentTimeMillis;
+		if( arrivenTime != 0 && currentTimeMillis >= arrivenTime )
+		{
+			arrived();
+			arrivenTime = 0;
+		}
+
+		if( rushTime != 0 && currentTimeMillis >= rushTime )
+		{
+			destination.rush(this);
+			rushTime = 0;
 		}
 	}
-	private function onTroopArrived(destination:Place):Void
+	
+	public function rush(source:Place):Void
 	{
-		//trace("troop -> onTroopArrived id:" + id, "index", destination.index, "path.size():" + path.size());
+		destination = path.shift();
+		if( destination == null || health <= 0 )
+		{
+			dispose();
+			return ;
+		}
+		
+		arrivenTime = currentTimeMillis + Math.round(building.get_troopSpeed() * PathFinder.getDistance(source, destination));
+		//trace("rush id:" + id, "health:" + health, "arrivenTime:" + arrivenTime, "destination:" + destination == null?"null":destination.index);
+	}
+	private function arrived():Void
+	{
+		//trace("arrived id:" + id, "index", destination.index, "path.size():" + path.size());
 		if( health <= 0 )
 			return ;
 		/*arrivenTime = java.lang.System.currentTimeMillis();
@@ -66,24 +87,18 @@ class Troop
 		var allow = destination.building.pushTroops(this);
 		if ( !allow || path.size() == 0 )
 		{
-			if( building != null && building.place != null )
-				building.place.removeTroop(id);
-				dispose();
+			//if( building != null && building.place != null )
+			//	building.place.removeTroop(id);
+			dispose();
 			return;
 		}
-
-		timer = new Timer(building.get_exitGap());
-		timer.run  = function() 
-		{
-			timer.stop();
-			timer = null;
-			destination.rush(this);
-		}
-		//trace("troop-> onTroopArrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
+		
+		rushTime = currentTimeMillis + building.get_exitGap();
+		//trace("arrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
 	}
 	public function hit(damage:Float):Void
 	{
-		trace("troop -> rush id:" + id , damage, health);
+		//trace("troop -> rush id:" + id , damage, health);
 		// recover network lags
 		/*if( java.lang.System.currentTimeMillis() - arrivenTime < 300 )
 		{
@@ -105,10 +120,7 @@ class Troop
 	
 	public function dispose() 
 	{
-		if( timer == null )
-			return;
-		timer.stop();
-		timer = null;
+		disposed = true;
 	}
 	#end
 }

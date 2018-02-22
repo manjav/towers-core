@@ -8,6 +8,7 @@ import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.PlaceList;
+import haxe.Int64;
 
 /**
  * ...
@@ -131,11 +132,22 @@ class BattleField
 	}
 	
 	#if java
-	public var now:Float = 0;
-	public var startAt:Float = 0;
-	public function getDuration() : Float
+	public var now:Int64 = 0;
+	public var startAt:Int64 = 0;
+	public var interval:Int64 = 100;
+	public function update() : Void
 	{
-		return now - startAt;
+		now += interval;
+		var p:Int = places.size() - 1;
+		while ( p >= 0 )
+		{
+			places.get(p).update(now);
+			p --;
+		}
+	}
+	public function getDuration() : Int64
+	{
+		return now / 1000 - startAt;
 	}
 	public function dispose() 
 	{
@@ -145,6 +157,7 @@ class BattleField
 			places.get(p).dispose();
 			p --;
 		}
+		java.lang.System.gc();
 	}
 	#end
 	

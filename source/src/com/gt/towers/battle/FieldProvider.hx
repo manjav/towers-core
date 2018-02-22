@@ -179,6 +179,6 @@ class FieldProvider
 		battles.set( "battle_913", new Battle_913( 913, "battle_913", "150,200,360,20" ) );
 		battles.set( "battle_914", new Battle_914( 914, "battle_914", "150,200,360,20" ) );
 		battles.set( "battle_915", new Battle_915( 915, "battle_915", "150,200,360,20" ) );
-		battles.set( "battle_916", new Battle_916( 916, "battle_916", "150,200,360,20" ) );
+	//	battles.set( "battle_916", new Battle_916( 916, "battle_916", "150,200,360,20" ) );
 	}
 }
