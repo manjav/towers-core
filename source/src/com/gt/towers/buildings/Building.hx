@@ -172,13 +172,13 @@ class Building extends AbstractBuilding
 		return true;
 	}
 	
-	public function calculatePopulation():Void
+	public function update( currentTimeMillis:Int64 ):Void
 	{
 		if( place == null || !place.enabled )
 			return;
 		
 		//var gap = 500 / get_spawnGap() ;
-		var gap = get_birthRate() ;
+		var gap = get_birthRate();
 		
 		if( _population < get_capacity() )
 		{
