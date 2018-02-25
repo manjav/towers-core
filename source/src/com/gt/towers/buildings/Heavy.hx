@@ -1,6 +1,4 @@
 package com.gt.towers.buildings;
-import com.gt.towers.constants.BuildingType;
-import com.gt.towers.utils.lists.IntList;
 
 /**
  * ...
@@ -11,7 +9,7 @@ class Heavy extends Building
 	#if flash
 	public override function get_troopName () : String
 	{
-		return "corruptedknight-move-";
+		return "30/";
 	}
 	public override function get_troopSpriteCount () : Int
 	{
@@ -21,14 +19,19 @@ class Heavy extends Building
 	
 	public override function get_troopSpeed():Int
 	{
-		return Math.round(2900 * (1/Building.TIME_SCALE));
+		return Math.round(4000 * (1/Building.TIME_SCALE));
 	}
 	public override function get_troopPower():Float
 	{
-		return 1.1 + ( Math.log(get_level()) * 0.7 + Math.log(improveLevel) ) * 0.3;
+		return 1.5 + ( Math.log(get_level()) * 0.9 + Math.log(improveLevel) ) * 0.5;
 	}
 	public override function get_birthRate():Float
 	{
-		return 0.2 * Building.TIME_SCALE;
+		return super.get_birthRate() * 0.8;
 	}
+	public override function get_exitGap():Int 
+	{
+		return super.get_exitGap() * 2;
+	}
+	
 }

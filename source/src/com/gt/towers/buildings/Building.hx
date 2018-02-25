@@ -4,8 +4,8 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
-import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
+import haxe.Int64;
 
 /**
  * ...
@@ -42,11 +42,20 @@ class Building extends AbstractBuilding
 	#if flash
 	public function get_troopName () : String
 	{
-		return "dwarf3b-move-";
+		return "10/";
 	}
 	public function get_troopSpriteCount () : Int
 	{
 		return 12;
+	}
+	public function get_options():IntList
+	{
+		var ret = new IntList();
+		if( !game.player.inTutorial() )
+			ret.push( BuildingType.B01_CAMP );
+		if( BuildingType.getAll().exists( type + 1 ) )
+			ret.push( BuildingType.IMPROVE );
+		return ret;
 	}
 	#end
 
@@ -62,7 +71,7 @@ class Building extends AbstractBuilding
 		else if ( improveLevel == 4 )
 			return 24;
 		else
-			return 10;
+			return BASE_CAPACITY;
 
 		//return 10 + (5 * improveLevel);
 	}
@@ -71,7 +80,7 @@ class Building extends AbstractBuilding
 	{
 		return Math.round(BASE_EXIT_GAP * (1 / TIME_SCALE));
 	}
-	public static var BASE_TROOP_SPEED:Int = 2000;
+	public static var BASE_TROOP_SPEED:Int = 2500;
 	public function get_troopSpeed():Int
 	{
 		return Math.round(BASE_TROOP_SPEED *  (1 / TIME_SCALE));
@@ -83,7 +92,7 @@ class Building extends AbstractBuilding
 	}
 	
 
-	public static var BASE_BIRTH_RATE:Float = 0.2;
+	public static var BASE_BIRTH_RATE:Float = 0.04;
 	public function get_birthRate():Float
 	{
 		return BASE_BIRTH_RATE * TIME_SCALE;
@@ -106,15 +115,6 @@ class Building extends AbstractBuilding
 		return BASE_DAMAGE_RADIUS;
 	}
 
-	public function get_options():IntList
-	{
-		var ret = new IntList();
-		if( !game.player.inTutorial() )
-			ret.push( BuildingType.B01_CAMP );
-		if( BuildingType.getAll().exists( type + 1 ) )
-			ret.push( BuildingType.IMPROVE );
-		return ret;
-	}
 	public function get_population():Int
 	{
 		return Math.floor(_population);
@@ -190,7 +190,7 @@ class Building extends AbstractBuilding
 		}
 		else if (_population > get_capacity())
 		{
-			gap = Math.ceil((_population - get_capacity()) * 0.3);
+			gap = Math.ceil(( _population - get_capacity()) * gap * 2 );
 			if( _population - gap < get_capacity() )
 				_population = get_capacity();
 			else

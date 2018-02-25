@@ -9,20 +9,20 @@ import com.gt.towers.utils.lists.IntList;
 class Camp extends Building
 {
 	
-	#if flash
-	public override function get_troopName () : String
-	{
-		return "dwarfinf-move-";
-	}
-	#end
-	
-	public override function get_birthRate():Float
-	{
-		return 0.2 * Building.TIME_SCALE;
-	}
 	public override function get_capacity():Int
 	{
 		return 10;
+	}
+	public override function get_troopSpeed():Int
+	{
+		return Math.round(3000 *  (1 / Building.TIME_SCALE));
+	}
+	
+	
+	#if flash
+	public override function get_troopName () : String
+	{
+		return "0/";
 	}
 	public override function get_options():IntList
 	{
@@ -33,4 +33,5 @@ class Camp extends Building
 		ret.push(BuildingType.B41_CRYSTAL);
 		return ret;
 	}
+	#end
 }
