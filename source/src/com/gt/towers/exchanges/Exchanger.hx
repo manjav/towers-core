@@ -2,16 +2,11 @@ package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
 import com.gt.towers.InitData;
-import com.gt.towers.Player;
-import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
-import com.gt.towers.utils.GameError;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.IntIntMap;
-import com.gt.towers.utils.maps.IntExchangeMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntShopMap;
 
@@ -46,11 +41,12 @@ class Exchanger
 			i ++;
 		}
 
+		var isCheap = game.player.id % 2 == 0;
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.S_0_HARD,  new ExchangeItem ( ExchangeType.S_0_HARD, ResourceType.CURRENCY_REAL, 100, ResourceType.CURRENCY_HARD,	1 ) );//50
-		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD,	100 ) );//50
-		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, 600 ) );//300
-		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 20000, ResourceType.CURRENCY_HARD, 1500 ) );//900
+		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD,	isCheap?200:100 ) );//50
+		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, isCheap?1200:600 ) );//300
+		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 20000, ResourceType.CURRENCY_HARD, isCheap?3000:1500 ) );//900
 	
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MONEY -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD, 20, ResourceType.CURRENCY_SOFT,	500 ) );
