@@ -201,11 +201,11 @@ class ExchangeType
 		else if ( type == CHESTS_56_GOLD )
 			return getNumTotalCards(type) * 6;
 		else if (type == CHESTS_57_CHROME)
-			return getNumTotalCards(type) * 3;
+			return getNumTotalCards(type) * 2;
 		else if (type == CHESTS_58_SILVER)
-			return getNumTotalCards(type) * 3;
+			return getNumTotalCards(type) * 2;
 		else if (type == CHESTS_59_GOLD)
-			return getNumTotalCards(type) * 4;
+			return getNumTotalCards(type) * 2;
 		else
 			return 0;
 	}
