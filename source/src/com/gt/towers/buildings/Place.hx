@@ -4,9 +4,9 @@ import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.TroopType;
-import com.gt.towers.utils.GTimer;
 import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
+import haxe.Int64;
 
 /**
  * ...
@@ -23,10 +23,17 @@ class Place
 	public var links:PlaceList;
 	public var building:Building;
 	public var mode:Int;
-	
-	private var troopId:Int;
 	public var game:Game;
 	public var battlefield:BattleField;
+	
+#if java
+	public var currentTimeMillis:Int64;
+	public var fightTime:Int64 = -1;
+    var lastRushTime:Int64;
+	var numFighters:Int;
+	var path:PlaceList;
+#end
+	var troopId:Int;
 
 	public function new(game:Game, battlefield:BattleField, index:Int, x:Float, y:Float, health:Float, botEnabled:Bool, mode:Int) 
 	{
@@ -59,30 +66,47 @@ class Place
 	}
 	
 #if java
-    public var fightTime:Int = -1;
+    public function update( currentTimeMillis:Int64 ) : Void
+    {
+		this.currentTimeMillis = currentTimeMillis;
+        building.update(currentTimeMillis);
+		//trace(numFighters, lastRushTime, currentTimeMillis, building.get_population());
+		if( numFighters > 0 && lastRushTime > 0 && lastRushTime < currentTimeMillis && building.get_population() > 0 )
+		{
+			var troop:Troop = building.troops.getFirst();
+			if( troop != null && path != null )
+			{
+				numFighters --;
+				lastRushTime = numFighters > 0 ? currentTimeMillis + troop.rushDelay : 0;
+				
+				troop.initPath(path);
+				rush(troop);
+			}
+			
+		}
+    }
+
 	public function fight(destination:Place, all:PlaceList):Void
 	{
-		var path:PlaceList = PathFinder.find(this, destination, all);
-
+		path = PathFinder.find(this, destination, all);
 		if( path == null || destination.building == building )
 			return;
-
-		var i = 0;
-		var itr = building.troops.iterator();
-		while ( itr.hasNext() )
-		{
-			var entry = itr.next();
-			var troop:Troop = entry.initPath(path);
-			GTimer.setTimeout(rush, building.troopRushGap * i + 1, [troop]);
-			i ++;
-		}
+		
+        lastRushTime = currentTimeMillis;
+		numFighters = building.get_population();
 	}
-	
+
+
 	public function rush(troop:Troop):Void
 	{
-		if ( !building.popTroop(troop) ) 
+		if( !building.popTroop(troop) ) 
 			return;
 		troop.rush(this);
+	}
+	
+	public function dispose() : Void
+	{
+		building.dispose();
 	}
 #end
 

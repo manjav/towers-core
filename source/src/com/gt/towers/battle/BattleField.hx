@@ -10,6 +10,7 @@ import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.PlaceList;
+import haxe.Int64;
 
 /**
  * ...
@@ -135,7 +136,7 @@ class BattleField
 		elixirBar.push(POPULATION_INIT);
 		
 	#if java
-		fighters = new java.util.HashMap<Int, Troop>();
+		fighters = new java.util.concurrent.ConcurrentHashMap<Int, Troop>();
 	#end
 	}
 	
@@ -185,20 +186,67 @@ class BattleField
 
 	
 	#if java
-	public var now:Float = 0;
-	public var startAt:Float = 0;
-	public function getDuration() : Float
-	{
-		return now - startAt;
+    public var now:Int64 = 0;
+    public var startAt:Int64 = 0;
+    public var interval:Int64 = 100;
+    public function update() : Void
+    {
+        now += interval;
+		
+		// increase population bars
+		var increaseCoef = getDuration() > getTime(2) ? 0.1 : 0.04;
+		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
+		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
+		
+		// update all places
+        var p:Int = places.size() - 1;
+        while ( p >= 0 )
+        {
+            places.get(p).update(now);
+            p --;
+		}
+		
+		// update all fighters
+		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = fighters.entrySet().iterator();
+        while( iterator.hasNext() )
+        {
+            iterator.next().getValue().update(now);
+		}
 	}
+	
+    public function getDuration() : Int64
+    {
+        return now / 1000 - startAt;
+    }
 	
 	public function hit(fighterId:Int, damage:Float) : Void
 	{
-		if( !fighters.containsKey(fighterId) )
+		if( !fighters.containsKey(fighterId) || fighters.get(fighterId).disposed )
 			return;
 		
 		fighters.get(fighterId).hit(damage);
 	}
+	
+	public function dispose() 
+    {
+        var p:Int = places.size() - 1;
+        while ( p >= 0 )
+        {
+            places.get(p).dispose();
+            p --;
+        }
+		
+        var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = fighters.entrySet().iterator();
+        while( iterator.hasNext() )
+        {
+            var troop:Troop = iterator.next().getValue();
+            troop.dispose();
+        }
+        fighters.clear();
+		
+        java.lang.System.gc();
+    }
+
 	#end
 	public function getTime(score:Int):Int
 	{

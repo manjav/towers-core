@@ -185,14 +185,14 @@ class AbstractBuilding
 	private function dispatchEvent (dispatcherId:Int, type:Int, data:Any) :Void
 	{
 	#if java
-		if ( eventCallback != null )
+		if( eventCallback != null )
 			eventCallback.dispatch( dispatcherId, type, data );
 	//#elseif flash
 			//dispatchEvent(new CoreEvent(CoreEvent.CHANGE, key, from, to) );
 	#end
 	}
 	
-	public function dispose():Void
+	public function dispose() : Void
 	{
 	}
 }

@@ -5,7 +5,7 @@ import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.cals.*;
 import com.gt.towers.constants.*;
 import com.gt.towers.events.BuildingEvent;
-import com.gt.towers.utils.GTimer;
+import haxe.Int64;
 
 /**
  * ...
@@ -29,11 +29,12 @@ class Building extends AbstractBuilding
 	public var damageRangeMax:Float = 180;
 #if java
 	public var troops:java.util.ArrayDeque<Troop>;
+	var transformCard:Building = null;
+	var transformTime:Int64 = 0;
+	var disposed:Bool;
 	#end
 
 	var _health:Float = 10;
-	//var _population:Float = 0;
-	var transfromTimeoutId:Int = -1;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
@@ -94,25 +95,29 @@ class Building extends AbstractBuilding
 		return troops.size();
 	}
 	
-	public function interval():Void
+    public function update( currentTimeMillis:Int64 ) : Void
 	{
-	//	if ( place==null || !place.enabled )
-	//		return;
-	//	_health = Math.min(_health + healRate, place.health);
-		if( troopType > -1 && place.mode == 1 )
-			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + 0.02 );
+		if( disposed )
+			return;
 		
-		if ( _health < place.health )
-			_health = Math.min(_health + 0.1, place.health);
-
-		/*if ( _population > place.health )
+		// increase elixir bar
+		if( troopType > -1 && place.mode == 1 )
+			place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) + 0.004 );
+		
+		// increase health
+		if( _health < place.health )
+			_health = Math.min(_health + 0.02, place.health);
+        
+		// update troops
+		var iterator = troops.iterator();
+		while ( iterator.hasNext() )
 		{
-			var br = Math.ceil((_population - place.health) * 0.1 );
-			if( _population - br < place.health )
-				_population = place.health;
-			else
-				_population -= br;
-		}*/
+            iterator.next().update(currentTimeMillis);
+        }
+		
+		// waiting for transform
+		if( transformTime > 0 && transformTime < place.currentTimeMillis )
+			finalizeTransform();
 	}
 	
 	public function popTroop(troop:Troop):Bool
@@ -133,9 +138,8 @@ class Building extends AbstractBuilding
 	public function pushTroops(troop:Troop) : Void
 	{
 		place.battlefield.fighters.remove(troop.id);
-		if ( troopType == troop.type )
+		if( troopType == troop.type )
 		{
-			
 			//if ( _health >= place.health )
 				troops.offerLast(troop);
 			//else
@@ -143,7 +147,7 @@ class Building extends AbstractBuilding
 		}
 		else
 		{
-			if ( get_population() > 0 )
+			if( get_population() > 0 )
 				troops.removeLast(); //_population = Math.max(_population - troop.power, 0);
 			else
 				_health -= troop.power;
@@ -155,10 +159,10 @@ class Building extends AbstractBuilding
 	
 	function occupy(troop:Troop) 
 	{
-		GTimer.clearTimeout(transfromTimeoutId);
+		transformCard = null;
+		transformTime = 0;
 		type = CardTypes.C001;
 		reset(troop.type);
-		//place.game = game = troop.building.game;
 		place.enabled = true; 
 		setFeatures(); 
 		dispatchEvent(place.index, BuildingEvent.OCCUPIED, null);
@@ -166,31 +170,34 @@ class Building extends AbstractBuilding
 	
 	public function transform(card:Building) : Bool
 	{
-		if ( !transformable(card) )
+		if( !transformable(card) )
 			return false;
 		
-		//trace(" type:" + type + " population:" + get_population() + " card.type:" + card.type + " card._population:" + card._population + " card.index:" + card.index + " card.troopType:" + card.troopType );
-		deployTime = game.featureCaculator.getInt(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
+		//deployTime = game.featureCaculator.getInt(BuildingFeatureType.F04_DEPLOY_TIME, type, get_level());
 		dispatchEvent(place.index, BuildingEvent.TRANSFORM_STARTED, null);
-		place.enabled = false;
+		//place.enabled = false;
 		place.battlefield.elixirBar.set(troopType, place.battlefield.elixirBar.get(troopType) - card.elixirSize );
-		transfromTimeoutId = GTimer.setTimeout(activeFighters, card.deployTime, [card]);
+		transformCard = card;
+		transformTime = place.currentTimeMillis + card.deployTime;
+		//trace(" type:" + type + " population:" + get_population() + " card.type:" + card.type + " card.index:" + card.index + " card.troopType:" + card.troopType + " transformTime:" + transformTime);
 		return true;
 	}
-	function activeFighters(card:Building) : Void
+	function finalizeTransform() : Void
 	{
-		place.enabled = true;
+		//place.enabled = true;
 		//reset(card.troopType);
-		this.type = card.type;
-		setFeatures();
+		//this.type = transformCard.type;
+		//setFeatures();
 		
 		var i = 0;
-		while( i < troopsCount )
+		while( i < transformCard.troopsCount )
 		{
 			var tid = place.getIncreasedId();
-			troops.addLast( new Troop(tid, this) );
+			troops.offerLast( new Troop(tid, transformCard, place.currentTimeMillis) );
 			i ++;
 		}
+		transformCard = null;
+		transformTime = 0;
 		dispatchEvent(place.index, BuildingEvent.TRANSFORM_COMPLETE, null);
 	}
 	
@@ -204,7 +211,6 @@ class Building extends AbstractBuilding
 		}
 		return ret;
 	}
-	
 #end
 	
 	public function transformable(card:Building) : Bool
@@ -228,7 +234,7 @@ class Building extends AbstractBuilding
 	override public function upgrade(confirmedHards:Int=0):Bool
 	{
 		var ret = super.upgrade(confirmedHards);
-		if ( !ret )
+		if( !ret )
 			return false;
 		setFeatures();
 		return ret;
@@ -244,14 +250,17 @@ class Building extends AbstractBuilding
 		return 12;
 	}*/
 #end
-	override public function dispose():Void
+	override public function dispose() : Void
 	{
 		super.dispose();
 #if java
-		GTimer.clearTimeout(transfromTimeoutId);
+		disposed = true;
+		var iterator = troops.iterator();
+		while ( iterator.hasNext() )
+		{
+            iterator.next().dispose();
+        }
+		troops.clear();
 #end
 	}
-	
-
-	
 }
