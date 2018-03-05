@@ -25,7 +25,6 @@ class Exchanger
 		this.game = game;
 		items = new IntShopMap();
 		
-		
 		var i = 0;
 		var exchangeKeys = initData.exchanges.keys();
 		while ( i < exchangeKeys.length )
@@ -37,17 +36,17 @@ class Exchanger
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
 			else if ( cex == ExchangeType.S_40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
-				
+			
 			i ++;
 		}
-
+		
 		var isCheap = game.player.id % 2 == 0;
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.S_0_HARD,  new ExchangeItem ( ExchangeType.S_0_HARD, ResourceType.CURRENCY_REAL, 100, ResourceType.CURRENCY_HARD,	1 ) );//50
 		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD,	isCheap?200:100 ) );//50
 		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, isCheap?1200:600 ) );//300
 		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 20000, ResourceType.CURRENCY_HARD, isCheap?3000:1500 ) );//900
-	
+		
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MONEY -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD, 20, ResourceType.CURRENCY_SOFT,	500 ) );
 		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 75, ResourceType.CURRENCY_SOFT,	2000 ) );
@@ -126,7 +125,7 @@ class Exchanger
 		var item = items.get(type);
 		if( item.category != ExchangeType.CHEST_CATE_110_BATTLES || item.getState(now) != ExchangeItem.CHEST_STATE_WAIT )
 			return false;
-			
+		
 		var exchangeKeys = items.keys();
 		var i = exchangeKeys.length-1;
 		while ( i >= 0 )
@@ -155,7 +154,7 @@ class Exchanger
 				softs += requirements.get(reqKeys[i]);
 			else if( ResourceType.isBuilding(reqKeys[i])) 
 				softs += game.player.buildings.get(reqKeys[i]).price() * requirements.get(reqKeys[i]);
-
+			
 			i ++;
 		}
 		return keyToHard(keys) + softToHard(softs) + hards ;
@@ -223,8 +222,8 @@ class Exchanger
 		}
 		
 		// hards
-		if ( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD && Math.random() > 0.2 )
-			ret.set( ResourceType.CURRENCY_HARD, type-56 );
+		if ( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD && Math.random() > 0.5 )
+			ret.set( ResourceType.CURRENCY_HARD, Math.ceil((type-56)/2) );
 		
 		// softs
 		var softDec = ExchangeType.getNumSofts(type) / 10;
@@ -314,7 +313,7 @@ class Exchanger
 			return ExchangeType.CHESTS_58_SILVER;
 		if ( category == ExchangeType.CHEST_CATE_103_FREE )
 			return ExchangeType.CHESTS_59_GOLD;
-
+		
 		if ( category == ExchangeType.CHEST_CATE_121_OFFER )
 			return ExchangeType.CHESTS_54_CHROME;
 		if ( category == ExchangeType.CHEST_CATE_122_OFFER )
