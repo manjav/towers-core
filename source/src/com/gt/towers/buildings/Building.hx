@@ -153,18 +153,23 @@ class Building extends AbstractBuilding
 		if( !improvable(type) )
 			return false;
 			
-		if( type != BuildingType.B01_CAMP )
-			_population -= Math.round( get_capacity() * ( game.player.inTutorial() && !game.player.hardMode ? 0.3 : 0.5) );
+		if ( type != BuildingType.B01_CAMP )
+		{
+			if ( game.player.inTutorial() )
+				_population -= Math.round( get_capacity() * (game.player.hardMode ? 0.7 : 0) );
+			else
+				_population -= Math.round( get_capacity() * 0.5 );
+		}
 		
 		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 		
 		//trace("improved", index, type);
 	if( !equalsCategory(type) )
-		{
-			place.setBuilidng(type, game);
-			return true;
-		}
+	{
+		place.setBuilidng(type, game);
+		return true;
+	}
 		
 		this.type ++;
 		improveLevel ++;
