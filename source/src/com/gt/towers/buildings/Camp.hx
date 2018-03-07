@@ -17,7 +17,10 @@ class Camp extends Building
 	{
 		return Math.round(3000 *  (1 / Building.TIME_SCALE));
 	}
-	
+	public override function get_troopPower():Float
+	{
+		return game.player.isHardMode() && game.player.isBot() ? 0.6 : 0.9;
+	}	
 	
 	#if flash
 	public override function get_troopName () : String
