@@ -58,8 +58,6 @@ class Player
 		
 		prefs = new com.gt.towers.utils.maps.IntStrMap();
 		#if flash
-		prefs.set(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101, "101");
-		
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_1_MUSIC, "true");
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_2_SFX, "true");
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_3_NOTIFICATION, "true");
@@ -101,9 +99,14 @@ class Player
 	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
 	public function get_openedChests():Int { return resources.exists(ResourceType.BATTLE_CHEST_OPENED) ? resources.get(ResourceType.BATTLE_CHEST_OPENED) : 0; }
 	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
-    public function inTutorial():Bool { return ((nickName == "guest" || get_questIndex() < 3) && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END && !isBot()); }
 	public function villageEnabled():Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function isHardMode():Bool { return !buildings.exists(CardTypes.INITIAL) || buildings.get(CardTypes.INITIAL).get_level() <= 1 ; }
+	public function isHardMode() : Bool { return !buildings.exists(CardTypes.INITIAL) || buildings.get(CardTypes.INITIAL).get_level() <= 1 ; }
+	public function getTutorStep() : Int { return prefs.getAsInt(com.gt.towers.constants.PrefsTypes.TUTOR); }
+	//public function inTutorial() : Bool { return ((nickName == "guest" || get_questIndex() < 3) && getTutorStep() < PrefsTypes.T_171_SELECT_NAME_FOCUS && !isBot()); }
+    public function inTutorial():Bool { return ((nickName == "guest" || get_questIndex() < 3) && getTutorStep() < PrefsTypes.TUTE_116_END && !isBot()); }
+	public function inShopTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_141_SHOP_FOCUS && getTutorStep() <= PrefsTypes.T_144_SHOP_BOOK_OPENED; }
+	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_151_DECK_FOCUS && getTutorStep() <= PrefsTypes.T_153_DECK_CARD_SELECTED; }
+	public function isBot() : Bool { return id < 10000; }
 	
 	public function get_level():Int
 	{
@@ -207,13 +210,12 @@ class Player
 		}
 		resources.increaseMap ( bundle );
 	}
-
 	
-	public function isBot() : Bool { return id < 10000; }
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{
-		if ( get_questIndex() >= 2 )
+		return true;
+		/*if ( get_questIndex() >= 2 )
 			return true;
 			
 		var tuteStep = prefs.getAsInt(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101);
@@ -223,7 +225,7 @@ class Player
 			return true;
 		if ( index == 2 && tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_113_SELECT_DECK )
 			return true;
-		return false;
+		return false;*/
 	}
 	public function colorIndex(troopType:Int):Int
 	{
