@@ -55,8 +55,6 @@ class Player
 		}
 		prefs = new com.gt.towers.utils.maps.IntStrMap();
 		#if flash
-		prefs.set(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101, "101");
-		
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_1_MUSIC, "true");
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_2_SFX, "true");
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_3_NOTIFICATION, "true");
@@ -184,24 +182,28 @@ class Player
 		return t;
 	}
 	
-	public function inTutorial() : Bool { return ((nickName == "guest" || get_questIndex() < 3) && prefs.getAsInt(PrefsTypes.TUTE_STEP_101) < PrefsTypes.TUTE_116_END && !isBot()); }
+	public function getTutorStep() : Int { return prefs.getAsInt(com.gt.towers.constants.PrefsTypes.TUTOR); }
+	public function inTutorial() : Bool { return ((nickName == "guest" || get_questIndex() < 3) && getTutorStep() < PrefsTypes.T_171_SELECT_NAME_FOCUS && !isBot()); }
+	public function inShopTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_141_SHOP_FOCUS && getTutorStep() <= PrefsTypes.T_144_SHOP_BOOK_OPENED; }
+	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_151_DECK_FOCUS && getTutorStep() <= PrefsTypes.T_153_DECK_CARD_SELECTED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function isHardMode() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
+	
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{
-		if ( get_questIndex() >= 2 )
+		//if ( get_questIndex() >= 2 )
 			return true;
 			
-		var tuteStep = prefs.getAsInt(com.gt.towers.constants.PrefsTypes.TUTE_STEP_101);
-		if ( index == 0 && tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_111_SELECT_EXCHANGE )
+		/*var tuteStep = getTutorStep();
+		if ( index == 0 && inShopTutorial() )
 			return true;
-		if ( index == 1 && (tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_101_START || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_115_UPGRADE_BUILDING || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_111_SELECT_EXCHANGE || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_113_SELECT_DECK) )
+		if ( index == 1 && (tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_100_FIRST_RUN || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_126_DECK_UPGRADE_BUILDING || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_122_SHOP_FIRST_VIEW || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_124_DECK_FIRST_VIEW) )
 			return true;
-		if ( index == 2 && tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_113_SELECT_DECK )
+		if ( index == 2 && inDeckTutorial() )
 			return true;
-		return false;
+		return false;*/
 	}
 	#end
 }
