@@ -8,6 +8,7 @@ import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
+import com.gt.towers.exchanges.ExchangeDonateItem;
 import com.gt.towers.utils.GameError;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntMap;
@@ -60,6 +61,8 @@ class Exchanger
 		var ads = new ExchangeItem (ExchangeType.CHEST_CATE_131_ADS, -1, -1, -1, -1, 1, 1);
 		ads.outcome = ExchangeType.CHESTS_57_CHROME;
 		items.set( ExchangeType.CHEST_CATE_131_ADS, ads );
+		
+		items.set( ExchangeType.DONATION_REQUEST, new ExchangeDonateItem ( ExchangeType.DONATION_REQUEST) );
 	}
 	
 	/**
@@ -125,6 +128,10 @@ class Exchanger
 		return true;
 	}
 
+	public function exchangeDonate (item:ExchangeDonateItem, cardType:Int, dueTime:Int):Bool
+	{
+		return false;
+	}
 	public function readyToStartOpening(type:Int, now:Int) : Bool
 	{
 		var item = items.get(type);
