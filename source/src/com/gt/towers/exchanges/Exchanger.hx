@@ -42,6 +42,8 @@ class Exchanger
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
 			else if ( cex == ExchangeType.S_40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
+			else if ( cex == ExchangeType.DONATION )
+				items.set(exchangeKeys[i], new ExchangeDonateItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
 			
 			i ++;
 		}
@@ -61,8 +63,6 @@ class Exchanger
 		var ads = new ExchangeItem (ExchangeType.CHEST_CATE_131_ADS, -1, -1, -1, -1, 1, 1);
 		ads.outcome = ExchangeType.CHESTS_57_CHROME;
 		items.set( ExchangeType.CHEST_CATE_131_ADS, ads );
-		
-		items.set( ExchangeType.DONATION_141_REQUEST, new ExchangeDonateItem ( ExchangeType.DONATION_141_REQUEST) );
 	}
 	
 	/**
@@ -87,8 +87,19 @@ class Exchanger
 			game.player.resources.reduceMap(item.requirements);
 			return true;
 		}
+		if ( item.category == ExchangeType.DONATION )
+		{
+			if ( item.getState(now) == ExchangeDonateItem.DONATION_STATE_EXPIRED )
+				return false;
+				
+			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
+			game.player.resources.reduceMap(item.requirements);
+			return true;
+		}
+		
 		
 		var deductions = game.player.deductions(item.requirements);
+		
 		var needsHard = toHard( deductions );
 		if( !game.player.has(item.requirements) && needsHard > confirmedHards  )
 			return false;

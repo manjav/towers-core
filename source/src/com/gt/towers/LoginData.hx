@@ -11,7 +11,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "3000.0205173414";//do not change len.
+	public var coreVersion:String = "3000.0312152952";//do not change len.
 	public var noticeVersion:Int = 3000;
 	public var forceVersion:Int = 3000;
 	public var resources:IntIntMap;
@@ -49,7 +49,7 @@ class LoginData
 		exchanges.push(ExchangeType.CHEST_CATE_121_OFFER);
 		exchanges.push(ExchangeType.CHEST_CATE_122_OFFER);
 		exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
-		exchanges.push(ExchangeType.DONATION_140_REQUEST);
+		exchanges.push(ExchangeType.DONATION_141_REQUEST);
 		
 		deck = new IntList();
 		deck.push(CardTypes.C201);

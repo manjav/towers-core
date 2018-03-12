@@ -72,7 +72,7 @@ class ExchangeType
 	static public var CHEST_CATE_131_ADS:Int = 131;
 
 	static public var DONATION:Int = 140;
-	static public var DONATION_REQUEST:Int = 141;
+	static public var DONATION_141_REQUEST:Int = 141;
 
 	public function new() {	}
 	
@@ -103,8 +103,8 @@ class ExchangeType
 			return 43200;			// 12 hour
 		else if (type == CHESTS_59_GOLD)
 			return 86400;			// 24 hour
-		else if (type == DONATION_REQUEST)
-			return 60;				// 1 min
+		else if (type == DONATION_141_REQUEST)
+			return 5*60;				// 5 min
 		else
 			return 0;
 	}

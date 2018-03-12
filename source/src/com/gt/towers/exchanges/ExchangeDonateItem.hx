@@ -1,8 +1,9 @@
 package com.gt.towers.exchanges;
+import com.gt.towers.utils.maps.IntIntMap;
 
 /**
  * ...
- * @author ...
+ * @author Babak Sheikh Salimi
  */
 class ExchangeDonateItem extends ExchangeItem 
 {
@@ -13,6 +14,14 @@ class ExchangeDonateItem extends ExchangeItem
 	
 	public function new(type:Int, reqKey_0:Int=-1, reqVal_0:Int=-1, outKey_0:Int=-1, outVal_0:Int=-1, numExchanges:Int=1, expiredAt:Int=0) 
 	{
+		this.requirements = new IntIntMap();
+		if (reqKey_0 > -1 )
+			requirements.set(reqKey_0, reqVal_0);
+			
+		this.outcomes = new IntIntMap();
+		if (outKey_0 > -1 )
+			outcomes.set(outKey_0, outVal_0);
+
 		super(type, reqKey_0, reqVal_0, outKey_0, outVal_0, numExchanges, expiredAt);
 		
 	}
