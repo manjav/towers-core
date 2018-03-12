@@ -28,7 +28,8 @@ class Player
 	public var inFriendlyBattle:Bool;
 	public var hardMode:Bool;
 	public var prefs:com.gt.towers.utils.maps.IntStrMap;
-	
+	public var skipTutorial:Bool;
+	public var hasQuests:Bool = true;
 	private var game:Game;
 
 	
@@ -182,7 +183,7 @@ class Player
 		return t;
 	}
 	
-	public function getTutorStep() : Int { return prefs.getAsInt(com.gt.towers.constants.PrefsTypes.TUTOR); }
+	public function getTutorStep() : Int { return skipTutorial ? PrefsTypes.T_182_RANK_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
 	public function inTutorial() : Bool { return ((nickName == "guest" || get_questIndex() < 3) && getTutorStep() < PrefsTypes.T_171_SELECT_NAME_FOCUS && !isBot()); }
 	public function inShopTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_141_SHOP_FOCUS && getTutorStep() <= PrefsTypes.T_144_SHOP_BOOK_OPENED; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_151_DECK_FOCUS && getTutorStep() <= PrefsTypes.T_153_DECK_CARD_SELECTED; }
