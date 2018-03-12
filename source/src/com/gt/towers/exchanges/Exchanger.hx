@@ -62,7 +62,7 @@ class Exchanger
 		ads.outcome = ExchangeType.CHESTS_57_CHROME;
 		items.set( ExchangeType.CHEST_CATE_131_ADS, ads );
 		
-		items.set( ExchangeType.DONATION_REQUEST, new ExchangeDonateItem ( ExchangeType.DONATION_REQUEST) );
+		items.set( ExchangeType.DONATION_141_REQUEST, new ExchangeDonateItem ( ExchangeType.DONATION_141_REQUEST) );
 	}
 	
 	/**
