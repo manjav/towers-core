@@ -50,6 +50,7 @@ class LoginData
 		exchanges.push(ExchangeType.CHEST_CATE_122_OFFER);
 		exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
 		exchanges.push(ExchangeType.DONATION_141_REQUEST);
+		exchanges.push(ExchangeType.DONATION_142_DONATE);
 		
 		deck = new IntList();
 		deck.push(CardTypes.C201);
