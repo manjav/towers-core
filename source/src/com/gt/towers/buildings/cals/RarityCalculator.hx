@@ -8,7 +8,7 @@ class RarityCalculator
 {
 	public var BASE_VALUE:Int = 0;
 	public function new() {}
-	public function get(type:Int):Float 
+	public function get(type:Int):Int 
 	{
 		return switch( type )
 		{
