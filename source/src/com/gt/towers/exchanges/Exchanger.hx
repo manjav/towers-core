@@ -4,6 +4,7 @@ import com.gt.towers.Game;
 import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.buildings.cals.RarityCalculator;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
@@ -42,8 +43,8 @@ class Exchanger
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
 			else if ( cex == ExchangeType.S_40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
-			else if ( cex == ExchangeType.DONATION )
-				items.set(exchangeKeys[i], new ExchangeDonateItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
+			else if ( cex == ExchangeType.DONATION_140 )
+				items.set(exchangeKeys[i], new ExchangeDonateItem ( exchangeKeys[i], -1, -1, -1, -1, 1, ex.expiredAt, -1 ) );
 			
 			i ++;
 		}
@@ -87,16 +88,6 @@ class Exchanger
 			game.player.resources.reduceMap(item.requirements);
 			return true;
 		}
-		if ( item.category == ExchangeType.DONATION )
-		{
-			if ( item.getState(now) == ExchangeDonateItem.DONATION_STATE_EXPIRED )
-				return false;
-				
-			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
-			game.player.resources.reduceMap(item.requirements);
-			return true;
-		}
-		
 		
 		var deductions = game.player.deductions(item.requirements);
 		
@@ -138,11 +129,41 @@ class Exchanger
 		}
 		return true;
 	}
-
-	public function exchangeDonate (item:ExchangeDonateItem, cardType:Int, dueTime:Int):Bool
+	public function exchangeDonate (item:ExchangeDonateItem, now:Int, confirmedHards:Int = 0):Bool
 	{
-		return false;
+		if ( item.getState(now) == ExchangeDonateItem.DONATION_STATE_EXPIRED )
+			return false;
+			
+		var cardResource:IntIntMap = new IntIntMap();
+		cardResource.set(item.cardType, 1);
+		
+		var cardsRecieved:IntIntMap = new IntIntMap();
+		cardsRecieved.set(item.cardType, item.numExchanges);
+		
+		//RarityCalculator rarity = new RarityCalculator();
+		var rewards:IntIntMap = new IntIntMap();
+		rewards.set(ResourceType.XP, 5);
+		rewards.set(ResourceType.CURRENCY_HARD, 1);
+		
+		// add outcomes and requirements
+		if ( item.type == ExchangeType.DONATION_141_REQUEST )
+			if( cardResource != null )
+				game.player.addResources(cardsRecieved);
+			else
+				return false;
+		else if ( item.type == ExchangeType.DONATION_142_DONATE ) 
+		{
+			if ( cardResource != null && rewards != null )
+			{
+				game.player.resources.reduceMap(cardResource);
+				game.player.addResources(rewards);
+			}
+			else
+				return false;
+		}
+		return true;
 	}
+	
 	public function readyToStartOpening(type:Int, now:Int) : Bool
 	{
 		var item = items.get(type);
