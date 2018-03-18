@@ -145,21 +145,25 @@ class Exchanger
 		rewards.set(ResourceType.XP, 5);
 		rewards.set(ResourceType.CURRENCY_HARD, 1);
 		
+		//check if player has earned card before
+		if ( !game.player.resources.exists(item.cardType) )
+			return false;
+				
 		// add outcomes and requirements
 		if ( item.type == ExchangeType.DONATION_141_REQUEST )
-			if( cardResource != null )
-				game.player.addResources(cardsRecieved);
-			else
+		{
+			if( cardResource == null )
 				return false;
+			game.player.addResources(cardsRecieved);
+		}
 		else if ( item.type == ExchangeType.DONATION_142_DONATE ) 
 		{
-			if ( cardResource != null && rewards != null )
-			{
-				game.player.resources.reduceMap(cardResource);
-				game.player.addResources(rewards);
-			}
-			else
+			if ( game.player.resources.get(item.cardType) <= 0 )
 				return false;
+			if ( cardResource == null && rewards == null )
+				return false;
+			game.player.resources.reduceMap(cardResource);
+			game.player.addResources(rewards);
 		}
 		return true;
 	}
