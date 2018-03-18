@@ -140,10 +140,26 @@ class Exchanger
 		var cardsRecieved:IntIntMap = new IntIntMap();
 		cardsRecieved.set(item.cardType, item.numExchanges);
 		
+		var r:RarityCalculator = new RarityCalculator();
+		var rarity:Int = r.get(item.cardType);
 		//RarityCalculator rarity = new RarityCalculator();
 		var rewards:IntIntMap = new IntIntMap();
-		rewards.set(ResourceType.XP, 5);
-		rewards.set(ResourceType.CURRENCY_HARD, 1);
+		
+		if ( rarity == 1 )
+		{
+			rewards.set(ResourceType.XP, 10);
+			rewards.set(ResourceType.CURRENCY_HARD, 50);
+		}
+		else if ( rarity == 2 )
+		{
+			rewards.set(ResourceType.XP, 10);
+			rewards.set(ResourceType.CURRENCY_HARD, 500);
+		}
+		else
+		{
+			rewards.set(ResourceType.XP, 10);
+			rewards.set(ResourceType.CURRENCY_HARD, 500);
+		}
 		
 		//check if player has earned card before
 		if ( !game.player.resources.exists(item.cardType) )
