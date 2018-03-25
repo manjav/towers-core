@@ -64,13 +64,15 @@ class FieldProvider
 		quests.set( "quest_37", new Quest_37( 37, "quest_37", "100,140,210,30" ) );
 		quests.set( "quest_38", new Quest_38( 38, "quest_38", "130,160,200,30" ) );
 		quests.set( "quest_39", new Quest_39( 39, "quest_39", "150,180,220,30" ) );
-	
-	
+		
+		
 		battles = new StringFieldMap();
-	
-		battles.set( "battle_1", new Battle_1( 1, "battle_1", "80,150,240,0" ) );
-		battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,0" ) );
-	
+		
+		battles.set( "battle_1", new Battle_1( 1, "battle_1", "80,150,240,0", "", "0,2,4",	"0") );
+		battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,0", "", "0",		"0") );
+		battles.set( "battle_3", new Battle_3( 3, "battle_3", "80,150,240,0" ) );
+		battles.set( "battle_4", new Battle_4( 4, "battle_4", "80,150,240,0" ) );
+		
 		battles.set( "battle_101", new Battle_101( 101, "battle_101", "80,160,260,0" ) );
 		battles.set( "battle_102", new Battle_102( 102, "battle_102", "80,160,260,0" ) );
 		battles.set( "battle_103", new Battle_103( 103, "battle_103", "80,160,260,0" ) );
@@ -85,7 +87,7 @@ class FieldProvider
 		battles.set( "battle_206", new Battle_206( 206, "battle_206", "100,130,210,0" ) );
 		battles.set( "battle_207", new Battle_207( 207, "battle_207", "100,130,210,0" ) );
 		battles.set( "battle_208", new Battle_208( 208, "battle_208", "100,130,210,0" ) );
-	
+		
 		battles.set( "battle_301", new Battle_301( 301, "battle_301", "100,150,250,20" ) );
 		battles.set( "battle_302", new Battle_302( 302, "battle_302", "100,150,250,20" ) );
 		battles.set( "battle_303", new Battle_303( 303, "battle_303", "100,150,250,20" ) );
@@ -96,7 +98,7 @@ class FieldProvider
 		battles.set( "battle_308", new Battle_308( 308, "battle_308", "100,150,250,20" ) );
 		battles.set( "battle_309", new Battle_309( 309, "battle_309", "100,150,250,20" ) );
 		battles.set( "battle_310", new Battle_310( 310, "battle_310", "100,150,250,20" ) );
-
+		
 		battles.set( "battle_401", new Battle_401( 401, "battle_401", "100,150,250,20" ) );
 		battles.set( "battle_402", new Battle_402( 402, "battle_402", "100,150,250,20" ) );
 		battles.set( "battle_403", new Battle_303( 403, "battle_403", "100,150,250,20" ) );
@@ -107,7 +109,7 @@ class FieldProvider
 		battles.set( "battle_408", new Battle_408( 408, "battle_408", "100,150,250,20" ) );
 		battles.set( "battle_409", new Battle_409( 409, "battle_409", "100,150,250,20" ) );
 		battles.set( "battle_410", new Battle_410( 410, "battle_410", "100,150,250,20" ) );
-	
+		
 		battles.set( "battle_501", new Battle_501( 501, "battle_501", "100,150,300,20" ) );
 		battles.set( "battle_502", new Battle_502( 502, "battle_502", "100,150,300,20" ) );
 		battles.set( "battle_503", new Battle_503( 503, "battle_503", "100,150,300,20" ) );
@@ -118,7 +120,7 @@ class FieldProvider
 		battles.set( "battle_508", new Battle_508( 508, "battle_508", "100,150,300,20" ) );
 		battles.set( "battle_509", new Battle_509( 509, "battle_509", "100,150,300,20" ) );
 		battles.set( "battle_510", new Battle_510( 510, "battle_510", "100,150,300,20" ) );
-
+		
 		battles.set( "battle_601", new Battle_601( 601, "battle_601", "100,150,320,20" ) );
 		battles.set( "battle_602", new Battle_602( 602, "battle_602", "100,150,320,20" ) );
 		battles.set( "battle_603", new Battle_603( 603, "battle_603", "100,150,320,20" ) );
@@ -132,7 +134,7 @@ class FieldProvider
 		battles.set( "battle_611", new Battle_611( 611, "battle_611", "100,150,320,20" ) );
 		battles.set( "battle_612", new Battle_612( 612, "battle_612", "100,150,320,20" ) );
 		battles.set( "battle_613", new Battle_613( 613, "battle_613", "100,150,320,20" ) );
-	
+		
 		battles.set( "battle_701", new Battle_701( 701, "battle_701", "150,200,360,20" ) );
 		battles.set( "battle_702", new Battle_702( 702, "battle_702", "150,200,360,20" ) );
 		battles.set( "battle_703", new Battle_703( 703, "battle_703", "150,200,360,20" ) );
@@ -146,7 +148,7 @@ class FieldProvider
 		battles.set( "battle_711", new Battle_711( 711, "battle_711", "150,200,360,20" ) );
 		battles.set( "battle_712", new Battle_712( 712, "battle_712", "150,200,360,20" ) );
 		battles.set( "battle_713", new Battle_713( 713, "battle_713", "150,200,360,20" ) );
-	
+		
 		battles.set( "battle_801", new Battle_801( 801, "battle_801", "150,200,360,20" ) );
 		battles.set( "battle_802", new Battle_802( 802, "battle_802", "150,200,360,20" ) );
 		battles.set( "battle_803", new Battle_803( 803, "battle_803", "150,200,360,20" ) );
