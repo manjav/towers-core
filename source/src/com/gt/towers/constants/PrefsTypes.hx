@@ -36,6 +36,11 @@ class PrefsTypes
 	public static var T_134_QUEST_2_FIRST_SWIPE:Int = 134;
 	public static var T_135_QUEST_2_LOSE:Int = 135;
 	
+	// for tutorial mode is 1
+	public static var T_136_QUEST_2_WIN:Int = 136;
+	public static var T_138_SELECT_NAME_FOCUS:Int = 138;
+	public static var T_139_NAME_SELECTED:Int = 139;
+	
 	public static var T_141_SHOP_FOCUS:Int = 141;
 	public static var T_142_SHOP_FIRST_VIEW:Int = 142;
 	public static var T_143_SHOP_BOOK_FOCUS:Int = 143;
