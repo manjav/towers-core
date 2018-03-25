@@ -260,23 +260,23 @@ class Building extends AbstractBuilding
 		return category == BuildingType.get_category(type);
 	}
  
+	#if flash
 	public function getFeatureValue(feature:Int):Float
 	{
 		if ( feature == BuildingFeatureType.F01_CAPACITY )
 			return get_capacity();
 		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return get_birthRate();
+			return get_birthRate() * 1000;
 		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
-			return get_troopSpeed();
+			return getFeatureBaseValue(feature) * 2 - get_troopSpeed() * 0.02;
 		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
-			return get_troopPower();
+			return get_troopPower() * 50;
 		else if ( feature == BuildingFeatureType.F21_DAMAGE )
-			return get_damage();
+			return get_damage() * 50;
 		else if ( feature == BuildingFeatureType.F22_FIRE_SPEED )
-			return get_damageGap();
+			return getFeatureBaseValue(feature) * 2 - get_damageGap() * 0.04;
 		else if ( feature == BuildingFeatureType.F23_RANGE )
-			return get_damageRadius();
-		
+			return get_damageRadius() * 0.2;
 		return 0;
 	}
 	
@@ -285,18 +285,18 @@ class Building extends AbstractBuilding
 		if ( feature == BuildingFeatureType.F01_CAPACITY )
 			return BASE_CAPACITY;
 		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return BASE_BIRTH_RATE;
+			return BASE_BIRTH_RATE * 1000;
 		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
-			return BASE_TROOP_SPEED;
+			return BASE_TROOP_SPEED * 0.02;
 		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
-			return BASE_TROOP_POWER;
+			return BASE_TROOP_POWER * 50;
 		else if ( feature == BuildingFeatureType.F21_DAMAGE )
-			return BASE_DAMAGE;
+			return BASE_DAMAGE * 50;
 		else if ( feature == BuildingFeatureType.F22_FIRE_SPEED )
-			return BASE_DAMAGE_GAP;
+			return BASE_DAMAGE_GAP * 0.04;
 		else if ( feature == BuildingFeatureType.F23_RANGE )
-			return BASE_DAMAGE_RADIUS;
-
+			return BASE_DAMAGE_RADIUS * 0.2;
 		return 0;
 	}
+	#end
 }
