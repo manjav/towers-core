@@ -1,5 +1,6 @@
 package com.gt.towers.buildings;
 import com.gt.towers.Game;
+import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
@@ -30,13 +31,15 @@ class Place
 	public var links:PlaceList;
 	public var building:Building;
 	public var game:Game;
+	public var battleField:BattleField;
 	
 	private var troopId:Int;
 
 
-	public function new(game:Game, index:Int, x:Float, y:Float, botEnabled:Bool) 
+	public function new(game:Game, battleField:BattleField, index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{
 		this.game = game;
+		this.battleField = battleField;
 		this.index = index;
 		this.x = x;
 		this.y = y;
@@ -110,7 +113,7 @@ class Place
 			return;
 		
 		if( game.player.inTutorial() && !game.player.hardMode )
-			troopsDivision = 0.8;
+			troopsDivision = 0.7;
 		
 		numTroops = Math.floor(building.get_population() * troopsDivision);
 		//trace(index, "population", building.get_population(), "numTroops", numTroops);

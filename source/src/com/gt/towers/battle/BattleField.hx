@@ -18,6 +18,7 @@ class BattleField
 {
 	private var questProvider:FieldProvider;
 
+	public var singleMode:Bool;
 	public var places:PlaceList;
 	public var map:FieldData;
 	public var difficulty:Int;
@@ -27,8 +28,14 @@ class BattleField
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
 		var isQuest = mapName.substr(0, 6) == "quest_";
-		var singleMode = game_1.player.buildings.keys().length == 0;
-
+		singleMode = game_1.player.buildings.keys().length == 0;
+		
+		#if java 
+		games = new java.util.ArrayList<Game>();
+		games.add(game_0);
+		games.add(game_1);
+		#end
+		
 		if( isQuest )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
@@ -50,7 +57,7 @@ class BattleField
 			{
 				if( map.index == 2 )
 				{
-					game_0.player.hardMode = game_0.player.isHardMode();
+					game_0.player.hardMode = game_0.player.emptyDeck();
 					difficulty = game_0.player.hardMode ? 14 : 0;
 					//map.places.get(3).enabled = !game_0.player.hardMode;
 					//map.places.get(0).enabled = game_0.player.hardMode;
@@ -88,7 +95,7 @@ class BattleField
 		while ( p < placesLen )
 		{
 			placeData = map.places.get( p );
-			place = new Place(placeData.troopType == 1 ? game_1 : game_0, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
+			place = new Place(placeData.troopType == 1 ? game_1 : game_0, this, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
 			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
 			place.building.createEngine(placeData.troopType);
 			places.push(place);
@@ -132,6 +139,7 @@ class BattleField
 	}
 	
 	#if java
+	public var games:java.util.List<Game>;
 	public var now:Int64 = 0;
 	public var startAt:Int64 = 0;
 	public var interval:Int64 = 100;

@@ -186,7 +186,7 @@ class Player
 	public function inShopTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_141_SHOP_FOCUS && getTutorStep() <= PrefsTypes.T_144_SHOP_BOOK_OPENED; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_151_DECK_FOCUS && getTutorStep() <= PrefsTypes.T_153_DECK_CARD_SELECTED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function isHardMode() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
+	public function emptyDeck() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
 	public function inTutorial() : Bool
 	{

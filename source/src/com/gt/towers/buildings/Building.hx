@@ -1,9 +1,11 @@
 package com.gt.towers.buildings;
 
 import com.gt.towers.Game;
+import com.gt.towers.Player;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.TroopType;
 import com.gt.towers.utils.lists.IntList;
 import haxe.Int64;
 
@@ -17,7 +19,7 @@ class Building extends AbstractBuilding
 	
 	public var place:Place;
 	public var index:Int;
-	public var troopType:Int = -1;
+	public var troopType:Int = -2;
 	
 	public var _population:Float;
 	var spawnIntervalId:Int;
@@ -30,8 +32,9 @@ class Building extends AbstractBuilding
 		
 		if( level == 0 )
 		{
-			if( getAbstract(type) != null)
-				level = getAbstract(type).get_level() ;
+			var abs = getAbstract(type);
+			if( abs != null && abs.get_level() > 0 )
+				level = abs.get_level() ;
 			else
 				level = 1;
 		}
@@ -164,12 +167,12 @@ class Building extends AbstractBuilding
 		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 		
-		//trace("improved", index, type);
-	if( !equalsCategory(type) )
-	{
-		place.setBuilidng(type, game);
-		return true;
-	}
+		trace("improved", index, type, equalsCategory(type));
+		if( !equalsCategory(type) )
+		{
+			place.setBuilidng(type, game);
+			return true;
+		}
 		
 		this.type ++;
 		improveLevel ++;
@@ -195,13 +198,13 @@ class Building extends AbstractBuilding
 		}
 		else if (_population > get_capacity())
 		{
-			gap = Math.ceil(( _population - get_capacity()) * gap * 2 );
+			gap = (_population - get_capacity()) * 0.03;
 			if( _population - gap < get_capacity() )
 				_population = get_capacity();
 			else
 				_population -= gap;
 		}
-		//game.tracer.log(place.index + " t:" + type + " g: " + gap);
+		//trace(place.index + " t:" + type + " g: " + gap);
 	}
 	
 	public function popTroop() : Bool
@@ -225,7 +228,13 @@ class Building extends AbstractBuilding
 	{
 		troopType = troop.type;
 		place.enabled = true;
-		_population = ( game.player.inTutorial() && !game.player.hardMode) ? get_capacity() * 0.3 : 0;
+		
+		var p = place.battleField.games.get(0).player;
+		if( place.battleField.singleMode && p.inTutorial() )
+			_population = !p.hardMode && p.troopType == TroopType.T_0 ? get_capacity() * 0.3 : 0;
+		else 
+			_population = 0;
+		
 		if ( type == BuildingType.B01_CAMP )
 		{
 			place.game = game = troop.building.game;
