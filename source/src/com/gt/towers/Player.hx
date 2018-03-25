@@ -28,7 +28,7 @@ class Player
 	public var inFriendlyBattle:Bool;
 	public var hardMode:Bool;
 	public var prefs:com.gt.towers.utils.maps.IntStrMap;
-	public var skipTutorial:Bool;
+	public var tutorialMode:Int = 0;
 	public var hasQuests:Bool = true;
 	private var game:Game;
 
@@ -84,7 +84,6 @@ class Player
 		
 		return lastQuest ;
 	}
-	
 	
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_keys():Int { return resources.get(ResourceType.KEY); }
@@ -183,13 +182,22 @@ class Player
 		return t;
 	}
 	
-	public function getTutorStep() : Int { return skipTutorial ? PrefsTypes.T_182_RANK_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
-	public function inTutorial() : Bool { return ((nickName == "guest" || get_questIndex() < 3) && getTutorStep() < PrefsTypes.T_171_SELECT_NAME_FOCUS && !isBot()); }
+	public function getTutorStep() : Int { return tutorialMode == -1 ? PrefsTypes.T_182_RANK_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
 	public function inShopTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_141_SHOP_FOCUS && getTutorStep() <= PrefsTypes.T_144_SHOP_BOOK_OPENED; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_151_DECK_FOCUS && getTutorStep() <= PrefsTypes.T_153_DECK_CARD_SELECTED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function isHardMode() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
+	public function inTutorial() : Bool
+	{
+		if( isBot() )
+			return false;
+		if( tutorialMode == 0 && get_questIndex() > 2 && getTutorStep() >= PrefsTypes.T_171_SELECT_NAME_FOCUS )
+			return false;
+		if( tutorialMode == 1 && get_battleswins() > 1 && getTutorStep() >= PrefsTypes.T_138_SELECT_NAME_FOCUS )
+			return false;
+		return true;
+	}
 	
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
