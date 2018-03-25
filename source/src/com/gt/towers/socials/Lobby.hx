@@ -11,8 +11,8 @@ import com.gt.towers.constants.ResourceType;
 class Lobby 
 {
 
-	public var requiredGems:Int = 10;
-	public var xpReward:Int = 10;
+	public var requiredGems:Int = 30;
+	public var xpReward:Int = 100;
 	public var game:Game;
 	
 	public function new(game:Game) 
