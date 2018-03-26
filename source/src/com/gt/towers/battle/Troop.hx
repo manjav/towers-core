@@ -24,8 +24,8 @@ class Troop
 	var currentTimeMillis:Int64;
 	var destination:Place;
 	
-	//var arrivenTime:Int64;
-	//var lastHost:Building;
+	var recoverArrivenTime:Int64;
+	var recoverlastHost:Building;
 
 	public function new( id:Int, building:Building, path:PlaceList, currentTimeMillis:Int64) 
 	{
@@ -75,15 +75,15 @@ class Troop
 		}
 		
 		arrivenTime = currentTimeMillis + Math.round(building.get_troopSpeed() * PathFinder.getDistance(source, destination));
-		//trace("rush id:" + id, "health:" + health, "arrivenTime:" + arrivenTime, "destination:" + destination == null?"null":destination.index);
+		//if( destination != null && destination.index == 5 ) trace("troop -> rush id:" + id, "health:" + health, "arrivenTime:" + arrivenTime, "destination:" + destination == null?"null":destination.index);
 	}
 	private function arrived():Void
 	{
-		//trace("arrived id:" + id, "index", destination.index, "path.size():" + path.size());
+		//if( destination.index == 5 ) trace("troop -> arrived id:" + id, " index:" + destination.index, " destination:" + destination.index, " path.size():" + path.size());
 		if( health <= 0 )
 			return ;
-		/*arrivenTime = java.lang.System.currentTimeMillis();
-		lastHost = destination.building;*/
+		recoverArrivenTime = arrivenTime + 1;
+		recoverlastHost = destination.building;
 		var allow = destination.building.pushTroops(this);
 		if ( !allow || path.size() == 0 )
 		{
@@ -98,21 +98,22 @@ class Troop
 	}
 	public function hit(damage:Float):Void
 	{
-		//trace("troop -> rush id:" + id , damage, health);
+		//if( destination.index == 5 ) trace("troop -> hit id:" + id , " health:" + health, " damage:" + damage, " destination:" + destination.index);
 		// recover network lags
-		/*if( java.lang.System.currentTimeMillis() - arrivenTime < 300 )
+		if( currentTimeMillis - recoverArrivenTime < 300 )
 		{
-			if( lastHost != null )
+			if( recoverlastHost != null )
 			{
-				if( lastHost.troopType == type )
-					lastHost._population -= Math.max(0, Math.min(damage, health));
+				if( recoverlastHost.troopType == type )
+					recoverlastHost._population = Math.max(0, recoverlastHost._population - Math.min(damage, health));
 				else
-					lastHost._population += Math.max(0, Math.min(damage, health));
-				trace("recovered missed hit => id:" + id + " damage:" + damage+ " health:" + health);
-				//lastHost = null;
+					recoverlastHost._population = Math.max(0, recoverlastHost._population + Math.min(damage, health));
+				//if( destination.index == 5 ) trace("recovered missed hit => id:" + id + " damage:" + damage + " health:" + health + " currentTimeMillis:" + currentTimeMillis + " recoverArrivenTime:" + recoverArrivenTime + " recoverlastHost:" + recoverlastHost.index);
+				recoverlastHost = null;
+				
 			}
 		}
-		*/
+		
 		health -= damage;
 		if( health <= 0 )
 			dispose();
