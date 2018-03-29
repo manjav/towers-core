@@ -30,6 +30,7 @@ class Player
 	public var prefs:com.gt.towers.utils.maps.IntStrMap;
 	public var tutorialMode:Int = 0;
 	public var hasQuests:Bool = true;
+	public var admin:Bool = false;
 	private var game:Game;
 
 	
@@ -37,6 +38,7 @@ class Player
 	{
 		this.game = game;
 		id = initData.id;
+		admin = isAdmin(id);
 		nickName = initData.nickName;
 		
 		// add player resources, quests data
@@ -188,6 +190,7 @@ class Player
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function emptyDeck() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
+	public static function isAdmin(id:Int) : Bool {return (id == 10412 || id == 10487); }
 	public function inTutorial() : Bool
 	{
 		if( isBot() )
