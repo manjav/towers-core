@@ -165,7 +165,6 @@ class BattleField
 			places.get(p).dispose();
 			p --;
 		}
-		java.lang.System.gc();
 	}
 	#end
 	

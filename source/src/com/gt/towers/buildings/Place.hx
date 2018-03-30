@@ -16,7 +16,6 @@ import haxe.Int64;
 class Place 
 {
 	#if java
-	public var fightTime:Int = -1;
 	var path:PlaceList;
 	var numTroops:Int = 0;
 	var lastRushTime:Int64;
