@@ -3,12 +3,12 @@ import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
+import com.gt.towers.calculators.FeatureCalculator;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.socials.Lobby;
 import com.gt.towers.utils.maps.IntArenaMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
-
 
 /**
  * ...
@@ -17,13 +17,14 @@ import com.gt.towers.utils.maps.IntBuildingMap;
 class Game
 {
 	public var loginData:LoginData = new LoginData(); 
-	public var player:Player;
 	public var appVersion:Int;
 	public var market:String;
 	public var sessionsCount:Int;
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
+	public var calculator:FeatureCalculator;
 	public var arenas:IntArenaMap;
+	public var player:Player;
 	public var lobby:Lobby;
 
 	public function new(){}
@@ -36,6 +37,7 @@ class Game
 		player = new Player(this, data);
 		exchanger = new Exchanger(this, data);
 		lobby = new Lobby(this);
+		calculator = new FeatureCalculator(this);
 		
 		arenas = new IntArenaMap();
 		
@@ -83,7 +85,7 @@ class Game
 			var arena = arenas.get(arenaIndex);
 			if ( player.get_point() < arena.min )
 				break;
-
+			
 			var cardsLen:Int = arena.cards.size() - 1;
 			while ( cardsLen >= 0 )
 			{
