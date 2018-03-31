@@ -131,11 +131,11 @@ class ExchangeType
 		else if (type == CHESTS_53_GOLD)
 			return 30;
 		else if (type == CHESTS_54_CHROME)
-			return 50;
+			return 40;
 		else if (type == CHESTS_55_SILVER)
-			return 90;
+			return 70;
 		else if (type == CHESTS_56_GOLD)
-			return 160;
+			return 120;
 		return 0;
 	}	
 	

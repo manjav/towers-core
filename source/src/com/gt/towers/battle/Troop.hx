@@ -98,7 +98,7 @@ class Troop
 	}
 	public function hit(damage:Float):Void
 	{
-		//if( destination.index == 5 ) trace("troop -> hit id:" + id , " health:" + health, " damage:" + damage, " destination:" + destination.index);
+		//if( destination.index == 5 ) trace("troop -> hit   id:" + id , " health:" + health, " damage:" + damage, " destination:" + destination.index);
 		// recover network lags
 		if( currentTimeMillis - recoverArrivenTime < 300 )
 		{
@@ -108,7 +108,7 @@ class Troop
 					recoverlastHost._population = Math.max(0, recoverlastHost._population - Math.min(damage, health));
 				else
 					recoverlastHost._population = Math.max(0, recoverlastHost._population + Math.min(damage, health));
-				//if( destination.index == 5 ) trace("recovered missed hit => id:" + id + " damage:" + damage + " health:" + health + " currentTimeMillis:" + currentTimeMillis + " recoverArrivenTime:" + recoverArrivenTime + " recoverlastHost:" + recoverlastHost.index);
+				//if( destination.index == 5 ) trace("recovered hit => id:" + id + " damage:" + damage + " health:" + health + " currentTimeMillis:" + currentTimeMillis + " recoverArrivenTime:" + recoverArrivenTime + " recoverlastHost:" + recoverlastHost.index);
 				recoverlastHost = null;
 				
 			}
