@@ -3,7 +3,7 @@ import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
-import com.gt.towers.buildings.cals.FeatureCalculator;
+import com.gt.towers.calculators.FeatureCalculator;
 import com.gt.towers.events.CoreEventDispatcher;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.constants.MessageTypes;
