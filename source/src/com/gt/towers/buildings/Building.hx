@@ -21,6 +21,19 @@ class Building extends AbstractBuilding
 	public var index:Int;
 	public var troopType:Int = -2;
 	
+	public var capacity:Int;
+	public var birthRate:Float;
+
+	//public var troopHealth:Float = 1;
+	public var troopPower:Float;
+	public var troopSpeed:Int;
+	public var troopRushGap:Int;
+	
+	public var damage:Float;
+	public var damageGap:Int;
+	//public var damageRadiusMin:Float;
+	public var damageRadiusMax:Float;
+	
 	public var _population:Float;
 	var spawnIntervalId:Int;
 	
@@ -40,7 +53,23 @@ class Building extends AbstractBuilding
 		}
 		super( game, type, level );
 	}
-
+	private function setFeatures():Void
+	{
+		/*// troops data
+		capacity
+		birthRate
+		troopSpeed = game.calculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level());
+		troopPower = game.calculator.get(BuildingFeatureType.F12_TROOP_POWER, type, get_level());
+		//troopHealth = game.calculator.get(BuildingFeatureType.F13_TROOP_HEALTH, type, get_level());
+		troopRushGap = game.calculator.getInt(BuildingFeatureType.F14_TROOP_RUSH_GAP, type, get_level());
+		
+		// defensive data
+		damage = game.calculator.get(BuildingFeatureType.F21_DAMAGE, type, get_level());
+		damageGap = game.calculator.getInt(BuildingFeatureType.F22_DAMAGE_GAP, type, get_level());
+		//damageRangeMin = game.calculator.get(BuildingFeatureType.F23_RANGE_RANGE_MIN, type, get_level());
+		damageRangeMax = game.calculator.get(BuildingFeatureType.F24_RANGE_RANGE_MAX, type, get_level());*/
+	}
+	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	#if flash
 	public function get_troopName () : String
@@ -60,7 +89,6 @@ class Building extends AbstractBuilding
 			ret.push( BuildingType.IMPROVE );
 		return ret;
 	}
-	#end
 
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
@@ -117,6 +145,7 @@ class Building extends AbstractBuilding
 	{
 		return BASE_DAMAGE_RADIUS;
 	}
+	#end
 
 	public function get_population():Int
 	{
@@ -147,6 +176,7 @@ class Building extends AbstractBuilding
 			initialPopulation = get_capacity();
 		
 		_population = initialPopulation;
+		setFeatures();
 		#end
 	}
 	
@@ -176,7 +206,7 @@ class Building extends AbstractBuilding
 		
 		this.type ++;
 		improveLevel ++;
-		
+		setFeatures();
 		return true;
 	}
 	
@@ -240,7 +270,9 @@ class Building extends AbstractBuilding
 			place.game = game = troop.building.game;
 			return;
 		}
-		place.setBuilidng(BuildingType.B01_CAMP, troop.building.game);
+		//place.setBuilidng(BuildingType.B01_CAMP, troop.building.game);
+		setFeatures();
+
 	}
 	
 	public function getPower() : Float
