@@ -17,6 +17,7 @@ class Troop
 	public var path:PlaceList;
 	public var building:Building;
 	public var disposed:Bool;
+
 	
 	var interval:Int;
 	var rushTime:Int64 = 0;
@@ -32,7 +33,7 @@ class Troop
 		this.id = id;
 		this.building = building;
 		this.type = building.troopType;
-		this.health = building.get_troopPower();
+		this.health = building.troopPower;
 		this.currentTimeMillis = currentTimeMillis;
 		
 		this.path = new PlaceList();
@@ -46,7 +47,7 @@ class Troop
 	}
 	
 	#if java
-	public function update( currentTimeMillis:Int64 ) : Void
+	public function update( currentTimeMillis:Int64 ): Void
 	{
 		if( disposed )
 			return;
@@ -65,7 +66,7 @@ class Troop
 		}
 	}
 	
-	public function rush(source:Place):Void
+	public function rush(source:Place) : Void
 	{
 		destination = path.shift();
 		if( destination == null || health <= 0 )
@@ -74,10 +75,10 @@ class Troop
 			return ;
 		}
 		
-		arrivenTime = currentTimeMillis + Math.round(building.get_troopSpeed() * PathFinder.getDistance(source, destination));
+		arrivenTime = currentTimeMillis + building.troopSpeed * PathFinder.getDistance(source, destination);
 		//if( destination != null && destination.index == 5 ) trace("troop -> rush id:" + id, "health:" + health, "arrivenTime:" + arrivenTime, "destination:" + destination == null?"null":destination.index);
 	}
-	private function arrived():Void
+	private function arrived() : Void
 	{
 		//if( destination.index == 5 ) trace("troop -> arrived id:" + id, " index:" + destination.index, " destination:" + destination.index, " path.size():" + path.size());
 		if( health <= 0 )
@@ -93,10 +94,10 @@ class Troop
 			return;
 		}
 		
-		rushTime = currentTimeMillis + building.get_exitGap();
+		rushTime = currentTimeMillis + building.troopRushGap;
 		//trace("arrived id:" + id + " allow:" + allow+ " path.size():" + path.size());
 	}
-	public function hit(damage:Float):Void
+	public function hit(damage:Float) : Void
 	{
 		//if( destination.index == 5 ) trace("troop -> hit   id:" + id , " health:" + health, " damage:" + damage, " destination:" + destination.index);
 		// recover network lags

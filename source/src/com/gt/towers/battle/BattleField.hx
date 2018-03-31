@@ -30,12 +30,6 @@ class BattleField
 		var isQuest = mapName.substr(0, 6) == "quest_";
 		singleMode = game_1.player.buildings.keys().length == 0;
 		
-		#if java 
-		games = new java.util.ArrayList<Game>();
-		games.add(game_0);
-		games.add(game_1);
-		#end
-		
 		if( isQuest )
 			map = game_0.fieldProvider.quests.get(mapName);
 		else
@@ -91,6 +85,14 @@ class BattleField
 			}
 		}
 		
+		#if java 
+		game_0.calculator.setField(this);
+		game_1.calculator.setField(this);
+		games = new java.util.ArrayList<Game>();
+		games.add(game_0);
+		games.add(game_1);
+		#end
+		
 		// create places and buildings
 		while ( p < placesLen )
 		{
@@ -142,7 +144,7 @@ class BattleField
 	public var games:java.util.List<Game>;
 	public var now:Int64 = 0;
 	public var startAt:Int64 = 0;
-	public var interval:Int64 = 100;
+	public var interval:Int = 100;
 	public function update() : Void
 	{
 		now += interval;

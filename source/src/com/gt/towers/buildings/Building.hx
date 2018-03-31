@@ -15,10 +15,7 @@ import haxe.Int64;
  */
 class Building extends AbstractBuilding
 {
-	public static var TIME_SCALE:Float = 1;
-	
 	public var place:Place;
-	public var index:Int;
 	public var troopType:Int = -2;
 	
 	public var capacity:Int;
@@ -35,19 +32,17 @@ class Building extends AbstractBuilding
 	public var damageRadiusMax:Float;
 	
 	public var _population:Float;
-	var spawnIntervalId:Int;
 	
 	public function new(game:Game, place:Place, index:Int, type:Int, level:Int = 0)
 	{
 		this.game = game;
 		this.place = place;
-		this.index = index;
 		
 		if( level == 0 )
 		{
 			var abs = getAbstract(type);
 			if( abs != null && abs.get_level() > 0 )
-				level = abs.get_level() ;
+				level = abs.get_level();
 			else
 				level = 1;
 		}
@@ -55,23 +50,27 @@ class Building extends AbstractBuilding
 	}
 	private function setFeatures():Void
 	{
-		/*// troops data
-		capacity
-		birthRate
-		troopSpeed = game.calculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level());
-		troopPower = game.calculator.get(BuildingFeatureType.F12_TROOP_POWER, type, get_level());
-		//troopHealth = game.calculator.get(BuildingFeatureType.F13_TROOP_HEALTH, type, get_level());
-		troopRushGap = game.calculator.getInt(BuildingFeatureType.F14_TROOP_RUSH_GAP, type, get_level());
+		category = BuildingType.get_category(type);
+		birthRate = game.calculator.get(BuildingFeatureType.F05_BIRTH_RATE, type, get_level(), improveLevel);
+		capacity = game.calculator.getInt(BuildingFeatureType.F06_CAPACITY, type, get_level(), improveLevel);
+		
+		// troops data
+		troopSpeed = game.calculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level(), improveLevel);
+		troopPower = game.calculator.get(BuildingFeatureType.F12_TROOP_POWER, type, get_level(), improveLevel);
+		//troopHealth = game.calculator.get(BuildingFeatureType.F13_TROOP_HEALTH, type, get_level(), improveLevel);
+		troopRushGap = game.calculator.getInt(BuildingFeatureType.F14_TROOP_RUSH_GAP, type, get_level(), improveLevel);
 		
 		// defensive data
-		damage = game.calculator.get(BuildingFeatureType.F21_DAMAGE, type, get_level());
-		damageGap = game.calculator.getInt(BuildingFeatureType.F22_DAMAGE_GAP, type, get_level());
-		//damageRangeMin = game.calculator.get(BuildingFeatureType.F23_RANGE_RANGE_MIN, type, get_level());
-		damageRangeMax = game.calculator.get(BuildingFeatureType.F24_RANGE_RANGE_MAX, type, get_level());*/
+		damage = game.calculator.get(BuildingFeatureType.F21_DAMAGE, type, get_level(), improveLevel);
+		damageGap = game.calculator.getInt(BuildingFeatureType.F22_DAMAGE_GAP, type, get_level(), improveLevel);
+		//damageRangeMin = game.calculator.get(BuildingFeatureType.F23_RANGE_RANGE_MIN, type, get_level(), improveLevel);
+		damageRadiusMax = game.calculator.get(BuildingFeatureType.F24_RANGE_RADIUS_MAX, type, get_level(), improveLevel);
+		//trace("type:" + type, " level:" + get_level(), " improveLevel:" + improveLevel, " birthRate:" + birthRate, " capacity:" + capacity, " troopSpeed:" + troopSpeed, " troopPower:" + troopPower, " troopRushGap:" + troopRushGap );
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 	#if flash
+	public static var TIME_SCALE:Float = 1;
 	public function get_troopName () : String
 	{
 		return "10/";
@@ -89,7 +88,12 @@ class Building extends AbstractBuilding
 			ret.push( BuildingType.IMPROVE );
 		return ret;
 	}
-
+	
+	public static var BASE_BIRTH_RATE:Float = 0.04;
+	public function get_birthRate():Float
+	{
+		return BASE_BIRTH_RATE * TIME_SCALE;
+	}
 	public static var BASE_CAPACITY:Int = 10;
 	public function get_capacity():Int 
 	{
@@ -103,7 +107,6 @@ class Building extends AbstractBuilding
 			return 24;
 		else
 			return BASE_CAPACITY;
-
 		//return 10 + (5 * improveLevel);
 	}
 	public static var BASE_EXIT_GAP:Int = 350;
@@ -120,13 +123,6 @@ class Building extends AbstractBuilding
 	public function get_troopPower():Float
 	{
 		return Math.round(BASE_TROOP_POWER);
-	}
-	
-
-	public static var BASE_BIRTH_RATE:Float = 0.04;
-	public function get_birthRate():Float
-	{
-		return BASE_BIRTH_RATE * TIME_SCALE;
 	}
 
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -162,7 +158,7 @@ class Building extends AbstractBuilding
 			return false;
 		
 		//trace("type "+ type ,this.type, " equalsCategory " + equalsCategory(this.type+1) , " _population " + _population , " get_capacity " + get_capacity());
-		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type % 10 == 1)) &&  _population >= get_capacity();
+		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type % 10 == 1)) &&  _population >= capacity;
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -172,11 +168,11 @@ class Building extends AbstractBuilding
 		this.troopType = troopType;
 		
 		#if java
+		setFeatures();
 		if (initialPopulation == -1)
-			initialPopulation = get_capacity();
+			initialPopulation = capacity;
 		
 		_population = initialPopulation;
-		setFeatures();
 		#end
 	}
 	
@@ -185,22 +181,24 @@ class Building extends AbstractBuilding
 	{
 		if( !improvable(type) )
 			return false;
-			
+		
 		if( type != BuildingType.B01_CAMP )
 		{
 			if( place.battleField.singleMode && game.player.inTutorial() )
-				_population -= Math.round( get_capacity() * (!game.player.hardMode && game.player.troopType == TroopType.T_0 ? 0.7 : 0.5) );
+				_population -= Math.round( capacity * (!game.player.hardMode && game.player.troopType == TroopType.T_0 ? 0.7 : 0.5) );
 			else 
-				_population -= Math.round( get_capacity() * 0.5 );
+				_population -= Math.round( capacity * 0.5 );
 		}
 		
 		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 		
-		//trace("improved", index, type, equalsCategory(type));
+		//trace("improved index:", place.index, " this.type:"+this.type, " type:"+type, "equalsCategory:"+equalsCategory(type));
 		if( !equalsCategory(type) )
 		{
-			place.setBuilidng(type, game);
+			this.type = type;
+			improveLevel = 1;
+			setFeatures();
 			return true;
 		}
 		
@@ -215,26 +213,23 @@ class Building extends AbstractBuilding
 		if( place == null || !place.enabled )
 			return;
 		
-		//var gap = 500 / get_spawnGap() ;
-		var gap = get_birthRate();
-		
-		if( _population < get_capacity() )
+		var gap:Float = birthRate + 0.0;
+		if( _population < capacity )
 		{
-			if( _population + gap > get_capacity())
-				_population = get_capacity();
+			if( _population + gap > capacity )
+				_population = capacity;
 			else
 				_population += gap;
-			
 		}
-		else if( _population > get_capacity() )
+		else if( _population > capacity )
 		{
-			gap = (_population - get_capacity()) * 0.1;
-			if( _population - gap < get_capacity() )
-				_population = get_capacity();
+			gap = (_population - capacity) * 0.1;
+			if( _population - gap < capacity )
+				_population = capacity;
 			else
 				_population -= gap;
 		}
-		//trace(place.index + " t:" + type + " g: " + gap);
+		//trace(place.index + " t:" + type," g: " + gap," _p: " + _population," _br: " + birthRate);
 	}
 	
 	public function popTroop() : Bool
@@ -261,23 +256,24 @@ class Building extends AbstractBuilding
 		
 		var p = place.battleField.games.get(0).player;
 		if( place.battleField.singleMode && p.inTutorial() )
-			_population = !p.hardMode && p.troopType == TroopType.T_0 ? get_capacity() * 0.3 : 0;
+			_population = !p.hardMode && p.troopType == TroopType.T_0 ? capacity * 0.3 : 0.0;
 		else 
 			_population = 0;
 		
-		if ( type == BuildingType.B01_CAMP )
-		{
+		//if ( type == BuildingType.B01_CAMP )
+		//{
 			place.game = game = troop.building.game;
-			return;
-		}
+		//	return;
+	//	}
+		type = BuildingType.B01_CAMP;
+		_level = 1;
 		//place.setBuilidng(BuildingType.B01_CAMP, troop.building.game);
 		setFeatures();
-
 	}
 	
 	public function getPower() : Float
 	{
-		return _population * get_troopPower();
+		return _population * troopPower;
 	}
 	#end
 
@@ -305,9 +301,9 @@ class Building extends AbstractBuilding
 			return get_troopPower() * 50;
 		else if ( feature == BuildingFeatureType.F21_DAMAGE )
 			return get_damage() * 50;
-		else if ( feature == BuildingFeatureType.F22_FIRE_SPEED )
+		else if ( feature == BuildingFeatureType.F22_DAMAGE_GAP )
 			return getFeatureBaseValue(feature) * 2 - get_damageGap() * 0.04;
-		else if ( feature == BuildingFeatureType.F23_RANGE )
+		else if ( feature == BuildingFeatureType.F24_RANGE_RADIUS_MAX )
 			return get_damageRadius() * 0.2;
 		return 0;
 	}
@@ -324,9 +320,9 @@ class Building extends AbstractBuilding
 			return BASE_TROOP_POWER * 50;
 		else if ( feature == BuildingFeatureType.F21_DAMAGE )
 			return BASE_DAMAGE * 50;
-		else if ( feature == BuildingFeatureType.F22_FIRE_SPEED )
+		else if ( feature == BuildingFeatureType.F22_DAMAGE_GAP )
 			return BASE_DAMAGE_GAP * 0.04;
-		else if ( feature == BuildingFeatureType.F23_RANGE )
+		else if ( feature == BuildingFeatureType.F24_RANGE_RADIUS_MAX )
 			return BASE_DAMAGE_RADIUS * 0.2;
 		return 0;
 	}

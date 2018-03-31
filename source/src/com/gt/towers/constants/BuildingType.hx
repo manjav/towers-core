@@ -1,11 +1,6 @@
 package com.gt.towers.constants;
-import com.gt.towers.buildings.Barracks;
 import com.gt.towers.buildings.Building;
-import com.gt.towers.buildings.Camp;
-import com.gt.towers.buildings.Heavy;
 import com.gt.towers.buildings.Place;
-import com.gt.towers.buildings.Rapid;
-import com.gt.towers.buildings.Crystal;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntMap;
 
@@ -56,9 +51,11 @@ class BuildingType
 	{
 		return type % 10;
 	}
-	public static function instantiate(game:Game, type:Int, place:Place, index:Int, level:Int = 0):Building
+	public static function instantiate(game:Game, type:Int, place:Place, index:Int, level:Int = 0) : Building
 	{
-		var category = get_category( type );
+		return new Building(game, place, index, type, level);
+
+		/*var category = get_category( type );
 		
 		if (category == BuildingType.B00_CAMP)
 			return new Camp(game, place, index, type, level);
@@ -71,9 +68,8 @@ class BuildingType
 		else if (category == BuildingType.B40_CRYSTAL)
 			return new Crystal(game, place, index, type, level);
 		else 
-			return null;
+			return null;*/
 	}
-	
 	
 	private static var _all:IntIntMap;
 	public static function getAll():IntIntMap

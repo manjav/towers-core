@@ -15,7 +15,7 @@ class TroopSpeedCalculator extends BaseCalculator
 		{
 			case 0	: 3000;
 			case 20	: BASE_VALUE - ( Math.log(level) * 2 + Math.log(improveLevel) ) * 80 - 1400;
-			case 30	: BASE_VALUE - ( Math.log(level) * 1 + Math.log(improveLevel) ) * 40;
+			case 30	: 4000;// BASE_VALUE - ( Math.log(level) * 1 + Math.log(improveLevel) ) * 40;
 			default : BASE_VALUE;
 		}
 	}

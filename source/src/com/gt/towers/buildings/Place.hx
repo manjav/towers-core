@@ -34,7 +34,6 @@ class Place
 	
 	private var troopId:Int;
 
-
 	public function new(game:Game, battleField:BattleField, index:Int, x:Float, y:Float, botEnabled:Bool) 
 	{
 		this.game = game;
@@ -81,15 +80,12 @@ class Place
 	}
 	
 	
-	
-	
-	
 	#if java
 	public function update( currentTimeMillis:Int64 ) : Void
 	{
 		building.update(currentTimeMillis);
 		
-		if( numTroops > 0 && currentTimeMillis > (lastRushTime + building.get_exitGap()) && path != null )
+		if( numTroops > 0 && currentTimeMillis > (lastRushTime + building.troopRushGap) && path != null )
 		{
 			lastRushTime = currentTimeMillis;
 			instantiateTroop(path, currentTimeMillis);
@@ -138,17 +134,6 @@ class Place
 		troops.get(troopId).hit(damage);
 	}
 	
-	public function setBuilidng(type:Int, game:Game) : Void
-	{
-		enabled = true;
-		var troopType = building.troopType;
-		var population = building.get_population();
-		
-		building = BuildingType.instantiate(game, type, this, index);
-		if( building != null )
-			building.createEngine(troopType, population);
-	}
-	
 	public function removeTroop(id:Int) : Void
 	{
 		if( troops.containsKey(id) )
@@ -172,5 +157,4 @@ class Place
 		troopId ++;
 		return troopId;
 	}
-
 }
