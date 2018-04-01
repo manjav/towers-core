@@ -223,7 +223,7 @@ class Building extends AbstractBuilding
 		}
 		else if( _population > capacity )
 		{
-			gap = (_population - capacity) * 0.1;
+			gap = (_population - capacity) * 0.05;
 			if( _population - gap < capacity )
 				_population = capacity;
 			else

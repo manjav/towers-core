@@ -17,8 +17,8 @@ class CapacityCalculator extends BaseCalculator
 		{
 			case 1 : 15;
 			case 2 : 18;
-			case 3 : 20;
-			case 4 : 22;
+			case 3 : 21;
+			case 4 : 24;
 			
 			default : BASE_VALUE;
 		}
