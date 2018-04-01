@@ -12,16 +12,20 @@ import haxe.Int64;
 class Troop 
 {
 	public var id:Int;
+	public var x:Float;
+	public var y:Float;
 	public var type:Int;
 	public var health:Float;
 	public var path:PlaceList;
 	public var building:Building;
 	public var disposed:Bool;
-
+	public var moving:Bool;
 	
 	var interval:Int;
+	var deltaX:Float = 0;
+	var deltaY:Float = 0;
 	var rushTime:Int64 = 0;
-	var arrivenTime:Int64 = 0;
+	//var arrivenTime:Int64 = 0;
 	var currentTimeMillis:Int64;
 	var destination:Place;
 	
@@ -32,6 +36,8 @@ class Troop
 	{
 		this.id = id;
 		this.building = building;
+		this.x = building.place.x;
+		this.y = building.place.y;
 		this.type = building.troopType;
 		this.health = building.troopPower;
 		this.currentTimeMillis = currentTimeMillis;
@@ -53,12 +59,19 @@ class Troop
 			return;
 		
 		this.currentTimeMillis = currentTimeMillis;
-		if( arrivenTime != 0 && currentTimeMillis >= arrivenTime )
+		if( destination == null )
+			return;
+		
+		if( moving )
 		{
-			arrived();
-			arrivenTime = 0;
+			x += deltaX;
+			y += deltaY;
+			//if ( type == 0 )
+			//	trace(id, x, y, deltaX, deltaY);
+			if( deltaX > 0 && x > destination.x || deltaX < 0 && x < destination.x || deltaY > 0 && y > destination.y || deltaY < 0 && y < destination.y )
+				arrived();
 		}
-
+		
 		if( rushTime != 0 && currentTimeMillis >= rushTime )
 		{
 			destination.rush(this);
@@ -75,16 +88,22 @@ class Troop
 			return ;
 		}
 		
-		arrivenTime = currentTimeMillis + building.troopSpeed * PathFinder.getDistance(source, destination);
+		var angle:Float = Math.atan2(destination.y - y, destination.x - x);
+		deltaX = building.troopSpeed * Math.cos(angle);
+		deltaY = building.troopSpeed * Math.sin(angle);
+		moving = true;
+		
+		//arrivenTime = currentTimeMillis + building.troopSpeed * PathFinder.getDistance(source, destination);
 		//if( destination != null && destination.index == 5 ) trace("troop -> rush id:" + id, "health:" + health, "arrivenTime:" + arrivenTime, "destination:" + destination == null?"null":destination.index);
 	}
 	private function arrived() : Void
 	{
+		moving = false;
 		//if( destination.index == 5 ) trace("troop -> arrived id:" + id, " index:" + destination.index, " destination:" + destination.index, " path.size():" + path.size());
 		if( health <= 0 )
 			return ;
-		recoverArrivenTime = arrivenTime + 1;
-		recoverlastHost = destination.building;
+		/*recoverArrivenTime = arrivenTime + 1;
+		recoverlastHost = destination.building;*/
 		var allow = destination.building.pushTroops(this);
 		if ( !allow || path.size() == 0 )
 		{
@@ -101,7 +120,7 @@ class Troop
 	{
 		//if( destination.index == 5 ) trace("troop -> hit   id:" + id , " health:" + health, " damage:" + damage, " destination:" + destination.index);
 		// recover network lags
-		if( currentTimeMillis - recoverArrivenTime < 300 )
+		/*if( currentTimeMillis - recoverArrivenTime < 300 )
 		{
 			if( recoverlastHost != null )
 			{
@@ -113,7 +132,7 @@ class Troop
 				recoverlastHost = null;
 				
 			}
-		}
+		}*/
 		
 		health -= damage;
 		if( health <= 0 )
