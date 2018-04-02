@@ -3,6 +3,7 @@ package com.gt.towers.buildings;
 import com.gt.towers.Game;
 import com.gt.towers.Player;
 import com.gt.towers.battle.Troop;
+import com.gt.towers.buildings.Defender;
 import com.gt.towers.constants.BuildingFeatureType;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.TroopType;
@@ -15,6 +16,9 @@ import haxe.Int64;
  */
 class Building extends AbstractBuilding
 {
+#if java
+	var defender:Defender;
+#end
 	public var place:Place;
 	public var troopType:Int = -2;
 	
@@ -23,13 +27,8 @@ class Building extends AbstractBuilding
 
 	//public var troopHealth:Float = 1;
 	public var troopPower:Float;
-	public var troopSpeed:Int;
+	public var troopSpeed:Float;
 	public var troopRushGap:Int;
-	
-	public var damage:Float;
-	public var damageGap:Int;
-	//public var damageRadiusMin:Float;
-	public var damageRadiusMax:Float;
 	
 	public var _population:Float;
 	
@@ -55,17 +54,18 @@ class Building extends AbstractBuilding
 		capacity = game.calculator.getInt(BuildingFeatureType.F06_CAPACITY, type, get_level(), improveLevel);
 		
 		// troops data
-		troopSpeed = game.calculator.getInt(BuildingFeatureType.F11_TROOP_SPEED, type, get_level(), improveLevel);
+		troopSpeed = game.calculator.get(BuildingFeatureType.F11_TROOP_SPEED, type, get_level(), improveLevel);
 		troopPower = game.calculator.get(BuildingFeatureType.F12_TROOP_POWER, type, get_level(), improveLevel);
 		//troopHealth = game.calculator.get(BuildingFeatureType.F13_TROOP_HEALTH, type, get_level(), improveLevel);
 		troopRushGap = game.calculator.getInt(BuildingFeatureType.F14_TROOP_RUSH_GAP, type, get_level(), improveLevel);
 		
-		// defensive data
-		damage = game.calculator.get(BuildingFeatureType.F21_DAMAGE, type, get_level(), improveLevel);
-		damageGap = game.calculator.getInt(BuildingFeatureType.F22_DAMAGE_GAP, type, get_level(), improveLevel);
-		//damageRangeMin = game.calculator.get(BuildingFeatureType.F23_RANGE_RANGE_MIN, type, get_level(), improveLevel);
-		damageRadiusMax = game.calculator.get(BuildingFeatureType.F24_RANGE_RADIUS_MAX, type, get_level(), improveLevel);
+		#if java
 		//trace("type:" + type, " level:" + get_level(), " improveLevel:" + improveLevel, " birthRate:" + birthRate, " capacity:" + capacity, " troopSpeed:" + troopSpeed, " troopPower:" + troopPower, " troopRushGap:" + troopRushGap );
+		if( category == BuildingType.B40_CRYSTAL )
+			defender = new Defender(place);
+		else if( defender != null )
+			defender = null;
+		#end
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -230,6 +230,11 @@ class Building extends AbstractBuilding
 				_population -= gap;
 		}
 		//trace(place.index + " t:" + type," g: " + gap," _p: " + _population," _br: " + birthRate);
+		
+		#if java
+		if( defender != null )
+			defender.update(currentTimeMillis);
+		#end
 	}
 	
 	public function popTroop() : Bool

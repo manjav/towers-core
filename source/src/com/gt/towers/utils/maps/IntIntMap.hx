@@ -5,7 +5,7 @@ import com.gt.towers.utils.GameError;
 #if java
 	import java.util.Map;
 	import java.NativeArray;
-	import com.gt.towers.utils.ValueChangeCallback;
+	import com.gt.towers.interfaces.IValueChangeCallback;
 #elseif flash
 	import flash.Vector;
 	import flash.events.EventDispatcher;
@@ -20,7 +20,7 @@ class IntIntMap extends EventDispatcher
 {
 
 	#if java
-	public var changeCallback:ValueChangeCallback;
+	public var changeCallback:IValueChangeCallback;
 	private var _map:java.util.HashMap<Int, Int>;
 	#elseif flash
 	private var _map:Map<Int, Int>;

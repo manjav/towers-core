@@ -7,6 +7,7 @@ import com.gt.towers.buildings.Place;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.TroopType;
+import com.gt.towers.interfaces.ITroopHitCallback;
 import com.gt.towers.utils.lists.PlaceList;
 import haxe.Int64;
 
@@ -24,6 +25,15 @@ class BattleField
 	public var difficulty:Int;
 	public var arena:Int;
 	public var extraTime:Int = 0;
+	
+#if java 
+	public var games:java.util.List<Game>;
+	public var now:Int64 = 0;
+	public var startAt:Int64 = 0;
+	public var interval:Int = 100;
+	public var troops:java.util.HashMap<Int, Troop>;
+	public var troopHitCallback:ITroopHitCallback;
+#end
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
@@ -84,14 +94,14 @@ class BattleField
 				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
 		}
-		
-		#if java 
+#if java 
 		game_0.calculator.setField(this);
 		game_1.calculator.setField(this);
 		games = new java.util.ArrayList<Game>();
 		games.add(game_0);
 		games.add(game_1);
-		#end
+		troops = new java.util.HashMap<Int, Troop>();
+#end
 		
 		// create places and buildings
 		while ( p < placesLen )
@@ -141,33 +151,68 @@ class BattleField
 	}
 	
 	#if java
-	public var games:java.util.List<Game>;
-	public var now:Int64 = 0;
-	public var startAt:Int64 = 0;
-	public var interval:Int = 100;
 	public function update() : Void
 	{
 		now += interval;
+		
+		// update places and buildnigs	
 		var p:Int = places.size() - 1;
 		while ( p >= 0 )
 		{
 			places.get(p).update(now);
 			p --;
 		}
+		
+		// update troops	
+		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
+        while( iterator.hasNext() )
+			iterator.next().getValue().update(now);
 	}
+	
 	public function getDuration() : Int64
 	{
 		return now / 1000 - startAt;
 	}
+	
+	public function hitTroop(defenderId:Int, hittdeTroops:java.util.List<Troop>) : Void
+	{
+		if( troopHitCallback != null )
+			troopHitCallback.hit(defenderId, hittdeTroops);
+			
+		var index:Int = hittdeTroops.size() - 1;
+        while ( index >= 0 )
+		{
+			if( hittdeTroops.get(index).health <= 0 )
+				troops.remove(hittdeTroops.get(index).id);
+			index --;
+		}
+	}
+
 	public function dispose() 
 	{
-		var p:Int = places.size() - 1;
+		/*var p:Int = places.size() - 1;
 		while ( p >= 0 )
 		{
 			places.get(p).dispose();
 			p --;
-		}
-	}
+		}*/
+		
+		// dispose troops
+		/*var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
+        while( iterator.hasNext() )
+        {
+            var troop:Troop = iterator.next().getValue();
+			troop.dispose();
+		}*/
+		troops.clear();
+	}	
+	/*public function removeTroop(id:Int) : Void
+	{
+		if( troops.containsKey(id) )
+			troops.remove(id);
+	}*/
+
+
 	#end
 	
 	public function getTime(score:Int):Int

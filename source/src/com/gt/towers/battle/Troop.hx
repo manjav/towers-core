@@ -141,6 +141,7 @@ class Troop
 	
 	public function dispose() 
 	{
+		moving = false;
 		disposed = true;
 	}
 	#end

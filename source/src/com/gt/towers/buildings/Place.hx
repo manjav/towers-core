@@ -19,7 +19,6 @@ class Place
 	var path:PlaceList;
 	var numTroops:Int = 0;
 	var lastRushTime:Int64;
-	var troops:java.util.HashMap<Int, Troop>;
 	#end
 
 	public var index:Int;
@@ -43,9 +42,6 @@ class Place
 		this.y = y;
 		this.enabled = botEnabled;
 		this.troopId = index * 10000;
-	#if java
-		this.troops = new java.util.HashMap<Int, Troop>();
-	#end
 	}
 		
 	public function getLinks(troopType:Int):PlaceList
@@ -91,13 +87,6 @@ class Place
 			instantiateTroop(path, currentTimeMillis);
 			numTroops --;
 		}
-		
-		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
-        while( iterator.hasNext() )
-        {
-            var troop:Troop = iterator.next().getValue();
-			troop.update(currentTimeMillis);
-		}
 	}
 	
 	public function fight(destination:Place, all:PlaceList, troopsDivision:Float) : Void
@@ -117,38 +106,13 @@ class Place
 	{
 		var tid = getIncreasedId();
 		var troop = new Troop(tid, building, path, currentTimeMillis);
-		troops.put( tid, troop );
+		battleField.troops.put( tid, troop );
 		rush(troop);
 	}
 	public function rush(troop:Troop) : Void
 	{
 		if( building.popTroop() )
 			troop.rush(this);
-	}
-
-	public function hit(troopId:Int, damage:Float) : Void
-	{
-		if( !troops.containsKey(troopId) )
-			return;
-		
-		troops.get(troopId).hit(damage);
-	}
-	
-	public function removeTroop(id:Int) : Void
-	{
-		if( troops.containsKey(id) )
-			troops.remove(id);
-	}
-
-	public function dispose() 
-	{
-		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
-        while( iterator.hasNext() )
-        {
-            var troop:Troop = iterator.next().getValue();
-			troop.dispose();
-		}
-		troops.clear();
 	}
 	#end	
 	
