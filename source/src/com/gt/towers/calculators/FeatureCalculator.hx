@@ -72,7 +72,7 @@ class FeatureCalculator
 			//case 4 : deployTime.get(buildingType, level, improveLevel) * TIME_SCALE;
 			case 5 : birthRate.get(buildingType, level, improveLevel) * TIME_SCALE;
 			
-			case 11: troopSpeed.get(buildingType, level, improveLevel) / TIME_SCALE;
+			case 11: troopSpeed.get(buildingType, level, improveLevel) * TIME_SCALE;
 			case 12: troopPower.get(buildingType, level, improveLevel);
 			//case 13: troopHealth.get(buildingType, level, improveLevel);
 			case 14: troopRushGap.get(buildingType, level, improveLevel) / TIME_SCALE;

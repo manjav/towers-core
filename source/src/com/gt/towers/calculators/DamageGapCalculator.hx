@@ -7,13 +7,13 @@ import com.gt.towers.constants.BuildingType;
  */
 class DamageGapCalculator  extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 500; }
+	public function new (game:Game) { super(game); BASE_VALUE = 210; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
 		if( BuildingType.get_category(type) != BuildingType.B40_CRYSTAL )
 			return BASE_VALUE ;
 		
-		return BASE_VALUE - (Math.log(level) * 90 + Math.log(improveLevel) * 80) ;
+		return BASE_VALUE + improveLevel * 80 - Math.log(level) * 40;
 	}
 
 }

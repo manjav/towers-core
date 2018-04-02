@@ -14,13 +14,13 @@ class BrithRateCalculator extends BaseCalculator
 #if java		
 		if( category == BuildingType.B00_CAMP )
 		{
-			if( !battleField.singleMode || battleField.games.get(0).player.inTutorial() )
+			if( !battleField.singleMode || !battleField.games.get(0).player.inTutorial() )
 				return BASE_VALUE;
 			
 			if( game == battleField.games.get(0) )
-				return BASE_VALUE * (battleField.map.isQuest && game.player.hardMode ? 0.8 : 1.2);
+				return BASE_VALUE * (battleField.map.isQuest && game.player.hardMode ? 0.8 : 1.2);// player
 			
-			return BASE_VALUE * (battleField.map.isQuest && battleField.games.get(0).player.hardMode ? 1.2 : 0.8);
+			return BASE_VALUE * (battleField.map.isQuest && battleField.games.get(0).player.hardMode ? 1.2 : 0.8);// bot
 		}
 #end	
 		if( category == BuildingType.B10_BARRACKS )
@@ -29,6 +29,5 @@ class BrithRateCalculator extends BaseCalculator
 			return BASE_VALUE * 0.8;
 		
 		return BASE_VALUE;
-
 	}
 }
