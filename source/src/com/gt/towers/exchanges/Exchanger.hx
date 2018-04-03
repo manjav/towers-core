@@ -4,7 +4,7 @@ import com.gt.towers.Game;
 import com.gt.towers.InitData;
 import com.gt.towers.Player;
 import com.gt.towers.buildings.Building;
-import com.gt.towers.buildings.cals.RarityCalculator;
+import com.gt.towers.calculators.RarityCalculator;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
