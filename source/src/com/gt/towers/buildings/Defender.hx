@@ -1,6 +1,7 @@
 package com.gt.towers.buildings;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Place;
+import com.gt.towers.calculators.DamageCalculator;
 import com.gt.towers.constants.BuildingFeatureType;
 import haxe.Int64;
 
@@ -64,6 +65,11 @@ class Defender
 		
 		var distance:Float = Math.sqrt(Math.pow(place.x-troop.x, 2) + Math.pow((place.y-troop.y)*1.25, 2));
 		return ( distance > damageRadiusMin && distance < damageRadiusMax );
+	}
+	
+	public function estimatePower() : Float
+	{
+		return place.building.improveLevel * 2 + this.damage / place.game.calculator.getBaseline(BuildingFeatureType.F21_DAMAGE) + place.game.calculator.getBaseline(BuildingFeatureType.F22_DAMAGE_GAP) / this.damageGap + this.damageRadiusMin / place.game.calculator.getBaseline(BuildingFeatureType.F24_RANGE_RADIUS_MAX);
 	}
 #end
 }

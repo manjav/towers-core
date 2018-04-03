@@ -231,10 +231,8 @@ class Building extends AbstractBuilding
 		}
 		//trace(place.index + " t:" + type," g: " + gap," _p: " + _population," _br: " + birthRate);
 		
-		#if java
 		if( defender != null )
 			defender.update(currentTimeMillis);
-		#end
 	}
 	
 	public function popTroop() : Bool
@@ -278,7 +276,10 @@ class Building extends AbstractBuilding
 	
 	public function getPower() : Float
 	{
-		return _population * troopPower;
+		var ret = _population * troopPower;
+		if( category == BuildingType.B40_CRYSTAL )
+			return ret + defender.estimatePower();
+		return ret;
 	}
 	#end
 
