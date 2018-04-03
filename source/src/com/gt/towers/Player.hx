@@ -243,49 +243,54 @@ class Player
 		switch( game.player.get_arena(0) )
 		{
 			case 1:
-				if ( rarity == 0 ) 		return 30;
-				else if ( rarity == 1 )	return 6;
+				if ( rarity == 0 ) 		return 10;
+				else if ( rarity == 1 )	return 1;
 				else if ( rarity == 2 )	return 1;
 				
 			case 2:
-				if ( rarity == 0 ) 		return 30;
-				else if ( rarity == 1 )	return 6;
+				if ( rarity == 0 ) 		return 10;
+				else if ( rarity == 1 )	return 1;
 				else if ( rarity == 2 )	return 1;
 				
 			case 3:
-				if ( rarity == 0 ) 		return 30;
-				else if ( rarity == 1 )	return 6;
+				if ( rarity == 0 ) 		return 10;
+				else if ( rarity == 1 )	return 1;
 				else if ( rarity == 2 )	return 1;
 				
 			case 4:
-				if ( rarity == 0 ) 		return 60;
-				else if ( rarity == 1 )	return 12;
-				else if ( rarity == 2 )	return 2;
+				if ( rarity == 0 ) 		return 15;
+				else if ( rarity == 1 )	return 2;
+				else if ( rarity == 2 )	return 1;
 				
 			case 5:
-				if ( rarity == 0 ) 		return 60;
-				else if ( rarity == 1 )	return 12;
-				else if ( rarity == 2 )	return 2;
+				if ( rarity == 0 ) 		return 15;
+				else if ( rarity == 1 )	return 2;
+				else if ( rarity == 2 )	return 1;
 				
 			case 6:
-				if ( rarity == 0 ) 		return 90;
-				else if ( rarity == 1 )	return 18;
-				else if ( rarity == 2 )	return 3;
+				if ( rarity == 0 ) 		return 20;
+				else if ( rarity == 1 )	return 2;
+				else if ( rarity == 2 )	return 1;
 				
 			case 7:
-				if ( rarity == 0 ) 		return 110;
-				else if ( rarity == 1 )	return 22;
-				else if ( rarity == 2 )	return 3;
+				if ( rarity == 0 ) 		return 25;
+				else if ( rarity == 1 )	return 3;
+				else if ( rarity == 2 )	return 1;
 				
 			case 8:
-				if ( rarity == 0 ) 		return 130;
-				else if ( rarity == 1 )	return 25;
-				else if ( rarity == 2 )	return 4;
+				if ( rarity == 0 ) 		return 30;
+				else if ( rarity == 1 )	return 3;
+				else if ( rarity == 2 )	return 1;
 				
 			case 9:
-				if ( rarity == 0 ) 		return 140;
-				else if ( rarity == 1 )	return 27;
-				else if ( rarity == 2 )	return 5;
+				if ( rarity == 0 ) 		return 35;
+				else if ( rarity == 1 )	return 4;
+				else if ( rarity == 2 )	return 1;
+				
+			case 10:
+				if ( rarity == 0 ) 		return 40;
+				else if ( rarity == 1 )	return 4;
+				else if ( rarity == 2 )	return 2;
 		}
 		return 0;
 	}
