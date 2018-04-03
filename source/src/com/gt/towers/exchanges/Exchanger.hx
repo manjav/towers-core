@@ -157,8 +157,8 @@ class Exchanger
 		}
 		else
 		{
-			rewards.set(ResourceType.XP, 10);
-			rewards.set(ResourceType.CURRENCY_HARD, 500);
+			rewards.set(ResourceType.XP, 1);
+			rewards.set(ResourceType.CURRENCY_HARD, 5);
 		}
 		
 		//check if player has earned card before
