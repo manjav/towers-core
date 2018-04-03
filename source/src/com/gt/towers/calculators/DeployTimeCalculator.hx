@@ -1,4 +1,4 @@
-package com.gt.towers.buildings.cals;
+package com.gt.towers.calculators;
 import com.gt.towers.constants.CardTypes;
 
 /**

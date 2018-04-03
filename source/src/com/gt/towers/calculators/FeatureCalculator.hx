@@ -1,6 +1,6 @@
-package com.gt.towers.buildings.cals;
-import com.gt.towers.buildings.cals.DeployTimeCalculator;
-import com.gt.towers.buildings.cals.ElixirSizeCalculator;
+package com.gt.towers.calculators;
+import com.gt.towers.calculators.DeployTimeCalculator;
+import com.gt.towers.calculators.ElixirSizeCalculator;
 import com.gt.towers.constants.BuildingFeatureType;
 
 /**
