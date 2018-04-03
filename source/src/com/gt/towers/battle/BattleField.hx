@@ -54,6 +54,15 @@ class BattleField
 		var placeData:PlaceData = null;
 		var place:Place = null;
 		
+#if java 
+		game_0.calculator.setField(this);
+		game_1.calculator.setField(this);
+		games = new java.util.ArrayList<Game>();
+		games.add(game_0);
+		games.add(game_1);
+		troops = new java.util.HashMap<Int, Troop>();
+#end
+		
 		game_0.player.hardMode = false;
 		if ( singleMode )
 		{
@@ -81,28 +90,22 @@ class BattleField
 					difficulty = arena;
 				
 				if( difficulty != 0 )
-					game_1.player.resources.set(ResourceType.POINT, game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) );
+				{
+					var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty));
+					if( ep < 0 )
+						ep = 2147483647;
+					game_1.player.resources.set(ResourceType.POINT, ep );
+				}
 			}
-		}
-		
-		if ( singleMode )
-		{
+			
 			game_1.fillAllBuildings();
-			if ( difficulty != 0 )
+			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
 				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
 		}
-#if java 
-		game_0.calculator.setField(this);
-		game_1.calculator.setField(this);
-		games = new java.util.ArrayList<Game>();
-		games.add(game_0);
-		games.add(game_1);
-		troops = new java.util.HashMap<Int, Troop>();
-#end
-		
+
 		// create places and buildings
 		while ( p < placesLen )
 		{
