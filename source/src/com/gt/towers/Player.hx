@@ -195,10 +195,17 @@ class Player
 	{
 		if( isBot() )
 			return false;
+	#if java
+		if( tutorialMode == 0 && get_questIndex() > 2 )
+			return false;
+		if( tutorialMode == 1 && get_battleswins() > 1 )
+			return false;
+	#elseif flash
 		if( tutorialMode == 0 && get_questIndex() > 2 && getTutorStep() >= PrefsTypes.T_171_SELECT_NAME_FOCUS )
 			return false;
 		if( tutorialMode == 1 && get_battleswins() > 1 && getTutorStep() >= PrefsTypes.T_138_SELECT_NAME_FOCUS )
 			return false;
+	#end
 		return true;
 	}
 	

@@ -216,7 +216,7 @@ class Exchanger
 			accCards += numCards;
 			//trace(numChest, arena, numChest % (arena * 5));
             if ( numChest == 0 || numChest == 4 || (numChest % (arena * 3) == 0 && type < ExchangeType.CHESTS_57_CHROME) )
-				addNewCard(ret, 1);
+				addNewCard(ret, 2);
 			addRandomSlot(ret, numCards);
 			numSlots --;
 		}

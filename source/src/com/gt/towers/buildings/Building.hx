@@ -185,7 +185,7 @@ class Building extends AbstractBuilding
 		if( type != BuildingType.B01_CAMP )
 		{
 			if( place.battleField.singleMode && game.player.inTutorial() )
-				_population -= Math.round( capacity * (!game.player.hardMode && game.player.troopType == TroopType.T_0 ? 0.7 : 0.5) );
+				_population -= Math.round( capacity * (!game.player.hardMode && game==place.battleField.games.get(0) ? 0.1 : 0.5) );
 			else 
 				_population -= Math.round( capacity * 0.5 );
 		}
@@ -259,10 +259,10 @@ class Building extends AbstractBuilding
 		
 		var p = place.battleField.games.get(0).player;
 		if( place.battleField.singleMode && p.inTutorial() )
-			_population = !p.hardMode && p.troopType == TroopType.T_0 ? capacity * 0.3 : 0.0;
+			_population = !p.hardMode && troop.type == TroopType.T_0 ? capacity * 0.4 : 0.0;
 		else 
 			_population = 0;
-		
+			
 		//if ( type == BuildingType.B01_CAMP )
 		//{
 			place.game = game = troop.building.game;

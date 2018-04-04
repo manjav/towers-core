@@ -30,7 +30,6 @@ class FieldData
 		this.introNum = IntList.parse(introNum);
 		this.startNum = IntList.parse(startNum);
 		this.endNum = IntList.parse(endNum);
-		
 #if flash
 		this.images = new com.gt.towers.utils.lists.ImageDataList();
 #end
@@ -61,7 +60,7 @@ class FieldData
 			if ( places.get(i).tutorIndex < 0 && places.get(i).tutorIndex != -3 )
 				return places.get( i );
 				
-				i ++;
+			i ++;
 		}
 		return null;
 	}

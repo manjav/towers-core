@@ -14,13 +14,13 @@ class TroopPowerCalculator  extends BaseCalculator
 #if java		
 		if ( category == BuildingType.B00_CAMP )
 		{
-			if( !battleField.singleMode || battleField.games.get(0).player.inTutorial() )
-			return 0.9;
+			if( !battleField.singleMode || !battleField.games.get(0).player.inTutorial() )
+				return 0.9;
 			
 			if( game == battleField.games.get(0) )
-				return battleField.map.isQuest && game.player.hardMode ? 0.7 : 1.15;
+				return battleField.map.isQuest && game.player.hardMode ? 0.7 : 1.2;
 			
-			return battleField.map.isQuest && battleField.games.get(0).player.hardMode ? 1.15 : 0.7;
+			return battleField.games.get(0).player.hardMode ? 1.2 : 0.7;
 		}
 #end		
 		return switch( category )
