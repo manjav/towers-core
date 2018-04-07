@@ -210,31 +210,34 @@ class Exchanger
 		var numCards:Int = 0;
 		var accCards:Int = 0;
 		var arena = game.player.get_arena(0) + 1;
-		while ( numSlots > 0 )
+		while( numSlots > 0 )
 		{
 			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
 			//trace(numChest, arena, numChest % (arena * 5));
-            if ( numChest == 0 || numChest == 4 || (numChest % (arena * 3) == 0 && type < ExchangeType.CHESTS_57_CHROME) )
-				addNewCard(ret, 2);
+			
+			if( numSlots == 0 )
+			{
+				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2.6) == 0 && type < ExchangeType.CHESTS_57_CHROME) || (type < ExchangeType.CHESTS_57_CHROME && type > ExchangeType.CHESTS_53_GOLD) )
+					addNewCard(ret, 2);
+			}
+			
 			addRandomSlot(ret, numCards);
 			numSlots --;
 		}
 		
 		// hards
-		if ( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD && Math.random() > 0.5 )
+		if( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD && Math.random() > 0.5 )
 			ret.set( ResourceType.CURRENCY_HARD, Math.ceil((type-56)/2) );
 		
 		// softs
 		var softDec = ExchangeType.getNumSofts(type) / 10;
 		ret.set( ResourceType.CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
-		
 		return ret;
-		
 	}
 	function addNewCard(ret:IntIntMap, count:Int) : Void
 	{
-		if ( game.player.inTutorial() )
+		if( game.player.inTutorial() )
 		{
 			ret.set( BuildingType.B11_BARRACKS, 2 );
 			return;
@@ -244,7 +247,7 @@ class Exchanger
 		var a = 0;
 		var allCards = new IntList();
 		var arena = game.player.get_arena(0);
-		while ( a <= arena )
+		while( a <= arena )
 		{
 			var cards = game.arenas.get (a).cards;
 			var c = 0;
@@ -256,7 +259,7 @@ class Exchanger
 			a ++;
 		}
 		a = 0;
-		while ( a < allCards.size() )
+		while( a < allCards.size() )
 		{
 			var randCard = allCards.get(a);
 			if ( !game.player.buildings.exists(randCard) )
@@ -270,35 +273,21 @@ class Exchanger
 	}
 	function addRandomSlot(ret:IntIntMap, count:Int) : Void
 	{
-		if ( game.player.buildings.keys().length <= ret.keys().length )
+		if( game.player.buildings.keys().length <= ret.keys().length )
 			return;
 		
 		var random = game.player.getRandomBuilding();
-		if ( ret.exists(random) )
+		if( random == -1 )
+			return;
+		if( ret.exists(random) )
 		{
 			addRandomSlot( ret, count );
 			return;
 		}
 		ret.set( random, count );
 	}
-	function addRandomCard(ret:IntIntMap, maxChance:Int) : Void
-	{
-		if ( game.player.buildings.keys().length <= ret.keys().length )
-			return;
-		
-		var random = game.player.getRandomBuilding();
-		if ( ret.exists(random) )
-		{
-			addRandomCard(ret, maxChance);
-			return;
-		}
-		ret.set(random, Math.ceil( Math.random() * maxChance * (5 - (random % 10)) / 2 ) );
-	}
 	#end
-	
-	
 
-	
 	
 	public static function getDailyChestType(numExchanges:Int) : Int
 	{

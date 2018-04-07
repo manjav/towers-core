@@ -54,23 +54,9 @@ class BuildingType
 	public static function instantiate(game:Game, type:Int, place:Place, index:Int, level:Int = 0) : Building
 	{
 		return new Building(game, place, index, type, level);
-
-		/*var category = get_category( type );
-		
-		if (category == BuildingType.B00_CAMP)
-			return new Camp(game, place, index, type, level);
-		else if (category == BuildingType.B10_BARRACKS)
-			return new Barracks(game, place, index, type, level);
-		else if (category == BuildingType.B20_RAPID)
-			return new Rapid(game, place, index, type, level);
-		else if (category == BuildingType.B30_HEAVY)
-			return new Heavy(game, place, index, type, level);
-		else if (category == BuildingType.B40_CRYSTAL)
-			return new Crystal(game, place, index, type, level);
-		else 
-			return null;*/
 	}
 	
+	#if flash
 	private static var _all:IntIntMap;
 	public static function getAll():IntIntMap
 	{
@@ -98,8 +84,37 @@ class BuildingType
 			_all.set( B43_CRYSTAL, 0 );
 			_all.set( B44_CRYSTAL, 0 );
 		}
-	
 		return _all;
 	}
+	
+	public static function getImproveList(type:Int):IntList
+    {
+        var ret = new com.gt.towers.utils.lists.IntList();
+		if( get_category(type) == BuildingType.B00_CAMP )
+		{
+			ret.push(BuildingType.B11_BARRACKS);
+			ret.push(BuildingType.B21_RAPID);
+			ret.push(BuildingType.B31_HEAVY);
+			ret.push(BuildingType.B41_CRYSTAL);
+		}
+		else
+		{
+			ret.push( BuildingType.B01_CAMP );
+			if( BuildingType.getAll().exists( type + 1 ) )
+				ret.push( BuildingType.IMPROVE );
+		}	
+        return ret;
+    }
 
+	public static function getTroopName (type:Int) : String
+	{
+		return switch ( get_category(type) )
+		{
+			case 0	: "0/";
+			case 20 : "20/";
+			case 30 : "30/";
+			default : "10/";
+		}
+	}
+	#end
 }
