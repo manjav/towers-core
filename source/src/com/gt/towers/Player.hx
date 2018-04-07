@@ -178,8 +178,23 @@ class Player
 	
 	public function getRandomBuilding():Int
 	{
+		var keys = resources.keys();
+		var i = keys.length - 1;
+		while ( i >= 0 )
+		{
+			if( ResourceType.isBuilding(keys[i]) )
+				break;
+			i --;
+		}
+		
+		if( i == -1 )
+		{
+			trace("player " + id +" has not any buildng");
+			return -1;
+		}
+		
 		var t = resources.getRandomKey();
-		if (! ResourceType.isBuilding(t) )
+		if ( !ResourceType.isBuilding(t) )
 			return getRandomBuilding();
 		return t;
 	}
