@@ -68,7 +68,7 @@ class FeatureCalculator
 			//case 0 : rarity.get(buildingType, level, improveLevel);
 			//case 1 : availableAt.get(buildingType, level, improveLevel);
 			//case 2 : elixirSize.get(buildingType, level, improveLevel);
-			case 6 : capacity.get(buildingType, level, improveLevel);
+			case 3 : capacity.get(buildingType, level, improveLevel);
 			//case 4 : deployTime.get(buildingType, level, improveLevel) * TIME_SCALE;
 			case 5 : birthRate.get(buildingType, level, improveLevel) * TIME_SCALE;
 			
@@ -113,6 +113,21 @@ class FeatureCalculator
 			case 24: damageRadiusMax.BASE_VALUE;
 			
 			default: 0;
+		}
+	}
+	
+	public function getUIFactor(featureType:Int) : Float
+	{
+		return switch( featureType )
+		{
+			case 5 : 1000;
+			case 11: 4;
+			case 12: 50;
+			case 21: 50;
+			case 22: 0.15;
+			case 23: 0.2;
+			case 24: 0.2;
+			default: 1;
 		}
 	}
 }
