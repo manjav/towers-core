@@ -19,6 +19,14 @@ class StickerType
 	public static var S6_HAHAHA:Int = 6;
 	public static var S7_REVENGE:Int = 7;
 	public static var S8_CURSED:Int = 8;
+	public static var S9_I_AFRAID:Int = 9;
+	public static var S10_DO_YOU_ANY:Int = 10;
+	public static var S11_NOVICE:Int = 11;
+	public static var S12_PRACTICE:Int = 12;
+	public static var S13_DISCONNECTED:Int = 13;
+	public static var S14_PROFESSIONAL:Int = 14;
+	public static var S15_DONT_FORCE:Int = 15;
+	public static var S16_I_SEE_YOU_SMALL:Int = 16;
 	
 	public static function getAll(game:Game):IntList
 	{
@@ -32,6 +40,18 @@ class StickerType
 		ret.push( S5_ALL_YOU_GOT );
 		ret.push( S6_HAHAHA );
 		ret.push( game.player.inFriendlyBattle ? S7_REVENGE : S8_CURSED );
+		
+		if( game.appVersion >= 2070 )
+		{
+			ret.push( S9_I_AFRAID );
+			ret.push( S10_DO_YOU_ANY );
+			ret.push( S11_NOVICE );
+			ret.push( S12_PRACTICE );
+			ret.push( S13_DISCONNECTED );
+			ret.push( S14_PROFESSIONAL );
+			ret.push( S15_DONT_FORCE );
+			ret.push( S16_I_SEE_YOU_SMALL );
+		}
 		
 		return ret;
 	}
@@ -65,7 +85,6 @@ class StickerType
 		return stks.get(Math.floor( Math.random() * stks.size() ));
 	}
 
-	
 	private static function getAnswers(sticker:Int) : IntList
 	{
 		var ret:IntList = new IntList();
