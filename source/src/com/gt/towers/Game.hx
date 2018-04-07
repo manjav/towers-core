@@ -42,16 +42,16 @@ class Game
 		arenas = new IntArenaMap();
 		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
-		arenas.set(0, new Arena(0, 0,		100,	-8,				"11"    ));
-		arenas.set(1, new Arena(1, 101,		300,	-7,				"21,31"	));//400
-		arenas.set(2, new Arena(2, 301,		600,	-6,				"41,12"	));//700
-		arenas.set(3, new Arena(3, 601,		1000,	-5,				"13,22"	));//1100
-		arenas.set(4, new Arena(4, 1001,	1500,	-4,				"32,42" ));//1400
-		arenas.set(5, new Arena(5, 1501,	2200,	-3,				"23,33"	));//1700
-		arenas.set(6, new Arena(6, 2201,	3000,	-2,				"14,43"	));//2000
-		arenas.set(7, new Arena(7, 3001,	4500,	-2,				"24"	));//2400
-		arenas.set(8, new Arena(8, 4501,	7000,	-1, 			"34"	));//2800
-		arenas.set(9, new Arena(9, 7001,	10000,	 0, 			"44"	));//3000
+		arenas.set(0, new Arena(0, 0,		100,	-8,				"11"    	));
+		arenas.set(1, new Arena(1, 101,		300,	-7,				"21,31,41"	));//400
+		arenas.set(2, new Arena(2, 301,		600,	-6,				"12,22,32"	));//700
+		arenas.set(3, new Arena(3, 601,		1000,	-5,				"13,23,33"	));//1100
+		arenas.set(4, new Arena(4, 1001,	1500,	-4,				"14" 		));//1400
+		arenas.set(5, new Arena(5, 1501,	2200,	-3,				"42"		));//1700
+		arenas.set(6, new Arena(6, 2201,	3000,	-2,				"24"		));//2000
+		arenas.set(7, new Arena(7, 3001,	4500,	-2,				"43"		));//2400
+		arenas.set(8, new Arena(8, 4501,	7000,	-1, 			"34"		));//2800
+		arenas.set(9, new Arena(9, 7001,	10000,	 0, 			"44"		));//3000
 		
 		fieldProvider = new FieldProvider(this);
 	}
