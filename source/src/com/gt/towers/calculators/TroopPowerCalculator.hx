@@ -12,15 +12,15 @@ class TroopPowerCalculator  extends BaseCalculator
 	{
 		var category = BuildingType.get_category(type);
 #if java		
-		if ( category == BuildingType.B00_CAMP )
+		if( category == BuildingType.B00_CAMP )
 		{
 			if( !battleField.singleMode || !battleField.games.get(0).player.inTutorial() )
-				return 0.9;
+				return BASE_VALUE * 0.9;// normal mode
 			
 			if( game == battleField.games.get(0) )
-				return battleField.map.isQuest && game.player.hardMode ? 0.7 : 1.2;
+				return BASE_VALUE * (game.player.hardMode ? 0.7 : 1.2);// player
 			
-			return battleField.games.get(0).player.hardMode ? 1.2 : 0.7;
+			return BASE_VALUE * (battleField.games.get(0).player.hardMode ? 1.2 : 0.7);// bot
 		}
 #end		
 		return switch( category )

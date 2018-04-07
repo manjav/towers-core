@@ -49,9 +49,10 @@ class Building extends AbstractBuilding
 	}
 	private function setFeatures():Void
 	{
-		category = BuildingType.get_category(type);
+		this.category = BuildingType.get_category(type);
+		this.improveLevel = BuildingType.get_improve(type);
+		capacity = game.calculator.getInt(BuildingFeatureType.F03_CAPACITY, type, get_level(), improveLevel);
 		birthRate = game.calculator.get(BuildingFeatureType.F05_BIRTH_RATE, type, get_level(), improveLevel);
-		capacity = game.calculator.getInt(BuildingFeatureType.F06_CAPACITY, type, get_level(), improveLevel);
 		
 		// troops data
 		troopSpeed = game.calculator.get(BuildingFeatureType.F11_TROOP_SPEED, type, get_level(), improveLevel);
@@ -69,80 +70,6 @@ class Building extends AbstractBuilding
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  generic  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-	#if flash
-	public static var TIME_SCALE:Float = 1;
-	public function get_troopName () : String
-	{
-		return "10/";
-	}
-	public function get_troopSpriteCount () : Int
-	{
-		return 12;
-	}
-	public function get_options():IntList
-	{
-		var ret = new IntList();
-		if( !game.player.inTutorial() )
-			ret.push( BuildingType.B01_CAMP );
-		if( BuildingType.getAll().exists( type + 1 ) )
-			ret.push( BuildingType.IMPROVE );
-		return ret;
-	}
-	
-	public static var BASE_BIRTH_RATE:Float = 0.04;
-	public function get_birthRate():Float
-	{
-		return BASE_BIRTH_RATE * TIME_SCALE;
-	}
-	public static var BASE_CAPACITY:Int = 10;
-	public function get_capacity():Int 
-	{
-		if ( improveLevel == 1 )
-			return 15;
-		else if ( improveLevel == 2 )
-			return 18;
-		else if ( improveLevel == 3 )
-			return 21;
-		else if ( improveLevel == 4 )
-			return 24;
-		else
-			return BASE_CAPACITY;
-		//return 10 + (5 * improveLevel);
-	}
-	public static var BASE_EXIT_GAP:Int = 350;
-	public function get_exitGap():Int 
-	{
-		return Math.round(BASE_EXIT_GAP * (1 / TIME_SCALE));
-	}
-	public static var BASE_TROOP_SPEED:Int = 2500;
-	public function get_troopSpeed():Int
-	{
-		return Math.round(BASE_TROOP_SPEED *  (1 / TIME_SCALE));
-	}
-	public static var BASE_TROOP_POWER:Float = 1;
-	public function get_troopPower():Float
-	{
-		return Math.round(BASE_TROOP_POWER);
-	}
-
-	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  defensive  data  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-	public static var BASE_DAMAGE:Float = 1;
-	public function get_damage():Float
-	{
-		return BASE_DAMAGE;
-	}
-	public static var BASE_DAMAGE_GAP:Int = 1000;
-	public function get_damageGap():Int
-	{
-		return Math.round(BASE_DAMAGE_GAP *  (1 / TIME_SCALE));
-	}
-	public static var BASE_DAMAGE_RADIUS:Float = 50;
-	public function get_damageRadius():Float
-	{
-		return BASE_DAMAGE_RADIUS;
-	}
-	#end
-
 	public function get_population():Int
 	{
 		return Math.floor(_population);
@@ -166,9 +93,8 @@ class Building extends AbstractBuilding
 	public function createEngine(troopType:Int, initialPopulation:Int = -1):Void
 	{
 		this.troopType = troopType;
-		
-		#if java
 		setFeatures();
+		#if java
 		if (initialPopulation == -1)
 			initialPopulation = capacity;
 		
@@ -278,7 +204,7 @@ class Building extends AbstractBuilding
 	{
 		var ret = _population * troopPower;
 		if( category == BuildingType.B40_CRYSTAL )
-			return ret + defender.estimatePower();
+			ret += defender.estimatePower();
 		return ret;
 	}
 	#end
@@ -293,44 +219,4 @@ class Building extends AbstractBuilding
 	{
 		return category == BuildingType.get_category(type);
 	}
- 
-	#if flash
-	public function getFeatureValue(feature:Int):Float
-	{
-		if ( feature == BuildingFeatureType.F01_CAPACITY )
-			return get_capacity();
-		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return get_birthRate() * 1000;
-		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
-			return getFeatureBaseValue(feature) * 2 - get_troopSpeed() * 0.02;
-		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
-			return get_troopPower() * 50;
-		else if ( feature == BuildingFeatureType.F21_DAMAGE )
-			return get_damage() * 50;
-		else if ( feature == BuildingFeatureType.F22_DAMAGE_GAP )
-			return getFeatureBaseValue(feature) * 2 - get_damageGap() * 0.04;
-		else if ( feature == BuildingFeatureType.F24_RANGE_RADIUS_MAX )
-			return get_damageRadius() * 0.2;
-		return 0;
-	}
-	
-	public function getFeatureBaseValue(feature:Int):Float
-	{
-		if ( feature == BuildingFeatureType.F01_CAPACITY )
-			return BASE_CAPACITY;
-		else if ( feature == BuildingFeatureType.F02_BIRTH_RATE )
-			return BASE_BIRTH_RATE * 1000;
-		else if ( feature == BuildingFeatureType.F11_TROOP_SPEED )
-			return BASE_TROOP_SPEED * 0.02;
-		else if ( feature == BuildingFeatureType.F12_TROOP_POWER )
-			return BASE_TROOP_POWER * 50;
-		else if ( feature == BuildingFeatureType.F21_DAMAGE )
-			return BASE_DAMAGE * 50;
-		else if ( feature == BuildingFeatureType.F22_DAMAGE_GAP )
-			return BASE_DAMAGE_GAP * 0.04;
-		else if ( feature == BuildingFeatureType.F24_RANGE_RADIUS_MAX )
-			return BASE_DAMAGE_RADIUS * 0.2;
-		return 0;
-	}
-	#end
-}
+ }

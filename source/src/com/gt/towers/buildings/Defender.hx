@@ -69,7 +69,7 @@ class Defender
 	
 	public function estimatePower() : Float
 	{
-		return place.building.improveLevel * 2 + this.damage / place.game.calculator.getBaseline(BuildingFeatureType.F21_DAMAGE) + place.game.calculator.getBaseline(BuildingFeatureType.F22_DAMAGE_GAP) / this.damageGap + this.damageRadiusMin / place.game.calculator.getBaseline(BuildingFeatureType.F24_RANGE_RADIUS_MAX);
+		return 5 + place.building.improveLevel * 7 + this.damage / place.game.calculator.getBaseline(BuildingFeatureType.F21_DAMAGE) + place.game.calculator.getBaseline(BuildingFeatureType.F22_DAMAGE_GAP) / this.damageGap + this.damageRadiusMin / place.game.calculator.getBaseline(BuildingFeatureType.F24_RANGE_RADIUS_MAX);
 	}
 #end
 }
