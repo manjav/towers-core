@@ -210,17 +210,15 @@ class Exchanger
 		var numCards:Int = 0;
 		var accCards:Int = 0;
 		var arena = game.player.get_arena(0) + 1;
-		while( numSlots > 0 )
+		while( numSlots >= 0 )
 		{
 			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
 			accCards += numCards;
-			//trace(numChest, arena, numChest % (arena * 5));
+			//trace("numChest", numChest, "numSlots", numSlots);
 			
-			if( numSlots == 1 )
-			{
+			if( numSlots == 0 )
 				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2.6) == 0 && type < ExchangeType.CHESTS_57_CHROME) || (type < ExchangeType.CHESTS_57_CHROME && type > ExchangeType.CHESTS_53_GOLD) )
 					addNewCard(ret, 2);
-			}
 			
 			addRandomSlot(ret, numCards);
 			numSlots --;
