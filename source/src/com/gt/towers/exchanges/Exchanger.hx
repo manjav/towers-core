@@ -216,7 +216,7 @@ class Exchanger
 			accCards += numCards;
 			//trace(numChest, arena, numChest % (arena * 5));
 			
-			if( numSlots == 0 )
+			if( numSlots == 1 )
 			{
 				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2.6) == 0 && type < ExchangeType.CHESTS_57_CHROME) || (type < ExchangeType.CHESTS_57_CHROME && type > ExchangeType.CHESTS_53_GOLD) )
 					addNewCard(ret, 2);
