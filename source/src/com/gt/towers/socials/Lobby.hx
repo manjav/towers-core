@@ -40,7 +40,7 @@ class Lobby
 
 	public function create():Bool
 	{
-		if (!creatable())
+		if( !creatable() )
 		{				
 			trace("Lobby is not creatable!");
 			return false;

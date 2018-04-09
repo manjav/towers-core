@@ -33,7 +33,6 @@ class Player
 	public var admin:Bool = false;
 	private var game:Game;
 
-	
 	public function new(game:Game, initData:InitData)
 	{
 		this.game = game;
@@ -76,12 +75,12 @@ class Player
 		var questsKeys = quests.keys();
 		while ( lastQuest < questsKeys.length )
 		{
-			if ( quests.get( questsKeys[lastQuest] ) == 0 )
+			if( quests.get( questsKeys[lastQuest] ) == 0 )
 				return lastQuest;
 			lastQuest ++;
 		}
 		
-		if ( lastQuest == game.fieldProvider.quests.keys().length )
+		if( lastQuest == game.fieldProvider.quests.keys().length )
 			return lastQuest - 1 ;
 		
 		return lastQuest ;
@@ -229,7 +228,7 @@ class Player
 	{
 		//if ( get_questIndex() >= 2 )
 			return true;
-			
+		
 		/*var tuteStep = getTutorStep();
 		if ( index == 0 && inShopTutorial() )
 			return true;
