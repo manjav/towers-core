@@ -204,15 +204,15 @@ class Exchanger
 	{
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
-		var totalCards = ExchangeType.getNumTotalCards(type) - 1;
-		var slotSize = totalCards / numSlots;
+		var totalCards = ExchangeType.getNumTotalCards(type) + 1;
+		var slotSize = Math.ceil(totalCards / numSlots);
 		var numChest:Int = game.player.get_openedChests();
 		var numCards:Int = 0;
 		var accCards:Int = 0;
 		var arena = game.player.get_arena(0) + 1;
 		while( numSlots >= 0 )
 		{
-			numCards = numSlots > 1 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.2) : totalCards - accCards;
+			numCards = numSlots > 0 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
