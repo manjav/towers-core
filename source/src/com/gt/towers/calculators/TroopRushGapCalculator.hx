@@ -1,4 +1,5 @@
 package com.gt.towers.calculators;
+import com.gt.towers.constants.BuildingType;
 
 /**
  * ...
@@ -9,9 +10,11 @@ class TroopRushGapCalculator extends BaseCalculator
 	public function new (game:Game) { super(game); BASE_VALUE = 350; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
-		//if( CardTypes.get_category( type ) == CardTypes.C200 )// rapids
-		//	return BASE_VALUE - 50 - Math.log(level) * 20 ;
-
-		return BASE_VALUE ;
+		return switch( BuildingType.get_category(type) )
+		{
+			case 20	: BASE_VALUE * 0.5;
+			case 30	: BASE_VALUE * 1.8;
+			default : BASE_VALUE;
+		}
 	}
 }

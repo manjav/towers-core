@@ -22,10 +22,22 @@ class TroopPowerCalculator  extends BaseCalculator
 			
 			return BASE_VALUE * (battleField.games.get(0).player.hardMode ? 1.2 : 0.7);// bot
 		}
-#end		
+		
+		if( category == BuildingType.B10_BARRACKS )
+		{
+			var ret = BASE_VALUE + ( Math.log(level) * 0.2 + Math.log(improveLevel) ) * 0.1;
+			if( !battleField.singleMode || !battleField.games.get(0).player.inTutorial() )
+				return ret;
+			
+			if( game == battleField.games.get(0) )
+				return ret * (game.player.hardMode ? 0.9 : 1.2);// player
+			
+			return ret * (battleField.games.get(0).player.hardMode ? 1.2 : 0.9);// bot
+		}
+#end
+		
 		return switch( category )
 		{
-			case 10	:	1.0 + ( Math.log(level) * 0.2 + Math.log(improveLevel) ) * 0.1;
 			case 20	:	1.1 + ( Math.log(level) * 0.3 + Math.log(improveLevel) ) * 0.3;
 			case 30	:	1.5 + ( Math.log(level) * 0.9 + Math.log(improveLevel) ) * 0.5;
 			default : BASE_VALUE;
