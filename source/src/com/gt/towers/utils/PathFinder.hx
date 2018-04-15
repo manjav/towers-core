@@ -27,7 +27,7 @@ class PathFinder
 		}
 		
 		closedList = new PlaceList();
-		if (!sreach(source, destination))
+		if( !sreach(source, destination) )
 			return null;
 
 		// Create return path
@@ -39,8 +39,8 @@ class PathFinder
 			last = last.owner;
 		}
 		while (last != null && last != source);
-		ret.reverse();
-
+			ret.reverse();
+		
 		//trace("Path found:", ret.length);
 		return ret;
 	}
