@@ -77,7 +77,7 @@ class Game
 	
 	public function fillAllBuildings() : Void
 	{
-		var baseLevel:Int = Math.round(Math.max(1, Math.log(player.get_point() / 250) * 2.4));
+		var baseLevel:Int = Math.round(Math.max(1, Math.log(player.get_point() / 250) * 2.5));
 		var arenaIndex = 0;
 		player.buildings = new IntBuildingMap();
 		while ( arenaIndex < arenas.keys().length )
@@ -90,12 +90,24 @@ class Game
 			while ( cardsLen >= 0 )
 			{
 				var type = arena.cards.get(cardsLen);
-				var level = baseLevel + 4 - BuildingType.get_improve(type);
-				trace("bot building " + type, " level:" + level);
+				var level = baseLevel + 5 - BuildingType.get_improve(type);
 				player.buildings.set(type, BuildingType.instantiate( this, type, null, 0, level ) );
 				cardsLen --;
 			}
 			arenaIndex ++;
 		}
+	}
+	
+	public function logBuildings() : Void
+	{
+		var keys = player.buildings.keys();
+		var len = keys.length - 1;
+		var log = player.id + " => ";
+		while ( len >= 0 )
+		{
+			log += " B" + keys[len] + ":" + player.buildings.get(keys[len]).get_level() + "\t";
+			len --;
+		}
+		trace(log);
 	}
 }

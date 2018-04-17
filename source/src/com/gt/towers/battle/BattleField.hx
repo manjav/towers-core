@@ -105,7 +105,11 @@ class BattleField
 				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
 		}
-
+		
+		// log buildings
+		game_0.logBuildings();
+		game_1.logBuildings();
+		
 		// create places and buildings
 		while ( p < placesLen )
 		{
@@ -117,7 +121,7 @@ class BattleField
 			
 			p ++;
 		}
-	
+		
 		// create links of places
 		p = 0;
 		var l = 0;
