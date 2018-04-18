@@ -69,7 +69,7 @@ class StickerType
 			
 			if( game.appVersion >= 2070 )
 			{
-				ret.push( S13_DISCONNECTED );
+				ret.push( S9_I_AFRAID );
 				ret.push( S14_PROFESSIONAL );
 			}
 		}

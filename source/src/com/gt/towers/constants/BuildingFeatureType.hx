@@ -33,7 +33,7 @@ class BuildingFeatureType
 		{
 			ret.push( F21_DAMAGE );
 			ret.push( F22_DAMAGE_GAP );
-			ret.push( F24_RANGE_RADIUS_MAX );
+			//ret.push( F24_RANGE_RADIUS_MAX );
 		}
 		return ret;
 	}

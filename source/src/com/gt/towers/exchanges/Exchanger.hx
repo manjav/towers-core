@@ -104,7 +104,7 @@ class Exchanger
 		game.player.resources.reduceMap(item.requirements);
 		
 		// reset item
-		if ( item.category == ExchangeType.CHEST_CATE_100_FREE )
+		if( item.category == ExchangeType.CHEST_CATE_100_FREE )
 		{
 			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
 			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);

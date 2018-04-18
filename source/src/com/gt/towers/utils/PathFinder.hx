@@ -14,32 +14,37 @@ class PathFinder
 	/**
 	 * Use 'Breadth First Search' (BFS) for finding path of troops
 	 */
-	public static function find(source:Place, destination:Place, all:PlaceList):PlaceList
+	public static function find(source:Place, destination:Place, all:PlaceList) : PlaceList
 	{
-		if (source == destination)
+		if( source == destination )
 			return null;
-
-		var p:Int = 0;
-		while (p < all.size())
+		
+		var p:Int = all.size() - 1;
+		while ( p >= 0 )
 		{
-			all.get(p).owner = null;
-			p++;
+			if( all.get(p) != null )
+				all.get(p).owner = null;
+			p --;
 		}
 		
 		closedList = new PlaceList();
 		if( !sreach(source, destination) )
 			return null;
-
+		
 		// Create return path
 		var ret:PlaceList = new PlaceList();
-		var last:Place = closedList.get(closedList.size()-1);
+		var last:Place = closedList.get(closedList.size() - 1);
 		do
 		{
-			ret.push(last);
-			last = last.owner;
+			if( last != null )
+			{
+				ret.push(last);
+				last = last.owner;
+			}
 		}
-		while (last != null && last != source);
-			ret.reverse();
+		while ( last != null && last != source );
+		
+		ret.reverse();
 		
 		//trace("Path found:", ret.length);
 		return ret;
@@ -51,29 +56,29 @@ class PathFinder
 		var openList:PlaceList = new PlaceList();
 		// Adding our starting point to Open List
 		openList.push(source);
-
+		
 		// Loop while openList contains some data.
-		while (openList.size() > 0)
+		while( openList.size() > 0 )
 		{
 			// Remove and get the first element from openList.
 			var node:Place = openList.shift();
-
+			
 			// Check if tower is Destination
-			if (node == destination)
+			if( node == destination )
 			{
 				closedList.push(destination);
 				return true;
 			}
-
+			
 			var numLinks:Int = node.links.size();
 			var i:Int = 0;
 			// Add each neighbor to the end of our openList
 			while (i < numLinks)
 			{
-				if ((node.links.get(i) != source && node.links.get(i).building.troopType == source.building.troopType) || node.links.get(i) == destination)
+				if( (node.links.get(i) != source && node.links.get(i).building.troopType == source.building.troopType) || node.links.get(i) == destination )
 				{
 					//trace(node.links.get(i).name, "added to", node.name )
-					if (node.links.get(i).owner == null)
+					if( node.links.get(i).owner == null )
 					{
 						node.links.get(i).owner = node;
 						openList.push(node.links.get(i));
@@ -81,7 +86,7 @@ class PathFinder
 				}
 				i ++;
 			}
-
+			
 			// Add current tower to closedList
 			closedList.push(node);
 			//trace("closedList", n.index);
@@ -93,5 +98,4 @@ class PathFinder
 	{
 		return Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) ) / 300;
 	}
-	
 }

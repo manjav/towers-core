@@ -168,7 +168,7 @@ class Player
 		var i = 0;
 		while ( i < bundleKeys.length )
 		{
-			if ( ResourceType.isBuilding(bundleKeys[i]) && !game.player.buildings.exists(bundleKeys[i]) )
+			if( ResourceType.isBuilding(bundleKeys[i]) && !game.player.buildings.exists(bundleKeys[i]) )
 				game.player.buildings.set(bundleKeys[i], BuildingType.instantiate( game, bundleKeys[i], null, 0, -1 ) );
 			i ++;
 		}
