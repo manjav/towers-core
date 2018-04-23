@@ -17,7 +17,6 @@ import com.gt.towers.utils.maps.IntShopMap;
 class Exchanger 
 {
 	private var game:Game;
-	
 	public var items:IntShopMap;
 
 	public function new(game:Game, initData:InitData) 
@@ -32,29 +31,31 @@ class Exchanger
 			var ex = initData.exchanges.get(exchangeKeys[i]);
 			var cex = ExchangeType.getCategory( exchangeKeys[i] );
 			
-			if( cex == ExchangeType.CHEST_CATE_100_FREE || cex == ExchangeType.CHEST_CATE_110_BATTLES || cex == ExchangeType.CHEST_CATE_120_OFFERS )
+			if( cex == ExchangeType.C100_FREES || cex == ExchangeType.C110_BATTLES || cex == ExchangeType.C120_MAGICS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
-			else if ( cex == ExchangeType.S_40_OTHERS )
+			else if( cex == ExchangeType.C40_OTHERS )
 				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
-			
 			i ++;
 		}
 		
-		var isCheap = game.player.id % 2 == 0;
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.S_0_HARD,  new ExchangeItem ( ExchangeType.S_0_HARD, ResourceType.CURRENCY_REAL, 100, ResourceType.CURRENCY_HARD,	1 ) );//50
-		items.set( ExchangeType.S_1_HARD,  new ExchangeItem ( ExchangeType.S_1_HARD, ResourceType.CURRENCY_REAL, 2000, ResourceType.CURRENCY_HARD,	isCheap?200:100 ) );//50
-		items.set( ExchangeType.S_2_HARD,  new ExchangeItem ( ExchangeType.S_2_HARD, ResourceType.CURRENCY_REAL, 10000, ResourceType.CURRENCY_HARD, isCheap?1200:600 ) );//300
-		items.set( ExchangeType.S_3_HARD,  new ExchangeItem ( ExchangeType.S_3_HARD, ResourceType.CURRENCY_REAL, 20000, ResourceType.CURRENCY_HARD, isCheap?3000:1500 ) );//900
-		
+		items.set( ExchangeType.C0_HARD,  new ExchangeItem ( ExchangeType.C0_HARD, ResourceType.CURRENCY_REAL, 100, ResourceType.CURRENCY_HARD,	1 ) );
+		if( game.appVersion < 2080 )
+		{
+			var isCheap = game.player.id % 2 == 0;
+			items.set( ExchangeType.C1_HARD,	new ExchangeItem( ExchangeType.C1_HARD, ResourceType.CURRENCY_REAL, 2000,	ResourceType.CURRENCY_HARD, isCheap?200:100 ) );//50
+			items.set( ExchangeType.C2_HARD,	new ExchangeItem( ExchangeType.C2_HARD, ResourceType.CURRENCY_REAL, 10000,	ResourceType.CURRENCY_HARD, isCheap?1200:600 ) );//300
+			items.set( ExchangeType.C3_HARD,	new ExchangeItem( ExchangeType.C3_HARD, ResourceType.CURRENCY_REAL, 20000,	ResourceType.CURRENCY_HARD, isCheap?3000:1500 ) );//900
+			
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MONEY -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.S_11_SOFT,  new ExchangeItem ( ExchangeType.S_11_SOFT, ResourceType.CURRENCY_HARD, 20, ResourceType.CURRENCY_SOFT,	500 ) );
-		items.set( ExchangeType.S_12_SOFT,  new ExchangeItem ( ExchangeType.S_12_SOFT, ResourceType.CURRENCY_HARD, 75, ResourceType.CURRENCY_SOFT,	2000 ) );
-		items.set( ExchangeType.S_13_SOFT,  new ExchangeItem ( ExchangeType.S_13_SOFT, ResourceType.CURRENCY_HARD, 350, ResourceType.CURRENCY_SOFT,	10000 ) );
+			items.set( ExchangeType.C11_SOFT,	new ExchangeItem( ExchangeType.C11_SOFT, ResourceType.CURRENCY_HARD, 20,	ResourceType.CURRENCY_SOFT,	500 ) );
+			items.set( ExchangeType.C12_SOFT,	new ExchangeItem( ExchangeType.C12_SOFT, ResourceType.CURRENCY_HARD, 75,	ResourceType.CURRENCY_SOFT,	2000 ) );
+			items.set( ExchangeType.C13_SOFT,	new ExchangeItem( ExchangeType.C13_SOFT, ResourceType.CURRENCY_HARD, 350,	ResourceType.CURRENCY_SOFT,	10000 ) );
+		}
 		
-		var ads = new ExchangeItem (ExchangeType.CHEST_CATE_131_ADS, -1, -1, -1, -1, 1, 1);
-		ads.outcome = ExchangeType.CHESTS_57_CHROME;
-		items.set( ExchangeType.CHEST_CATE_131_ADS, ads );
+		var ads = new ExchangeItem (ExchangeType.C131_AD, -1, -1, -1, -1, 1, 1);
+		ads.outcome = ExchangeType.BOOKS_57_CHROME;
+		items.set( ExchangeType.C131_AD, ads );
 	}
 	
 	/**
@@ -65,14 +66,14 @@ class Exchanger
 	public function exchange (item:ExchangeItem, now:Int, confirmedHards:Int=0):Bool
 	{
 		// provide requirements
-		if( item.isChest() )
+		if( item.isBook() )
 			item.requirements = getChestRequierement(item, now);
 		
 		// start opening process
-		if ( item.category == ExchangeType.CHEST_CATE_110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
+		if( item.category == ExchangeType.C110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 		{
 			item.outcomes = null;
-			if ( !readyToStartOpening(item.type, now) )
+			if( !readyToStartOpening(item.type, now) )
 				return false;
 				
 			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
@@ -94,7 +95,7 @@ class Exchanger
 		
 #if java
 		// provide and earn outcomes 
-		if( item.isChest() )
+		if( item.isBook() )
 			item.outcomes = getChestOutcomes(item.outcome);
 #end
 		// add outs
@@ -104,12 +105,12 @@ class Exchanger
 		game.player.resources.reduceMap(item.requirements);
 		
 		// reset item
-		if( item.category == ExchangeType.CHEST_CATE_100_FREE )
+		if( item.category == ExchangeType.C100_FREES )
 		{
 			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
 			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);
 		}
-		else if( item.category == ExchangeType.CHEST_CATE_110_BATTLES )
+		else if( item.category == ExchangeType.C110_BATTLES )
 		{
 			var openedChests = game.player.get_openedChests();
 			openedChests ++;
@@ -123,14 +124,14 @@ class Exchanger
 	public function readyToStartOpening(type:Int, now:Int) : Bool
 	{
 		var item = items.get(type);
-		if( item.category != ExchangeType.CHEST_CATE_110_BATTLES || item.getState(now) != ExchangeItem.CHEST_STATE_WAIT )
+		if( item.category != ExchangeType.C110_BATTLES || item.getState(now) != ExchangeItem.CHEST_STATE_WAIT )
 			return false;
 		
 		var exchangeKeys = items.keys();
 		var i = exchangeKeys.length-1;
 		while ( i >= 0 )
 		{
-			if( items.get(exchangeKeys[i]).category == ExchangeType.CHEST_CATE_110_BATTLES && items.get(exchangeKeys[i]).getState(now) == ExchangeItem.CHEST_STATE_BUSY )
+			if( items.get(exchangeKeys[i]).category == ExchangeType.C110_BATTLES && items.get(exchangeKeys[i]).getState(now) == ExchangeItem.CHEST_STATE_BUSY )
 				return false;
 			i --;
 		}
@@ -185,14 +186,14 @@ class Exchanger
 	function getChestRequierement(item:ExchangeItem, now:Int) : IntIntMap
 	{
 		var ret = new IntIntMap();
-		if( item.category == ExchangeType.CHEST_CATE_100_FREE || item.category == ExchangeType.CHEST_CATE_110_BATTLES )
+		if( item.category == ExchangeType.C100_FREES || item.category == ExchangeType.C110_BATTLES )
 		{
 			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY )
 				ret.set(ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) );
 			else if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 				ret.set(ResourceType.KEY, ExchangeType.getKeyRequierement(item.outcome));
 		}
-		else if( item.category == ExchangeType.CHEST_CATE_120_OFFERS )
+		else if( item.category == ExchangeType.C120_MAGICS )
 		{
 			ret.set(ResourceType.CURRENCY_HARD, ExchangeType.getHardRequierement(item.outcome));
 		}
@@ -217,7 +218,7 @@ class Exchanger
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
 			if( numSlots == 0 )
-				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2) == 0 && type < ExchangeType.CHESTS_57_CHROME) || (type < ExchangeType.CHESTS_57_CHROME && type > ExchangeType.CHESTS_53_GOLD) )
+				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2) == 0 && type < ExchangeType.BOOKS_57_CHROME) || (type < ExchangeType.BOOKS_57_CHROME && type > ExchangeType.BOOKS_53_GOLD) )
 					addNewCard(ret, 2);
 			
 			addRandomSlot(ret, numCards);
@@ -225,7 +226,7 @@ class Exchanger
 		}
 		
 		// hards
-		if( type > ExchangeType.CHESTS_56_GOLD && type <= ExchangeType.CHESTS_59_GOLD && Math.random() > 0.5 )
+		if( type > ExchangeType.BOOKS_56_GOLD && type <= ExchangeType.BOOKS_59_GOLD && Math.random() > 0.5 )
 			ret.set( ResourceType.CURRENCY_HARD, Math.ceil((type-56)/2) );
 		
 		// softs
@@ -289,43 +290,43 @@ class Exchanger
 	
 	public static function getDailyChestType(numExchanges:Int) : Int
 	{
-		return ExchangeType.CHESTS_51_CHROME;
+		return ExchangeType.BOOKS_51_CHROME;
 	}
 	
 	public static function getChestType(category:Int) : Int
 	{
-		if ( category == ExchangeType.CHEST_CATE_101_FREE )
-			return ExchangeType.CHESTS_57_CHROME;
-		if ( category == ExchangeType.CHEST_CATE_102_FREE )
-			return ExchangeType.CHESTS_58_SILVER;
-		if ( category == ExchangeType.CHEST_CATE_103_FREE )
-			return ExchangeType.CHESTS_59_GOLD;
+		if ( category == ExchangeType.C101_FREE )
+			return ExchangeType.BOOKS_57_CHROME;
+		if ( category == ExchangeType.C102_FREE )
+			return ExchangeType.BOOKS_58_SILVER;
+		if ( category == ExchangeType.C103_FREE )
+			return ExchangeType.BOOKS_59_GOLD;
 		
-		if ( category == ExchangeType.CHEST_CATE_121_OFFER )
-			return ExchangeType.CHESTS_54_CHROME;
-		if ( category == ExchangeType.CHEST_CATE_122_OFFER )
-			return ExchangeType.CHESTS_55_SILVER;
-		if ( category == ExchangeType.CHEST_CATE_123_OFFER )
-			return ExchangeType.CHESTS_56_GOLD;
+		if ( category == ExchangeType.C121_MAGIC )
+			return ExchangeType.BOOKS_54_CHROME;
+		if ( category == ExchangeType.C122_MAGIC )
+			return ExchangeType.BOOKS_55_SILVER;
+		if ( category == ExchangeType.C123_MAGIC )
+			return ExchangeType.BOOKS_56_GOLD;
 		
-		return ExchangeType.CHEST_CATE_101_FREE ;
+		return ExchangeType.C101_FREE ;
 	}
 	
 	private static function getBattleChestType(numChests:Int) : Int
 	{
 		if( numChests == 0 )
-			return ExchangeType.CHESTS_51_CHROME;
+			return ExchangeType.BOOKS_51_CHROME;
 		if( numChests % 3 == 0 )
-			return ExchangeType.CHESTS_52_SILVER;
+			return ExchangeType.BOOKS_52_SILVER;
 		if( numChests % 7 == 0 || numChests == 1 )
-			return ExchangeType.CHESTS_53_GOLD;
+			return ExchangeType.BOOKS_53_GOLD;
 		if( numChests % 19 == 0 )
-			return ExchangeType.CHESTS_54_CHROME;
+			return ExchangeType.BOOKS_54_CHROME;
 		if( numChests % 47 == 0 )
-			return ExchangeType.CHESTS_55_SILVER;
+			return ExchangeType.BOOKS_55_SILVER;
 		if( numChests % 71 == 0 )
-			return ExchangeType.CHESTS_56_GOLD;
+			return ExchangeType.BOOKS_56_GOLD;
 			
-		return ExchangeType.CHESTS_51_CHROME;
+		return ExchangeType.BOOKS_51_CHROME;
 	}
 }

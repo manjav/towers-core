@@ -14,13 +14,13 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "2710.0423114745";//do not change len.
+	public var coreVersion:String = "2710.0423163816";//do not change len.
 	public var noticeVersion:Int = 2610;
 	public var forceVersion:Int = 2610;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;
-		
+	
 	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
 	public var maxKeysPerDay:Int = 20;
@@ -37,16 +37,19 @@ class LoginData
 		buildingsLevel = new IntIntMap();
 		
 		exchanges = new IntList();
-		exchanges.push(ExchangeType.S_41_KEYS);
-		exchanges.push(ExchangeType.CHEST_CATE_101_FREE);
-		exchanges.push(ExchangeType.CHEST_CATE_102_FREE);
-		exchanges.push(ExchangeType.CHEST_CATE_103_FREE);
-		exchanges.push(ExchangeType.CHEST_CATE_111_BATTLE);
-		exchanges.push(ExchangeType.CHEST_CATE_112_BATTLE);
-		exchanges.push(ExchangeType.CHEST_CATE_113_BATTLE);
-		exchanges.push(ExchangeType.CHEST_CATE_121_OFFER);
-		exchanges.push(ExchangeType.CHEST_CATE_122_OFFER);
-		exchanges.push(ExchangeType.CHEST_CATE_123_OFFER);
+		exchanges.push(ExchangeType.C41_KEYS);
+		exchanges.push(ExchangeType.C101_FREE);
+		exchanges.push(ExchangeType.C102_FREE);
+		exchanges.push(ExchangeType.C103_FREE);
+		exchanges.push(ExchangeType.C111_BATTLE);
+		if( noticeVersion < 2800 )
+		{
+			exchanges.push(ExchangeType.C112_BATTLE);
+			exchanges.push(ExchangeType.C113_BATTLE);
+			exchanges.push(ExchangeType.C121_MAGIC);
+			exchanges.push(ExchangeType.C122_MAGIC);
+			exchanges.push(ExchangeType.C123_MAGIC);
+		}
 	}
 }	
 	

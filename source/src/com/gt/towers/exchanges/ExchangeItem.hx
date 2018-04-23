@@ -8,23 +8,24 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class ExchangeItem extends Exchange
 {
+	public var category:Int;
+	public var bonus:Int = 0;
+	public var discount:Float = 1;
 	public var enabled:Bool = true;
 	public var requirements:IntIntMap;
 	public var outcomes:IntIntMap;
-	public var category:Int;
 
 	public function new(type:Int, reqKey_0:Int=-1, reqVal_0:Int=-1, outKey_0:Int=-1, outVal_0:Int=-1, numExchanges:Int=1, expiredAt:Int=0) 
 	{
 		super(type, numExchanges, expiredAt, outKey_0);
 		
-		category = ExchangeType.getCategory(type);
+		this.category = ExchangeType.getCategory(type);
 		this.requirements = new IntIntMap();
-		if (reqKey_0 > -1 )
-			requirements.set(reqKey_0, reqVal_0);
-			
+		if( reqKey_0 > -1 )
+			this.requirements.set(reqKey_0, reqVal_0);
 		this.outcomes = new IntIntMap();
-		if (outKey_0 > -1 )
-			outcomes.set(outKey_0, outVal_0);
+		if( outKey_0 > -1 )
+			this.outcomes.set(outKey_0, outVal_0);
 	}
 	
 	public static var CHEST_STATE_WAIT:Int = 0;
@@ -38,7 +39,13 @@ class ExchangeItem extends Exchange
 			return CHEST_STATE_BUSY;
 		return CHEST_STATE_READY;
 	}
-	public function isChest():Bool
+	
+	public function isLimited():Bool
+    {
+        return category > 20 && category < 110;
+    }
+
+	public function isBook():Bool
 	{
 		return category >= 100;
 	}
