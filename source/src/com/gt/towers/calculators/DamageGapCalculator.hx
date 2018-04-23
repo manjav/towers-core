@@ -13,7 +13,7 @@ class DamageGapCalculator  extends BaseCalculator
 		if( BuildingType.get_category(type) != BuildingType.B40_CRYSTAL )
 			return BASE_VALUE ;
 		
-		return BASE_VALUE + improveLevel * 90 - Math.log(level) * 40;
+		return BASE_VALUE + improveLevel * 100 - Math.log(level) * 40;
 	}
 
 }

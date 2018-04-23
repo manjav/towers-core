@@ -24,7 +24,7 @@ class BrithRateCalculator extends BaseCalculator
 		}
 #end	
 		if( category == BuildingType.B10_BARRACKS )
-			return BASE_VALUE + Math.log(level) * 0.03 + Math.log(improveLevel) * 0.02;
+			return BASE_VALUE + Math.log(level) * 0.06 + Math.log(improveLevel) * 0.01;
 		else if( category == BuildingType.B30_HEAVY || category == BuildingType.B40_CRYSTAL )
 			return BASE_VALUE * 0.8;
 		

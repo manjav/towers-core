@@ -12,7 +12,6 @@ class DamageCalculator extends BaseCalculator
 	{
 		if( BuildingType.get_category(type) != BuildingType.B40_CRYSTAL )
 			return BASE_VALUE ;
-			
-		return BASE_VALUE + ( Math.log(level) * 0.9 + Math.log(improveLevel) ) * 0.5;
+		return BASE_VALUE + ( Math.log(level) * 1.8 + Math.log(improveLevel) ) * 0.3;
 	}
 }
