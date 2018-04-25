@@ -42,14 +42,6 @@ class LoginData
 		exchanges.push(ExchangeType.C102_FREE);
 		exchanges.push(ExchangeType.C103_FREE);
 		exchanges.push(ExchangeType.C111_BATTLE);
-		if( noticeVersion < 2800 )
-		{
-			exchanges.push(ExchangeType.C112_BATTLE);
-			exchanges.push(ExchangeType.C113_BATTLE);
-			exchanges.push(ExchangeType.C121_MAGIC);
-			exchanges.push(ExchangeType.C122_MAGIC);
-			exchanges.push(ExchangeType.C123_MAGIC);
-		}
 	}
 }	
 	

@@ -51,6 +51,11 @@ class Exchanger
 			items.set( ExchangeType.C11_SOFT,	new ExchangeItem( ExchangeType.C11_SOFT, ResourceType.CURRENCY_HARD, 20,	ResourceType.CURRENCY_SOFT,	500 ) );
 			items.set( ExchangeType.C12_SOFT,	new ExchangeItem( ExchangeType.C12_SOFT, ResourceType.CURRENCY_HARD, 75,	ResourceType.CURRENCY_SOFT,	2000 ) );
 			items.set( ExchangeType.C13_SOFT,	new ExchangeItem( ExchangeType.C13_SOFT, ResourceType.CURRENCY_HARD, 350,	ResourceType.CURRENCY_SOFT,	10000 ) );
+			
+		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MAGIC -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+			items.set( ExchangeType.C11_SOFT,	new ExchangeItem( ExchangeType.C121_MAGIC, ResourceType.CURRENCY_HARD, 0,	ExchangeType.BOOKS_54_CHROME,	0 ) );
+			items.set( ExchangeType.C12_SOFT,	new ExchangeItem( ExchangeType.C122_MAGIC, ResourceType.CURRENCY_HARD, 0,	ExchangeType.BOOKS_55_SILVER,	0 ) );
+			items.set( ExchangeType.C13_SOFT,	new ExchangeItem( ExchangeType.C123_MAGIC, ResourceType.CURRENCY_HARD, 0,	ExchangeType.BOOKS_56_GOLD,		0 ) );
 		}
 		
 		var ads = new ExchangeItem (ExchangeType.C131_AD, -1, -1, -1, -1, 1, 1);
