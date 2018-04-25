@@ -121,7 +121,23 @@ class Exchanger
 			openedChests ++;
 			game.player.resources.set(ResourceType.BATTLE_CHEST_OPENED, openedChests);
 			item.expiredAt = 0;
-			item.outcome = getBattleChestType(openedChests);
+			
+			if( game.player.get_keys() > 20 )// consume accumulated keys
+			{
+				var rand = Math.random();
+				if( rand > 0.8 )
+					item.outcome = getBattleChestType(71);
+				else if( rand > 0.6 )
+					item.outcome = getBattleChestType(47);
+				else if( rand > 0.3 )
+					item.outcome = getBattleChestType(19);
+				else
+					item.outcome = getBattleChestType(openedChests);
+			}
+			else
+			{
+				item.outcome = getBattleChestType(openedChests);
+			}
 		}
 		return true;
 	}
