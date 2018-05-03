@@ -18,25 +18,29 @@ class Exchanger
 {
 	private var game:Game;
 	public var items:IntShopMap;
+#if java
+	public var updater:ExchangeUpdater;
+#end
 
 	public function new(game:Game, initData:InitData) 
 	{
 		this.game = game;
 		items = new IntShopMap();
+		#if java
+		updater = new ExchangeUpdater(game);
 		
 		var i = 0;
 		var exchangeKeys = initData.exchanges.keys();
 		while ( i < exchangeKeys.length )
 		{
 			var ex = initData.exchanges.get(exchangeKeys[i]);
-			var cex = ExchangeType.getCategory( exchangeKeys[i] );
+			var item:ExchangeItem = new ExchangeItem(ex.type, -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt);
+			updater.update(item);
+			items.set(item.type, item );
 			
-			if( cex == ExchangeType.C100_FREES || cex == ExchangeType.C110_BATTLES || cex == ExchangeType.C120_MAGICS )
-				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt ) );
-			else if( cex == ExchangeType.C40_OTHERS )
-				items.set( exchangeKeys[i], new ExchangeItem ( exchangeKeys[i], -1 , -1, -1, -1, ex.numExchanges, ex.expiredAt ) );
 			i ++;
 		}
+		#end
 		
 		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 		items.set( ExchangeType.C0_HARD,  new ExchangeItem ( ExchangeType.C0_HARD, ResourceType.CURRENCY_REAL, 100, ResourceType.CURRENCY_HARD,	1 ) );
@@ -103,6 +107,10 @@ class Exchanger
 		if( item.isBook() )
 			item.outcomes = getChestOutcomes(item.outcome);
 #end
+		
+		if( item.category == ExchangeType.C20_SPECIALS && item.numExchanges > 0 )
+			return false;
+		
 		// add outs
 		if( item.outcomes != null )
 			game.player.addResources(item.outcomes);
@@ -139,6 +147,11 @@ class Exchanger
 				item.outcome = getBattleChestType(openedChests);
 			}
 		}
+		else if( item.category == ExchangeType.C20_SPECIALS )
+		{
+			item.numExchanges ++;
+		}
+		
 		return true;
 	}
 

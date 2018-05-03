@@ -20,10 +20,12 @@ package com.gt.towers.constants;
 	static public var C12_SOFT:Int = 12;
 	static public var C13_SOFT:Int = 13;
 	
-/*	static public var S_20_SPECIALS:Int = 20;
-	static public var S_21_SPECIALS:Int = 21;
+	static public var C20_SPECIALS:Int = 20;
+	static public var C21_SPECIAL:Int = 21;
+	static public var C22_SPECIAL:Int = 22;
+	static public var C23_SPECIAL:Int = 23;
 	
-	static public var S_30_CHEST:Int = 30;
+/*	static public var S_30_CHEST:Int = 30;
 	static public var S_31_CHEST:Int = 31;
 	static public var S_32_CHEST:Int = 32;
 	static public var S_33_CHEST:Int = 33;*/
