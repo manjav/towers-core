@@ -67,10 +67,18 @@ class FieldProvider
 		
 		
 		battles = new StringFieldMap();
-		battles.set( "battle_1", new Battle_1( 1, "battle_1", "80,150,240,300", "", "0,2,4",	"0") );
-		battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,300", "", "0",		"0") );
-		battles.set( "battle_3", new Battle_3( 3, "battle_3", "100,130,180,240" ) );
-		battles.set( "battle_4", new Battle_4( 4, "battle_4", "100,130,180,240" ) );
+		if( game.appVersion >= 2900 )
+		{
+			battles.set( "battle_1", new Battle_8( 1, "battle_1", "80,150,240,300", "", "0,2,4",	"0") );
+			battles.set( "battle_2", new Battle_9( 2, "battle_2", "80,150,240,300", "", "0",		"0") );
+		}
+		else
+		{
+			battles.set( "battle_1", new Battle_1( 1, "battle_1", "80,150,240,300", "", "0,2,4",	"0") );
+			battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,300", "", "0",		"0") );
+		}
+		battles.set( "battle_3", new Battle_3( 3, "battle_3", "60,90,120,180" ) );
+		battles.set( "battle_4", new Battle_4( 4, "battle_4", "60,90,120,180" ) );
 		
 		battles.set( "battle_101", new Battle_101( 101, "battle_101", "100,130,180,240" ) );
 		battles.set( "battle_102", new Battle_102( 102, "battle_102", "100,130,180,240" ) );
@@ -164,6 +172,8 @@ class FieldProvider
 		battles.set( "battle_814", new Battle_814( 814, "battle_814", "150,200,300,360" ) );
 		battles.set( "battle_815", new Battle_815( 815, "battle_815", "150,200,300,360" ) );
 		battles.set( "battle_816", new Battle_816( 816, "battle_816", "150,200,300,360" ) );
+		
+		//battles.set( "battle_901", new Battle_3( 901, "battle_901", "10,20,30,40" ) );
 
 		battles.set( "battle_901", new Battle_901( 901, "battle_901", "150,200,300,360" ) );
 		//battles.set( "battle_902", new Battle_902( 902, "battle_902", "150,200,300,360" ) );
