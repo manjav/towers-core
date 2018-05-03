@@ -92,7 +92,7 @@ class BattleField
 				if( difficulty != 0 )
 				{
 					var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty));
-					if( ep < 0 )
+					if( ep < 0 && difficulty > 0 )
 						ep = 2147483647;
 					game_1.player.resources.set(ResourceType.POINT, ep );
 				}

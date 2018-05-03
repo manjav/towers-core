@@ -77,7 +77,8 @@ class Game
 	
 	public function fillAllBuildings() : Void
 	{
-		var baseLevel:Int = Math.round(Math.max(1, Math.log(player.get_point() / 250) * 2.5));
+		var baseLevel:Int = Math.round( Math.log( Math.max(1, player.get_point() / 100) ) ) * 5 + 1;
+		var playerArena = player.get_arena(0);
 		var arenaIndex = 0;
 		player.buildings = new IntBuildingMap();
 		while ( arenaIndex < arenas.keys().length )
@@ -90,8 +91,8 @@ class Game
 			while ( cardsLen >= 0 )
 			{
 				var type = arena.cards.get(cardsLen);
-				var level = baseLevel + 5 - BuildingType.get_improve(type);
-				player.buildings.set(type, BuildingType.instantiate( this, type, null, 0, level ) );
+				var level = playerArena == 0 ? 1 : baseLevel + 4 - BuildingType.get_improve(type);
+				player.buildings.set(type, BuildingType.instantiate( this, type, null, 0, level));
 				cardsLen --;
 			}
 			arenaIndex ++;
