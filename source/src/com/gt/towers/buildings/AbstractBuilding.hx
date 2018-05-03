@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
+import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -114,7 +115,7 @@ class AbstractBuilding
 	
 	public function upgradable(confirmedHards:Int=0):Bool 
 	{
-		return _level == -1 || confirmedHards >= game.exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
+		return _level == -1 || confirmedHards >= Exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
@@ -164,13 +165,13 @@ class AbstractBuilding
 	}
 
 	
-	public function price(count:Int = 1):Int
+	public function toSoft(improveLevel:Int, count:Int = 1):Int
 	{
-		return   Math.round( (improveLevel * 10) + 10 ); 
+		return Exchanger.cardToSoft(improveLevel) * count;
 	}
-	public function toGem(count:Int = 1):Int
+	public function toHard(count:Int = 1):Int
 	{
-		return game.exchanger.softToHard( price(count) );
+		return Exchanger.softToHard( toSoft(count) );
 	}
 
 }

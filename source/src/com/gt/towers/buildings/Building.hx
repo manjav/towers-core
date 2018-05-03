@@ -61,7 +61,7 @@ class Building extends AbstractBuilding
 		troopRushGap = game.calculator.getInt(BuildingFeatureType.F14_TROOP_RUSH_GAP, type, get_level(), improveLevel);
 		
 		#if java
-		//trace("type:" + type, " level:" + get_level(), " improveLevel:" + improveLevel, " birthRate:" + birthRate, " capacity:" + capacity, " troopSpeed:" + troopSpeed, " troopPower:" + troopPower, " troopRushGap:" + troopRushGap );
+		//trace("index:" + place.index, " type:" + type, " level:" + get_level(), " improveLevel:" + improveLevel, " birthRate:" + birthRate, " capacity:" + capacity, " troopSpeed:" + troopSpeed, " troopPower:" + troopPower, " troopRushGap:" + troopRushGap );
 		if( category == BuildingType.B40_CRYSTAL )
 			defender = new Defender(place);
 		else if( defender != null )

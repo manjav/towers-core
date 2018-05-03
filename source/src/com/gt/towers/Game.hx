@@ -102,7 +102,7 @@ class Game
 	{
 		var keys = player.buildings.keys();
 		var len = keys.length - 1;
-		var log = player.id + " => ";
+		var log = "Id: " + player.id + ", Point: " + player.get_point() + " => ";
 		while ( len >= 0 )
 		{
 			log += " B" + keys[len] + ":" + player.buildings.get(keys[len]).get_level() + "\t";

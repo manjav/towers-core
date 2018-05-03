@@ -159,42 +159,79 @@ class Exchanger
 		return game.player.get_keys() >= ExchangeType.getKeyRequierement(item.outcome);
 	}
 	
-	public function toHard(requirements:IntIntMap):Int
+	static public function toHard(map:IntIntMap) : Int
 	{
-		var reqKeys = requirements.keys();
+		var reqKeys = map.keys();
 		var keys = 0;
 		var softs = 0;
 		var hards = 0;
+		var reals = 0;
 		var i = 0;
 		while ( i < reqKeys.length )
 		{
 			if( reqKeys[i] == ResourceType.KEY )
-				keys += requirements.get(reqKeys[i]);
+				keys += map.get(reqKeys[i]);
+			if( reqKeys[i] == ResourceType.CURRENCY_REAL )
+				reals += map.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_HARD )
-				hards += requirements.get(reqKeys[i]);
+				hards += map.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
-				softs += requirements.get(reqKeys[i]);
+				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isBuilding(reqKeys[i])) 
-				softs += game.player.buildings.get(reqKeys[i]).price() * requirements.get(reqKeys[i]);
+				softs += cardToSoft( BuildingType.get_improve(reqKeys[i]) ) * map.get(reqKeys[i]);
 			
 			i ++;
 		}
-		return keyToHard(keys) + softToHard(softs) + hards ;
+		return keyToHard(keys) + softToHard(softs) + realToHard(reals) + hards ;
 	}
 	
-	public function softToHard(price:Int):Int
+	static public function toSoft(map:IntIntMap) : Int
+	{
+		var reqKeys = map.keys();
+		var keys = 0;
+		var softs = 0;
+		var hards = 0;
+		var reals = 0;
+		var i = 0;
+		while ( i < reqKeys.length )
+		{
+			if( reqKeys[i] == ResourceType.KEY )
+				keys += map.get(reqKeys[i]);
+			if( reqKeys[i] == ResourceType.CURRENCY_REAL )
+				reals += map.get(reqKeys[i]);
+			else if( reqKeys[i] == ResourceType.CURRENCY_HARD )
+				hards += map.get(reqKeys[i]);
+			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
+				softs += map.get(reqKeys[i]);
+			else if( ResourceType.isBuilding(reqKeys[i])) 
+				softs += cardToSoft( BuildingType.get_improve(reqKeys[i]) ) * map.get(reqKeys[i]);
+			
+			i ++;
+		}
+		return hardToSoft( keyToHard(keys) + realToHard(reals) + hards ) + softs ;
+	}
+	
+	static public function hardToSoft(hards:Int):Int
+	{
+		return hards * 5;
+	}
+	static public function realToHard(price:Int):Int
+	{
+		return Math.round( price * 0.1 ) ;
+	}
+	static public function softToHard(price:Int):Int
 	{
 		return Math.round( price * 0.2 ) ;
 	}
-	public function timeToHard(time:Int):Int
+	static public function timeToHard(time:Int):Int
 	{
 		return Math.round( Math.max( Math.log(time / 600) * 3 + (time / 3600) * 2 + 3 , 0) );
 	}
-	public function timeToKey(time:Int):Int
+	static public function timeToKey(time:Int):Int
 	{
 		return Math.floor(timeToHard(time) / 20);
 	}
-	public function keyToHard(count:Int):Int
+	static public function keyToHard(count:Int):Int
 	{
 		if( count < 5 )
 			return Math.round( count * 10 ) ;
@@ -203,6 +240,10 @@ class Exchanger
 		else
 			return Math.round( count * 8 ) ;
 	}	
+	static public function cardToSoft(improveLevel:Int) : Int
+	{
+		return Math.round( (improveLevel * 10) + 10 ); 
+	}
 	
 	function getChestRequierement(item:ExchangeItem, now:Int) : IntIntMap
 	{
