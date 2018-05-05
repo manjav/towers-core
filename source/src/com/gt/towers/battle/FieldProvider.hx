@@ -67,7 +67,12 @@ class FieldProvider
 		
 		
 		battles = new StringFieldMap();
-		if( game.appVersion >= 2900 )
+		if( game.appVersion >= 2910 )
+		{
+			battles.set( "battle_1", new Battle_8( 1, "battle_1", "80,150,240,300", "", "0,2,4,6",	"0") );
+			battles.set( "battle_2", new Battle_7( 2, "battle_2", "80,150,240,300", "", "0",		"0") );
+		}
+		else if( game.appVersion >= 2900 )
 		{
 			battles.set( "battle_1", new Battle_8( 1, "battle_1", "80,150,240,300", "", "0,2,4",	"0") );
 			battles.set( "battle_2", new Battle_9( 2, "battle_2", "80,150,240,300", "", "0",		"0") );
