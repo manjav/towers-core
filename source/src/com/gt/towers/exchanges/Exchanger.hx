@@ -62,9 +62,8 @@ class Exchanger
 			items.set( ExchangeType.C13_SOFT,	new ExchangeItem( ExchangeType.C123_MAGIC, ResourceType.CURRENCY_HARD, 0,	ExchangeType.BOOKS_56_GOLD,		0 ) );
 		}
 		
-		var ads = new ExchangeItem (ExchangeType.C131_AD, -1, -1, -1, -1, 1, 1);
-		ads.outcome = ExchangeType.BOOKS_57_CHROME;
-		items.set( ExchangeType.C131_AD, ads );
+		// ad book
+		items.set( ExchangeType.C131_AD, new ExchangeItem (ExchangeType.C131_AD, -1, -1, ExchangeType.BOOKS_57_CHROME, 0, 1, 1) );
 	}
 	
 	/**
