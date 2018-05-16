@@ -14,7 +14,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "2910.0505181738";//do not change len.
+	public var coreVersion:String = "2950.0516174107";//do not change len.
 	public var noticeVersion:Int = 2910;
 	public var forceVersion:Int = 2610;
 	public var resources:IntIntMap;
@@ -46,5 +46,4 @@ class LoginData
 		exchanges.push(ExchangeType.C103_FREE);
 		exchanges.push(ExchangeType.C111_BATTLE);
 	}
-}	
-	
+}
