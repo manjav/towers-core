@@ -34,7 +34,7 @@ class Exchanger
 		while ( i < exchangeKeys.length )
 		{
 			var ex = initData.exchanges.get(exchangeKeys[i]);
-			var item:ExchangeItem = new ExchangeItem(ex.type, -1, -1, ex.outcome, 1, ex.numExchanges, ex.expiredAt);
+			var item:ExchangeItem = new ExchangeItem(ex.type, ex.numExchanges, ex.expiredAt, "", ex.outcomesStr);
 			updater.update(item);
 			items.set(item.type, item );
 			
@@ -42,28 +42,11 @@ class Exchanger
 		}
 		#end
 		
-		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.C0_HARD,  new ExchangeItem ( ExchangeType.C0_HARD, ResourceType.CURRENCY_REAL, 100, ResourceType.CURRENCY_HARD,	1 ) );
-		if( game.appVersion < 2080 )
-		{
-			var isCheap = game.player.id % 2 == 0;
-			items.set( ExchangeType.C1_HARD,	new ExchangeItem( ExchangeType.C1_HARD, ResourceType.CURRENCY_REAL, 2000,	ResourceType.CURRENCY_HARD, isCheap?200:100 ) );//50
-			items.set( ExchangeType.C2_HARD,	new ExchangeItem( ExchangeType.C2_HARD, ResourceType.CURRENCY_REAL, 10000,	ResourceType.CURRENCY_HARD, isCheap?1200:600 ) );//300
-			items.set( ExchangeType.C3_HARD,	new ExchangeItem( ExchangeType.C3_HARD, ResourceType.CURRENCY_REAL, 20000,	ResourceType.CURRENCY_HARD, isCheap?3000:1500 ) );//900
-			
-		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MONEY -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-			items.set( ExchangeType.C11_SOFT,	new ExchangeItem( ExchangeType.C11_SOFT, ResourceType.CURRENCY_HARD, 20,	ResourceType.CURRENCY_SOFT,	500 ) );
-			items.set( ExchangeType.C12_SOFT,	new ExchangeItem( ExchangeType.C12_SOFT, ResourceType.CURRENCY_HARD, 75,	ResourceType.CURRENCY_SOFT,	2000 ) );
-			items.set( ExchangeType.C13_SOFT,	new ExchangeItem( ExchangeType.C13_SOFT, ResourceType.CURRENCY_HARD, 350,	ResourceType.CURRENCY_SOFT,	10000 ) );
-			
-		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- MAGIC -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-			items.set( ExchangeType.C11_SOFT,	new ExchangeItem( ExchangeType.C121_MAGIC, ResourceType.CURRENCY_HARD, 0,	ExchangeType.BOOKS_54_CHROME,	0 ) );
-			items.set( ExchangeType.C12_SOFT,	new ExchangeItem( ExchangeType.C122_MAGIC, ResourceType.CURRENCY_HARD, 0,	ExchangeType.BOOKS_55_SILVER,	0 ) );
-			items.set( ExchangeType.C13_SOFT,	new ExchangeItem( ExchangeType.C123_MAGIC, ResourceType.CURRENCY_HARD, 0,	ExchangeType.BOOKS_56_GOLD,		0 ) );
-		}
+		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- Test GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+		items.set( ExchangeType.C0_HARD,  new ExchangeItem ( ExchangeType.C0_HARD, 1, 0, "1101:100", "1003:1" ) );
 		
 		// ad book
-		items.set( ExchangeType.C131_AD, new ExchangeItem (ExchangeType.C131_AD, -1, -1, ExchangeType.BOOKS_57_CHROME, 0, 1, 1) );
+		items.set( ExchangeType.C131_AD,  new ExchangeItem ( ExchangeType.C131_AD, 1, 0, "", "57:1" ) );
 	}
 	
 	/**

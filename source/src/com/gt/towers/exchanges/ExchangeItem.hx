@@ -15,17 +15,48 @@ class ExchangeItem extends Exchange
 	public var requirements:IntIntMap;
 	public var outcomes:IntIntMap;
 
-	public function new(type:Int, reqKey_0:Int=-1, reqVal_0:Int=-1, outKey_0:Int=-1, outVal_0:Int=-1, numExchanges:Int=1, expiredAt:Int=0) 
+	public function new(type:Int, numExchanges:Int = 1, expiredAt:Int = 0, reqsStr:String = "", outsStr:String = "") 
 	{
-		super(type, numExchanges, expiredAt, outKey_0);
+		super(type, numExchanges, expiredAt, outsStr);
 		
 		this.category = ExchangeType.getCategory(type);
-		this.requirements = new IntIntMap();
-		if( reqKey_0 > -1 )
+		
+		/*if( reqKey_0 > -1 )
 			this.requirements.set(reqKey_0, reqVal_0);
-		this.outcomes = new IntIntMap();
 		if( outKey_0 > -1 )
-			this.outcomes.set(outKey_0, outVal_0);
+			this.outcomes.set(outKey_0, outVal_0);*/
+		
+		var list:Array<String>;
+		var listLen:Int;
+		var kayVal:Array<String>;
+		//trace("type", type, "numExchanges", numExchanges, "expiredAt", expiredAt, "reqsStr", reqsStr, "outsStr", outsStr);
+		this.requirements = new IntIntMap();
+		if( reqsStr != "" )
+		{
+			list = reqsStr.split(",");
+			listLen = list.length - 1;
+			while ( listLen >= 0 )
+			{
+				kayVal = list[listLen].split(":");
+				this.requirements.increase(Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0 );
+				//trace("reqsStr", list[listLen], Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0);
+				listLen --;
+			}
+		}
+		
+		this.outcomes = new IntIntMap();
+		if( outsStr != "" )
+		{
+			list = outsStr.split(",");
+			listLen = list.length - 1;
+			while ( listLen >= 0 )
+			{
+				kayVal = list[listLen].split(":");
+				this.outcomes.increase(Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0 );
+				//trace("outsStr", list[listLen], Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0);
+				listLen --;
+			}
+		}
 	}
 	
 	public static var CHEST_STATE_WAIT:Int = 0;

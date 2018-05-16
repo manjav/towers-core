@@ -2,6 +2,7 @@ package com.gt.towers.exchanges;
 import com.gt.towers.Game;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.ResourceType;
+import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -48,18 +49,42 @@ class ExchangeUpdater
 			item.expiredAt = now + 86400;
 			item.numExchanges = 0;
 			//trace("update end", item.type, item.outcome, item.expiredAt, item.numExchanges);
+			item.outcomes = new IntIntMap();
+			updateOffer(item);
 		}
-		item.outcomes = new IntIntMap();
-		item.outcomes.set(item.outcome, getOutcomeQuantity(item.outcome));
+		else if ( item.outcomes.values()[0] <= 0 )
+		{
+			updateOffer(item);
+		}
+
 		item.requirements = new IntIntMap();
 		item.requirements.set(getRequirementType(item.outcome), getPrice(item));
-		changes.add(item);
     }
+	
+	function updateOffer(item:ExchangeItem) : Void
+	{
+		item.outcomes.set(item.outcome, getOutcomeQuantity(item.outcome));
+		item.outcomesStr = "";
+		var keys = item.outcomes.keys();
+		var keysLen:Int = keys.length - 1;
+		while ( keysLen >= 0 )
+		{
+			item.outcomesStr += keys[keysLen] + ":" + item.outcomes.get(keys[keysLen]);
+			if( keysLen > 0 )
+				item.outcomesStr += ",";
+			keysLen --;
+		}
+		
+		changes.add(item);
+	}
 	
 	function getOutcomeQuantity(outcome:Int):Int 
 	{
 		if( ResourceType.isBuilding(outcome) )
+		{
+			//trace("building", outcome, "get_upgradeCards", game.player.buildings.get(outcome).get_upgradeCards());
 			return 10;
+		}
 		return switch ( outcome )
 		{
 			case 1002	: 100;
