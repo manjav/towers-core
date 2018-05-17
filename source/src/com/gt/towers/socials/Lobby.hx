@@ -11,7 +11,7 @@ import com.gt.towers.constants.ResourceType;
 class Lobby 
 {
 	public static var buddyInviterReward:Int = 20;
-	public static var buddyInviteeReward:Int = 50;
+	public static var buddyInviteeReward:Int = 20;
 	
 	public var requiredGems:Int = 30;
 	public var xpReward:Int = 100;
