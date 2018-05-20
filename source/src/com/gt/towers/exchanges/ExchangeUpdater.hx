@@ -12,6 +12,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class ExchangeUpdater 
 {
 	var now:Int;
+	var arena:Int;
 	var game:Game;
 	public var changes:java.util.List<ExchangeItem>;
 
@@ -20,14 +21,23 @@ class ExchangeUpdater
 		
 		this.game = game;
 	    this.now = cast(java.lang.System.currentTimeMillis() / 1000, Int);
+		this.arena = game.player.get_arena(0);
         this.changes = new java.util.ArrayList();
     }
 
     public function update( item:ExchangeItem ):Void
     {
-		if( item.category != ExchangeType.C20_SPECIALS )
+		if( item.category != ExchangeType.C20_SPECIALS && item.category != ExchangeType.C30_BUNDLES )
 			return;
-		//trace("update start", item.type, item.outcome, item.expiredAt, item.numExchanges);
+			
+		if( item.category == ExchangeType.C20_SPECIALS )
+			updateSpecials(item);
+		else if( item.category == ExchangeType.C30_BUNDLES )
+			updateBundles(item);
+	}
+	
+	function updateSpecials(item:ExchangeItem) : Void
+	{
 		if( item.expiredAt < now )
 		{
 			if( item.type == ExchangeType.C23_SPECIAL )
@@ -48,22 +58,49 @@ class ExchangeUpdater
 			
 			item.expiredAt = now + 86400;
 			item.numExchanges = 0;
-			//trace("update end", item.type, item.outcome, item.expiredAt, item.numExchanges);
 			item.outcomes = new IntIntMap();
-			updateOffer(item);
+			item.outcomes.set(item.outcome, getOutcomeQuantity(item));
+			createOutcomeString(item);
 		}
-		else if ( item.outcomes.values()[0] <= 0 )
+		else if( item.outcomes.values()[0] <= 0 )
 		{
-			updateOffer(item);
+			item.outcomes.set(item.outcome, getOutcomeQuantity(item));
+			createOutcomeString(item);
 		}
-
+		
 		item.requirements = new IntIntMap();
-		item.requirements.set(getRequirementType(item.outcome), getPrice(item));
-    }
+		item.requirements.set(getRequirementType(item), getPrice(item));
+	}
 	
-	function updateOffer(item:ExchangeItem) : Void
+	function updateBundles(item:ExchangeItem) : Void
 	{
-		item.outcomes.set(item.outcome, getOutcomeQuantity(item.outcome));
+		if( item.expiredAt < now && arena > 0 )
+		{
+			item.expiredAt = now + 86400;
+			item.numExchanges = 0;
+			item.outcomes = new IntIntMap();
+			item.requirements = new IntIntMap();
+			if( item.type == ExchangeType.C31_BUNDLE )
+			{
+				item.outcomes.set(ResourceType.CURRENCY_SOFT, 40000);
+				item.outcomes.set(ExchangeType.BOOKS_54_CHROME, 1);
+			}
+			else if( item.type == ExchangeType.C32_BUNDLE )
+			{
+				item.outcomes.set(ResourceType.CURRENCY_SOFT, 15000);
+				item.outcomes.set(ResourceType.CURRENCY_HARD, 500);
+			}
+			createOutcomeString(item);
+		}
+		
+		if( item.type == ExchangeType.C31_BUNDLE )
+			item.requirements.set(getRequirementType(item), 19999);
+		else if( item.type == ExchangeType.C32_BUNDLE )
+			item.requirements.set(getRequirementType(item), 9999);
+	}
+	
+	function createOutcomeString(item:ExchangeItem) : Void
+	{
 		item.outcomesStr = "";
 		var keys = item.outcomes.keys();
 		var keysLen:Int = keys.length - 1;
@@ -78,27 +115,31 @@ class ExchangeUpdater
 		changes.add(item);
 	}
 	
-	function getOutcomeQuantity(outcome:Int):Int 
+	function getOutcomeQuantity(item:ExchangeItem):Int 
 	{
-		if( ResourceType.isBuilding(outcome) )
+		var bundleFactor = item.category == ExchangeType.C30_BUNDLES ? 100 : 1;
+		if( ResourceType.isBuilding(item.outcome) )
+			return 3 * ( arena + 1 );
+		else if( ResourceType.isBook(item.outcome) )
+			return 1;
+		
+		return switch ( item.outcome )
 		{
-			//trace("building", outcome, "get_upgradeCards", game.player.buildings.get(outcome).get_upgradeCards());
-			return 10;
-		}
-		return switch ( outcome )
-		{
-			case 1002	: 100;
-			case 1003	: 5;
-			case 1004	: 3;
+			case 1002	: 10 * ( arena + 1 ) * bundleFactor;
+			case 1003	: 3 * bundleFactor;
+			case 1004	: 2 * bundleFactor;
 			default		: 10;
 		}
 	}
 	
-	function getRequirementType(outcome:Int):Int 
+	function getRequirementType(item:ExchangeItem) : Int 
 	{
-		if( ResourceType.isBuilding(outcome) )
+		if( item.category == ExchangeType.C30_BUNDLES )
+			return 1101;
+		
+		if( ResourceType.isBuilding(item.outcome) )
 			return 1002;
-		return switch ( outcome )
+		return switch ( item.outcome )
 		{
 			case 1002	: 1003;
 			case 1003	: 1101;
@@ -109,11 +150,14 @@ class ExchangeUpdater
 	
 	function getPrice(item:ExchangeItem):Int 
 	{
+		if( item.category == ExchangeType.C30_BUNDLES )
+			return Math.round(Exchanger.toReal(item.outcomes) * 0.4);
+		
 		var count = item.outcomes.values()[0];
 		if( ResourceType.isBuilding(item.outcome) )
-			return Math.round(Exchanger.toSoft(item.outcomes) * 0.1);
+			return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
 		else if( (item.outcome == ResourceType.CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.CURRENCY_HARD && count <= 5) || (item.outcome == ResourceType.KEY && count <= 3) )
 			return 0;
-		return Math.round(Exchanger.toSoft(item.outcomes) * 0.1);
+		return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
 	}
 }

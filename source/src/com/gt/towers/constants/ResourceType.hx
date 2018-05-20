@@ -16,7 +16,6 @@ class ResourceType
 
 	public static var CURRENCY_REAL:Int = 1101;
 	
-	
 	public static var BATTLES_COUNT:Int = 1201;
 	public static var BATTLES_WINS:Int = 1202;
 	public static var BATTLE_CHEST_OPENED:Int = 1203;
@@ -30,7 +29,7 @@ class ResourceType
 	
 	static public function isBuilding(type:Int) 
 	{
-		return type < 1000 && type >= 10; 
+		return (type >= 10 && type < 50) || (type >= 60 && type < 1000); 
 	}
 	
 	static public function getName(type:Int) : String
@@ -42,5 +41,10 @@ class ResourceType
 		else if ( type == CURRENCY_HARD ) return "CURRENCY_HARD";
 		else if ( type == CURRENCY_REAL ) return "CURRENCY_REAL";
 		else return "TYPE_" + type;
+	}
+	
+	static public function isBook(type:Int) 
+	{
+		return type >= 50 && type < 60;
 	}
 }

@@ -34,13 +34,7 @@ class Game
 		market = data.market;
 		sessionsCount = data.sessionsCount;
 		
-		player = new Player(this, data);
-		exchanger = new Exchanger(this, data);
-		lobby = new Lobby(this);
-		calculator = new FeatureCalculator(this);
-		
 		arenas = new IntArenaMap();
-		
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));
 		arenas.set(0, new Arena(0, 0,		100,	-8,				"11"    	));
 		arenas.set(1, new Arena(1, 101,		300,	-7,				"21,31,41"	));//400
@@ -52,6 +46,11 @@ class Game
 		arenas.set(7, new Arena(7, 3001,	4500,	-2,				"43"		));//2400
 		arenas.set(8, new Arena(8, 4501,	7000,	-1, 			"34"		));//2800
 		arenas.set(9, new Arena(9, 7001,	10000,	 0, 			"44"		));//3000
+		
+		player = new Player(this, data);
+		exchanger = new Exchanger(this, data);
+		lobby = new Lobby(this);
+		calculator = new FeatureCalculator(this);
 		
 		fieldProvider = new FieldProvider(this);
 	}

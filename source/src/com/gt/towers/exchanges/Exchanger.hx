@@ -66,7 +66,7 @@ class Exchanger
 			item.outcomes = null;
 			if( !readyToStartOpening(item.type, now) )
 				return false;
-				
+			
 			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
 			game.player.resources.reduceMap(item.requirements);
 			return true;
@@ -84,18 +84,33 @@ class Exchanger
 			game.player.addResources(deductions);
 		}
 		
+	
+		var outs = new IntIntMap();
+		outs.increaseMap(item.outcomes);
 #if java
-		// provide and earn outcomes 
-		if( item.isBook() )
-			item.outcomes = getChestOutcomes(item.outcome);
+		var outKeys = outs.keys();
+		var o = 0;
+		while ( o < outKeys.length )
+		{
+			if( ResourceType.isBook( outKeys[o] ) )
+			{
+				outs.remove( outKeys[o] );
+				outs.increaseMap( getChestOutcomes( outKeys[o] ) );
+			}
+			o ++;
+		}
+		trace("outs", outs.toString());
 #end
 		
 		if( item.category == ExchangeType.C20_SPECIALS && item.numExchanges > 0 )
 			return false;
 		
 		// add outs
-		if( item.outcomes != null )
-			game.player.addResources(item.outcomes);
+#if flash
+		if( item.containBook() == -1 )
+#end
+			game.player.addResources(outs);
+		
 		// consume reqs
 		game.player.resources.reduceMap(item.requirements);
 		
@@ -154,6 +169,11 @@ class Exchanger
 		return game.player.get_keys() >= ExchangeType.getKeyRequierement(item.outcome);
 	}
 	
+	static public function toReal(map:IntIntMap) : Int
+	{
+		return hardToReal(toHard(map));
+	}
+	
 	static public function toHard(map:IntIntMap) : Int
 	{
 		var reqKeys = map.keys();
@@ -174,6 +194,8 @@ class Exchanger
 				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isBuilding(reqKeys[i])) 
 				softs += cardToSoft( BuildingType.get_improve(reqKeys[i]) ) * map.get(reqKeys[i]);
+			else if( ResourceType.isBook(reqKeys[i])) 
+				hards += ExchangeType.getHardRequierement(reqKeys[i]);
 			
 			i ++;
 		}
@@ -213,6 +235,10 @@ class Exchanger
 	static public function realToHard(price:Int):Int
 	{
 		return Math.round( price * 0.1 ) ;
+	}
+	static public function hardToReal(hards:Int):Int
+	{
+		return Math.round( hards * 10 ) ;
 	}
 	static public function softToHard(price:Int):Int
 	{
@@ -272,7 +298,7 @@ class Exchanger
 		{
 			numCards = numSlots > 0 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
 			accCards += numCards;
-			//trace("numChest", numChest, "numSlots", numSlots);
+			trace("numChest", numChest, "numSlots", numSlots);
 			
 			if( numSlots == 0 )
 				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2) == 0 && type < ExchangeType.BOOKS_57_CHROME) || (type < ExchangeType.BOOKS_57_CHROME && type > ExchangeType.BOOKS_53_GOLD) )

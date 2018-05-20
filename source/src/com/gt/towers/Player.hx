@@ -99,11 +99,11 @@ class Player
 	{
 		var xp:Int = get_xp();
 		
-		if (xp < 15)
+		if( xp < 15 )
 			return 1;
-		else if (xp < 135)
+		else if( xp < 135 )
 			return 2;
-		else if (xp < 80)
+		else if( xp < 80 )
 			return 3;
 		else 
 		{
@@ -120,14 +120,14 @@ class Player
 	
 	public function get_arena(point:Int) : Int
 	{
-		if ( point == 0 )
+		if( point == 0 )
 			point = get_point();
 			
 		var arenaKeys = game.arenas.keys();
 		var arena = arenaKeys.length - 1;
 		while ( arena >= 0 )
 		{
-			if ( point > game.arenas.get( arenaKeys[arena] ).max )
+			if( point > game.arenas.get( arenaKeys[arena] ).max )
 				break;
 			arena --;
 		}
@@ -138,9 +138,9 @@ class Player
 	{
 		var i:Int = 0;
 		var keis = IntIntMap.keys();
-		while (i < keis.length)
+		while ( i < keis.length )
 		{
-			if ( IntIntMap.get(keis[i]) > resources.get(keis[i]) )
+			if( IntIntMap.get(keis[i]) > resources.get(keis[i]) )
 				return false;
 			i++;
 		}
@@ -155,7 +155,7 @@ class Player
 		while ( i < keis.length )
 		{
 			var remain = IntIntMap.get(keis[i]) - resources.get(keis[i]);
-			if(remain > 0)
+			if( remain > 0 )
 				ret.set(keis[i], remain);
 			i ++;
 		}
@@ -193,7 +193,7 @@ class Player
 		}
 		
 		var t = resources.getRandomKey();
-		if ( !ResourceType.isBuilding(t) )
+		if( !ResourceType.isBuilding(t) )
 			return getRandomBuilding();
 		return t;
 	}

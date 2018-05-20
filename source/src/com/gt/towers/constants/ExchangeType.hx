@@ -25,10 +25,9 @@ package com.gt.towers.constants;
 	static public var C22_SPECIAL:Int = 22;
 	static public var C23_SPECIAL:Int = 23;
 	
-/*	static public var S_30_CHEST:Int = 30;
-	static public var S_31_CHEST:Int = 31;
-	static public var S_32_CHEST:Int = 32;
-	static public var S_33_CHEST:Int = 33;*/
+	static public var C30_BUNDLES:Int = 30;
+	static public var C31_BUNDLE:Int = 31;
+	static public var C32_BUNDLE:Int = 32;
 	
 	static public var C40_OTHERS:Int = 40;
 	static public var C41_KEYS:Int = 41;
@@ -118,19 +117,19 @@ package com.gt.towers.constants;
 	
 	public static function getHardRequierement(type:Int):Int
 	{
-		if (type == BOOKS_51_CHROME)
-			return 10;
-		else if (type == BOOKS_52_SILVER)
-			return 20;
-		else if (type == BOOKS_53_GOLD)
-			return 30;
-		else if (type == BOOKS_54_CHROME)
-			return 40;
-		else if (type == BOOKS_55_SILVER)
-			return 70;
-		else if (type == BOOKS_56_GOLD)
-			return 120;
-		return 0;
+		return switch ( type )
+		{
+			case 51 : 10;
+			case 52 : 20;
+			case 53 : 30;
+			case 54 : 40;
+			case 55 : 70;
+			case 56 : 120;
+			case 57 : 5;
+			case 58 : 10;
+			case 59 : 15;
+			default : 0;
+		}
 	}	
 	
 	public static function getNumSlots(type:Int):Int

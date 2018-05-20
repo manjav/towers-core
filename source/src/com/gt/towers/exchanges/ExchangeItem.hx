@@ -1,5 +1,6 @@
 package com.gt.towers.exchanges;
 import com.gt.towers.constants.ExchangeType;
+import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -79,5 +80,18 @@ class ExchangeItem extends Exchange
 	public function isBook():Bool
 	{
 		return category >= 100;
+	}
+	
+	public function containBook() : Int
+	{
+		var outs = outcomes.keys();
+		var step = outs.length - 1;
+		while ( step >= 0 )
+		{
+			if( ResourceType.isBook( outs[step] ) )
+				return outs[step];
+			step --;
+		}
+		return -1;
 	}
 }
