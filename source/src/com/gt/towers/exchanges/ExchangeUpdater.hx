@@ -101,17 +101,7 @@ class ExchangeUpdater
 	
 	function createOutcomeString(item:ExchangeItem) : Void
 	{
-		item.outcomesStr = "";
-		var keys = item.outcomes.keys();
-		var keysLen:Int = keys.length - 1;
-		while ( keysLen >= 0 )
-		{
-			item.outcomesStr += keys[keysLen] + ":" + item.outcomes.get(keys[keysLen]);
-			if( keysLen > 0 )
-				item.outcomesStr += ",";
-			keysLen --;
-		}
-		
+		item.createOutcomesStr();
 		changes.add(item);
 	}
 	

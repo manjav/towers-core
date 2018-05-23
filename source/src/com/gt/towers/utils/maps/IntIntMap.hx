@@ -260,9 +260,9 @@ class IntIntMap extends EventDispatcher
 		while ( i < keys.length )
 		{
 			if ( i == 0 )
-				st = keys[i] + ": " + values[i];
+				st = keys[i] + ":" + values[i];
 			else
-				st += ", " + keys[i] + ": " + values[i];
+				st += ", " + keys[i] + ":" + values[i];
 			i++;
 		}
 		return st;

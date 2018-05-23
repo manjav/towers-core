@@ -60,12 +60,15 @@ class ExchangeItem extends Exchange
 		}
 	}
 	
+	public static var CHEST_STATE_EMPTY:Int = -1;
 	public static var CHEST_STATE_WAIT:Int = 0;
 	public static var CHEST_STATE_BUSY:Int = 1;
 	public static var CHEST_STATE_READY:Int = 2;
 	public function getState(now:Int):Int
 	{
-		if( expiredAt == 0 )
+		if( outcome == -1 )
+			return CHEST_STATE_EMPTY;
+		else if( expiredAt == 0 )
 			return CHEST_STATE_WAIT;
 		else if( expiredAt > now )
 			return CHEST_STATE_BUSY;
@@ -93,5 +96,20 @@ class ExchangeItem extends Exchange
 			step --;
 		}
 		return -1;
+	}
+	
+	public function createOutcomesStr() : String
+	{
+		outcomesStr = "";
+		var outs = outcomes.keys();
+		var step = outs.length - 1;
+		while ( step >= 0 )
+		{
+			outcomesStr += outs[step] + ":" + outcomes.get(outs[step]);
+			if( step > 0 )
+				outcomesStr += ",";
+			step --;
+		}
+		return outcomesStr;
 	}
 }

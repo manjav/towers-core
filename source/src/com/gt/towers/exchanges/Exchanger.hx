@@ -63,7 +63,7 @@ class Exchanger
 		// start opening process
 		if( item.category == ExchangeType.C110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 		{
-			item.outcomes = null;
+			//item.outcomes = new IntIntMap();
 			if( !readyToStartOpening(item.type, now) )
 				return false;
 			
@@ -99,15 +99,14 @@ class Exchanger
 			}
 			o ++;
 		}
-		trace("outs", outs.toString());
+		trace("outcomes", outs.toString());
 #end
-		
 		if( item.category == ExchangeType.C20_SPECIALS && item.numExchanges > 0 )
 			return false;
 		
-		// add outs
+		// add outcomes
 #if flash
-		if( item.containBook() == -1 )
+		if( item.containBook() == -1 )// prevent adding outcomes witch contain book into player resources in client-side
 #end
 			game.player.addResources(outs);
 		
@@ -126,32 +125,40 @@ class Exchanger
 			openedChests ++;
 			game.player.resources.set(ResourceType.BATTLE_CHEST_OPENED, openedChests);
 			item.expiredAt = 0;
-			
-			if( game.player.get_keys() > 20 )// consume accumulated keys
-			{
-				var rand = Math.random();
-				if( rand > 0.8 )
-					item.outcome = getBattleChestType(71);
-				else if( rand > 0.6 )
-					item.outcome = getBattleChestType(47);
-				else if( rand > 0.3 )
-					item.outcome = getBattleChestType(19);
-				else
-					item.outcome = getBattleChestType(openedChests);
-			}
-			else
-			{
-				item.outcome = getBattleChestType(openedChests);
-			}
+			findRandomBook(item);
 		}
-		else if( item.category == ExchangeType.C20_SPECIALS )
+		else if( item.category == ExchangeType.C20_SPECIALS || item.category == ExchangeType.C30_BUNDLES )
 		{
 			item.numExchanges ++;
 		}
 		
+		item.createOutcomesStr();
 		return true;
 	}
 
+	public function findRandomBook(item:ExchangeItem) : Void
+	{
+		var openedChests = game.player.get_openedChests();
+		if( game.player.get_keys() > 20 )// consume accumulated keys
+		{
+			var rand = Math.random();
+			if( rand > 0.8 )
+				item.outcome = getBattleChestType(71);
+			else if( rand > 0.6 )
+				item.outcome = getBattleChestType(47);
+			else if( rand > 0.3 )
+				item.outcome = getBattleChestType(19);
+			else
+				item.outcome = getBattleChestType(openedChests);
+		}
+		else
+		{
+			item.outcome = getBattleChestType(openedChests);
+		}
+		item.outcomes = new IntIntMap();
+		item.outcomes.set(item.outcome, 1);
+	}
+	
 	public function readyToStartOpening(type:Int, now:Int) : Bool
 	{
 		var item = items.get(type);
@@ -298,7 +305,7 @@ class Exchanger
 		{
 			numCards = numSlots > 0 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
 			accCards += numCards;
-			trace("numChest", numChest, "numSlots", numSlots);
+			//trace("numChest", numChest, "numSlots", numSlots);
 			
 			if( numSlots == 0 )
 				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2) == 0 && type < ExchangeType.BOOKS_57_CHROME) || (type < ExchangeType.BOOKS_57_CHROME && type > ExchangeType.BOOKS_53_GOLD) )
