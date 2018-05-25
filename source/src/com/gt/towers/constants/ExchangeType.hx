@@ -64,6 +64,9 @@ package com.gt.towers.constants;
 	static public var BOOKS_57_CHROME:Int = 57;
 	static public var BOOKS_58_SILVER:Int = 58;
 	static public var BOOKS_59_GOLD:Int = 59;
+	
+	static public var C190_OTHERS:Int = 190;
+	static public var C191_RENAME:Int = 191;
 
 	public function new(){}
 	
@@ -128,6 +131,7 @@ package com.gt.towers.constants;
 			case 57 : 5;
 			case 58 : 10;
 			case 59 : 15;
+			case 191 : 50;
 			default : 0;
 		}
 	}	

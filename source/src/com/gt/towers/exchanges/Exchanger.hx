@@ -47,6 +47,10 @@ class Exchanger
 		
 		// ad book
 		items.set( ExchangeType.C131_AD,  new ExchangeItem ( ExchangeType.C131_AD, 1, 0, "", "57:1" ) );
+		
+		// rename
+		if( !items.exists( ExchangeType.C191_RENAME ) )
+			items.set( ExchangeType.C191_RENAME,  new ExchangeItem ( ExchangeType.C191_RENAME, 0 ) );
 	}
 	
 	/**
@@ -58,7 +62,9 @@ class Exchanger
 	{
 		// provide requirements
 		if( item.isBook() )
-			item.requirements = getChestRequierement(item, now);
+			item.requirements = getBookRequierement(item, now);
+		else if ( item.isIncreamental() )
+			item.requirements = getIncreamentalRequierement(item, now);
 		
 		// start opening process
 		if( item.category == ExchangeType.C110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
@@ -84,7 +90,6 @@ class Exchanger
 			game.player.addResources(deductions);
 		}
 		
-	
 		var outs = new IntIntMap();
 		outs.increaseMap(item.outcomes);
 #if java
@@ -127,7 +132,7 @@ class Exchanger
 			item.expiredAt = 0;
 			findRandomBook(item);
 		}
-		else if( item.category == ExchangeType.C20_SPECIALS || item.category == ExchangeType.C30_BUNDLES )
+		else if( item.category == ExchangeType.C20_SPECIALS || item.category == ExchangeType.C30_BUNDLES || item.type == ExchangeType.C191_RENAME )
 		{
 			item.numExchanges ++;
 		}
@@ -273,7 +278,7 @@ class Exchanger
 		return Math.round( (improveLevel * 10) + 10 ); 
 	}
 	
-	function getChestRequierement(item:ExchangeItem, now:Int) : IntIntMap
+	function getBookRequierement(item:ExchangeItem, now:Int) : IntIntMap
 	{
 		var ret = new IntIntMap();
 		if( item.category == ExchangeType.C100_FREES || item.category == ExchangeType.C110_BATTLES )
@@ -290,6 +295,14 @@ class Exchanger
 		return ret;
 	}
 	
+	function getIncreamentalRequierement(item:ExchangeItem, now:Int) : IntIntMap
+	{
+		var ret = new IntIntMap();
+		if( item.type == ExchangeType.C191_RENAME )
+			ret.set(ResourceType.CURRENCY_HARD, ExchangeType.getHardRequierement(item.type) * item.numExchanges);
+		return ret;
+	}
+		
 	#if java
 	function getChestOutcomes(type:Int) : IntIntMap
 	{

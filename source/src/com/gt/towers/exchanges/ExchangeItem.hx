@@ -82,7 +82,12 @@ class ExchangeItem extends Exchange
 
 	public function isBook():Bool
 	{
-		return category >= 100;
+		return category >= 100 && category < 130;
+	}
+	
+	public function isIncreamental() 
+	{
+		return type == ExchangeType.C191_RENAME;
 	}
 	
 	public function containBook() : Int
@@ -112,4 +117,5 @@ class ExchangeItem extends Exchange
 		}
 		return outcomesStr;
 	}
+
 }
