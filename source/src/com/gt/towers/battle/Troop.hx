@@ -1,7 +1,6 @@
 package com.gt.towers.battle;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
-import com.gt.towers.utils.PathFinder;
 import com.gt.towers.utils.lists.PlaceList;
 import haxe.Int64;
 
