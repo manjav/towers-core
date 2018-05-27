@@ -1,6 +1,7 @@
 package com.gt.towers.battle;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.buildings.Place;
+import com.gt.towers.constants.BuildingType;
 import com.gt.towers.utils.lists.PlaceList;
 import haxe.Int64;
 
@@ -38,7 +39,7 @@ class Troop
 		this.x = building.place.x;
 		this.y = building.place.y;
 		this.type = building.troopType;
-		this.health = building.troopPower;
+		this.health = building.troopPower * (building.category == BuildingType.B30_HEAVY ? 1.3 : 1);
 		this.currentTimeMillis = currentTimeMillis;
 		
 		this.path = new PlaceList();

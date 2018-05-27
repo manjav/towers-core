@@ -12,8 +12,8 @@ class TroopRushGapCalculator extends BaseCalculator
 	{
 		return switch( BuildingType.get_category(type) )
 		{
-			case 20	: BASE_VALUE * 0.5;
-			case 30	: BASE_VALUE * 1.8;
+			case 20	: BASE_VALUE * 0.6;
+			case 30	: BASE_VALUE * 1.4;
 			default : BASE_VALUE;
 		}
 	}
