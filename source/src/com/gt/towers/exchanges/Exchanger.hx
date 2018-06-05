@@ -125,9 +125,7 @@ class Exchanger
 		// reset item
 		if( item.category == ExchangeType.C100_FREES )
 		{
-			if( item.expiredAt > now )
-				item.numExchanges ++;
-			
+			item.numExchanges = item.expiredAt < now ? 1 : item.numExchanges + 1;
 			item.expiredAt = now + ExchangeType.getCooldown(item.type);
 			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);
 		}

@@ -19,13 +19,7 @@ class ExchangeItem extends Exchange
 	public function new(type:Int, numExchanges:Int = 1, expiredAt:Int = 0, reqsStr:String = "", outsStr:String = "") 
 	{
 		super(type, numExchanges, expiredAt, outsStr);
-		
 		this.category = ExchangeType.getCategory(type);
-		
-		/*if( reqKey_0 > -1 )
-			this.requirements.set(reqKey_0, reqVal_0);
-		if( outKey_0 > -1 )
-			this.outcomes.set(outKey_0, outVal_0);*/
 		
 		var list:Array<String>;
 		var listLen:Int;
@@ -74,12 +68,7 @@ class ExchangeItem extends Exchange
 			return CHEST_STATE_BUSY;
 		return CHEST_STATE_READY;
 	}
-	
-/*	public function isLimited():Bool
-    {
-        return category > 20 && category < 110;
-    }
-*/
+
 	public function isBook():Bool
 	{
 		return category >= 100 && category < 130;
