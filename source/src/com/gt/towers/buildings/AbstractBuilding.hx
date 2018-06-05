@@ -1,6 +1,7 @@
 package com.gt.towers.buildings;
 import com.gt.towers.Game;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.exchanges.Exchanger;
@@ -119,18 +120,19 @@ class AbstractBuilding
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
-		if ( _level == -1 )
+		if( _level == -1 )
 		{
 			_level = 1;
 			return true;
 		}
-		if ( !upgradable(confirmedHards) )
+		if( !upgradable(confirmedHards) )
 			return false;
-			
+		
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_upgradeRequirements();
 		ei.outcomes = get_upgradeRewards();
-		if ( !game.exchanger.exchange(ei, 0, confirmedHards) )
+		var res = game.exchanger.exchange(ei, 0, confirmedHards);
+		if( res != MessageTypes.RESPONSE_SUCCEED )
 			return false;
 		
 		_level ++;

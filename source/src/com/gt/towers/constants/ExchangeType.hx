@@ -5,7 +5,7 @@ package com.gt.towers.constants;
  * @author Mansour Djawadi
  */
 
- class ExchangeType 
+class ExchangeType 
 {
 	public static var C0_HARD:Int = 0;
 	public static var C1_HARD:Int = 1;
@@ -31,6 +31,8 @@ package com.gt.towers.constants;
 	
 	static public var C40_OTHERS:Int = 40;
 	static public var C41_KEYS:Int = 41;
+	static public var C42_RENAME:Int = 42;
+	static public var C43_ADS:Int = 43;
 	
 	static public var C100_FREES:Int = 100;
 	static public var C101_FREE:Int = 101;
@@ -45,31 +47,25 @@ package com.gt.towers.constants;
 	static public var C111_BATTLE:Int = 111;
 	static public var C112_BATTLE:Int = 112;
 	static public var C113_BATTLE:Int = 113;
+	static public var C114_BATTLE:Int = 114;
 	
 	static public var C120_MAGICS:Int = 120;
 	static public var C121_MAGIC:Int = 121;
 	static public var C122_MAGIC:Int = 122;
 	static public var C123_MAGIC:Int = 123;
 	
-	static public var C130_ADS:Int = 130;
-	static public var C131_AD:Int = 131;
-	
 	static public var BOOKS_50:Int = 50;
-	static public var BOOKS_51_CHROME:Int = 51;
-	static public var BOOKS_52_SILVER:Int = 52;
-	static public var BOOKS_53_GOLD:Int = 53;
-	static public var BOOKS_54_CHROME:Int = 54;
-	static public var BOOKS_55_SILVER:Int = 55;
-	static public var BOOKS_56_GOLD:Int = 56;
-	static public var BOOKS_57_CHROME:Int = 57;
-	static public var BOOKS_58_SILVER:Int = 58;
-	static public var BOOKS_59_GOLD:Int = 59;
-	
-	static public var C190_OTHERS:Int = 190;
-	static public var C191_RENAME:Int = 191;
+	static public var BOOK_S_51_BRONZE:Int = 51;
+	static public var BOOK_M_52_SILVER:Int = 52;
+	static public var BOOK_M_53_STARS:Int = 53;
+	static public var BOOK_M_54_SEA:Int = 54;
+	static public var BOOK_M_55_INKAY:Int = 55;
+	static public var BOOK_M_56_PIRATE:Int = 56;
+	static public var BOOK_B_57_TREASURE:Int = 57;
+	static public var BOOK_B_58_AMBER:Int = 58;
+	static public var BOOK_B_59_DRAGON:Int = 59;
 
 	public function new(){}
-	
 	public static function getCategory(type:Int):Int 
 	{
 		return Math.floor(type / 10) * 10;
@@ -77,43 +73,36 @@ package com.gt.towers.constants;
 	
 	public static function getCooldown(type:Int):Int
 	{
-		if( type == C41_KEYS )
-			return 108000;
-		else if (type == BOOKS_51_CHROME)
-			return 14400;			// 4 hour
-		else if (type == BOOKS_52_SILVER)
-			return 28800;			// 8 hour
-		else if (type == BOOKS_53_GOLD)
-			return 43200;			// 12 hour
-		else if (type == BOOKS_54_CHROME)
-			return 43200;			// 12 hour
-		else if (type == BOOKS_55_SILVER)
-			return 86400;			// 24 hour
-		else if (type == BOOKS_56_GOLD)
-			return 86400;			// 36 hour
-		else if (type == BOOKS_57_CHROME)
-			return 9000;			// 2.5 hour
-		else if (type == BOOKS_58_SILVER)
-			return 28800;			// 8 hour
-		else if (type == BOOKS_59_GOLD)
-			return 86400;			// 24 hour
-		else
-			return 0;
+		return switch(type)
+		{
+			case 41	: 24	* 3600;
+			case 51 : 10;
+			case 52 : 3		* 3600;
+			case 53 : 8		* 3600;
+			case 54 : 12	* 3600;
+			case 55 : 24	* 3600;
+			case 56 : 24	* 3600;
+			case 57 : 0;
+			case 58 : 0;
+			case 59 : 0;
+			case 101 : 3	* 3600;
+			default : 0;
+		}
 	}
 	
 	public static function getKeyRequierement(type:Int):Int
 	{
-		if (type == BOOKS_51_CHROME)
+		if( type == BOOK_M_54_SEA )
 			return 3;
-		else if (type == BOOKS_52_SILVER)
+		else if( type == BOOK_M_55_INKAY )
 			return 6;
-		else if (type == BOOKS_53_GOLD)
+		else if( type == BOOK_M_56_PIRATE )
 			return 10;
-		else if (type == BOOKS_54_CHROME)
+		else if( type == BOOK_B_57_TREASURE )
 			return 15;
-		else if (type == BOOKS_55_SILVER)
+		else if( type == BOOK_B_58_AMBER )
 			return 20;
-		else if (type == BOOKS_56_GOLD)
+		else if( type == BOOK_B_59_DRAGON )
 			return 25;
 		return 0;
 	}
@@ -122,88 +111,98 @@ package com.gt.towers.constants;
 	{
 		return switch ( type )
 		{
-			case 51 : 10;
-			case 52 : 20;
-			case 53 : 30;
-			case 54 : 40;
-			case 55 : 70;
-			case 56 : 120;
-			case 57 : 5;
-			case 58 : 10;
-			case 59 : 15;
-			case 191 : 50;
+			case 51 : 5;
+			case 52 : 10;
+			case 53 : 15;
+			case 54 : 10;
+			case 55 : 20;
+			case 56 : 30;
+			case 57 : 40;
+			case 58 : 70;
+			case 59 : 120;
 			default : 0;
 		}
 	}	
 	
 	public static function getNumSlots(type:Int):Int
 	{
-		if (type == BOOKS_51_CHROME)
-			return 3;
-		else if (type == BOOKS_52_SILVER)
-			return 4;
-		else if (type == BOOKS_53_GOLD)
-			return 6;
-		else if (type == BOOKS_54_CHROME)
-			return 8;
-		else if (type == BOOKS_55_SILVER)
-			return 8;
-		else if (type == BOOKS_56_GOLD)
-			return 8;
-		else if (type == BOOKS_57_CHROME)
+		if( type == BOOK_S_51_BRONZE )
 			return 2;
-		else if (type == BOOKS_58_SILVER)
+		else if( type == BOOK_M_52_SILVER )
 			return 3;
-		else if (type == BOOKS_59_GOLD)
+		else if( type == BOOK_M_53_STARS )
 			return 4;
+		else if( type == BOOK_M_54_SEA )
+			return 3;
+		else if( type == BOOK_M_55_INKAY )
+			return 4;
+		else if( type == BOOK_M_56_PIRATE )
+			return 6;
+		else if( type == BOOK_B_57_TREASURE )
+			return 7;
+		else if( type == BOOK_B_58_AMBER )
+			return 8;
+		else if( type == BOOK_B_59_DRAGON )
+			return 8;
 		return 0;
 	}	
 	
 	public static function getNumTotalCards(type:Int):Int
 	{
-		if( type == BOOKS_51_CHROME )
+		if( type == BOOK_S_51_BRONZE)
 			return 4;
-		else if( type == BOOKS_52_SILVER )
-			return 7;
-		else if( type == BOOKS_53_GOLD )
-			return 17;
-		else if( type == BOOKS_54_CHROME )
-			return 30;
-		else if( type == BOOKS_55_SILVER )
-			return 50;
-		else if( type == BOOKS_56_GOLD )
-			return 100;
-		else if (type == BOOKS_57_CHROME)
-			return 4;
-		else if (type == BOOKS_58_SILVER)
+		else if( type == BOOK_M_52_SILVER)
 			return 10;
-		else if (type == BOOKS_59_GOLD)
+		else if( type == BOOK_M_53_STARS)
 			return 24;
+		else if( type == BOOK_M_54_SEA )
+			return 4;
+		else if( type == BOOK_M_55_INKAY )
+			return 7;
+		else if( type == BOOK_M_56_PIRATE )
+			return 17;
+		else if( type == BOOK_B_57_TREASURE )
+			return 30;
+		else if( type == BOOK_B_58_AMBER )
+			return 50;
+		else if( type == BOOK_B_59_DRAGON )
+			return 100;
 		else
 			return 0;
 	}
 	
 	public static function getNumSofts(type:Int):Int
 	{
-		if( type == BOOKS_51_CHROME )
+		if( type == BOOK_M_54_SEA )
 			return getNumTotalCards(type) * 3;
-		else if( type == BOOKS_52_SILVER )
+		else if( type == BOOK_M_55_INKAY )
 			return getNumTotalCards(type) * 3;
-		else if( type == BOOKS_53_GOLD )
+		else if( type == BOOK_M_56_PIRATE )
 			return getNumTotalCards(type) * 4;
-		else if( type == BOOKS_54_CHROME )
+		else if( type == BOOK_B_57_TREASURE )
 			return getNumTotalCards(type) * 4;
-		else if( type == BOOKS_55_SILVER )
+		else if( type == BOOK_B_58_AMBER )
 			return getNumTotalCards(type) * 5;
-		else if ( type == BOOKS_56_GOLD )
+		else if ( type == BOOK_B_59_DRAGON )
 			return getNumTotalCards(type) * 6;
-		else if (type == BOOKS_57_CHROME)
+		else if( type == BOOK_S_51_BRONZE )
 			return getNumTotalCards(type) * 2;
-		else if (type == BOOKS_58_SILVER)
+		else if( type == BOOK_M_52_SILVER )
 			return getNumTotalCards(type) * 2;
-		else if (type == BOOKS_59_GOLD)
+		else if( type == BOOK_M_53_STARS )
 			return getNumTotalCards(type) * 2;
 		else
 			return 0;
+	}
+	
+	public static function getBookType(category:Int) : Int
+	{
+		return switch(category)
+		{
+			case 121 : ExchangeType.BOOK_B_57_TREASURE;
+			case 122 : ExchangeType.BOOK_B_58_AMBER;
+			case 123 : ExchangeType.BOOK_B_59_DRAGON;
+			default : ExchangeType.BOOK_B_57_TREASURE;
+		}
 	}
 }

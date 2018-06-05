@@ -83,7 +83,7 @@ class ExchangeUpdater
 			if( item.type == ExchangeType.C31_BUNDLE )
 			{
 				item.outcomes.set(ResourceType.CURRENCY_SOFT, 40000);
-				item.outcomes.set(ExchangeType.BOOKS_54_CHROME, 1);
+				item.outcomes.set(ExchangeType.BOOK_B_57_TREASURE, 1);
 			}
 			else if( item.type == ExchangeType.C32_BUNDLE )
 			{

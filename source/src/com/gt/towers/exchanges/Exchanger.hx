@@ -3,6 +3,7 @@ package com.gt.towers.exchanges;
 import com.gt.towers.Game;
 import com.gt.towers.InitData;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
@@ -46,42 +47,44 @@ class Exchanger
 		items.set( ExchangeType.C0_HARD,  new ExchangeItem ( ExchangeType.C0_HARD, 1, 0, "1101:100", "1003:1" ) );
 		
 		// ad book
-		items.set( ExchangeType.C131_AD,  new ExchangeItem ( ExchangeType.C131_AD, 1, 0, "", "57:1" ) );
+		items.set( ExchangeType.C43_ADS,  new ExchangeItem ( ExchangeType.C43_ADS, 1, 0, "", "57:1" ) );
 		
 		// rename
-		if( !items.exists( ExchangeType.C191_RENAME ) )
-			items.set( ExchangeType.C191_RENAME,  new ExchangeItem ( ExchangeType.C191_RENAME, 0 ) );
+		if( !items.exists( ExchangeType.C42_RENAME ) )
+			items.set( ExchangeType.C42_RENAME,  new ExchangeItem ( ExchangeType.C42_RENAME, 0 ) );
 	}
 	
 	/**
-	 * validate requiremets must be enougth 
-	 * @param	itemId
-	 * @return
+	 * 
+	 * @param	item
+	 * @param	now
+	 * @param	confirmedHards
+	 * @return response (MessageTypes)
 	 */
-	public function exchange (item:ExchangeItem, now:Int, confirmedHards:Int=0):Bool
+	public function exchange (item:ExchangeItem, now:Int, confirmedHards:Int=0):Int
 	{
+		if( item.category == ExchangeType.C100_FREES )
+			findRandomOutcome(item);
+		
 		// provide requirements
-		if( item.isBook() )
-			item.requirements = getBookRequierement(item, now);
-		else if ( item.isIncreamental() )
-			item.requirements = getIncreamentalRequierement(item, now);
+		item.requirements = getRequierement(item, now);
 		
 		// start opening process
 		if( item.category == ExchangeType.C110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 		{
-			//item.outcomes = new IntIntMap();
-			if( !readyToStartOpening(item.type, now) )
-				return false;
+			var res = isBattleBookReady(item.type, now);
+			if( res != MessageTypes.RESPONSE_SUCCEED )
+				return res;
 			
 			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
 			game.player.resources.reduceMap(item.requirements);
-			return true;
+			return MessageTypes.RESPONSE_SUCCEED;
 		}
 		
-		var deductions = game.player.deductions(item.requirements);
+		var deductions = game.player.deductions(item.requirements); trace("confirmedHards", confirmedHards, "deductions", deductions.toString(), "req", item.requirements.toString());
 		var needsHard = toHard( deductions );
 		if( !game.player.has(item.requirements) && needsHard > confirmedHards  )
-			return false;
+			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 		
 		// provide reqs by hard
 		if( confirmedHards > 0 )
@@ -99,21 +102,22 @@ class Exchanger
 		{
 			if( ResourceType.isBook( outKeys[o] ) )
 			{
+				trace("book", outKeys[o]);
 				outs.remove( outKeys[o] );
-				outs.increaseMap( getChestOutcomes( outKeys[o] ) );
+				outs.increaseMap( getBookOutcomes( outKeys[o] ) );
 			}
 			o ++;
 		}
 		trace("outcomes", outs.toString());
 #end
 		if( item.category == ExchangeType.C20_SPECIALS && item.numExchanges > 0 )
-			return false;
+			return MessageTypes.RESPONSE_NOT_ALLOWED;
 		
 		// add outcomes
 #if flash
 		if( item.containBook() == -1 )// prevent adding outcomes witch contain book into player resources in client-side
 #end
-			game.player.addResources(outs);
+		game.player.addResources(outs);
 		
 		// consume reqs
 		game.player.resources.reduceMap(item.requirements);
@@ -121,64 +125,53 @@ class Exchanger
 		// reset item
 		if( item.category == ExchangeType.C100_FREES )
 		{
-			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
+			if( item.expiredAt > now )
+				item.numExchanges ++;
+			
+			item.expiredAt = now + ExchangeType.getCooldown(item.type);
 			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);
 		}
 		else if( item.category == ExchangeType.C110_BATTLES )
 		{
-			var openedChests = game.player.get_openedChests();
-			openedChests ++;
-			game.player.resources.set(ResourceType.BATTLE_CHEST_OPENED, openedChests);
+			game.player.resources.increase(ResourceType.BATTLE_CHEST_OPENED, 1);
 			item.expiredAt = 0;
-			findRandomBook(item);
+			item.outcomes = new IntIntMap();
 		}
-		else if( item.category == ExchangeType.C20_SPECIALS || item.category == ExchangeType.C30_BUNDLES || item.type == ExchangeType.C191_RENAME )
+		else if( item.category == ExchangeType.C20_SPECIALS || item.category == ExchangeType.C30_BUNDLES || item.isIncreamental() )
 		{
 			item.numExchanges ++;
 		}
 		
 		item.createOutcomesStr();
-		return true;
+		return MessageTypes.RESPONSE_SUCCEED;
 	}
 
-	public function findRandomBook(item:ExchangeItem) : Void
+	public function findRandomOutcome(item:ExchangeItem) : Void
 	{
-		var openedChests = game.player.get_openedChests();
-		if( game.player.get_keys() > 20 )// consume accumulated keys
-		{
-			var rand = Math.random();
-			if( rand > 0.8 )
-				item.outcome = getBattleChestType(71);
-			else if( rand > 0.6 )
-				item.outcome = getBattleChestType(47);
-			else if( rand > 0.3 )
-				item.outcome = getBattleChestType(19);
-			else
-				item.outcome = getBattleChestType(openedChests);
-		}
-		else
-		{
-			item.outcome = getBattleChestType(openedChests);
-		}
+		var openedChests = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.FREE_CHEST_OPENED) : game.player.getResource(ResourceType.BATTLE_CHEST_OPENED);
+		item.outcome = getBattleBook(openedChests, item.category == ExchangeType.C110_BATTLES);
 		item.outcomes = new IntIntMap();
-		item.outcomes.set(item.outcome, 1);
+		item.outcomes.set(item.outcome, game.player.get_arena(0));
 	}
 	
-	public function readyToStartOpening(type:Int, now:Int) : Bool
+	public function isBattleBookReady(type:Int, now:Int) : Int
 	{
 		var item = items.get(type);
 		if( item.category != ExchangeType.C110_BATTLES || item.getState(now) != ExchangeItem.CHEST_STATE_WAIT )
-			return false;
+			return MessageTypes.RESPONSE_NOT_ALLOWED;
 		
+		// check another slot is in process
 		var exchangeKeys = items.keys();
 		var i = exchangeKeys.length-1;
 		while ( i >= 0 )
 		{
 			if( items.get(exchangeKeys[i]).category == ExchangeType.C110_BATTLES && items.get(exchangeKeys[i]).getState(now) == ExchangeItem.CHEST_STATE_BUSY )
-				return false;
+				return MessageTypes.RESPONSE_ALREADY_SENT;
 			i --;
 		}
-		return game.player.get_keys() >= ExchangeType.getKeyRequierement(item.outcome);
+		if( game.player.get_keys() < ExchangeType.getKeyRequierement(item.outcome) )
+			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+		return MessageTypes.RESPONSE_SUCCEED;
 	}
 	
 	static public function toReal(map:IntIntMap) : Int
@@ -278,15 +271,26 @@ class Exchanger
 		return Math.round( (improveLevel * 10) + 10 ); 
 	}
 	
-	function getBookRequierement(item:ExchangeItem, now:Int) : IntIntMap
+	function getRequierement(item:ExchangeItem, now:Int) : IntIntMap
 	{
+		if( item.category < ExchangeType.C40_OTHERS )
+			return item.requirements;
+		
 		var ret = new IntIntMap();
-		if( item.category == ExchangeType.C100_FREES || item.category == ExchangeType.C110_BATTLES )
+		if( item.isIncreamental() )
+		{
+			ret.set( ResourceType.CURRENCY_HARD, ExchangeType.getHardRequierement(item.type) * item.numExchanges);
+		}
+		else if( item.category == ExchangeType.C110_BATTLES )
 		{
 			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY )
 				ret.set(ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) );
 			else if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 				ret.set(ResourceType.KEY, ExchangeType.getKeyRequierement(item.outcome));
+		}
+		else if( item.category == ExchangeType.C100_FREES && item.expiredAt > now )
+		{
+			ret.set( ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) * item.numExchanges);
 		}
 		else if( item.category == ExchangeType.C120_MAGICS )
 		{
@@ -295,45 +299,38 @@ class Exchanger
 		return ret;
 	}
 	
-	function getIncreamentalRequierement(item:ExchangeItem, now:Int) : IntIntMap
-	{
-		var ret = new IntIntMap();
-		if( item.type == ExchangeType.C191_RENAME )
-			ret.set(ResourceType.CURRENCY_HARD, ExchangeType.getHardRequierement(item.type) * item.numExchanges);
-		return ret;
-	}
-		
 	#if java
-	function getChestOutcomes(type:Int) : IntIntMap
+	function getBookOutcomes(type:Int, isDaily:Bool = false ) : IntIntMap
 	{
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
 		var totalCards = ExchangeType.getNumTotalCards(type) + 1;
 		var slotSize = Math.ceil(totalCards / numSlots);
-		var numChest:Int = game.player.get_openedChests();
+		var numChest:Int = game.player.getResource(isDaily ? ResourceType.FREE_CHEST_OPENED : ResourceType.BATTLE_CHEST_OPENED);
 		var numCards:Int = 0;
 		var accCards:Int = 0;
-		var arena = game.player.get_arena(0) + 1;
+		//var arena = game.player.get_arena(0) + 1;
 		while( numSlots >= 0 )
 		{
 			numCards = numSlots > 0 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
-			if( numSlots == 0 )
-				if( numChest == 0 || numChest == 4 || (numChest % Math.floor(arena * 2) == 0 && type < ExchangeType.BOOKS_57_CHROME) || (type < ExchangeType.BOOKS_57_CHROME && type > ExchangeType.BOOKS_53_GOLD) )
+            if( numSlots == 0 && type > ExchangeType.BOOK_M_56_PIRATE ) // last slot in only mid and big slots
+            {
+                if( numChest == 0 || numChest == 4 || (Math.random() <  6 / (type - 53)) ) // first book or  rendomly
 					addNewCard(ret, 2);
-			
+			}
 			addRandomSlot(ret, numCards);
 			numSlots --;
 		}
 		
 		// hards
-		if( type > ExchangeType.BOOKS_56_GOLD && type <= ExchangeType.BOOKS_59_GOLD && Math.random() > 0.5 )
-			ret.set( ResourceType.CURRENCY_HARD, Math.ceil((type-56)/2) );
-		
-		// softs
-		var softDec = ExchangeType.getNumSofts(type) / 10;
+        if( isDaily )
+            ret.set( ResourceType.CURRENCY_HARD, Math.ceil((type - 56) * 0.5) );
+        
+        // softs
+        var softDec = ExchangeType.getNumSofts(type) * 0.1;
 		ret.set( ResourceType.CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
 		return ret;
 	}
@@ -391,45 +388,36 @@ class Exchanger
 	#end
 
 	
-	public static function getDailyChestType(numExchanges:Int) : Int
+	/*public static function getDailyChestType(numExchanges:Int) : Int
 	{
-		return ExchangeType.BOOKS_51_CHROME;
+		return ExchangeType.BOOK_M_54_BRONZE;
 	}
+	*/
 	
-	public static function getChestType(category:Int) : Int
+	private function getBattleBook(openedBooks:Int, isBattle:Bool) : Int
 	{
-		if ( category == ExchangeType.C101_FREE )
-			return ExchangeType.BOOKS_57_CHROME;
-		if ( category == ExchangeType.C102_FREE )
-			return ExchangeType.BOOKS_58_SILVER;
-		if ( category == ExchangeType.C103_FREE )
-			return ExchangeType.BOOKS_59_GOLD;
+		if( isBattle && game.player.get_keys() > 20 )// consume accumulated keys
+		{
+			var rand = Math.random();
+			if( rand > 0.8 )
+				return ExchangeType.BOOK_M_56_PIRATE;
+			else if( rand > 0.6 )
+				return ExchangeType.BOOK_M_55_INKAY;
+			else if( rand > 0.3 )
+				return ExchangeType.BOOK_M_54_SEA;
+		}
 		
-		if ( category == ExchangeType.C121_MAGIC )
-			return ExchangeType.BOOKS_54_CHROME;
-		if ( category == ExchangeType.C122_MAGIC )
-			return ExchangeType.BOOKS_55_SILVER;
-		if ( category == ExchangeType.C123_MAGIC )
-			return ExchangeType.BOOKS_56_GOLD;
-		
-		return ExchangeType.C101_FREE ;
-	}
-	
-	private static function getBattleChestType(numChests:Int) : Int
-	{
-		if( numChests == 0 )
-			return ExchangeType.BOOKS_51_CHROME;
-		if( numChests % 3 == 0 )
-			return ExchangeType.BOOKS_52_SILVER;
-		if( numChests % 7 == 0 || numChests == 1 )
-			return ExchangeType.BOOKS_53_GOLD;
-		if( numChests % 19 == 0 )
-			return ExchangeType.BOOKS_54_CHROME;
-		if( numChests % 47 == 0 )
-			return ExchangeType.BOOKS_55_SILVER;
-		if( numChests % 71 == 0 )
-			return ExchangeType.BOOKS_56_GOLD;
+		if( openedBooks == 0 )
+			return ExchangeType.BOOK_S_51_BRONZE;
+		if( openedBooks % 5 == 0 )
+			return ExchangeType.BOOK_M_53_STARS;
+		if( openedBooks % 7 == 0 || openedBooks == 2 )
+			return ExchangeType.BOOK_M_54_SEA;
+		if( openedBooks % 19 == 0 )
+			return ExchangeType.BOOK_M_55_INKAY;
+		if( openedBooks % 47 == 0 )
+			return ExchangeType.BOOK_M_56_PIRATE;
 			
-		return ExchangeType.BOOKS_51_CHROME;
+		return ExchangeType.BOOK_M_52_SILVER;
 	}
 }

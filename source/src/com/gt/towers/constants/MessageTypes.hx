@@ -41,6 +41,10 @@ class MessageTypes
     public static var RESPONSE_NOT_FOUND:Int = -4;
     public static var RESPONSE_UNKNOWN_ERROR:Int = -5;
 	
+	public static var RESPONSE_NOT_ENOUGH_REQS:Int = -6;
+	public static var RESPONSE_MUST_WAIT:Int = -7;
+
+	
 	
 	public function new(){}
 	

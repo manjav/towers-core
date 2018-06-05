@@ -14,9 +14,9 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "3000.0520190940";//do not change len.
-	public var noticeVersion:Int = 2910;
-	public var forceVersion:Int = 2610;
+	public var coreVersion:String = "3100.0603185158";//do not change len.
+	public var noticeVersion:Int = 3100;
+	public var forceVersion:Int = 3100;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;
@@ -44,8 +44,9 @@ class LoginData
 		exchanges.push(ExchangeType.C32_BUNDLE);
 		exchanges.push(ExchangeType.C41_KEYS);
 		exchanges.push(ExchangeType.C101_FREE);
-		exchanges.push(ExchangeType.C102_FREE);
-		exchanges.push(ExchangeType.C103_FREE);
 		exchanges.push(ExchangeType.C111_BATTLE);
+		exchanges.push(ExchangeType.C112_BATTLE);
+		exchanges.push(ExchangeType.C113_BATTLE);
+		exchanges.push(ExchangeType.C114_BATTLE);
 	}
 }

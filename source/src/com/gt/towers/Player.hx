@@ -86,6 +86,7 @@ class Player
 		return lastQuest ;
 	}
 	
+	public function getResource(type:Int):Int { return resources.exists(type) ? resources.get(type) : 0; }
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_keys():Int { return resources.get(ResourceType.KEY); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
@@ -93,7 +94,6 @@ class Player
 	public function get_hards():Int { return resources.get(ResourceType.CURRENCY_HARD); }
 	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES_COUNT); }
 	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
-	public function get_openedChests():Int { return resources.exists(ResourceType.BATTLE_CHEST_OPENED) ? resources.get(ResourceType.BATTLE_CHEST_OPENED) : 0; }
 	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
 	public function get_level():Int
 	{

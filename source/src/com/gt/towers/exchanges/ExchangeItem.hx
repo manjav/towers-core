@@ -66,7 +66,7 @@ class ExchangeItem extends Exchange
 	public static var CHEST_STATE_READY:Int = 2;
 	public function getState(now:Int):Int
 	{
-		if( outcome == -1 )
+		if( outcome == 0 && category == ExchangeType.C110_BATTLES )
 			return CHEST_STATE_EMPTY;
 		else if( expiredAt == 0 )
 			return CHEST_STATE_WAIT;
@@ -75,11 +75,11 @@ class ExchangeItem extends Exchange
 		return CHEST_STATE_READY;
 	}
 	
-	public function isLimited():Bool
+/*	public function isLimited():Bool
     {
         return category > 20 && category < 110;
     }
-
+*/
 	public function isBook():Bool
 	{
 		return category >= 100 && category < 130;
@@ -87,7 +87,7 @@ class ExchangeItem extends Exchange
 	
 	public function isIncreamental() 
 	{
-		return type == ExchangeType.C191_RENAME;
+		return type == ExchangeType.C42_RENAME || type == ExchangeType.C43_ADS;
 	}
 	
 	public function containBook() : Int
