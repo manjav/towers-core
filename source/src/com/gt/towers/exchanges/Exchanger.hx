@@ -300,9 +300,10 @@ class Exchanger
 	#if java
 	function getBookOutcomes(type:Int, isDaily:Bool = false ) : IntIntMap
 	{
+		var arena = game.player.get_arena(0);
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
-		var totalCards = ExchangeType.getNumTotalCards(type) + 1;
+		var totalCards = ExchangeType.getNumTotalCards(type, arena) + 1;
 		var slotSize = Math.ceil(totalCards / numSlots);
 		var numChest:Int = game.player.getResource(isDaily ? ResourceType.FREE_CHEST_OPENED : ResourceType.BATTLE_CHEST_OPENED);
 		var numCards:Int = 0;
@@ -328,7 +329,7 @@ class Exchanger
             ret.set( ResourceType.CURRENCY_HARD, Math.ceil((type - 56) * 0.5) );
         
         // softs
-        var softDec = ExchangeType.getNumSofts(type) * 0.1;
+        var softDec = ExchangeType.getNumSofts(type, arena) * 0.1;
 		ret.set( ResourceType.CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
 		return ret;
 	}
@@ -407,9 +408,9 @@ class Exchanger
 		
 		if( openedBooks == 0 )
 			return ExchangeType.BOOK_S_51_BRONZE;
-		if( openedBooks % 5 == 0 )
+		if( openedBooks % 7 == 0 )
 			return ExchangeType.BOOK_M_53_STARS;
-		if( openedBooks % 7 == 0 || openedBooks == 2 )
+		if( openedBooks % 11 == 0 || openedBooks == 2 )
 			return ExchangeType.BOOK_M_54_SEA;
 		if( openedBooks % 19 == 0 )
 			return ExchangeType.BOOK_M_55_INKAY;

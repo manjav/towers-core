@@ -73,7 +73,7 @@ class ExchangeType
 	
 	public static function getCooldown(type:Int):Int
 	{
-		return switch(type)
+		return switch ( type )
 		{
 			case 41	: 24	* 3600;
 			case 51 : 10;
@@ -82,9 +82,6 @@ class ExchangeType
 			case 54 : 12	* 3600;
 			case 55 : 24	* 3600;
 			case 56 : 24	* 3600;
-			case 57 : 0;
-			case 58 : 0;
-			case 59 : 0;
 			case 101 : 3	* 3600;
 			default : 0;
 		}
@@ -92,31 +89,21 @@ class ExchangeType
 	
 	public static function getKeyRequierement(type:Int):Int
 	{
-		if( type == BOOK_M_54_SEA )
-			return 3;
-		else if( type == BOOK_M_55_INKAY )
-			return 6;
-		else if( type == BOOK_M_56_PIRATE )
-			return 10;
-		else if( type == BOOK_B_57_TREASURE )
-			return 15;
-		else if( type == BOOK_B_58_AMBER )
-			return 20;
-		else if( type == BOOK_B_59_DRAGON )
-			return 25;
-		return 0;
+		return switch ( type )
+		{
+			case 52 : 3;
+			case 53 : 5;
+			case 54 : 8;
+			case 55 : 10;
+			case 56 : 20;
+			default : 0;
+		}
 	}
 	
 	public static function getHardRequierement(type:Int):Int
 	{
 		return switch ( type )
 		{
-			case 51 : 5;
-			case 52 : 10;
-			case 53 : 15;
-			case 54 : 10;
-			case 55 : 20;
-			case 56 : 30;
 			case 57 : 40;
 			case 58 : 70;
 			case 59 : 120;
@@ -126,73 +113,41 @@ class ExchangeType
 	
 	public static function getNumSlots(type:Int):Int
 	{
-		if( type == BOOK_S_51_BRONZE )
-			return 2;
-		else if( type == BOOK_M_52_SILVER )
-			return 3;
-		else if( type == BOOK_M_53_STARS )
-			return 4;
-		else if( type == BOOK_M_54_SEA )
-			return 3;
-		else if( type == BOOK_M_55_INKAY )
-			return 4;
-		else if( type == BOOK_M_56_PIRATE )
-			return 6;
-		else if( type == BOOK_B_57_TREASURE )
-			return 7;
-		else if( type == BOOK_B_58_AMBER )
-			return 8;
-		else if( type == BOOK_B_59_DRAGON )
-			return 8;
-		return 0;
+		return switch ( type )
+		{
+			case 51 : 2;
+			case 52 : 3;
+			case 53 : 4;
+			case 54 : 5;
+			case 55 : 5;
+			case 56 : 6;
+			case 57 : 6;
+			case 58 : 7;
+			case 59 : 7;
+			default : 0;
+		}
 	}	
 	
-	public static function getNumTotalCards(type:Int):Int
+	public static function getNumTotalCards(type:Int, arena:Int):Int
 	{
-		if( type == BOOK_S_51_BRONZE)
-			return 4;
-		else if( type == BOOK_M_52_SILVER)
-			return 10;
-		else if( type == BOOK_M_53_STARS)
-			return 24;
-		else if( type == BOOK_M_54_SEA )
-			return 4;
-		else if( type == BOOK_M_55_INKAY )
-			return 7;
-		else if( type == BOOK_M_56_PIRATE )
-			return 17;
-		else if( type == BOOK_B_57_TREASURE )
-			return 30;
-		else if( type == BOOK_B_58_AMBER )
-			return 50;
-		else if( type == BOOK_B_59_DRAGON )
-			return 100;
-		else
-			return 0;
+		return switch ( type )
+		{
+			case 51 : 3		+ arena;
+			case 52 : 3		+ arena;
+			case 53 : 10	+ 3		* arena;
+			case 54 : 20	+ 6		* arena;
+			case 55 : 35	+ 12	* arena;
+			case 56 : 70	+ 24	* arena;
+			case 57 : 80	+ 28	* arena;
+			case 58 : 120	+ 36	* arena;
+			case 59 : 150	+ 40	* arena;
+			default : 0;
+		}
 	}
 	
-	public static function getNumSofts(type:Int):Int
+	public static function getNumSofts(type:Int, arena:Int):Int
 	{
-		if( type == BOOK_M_54_SEA )
-			return getNumTotalCards(type) * 3;
-		else if( type == BOOK_M_55_INKAY )
-			return getNumTotalCards(type) * 3;
-		else if( type == BOOK_M_56_PIRATE )
-			return getNumTotalCards(type) * 4;
-		else if( type == BOOK_B_57_TREASURE )
-			return getNumTotalCards(type) * 4;
-		else if( type == BOOK_B_58_AMBER )
-			return getNumTotalCards(type) * 5;
-		else if ( type == BOOK_B_59_DRAGON )
-			return getNumTotalCards(type) * 6;
-		else if( type == BOOK_S_51_BRONZE )
-			return getNumTotalCards(type) * 2;
-		else if( type == BOOK_M_52_SILVER )
-			return getNumTotalCards(type) * 2;
-		else if( type == BOOK_M_53_STARS )
-			return getNumTotalCards(type) * 2;
-		else
-			return 0;
+		return getNumTotalCards(type, arena) * 7;
 	}
 	
 	public static function getBookType(category:Int) : Int
