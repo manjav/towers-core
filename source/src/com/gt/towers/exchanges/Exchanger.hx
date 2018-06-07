@@ -132,7 +132,7 @@ class Exchanger
 		else if( item.category == ExchangeType.C110_BATTLES )
 		{
 			game.player.resources.increase(ResourceType.BATTLE_CHEST_OPENED, 1);
-			item.expiredAt = 0;
+			item.outcome = item.expiredAt = 0;
 			item.outcomes = new IntIntMap();
 		}
 		else if( item.category == ExchangeType.C20_SPECIALS || item.category == ExchangeType.C30_BUNDLES || item.isIncreamental() )
