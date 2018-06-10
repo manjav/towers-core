@@ -167,9 +167,9 @@ class AbstractBuilding
 	}
 
 	
-	public function toSoft(improveLevel:Int, count:Int = 1):Int
+	public function toSoft(count:Int = 1):Int
 	{
-		return Exchanger.cardToSoft(improveLevel) * count;
+		return Exchanger.cardToSoft(count, improveLevel);
 	}
 	public function toHard(count:Int = 1):Int
 	{
