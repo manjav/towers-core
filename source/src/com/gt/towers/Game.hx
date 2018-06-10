@@ -48,7 +48,7 @@ class Game
 		arenas.set(9, new Arena(9, 7001,	10000,	 0, 			"44"		));//3000
 		
 		player = new Player(this, data);
-		exchanger = new Exchanger(this, data);
+		exchanger = new Exchanger(this);
 		lobby = new Lobby(this);
 		calculator = new FeatureCalculator(this);
 		

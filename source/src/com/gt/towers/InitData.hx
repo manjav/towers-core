@@ -1,6 +1,5 @@
 package com.gt.towers;
 import com.gt.towers.utils.maps.IntIntMap;
-import com.gt.towers.utils.maps.IntExchangeMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -14,17 +13,14 @@ class InitData
 	public var market:String;
 	public var appVersion:Int;
 	public var sessionsCount:Int;
-	
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var quests:IntIntMap;
-	public var exchanges:IntExchangeMap;
 	
 	public function new() 
 	{
 		resources = new IntIntMap();
 		buildingsLevel = new IntIntMap();
 		quests = new IntIntMap();
-		exchanges = new IntExchangeMap();
 	}
 }

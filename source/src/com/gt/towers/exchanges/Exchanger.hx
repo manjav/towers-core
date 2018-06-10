@@ -23,35 +23,10 @@ class Exchanger
 	public var updater:ExchangeUpdater;
 #end
 
-	public function new(game:Game, initData:InitData) 
+	public function new(game:Game) 
 	{
 		this.game = game;
 		items = new IntShopMap();
-		#if java
-		updater = new ExchangeUpdater(game);
-		
-		var i = 0;
-		var exchangeKeys = initData.exchanges.keys();
-		while ( i < exchangeKeys.length )
-		{
-			var ex = initData.exchanges.get(exchangeKeys[i]);
-			var item:ExchangeItem = new ExchangeItem(ex.type, ex.numExchanges, ex.expiredAt, "", ex.outcomesStr);
-			updater.update(item);
-			items.set(item.type, item );
-			
-			i ++;
-		}
-		#end
-		
-		// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- Test GEM -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-		items.set( ExchangeType.C0_HARD,  new ExchangeItem ( ExchangeType.C0_HARD, 1, 0, "1101:100", "1003:1" ) );
-		
-		// ad book
-		items.set( ExchangeType.C43_ADS,  new ExchangeItem ( ExchangeType.C43_ADS, 1, 0, "", "57:1" ) );
-		
-		// rename
-		if( !items.exists( ExchangeType.C42_RENAME ) )
-			items.set( ExchangeType.C42_RENAME,  new ExchangeItem ( ExchangeType.C42_RENAME, 0 ) );
 	}
 	
 	/**
@@ -140,7 +115,7 @@ class Exchanger
 			item.numExchanges ++;
 		}
 		
-		item.createOutcomesStr();
+		item.createMapsStr();
 		return MessageTypes.RESPONSE_SUCCEED;
 	}
 

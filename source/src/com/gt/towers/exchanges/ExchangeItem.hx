@@ -7,35 +7,47 @@ import com.gt.towers.utils.maps.IntIntMap;
  * ...
  * @author Mansour Djawadi
  */
-class ExchangeItem extends Exchange
+class ExchangeItem
 {
+	public var type:Int;
+	public var numExchanges:Int;
+	public var expiredAt:Int;
+	public var outcome:Int;
+	public var outcomes:IntIntMap;
+	public var outcomesStr:String;
 	public var category:Int;
 	public var bonus:Int = 0;
 	public var discount:Float = 1;
 	public var enabled:Bool = true;
 	public var requirements:IntIntMap;
-	public var outcomes:IntIntMap;
+	public var requirementsStr:String;
 
 	public function new(type:Int, numExchanges:Int = 1, expiredAt:Int = 0, reqsStr:String = "", outsStr:String = "") 
 	{
-		super(type, numExchanges, expiredAt, outsStr);
+		this.type = type;
+		this.numExchanges = numExchanges;
+		this.expiredAt = expiredAt;
+		this.outcome = Std.parseInt(outsStr.split(":")[0]);
+		this.outcomesStr = outsStr;
+		this.requirementsStr = reqsStr;
 		this.category = ExchangeType.getCategory(type);
 		
+		
 		var list:Array<String>;
-		var listLen:Int;
+		var step:Int;
 		var kayVal:Array<String>;
 		//trace("type", type, "numExchanges", numExchanges, "expiredAt", expiredAt, "reqsStr", reqsStr, "outsStr", outsStr);
 		this.requirements = new IntIntMap();
 		if( reqsStr != "" )
 		{
 			list = reqsStr.split(",");
-			listLen = list.length - 1;
-			while ( listLen >= 0 )
+			step = 0;
+			while ( step < list.length )
 			{
-				kayVal = list[listLen].split(":");
+				kayVal = list[step].split(":");
 				this.requirements.increase(Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0 );
 				//trace("reqsStr", list[listLen], Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0);
-				listLen --;
+				step ++;
 			}
 		}
 		
@@ -43,13 +55,13 @@ class ExchangeItem extends Exchange
 		if( outsStr != "" )
 		{
 			list = outsStr.split(",");
-			listLen = list.length - 1;
-			while ( listLen >= 0 )
+			step = 0;
+			while ( step < list.length )
 			{
-				kayVal = list[listLen].split(":");
+				kayVal = list[step].split(":");
 				this.outcomes.increase(Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0 );
 				//trace("outsStr", list[listLen], Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0);
-				listLen --;
+				step ++;
 			}
 		}
 	}
@@ -92,19 +104,10 @@ class ExchangeItem extends Exchange
 		return -1;
 	}
 	
-	public function createOutcomesStr() : String
+	public function createMapsStr() : Void
 	{
-		outcomesStr = "";
-		var outs = outcomes.keys();
-		var step = outs.length - 1;
-		while ( step >= 0 )
-		{
-			outcomesStr += outs[step] + ":" + outcomes.get(outs[step]);
-			if( step > 0 )
-				outcomesStr += ",";
-			step --;
-		}
-		return outcomesStr;
+		outcomesStr = outcomes.toString();
+		requirementsStr = requirements.toString();
 	}
-
+	
 }

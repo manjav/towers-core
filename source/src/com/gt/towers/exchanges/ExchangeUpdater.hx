@@ -101,7 +101,7 @@ class ExchangeUpdater
 	
 	function createOutcomeString(item:ExchangeItem) : Void
 	{
-		item.createOutcomesStr();
+		item.createMapsStr();
 		changes.add(item);
 	}
 	

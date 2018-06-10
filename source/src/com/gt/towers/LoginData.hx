@@ -4,7 +4,6 @@ import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.IntExchangeMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 /**
@@ -40,8 +39,6 @@ class LoginData
 		exchanges.push(ExchangeType.C21_SPECIAL);
 		exchanges.push(ExchangeType.C22_SPECIAL);
 		exchanges.push(ExchangeType.C23_SPECIAL);
-		exchanges.push(ExchangeType.C31_BUNDLE);
-		exchanges.push(ExchangeType.C32_BUNDLE);
 		exchanges.push(ExchangeType.C41_KEYS);
 		exchanges.push(ExchangeType.C101_FREE);
 		exchanges.push(ExchangeType.C111_BATTLE);

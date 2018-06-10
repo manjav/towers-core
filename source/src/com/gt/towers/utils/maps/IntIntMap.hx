@@ -254,17 +254,16 @@ class IntIntMap extends EventDispatcher
 	#end
 	{
 		var keys = keys();
-		var values = values();
-		var st:String = "";
+		var ret:String = "";
 		var i:Int = 0;
 		while ( i < keys.length )
 		{
-			if ( i == 0 )
-				st = keys[i] + ":" + values[i];
+			if( i == 0 )
+				ret = keys[i] + ":" + get(keys[i]);
 			else
-				st += ", " + keys[i] + ":" + values[i];
-			i++;
+				ret += "," + keys[i] + ":" + get(keys[i]);
+			i ++;
 		}
-		return st;
+		return ret;
 	}
 }
