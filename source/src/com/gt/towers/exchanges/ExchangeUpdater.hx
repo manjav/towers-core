@@ -27,13 +27,11 @@ class ExchangeUpdater
 
     public function update( item:ExchangeItem ):Void
     {
-		if( item.category != ExchangeType.C20_SPECIALS && item.category != ExchangeType.C30_BUNDLES )
+		if( item.category != ExchangeType.C20_SPECIALS )
 			return;
 			
 		if( item.category == ExchangeType.C20_SPECIALS )
 			updateSpecials(item);
-		else if( item.category == ExchangeType.C30_BUNDLES )
-			updateBundles(item);
 	}
 	
 	function updateSpecials(item:ExchangeItem) : Void
@@ -71,34 +69,7 @@ class ExchangeUpdater
 		item.requirements = new IntIntMap();
 		item.requirements.set(getRequirementType(item), getPrice(item));
 	}
-	
-	function updateBundles(item:ExchangeItem) : Void
-	{
-		if( item.expiredAt < now && arena > 0 )
-		{
-			item.expiredAt = now + 86400;
-			item.numExchanges = 0;
-			item.outcomes = new IntIntMap();
-			item.requirements = new IntIntMap();
-			if( item.type == ExchangeType.C31_BUNDLE )
-			{
-				item.outcomes.set(ResourceType.CURRENCY_SOFT, 40000);
-				item.outcomes.set(ExchangeType.BOOK_B_57_TREASURE, 1);
-			}
-			else if( item.type == ExchangeType.C32_BUNDLE )
-			{
-				item.outcomes.set(ResourceType.CURRENCY_SOFT, 15000);
-				item.outcomes.set(ResourceType.CURRENCY_HARD, 500);
-			}
-			createOutcomeString(item);
-		}
 		
-		if( item.type == ExchangeType.C31_BUNDLE )
-			item.requirements.set(getRequirementType(item), 19999);
-		else if( item.type == ExchangeType.C32_BUNDLE )
-			item.requirements.set(getRequirementType(item), 9999);
-	}
-	
 	function createOutcomeString(item:ExchangeItem) : Void
 	{
 		item.createMapsStr();
@@ -107,7 +78,6 @@ class ExchangeUpdater
 	
 	function getOutcomeQuantity(item:ExchangeItem):Int 
 	{
-		var bundleFactor = item.category == ExchangeType.C30_BUNDLES ? 100 : 1;
 		if( ResourceType.isBuilding(item.outcome) )
 			return 3 * ( arena + 1 );
 		else if( ResourceType.isBook(item.outcome) )
@@ -115,9 +85,9 @@ class ExchangeUpdater
 		
 		return switch ( item.outcome )
 		{
-			case 1002	: 10 * ( arena + 1 ) * bundleFactor;
-			case 1003	: 3 * bundleFactor;
-			case 1004	: 2 * bundleFactor;
+			case 1002	: 10 * ( arena + 1 );
+			case 1003	: 1 * Math.ceil( (arena + 1) * 0.3 );
+			case 1004	: 1 * Math.ceil( (arena + 1) * 0.3 );
 			default		: 10;
 		}
 	}
@@ -140,9 +110,6 @@ class ExchangeUpdater
 	
 	function getPrice(item:ExchangeItem):Int 
 	{
-		if( item.category == ExchangeType.C30_BUNDLES )
-			return Math.round(Exchanger.toReal(item.outcomes) * 0.4);
-		
 		var count = item.outcomes.values()[0];
 		if( ResourceType.isBuilding(item.outcome) )
 			return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
