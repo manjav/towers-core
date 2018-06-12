@@ -313,9 +313,10 @@ class Exchanger
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
-            if( numSlots == 0 && type > ExchangeType.BOOK_56_JUNGLE ) // last slot in only mid and big slots
+            if( numSlots == 0  ) // last slot
             {
-                if( openedBook == 0 || openedBook == 4 || (Math.random() <  6 / (type - 53)) ) // first book or  rendomly
+				var randomness = (type - 53) * 0.1; // 0.1 ~ 0.6 based on book type
+				if( openedBook == 0 || ExchangeType.isMagic(type) || Math.random() < randomness )
 					addNewCard(ret, 2);
 			}
 			addRandomSlot(ret, numCards);
@@ -385,12 +386,10 @@ class Exchanger
 	}
 	#end
 
-	
 	/*public static function getDailyChestType(numExchanges:Int) : Int
 	{
 		return ExchangeType.BOOK_M_54_BRONZE;
-	}
-	*/
+	}*/
 	
 	private function getFreeBook(openedBooks:Int) : Int
 	{

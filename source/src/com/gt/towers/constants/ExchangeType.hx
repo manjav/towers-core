@@ -140,14 +140,8 @@ class ExchangeType
 		return Math.round(Math.pow(getNumTotalCards(type, arena), 1.5));
 	}
 
-	public static function getBookType(category:Int) : Int
+	public static function isMagic(type:Int) : Bool
 	{
-		return switch (category)
-		{
-			case 121 : ExchangeType.BOOK_55_PIRATE;
-			case 122 : ExchangeType.BOOK_56_JUNGLE;
-			case 123 : ExchangeType.BOOK_58_AMBER;
-			default : ExchangeType.BOOK_55_PIRATE;
-		}
+		return type == BOOK_55_PIRATE || type == BOOK_56_JUNGLE || type == BOOK_58_AMBER ;
 	}
 }
