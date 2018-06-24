@@ -23,6 +23,7 @@ class Game
 	public var exchanger:Exchanger;
 	public var fieldProvider:FieldProvider;
 	public var calculator:FeatureCalculator;
+	public var levels:Array<Int>;
 	public var arenas:IntArenaMap;
 	public var player:Player;
 	public var lobby:Lobby;
@@ -33,6 +34,8 @@ class Game
 		appVersion = data.appVersion;
 		market = data.market;
 		sessionsCount = data.sessionsCount;
+		
+		levels = [0, 20, 50, 100, 200, 400, 1000, 2000, 5000, 10000, 20000, 40000, 80000];
 		
 		arenas = new IntArenaMap();
 	  //				Arena(num, min,		max,	minWinStreak,	unlockCards));

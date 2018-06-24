@@ -93,27 +93,18 @@ class Player
 	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES_COUNT); }
 	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
 	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
-	public function get_level():Int
+	public function get_level(xp:Int):Int
 	{
-		var xp:Int = get_xp();
-		
-		if( xp < 15 )
-			return 1;
-		else if( xp < 135 )
-			return 2;
-		else if( xp < 80 )
-			return 3;
-		else 
+		if( xp == 0 )
+			xp = get_xp();
+		var index = 0;
+		while ( index < game.levels.length )
 		{
-			var l:Int = 3;
-			var _xp:Int = 0;
-			while (_xp <= xp)
-			{
-				l ++;
-				_xp = Math.round( l * (l + 1) * (l + 2) * (l + 9) / 6) ;
-			}
-			return l;
+			if( game.levels[index] >= xp )
+				return index;
+			index ++;
 		}
+		return index;
 	}
 	
 	public function get_arena(point:Int) : Int
