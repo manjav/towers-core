@@ -1,10 +1,7 @@
 package com.gt.towers;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
-import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 /**
  * ...
@@ -13,16 +10,14 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "3100.0605114039";//do not change len.
-	public var noticeVersion:Int = 3100;
+	public var coreVersion:String = "3200.0624183846";//do not change len.
+	public var noticeVersion:Int = 3200;
 	public var forceVersion:Int = 3100;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;
-	
 	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
-	public var maxKeysPerDay:Int = 20;
 	
 	public function new()
 	{
@@ -38,7 +33,6 @@ class LoginData
 		exchanges.push(ExchangeType.C21_SPECIAL);
 		exchanges.push(ExchangeType.C22_SPECIAL);
 		exchanges.push(ExchangeType.C23_SPECIAL);
-		exchanges.push(ExchangeType.C41_KEYS);
 		exchanges.push(ExchangeType.C101_FREE);
 		exchanges.push(ExchangeType.C111_BATTLE);
 		exchanges.push(ExchangeType.C112_BATTLE);

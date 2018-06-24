@@ -88,19 +88,6 @@ class ExchangeType
 		}
 	}
 
-	public static function getKeyRequierement(type:Int):Int
-	{
-		return switch ( type )
-		{
-			case 52 : 3;
-			case 53 : 5;
-			case 54 : 8;
-			case 57 : 10;
-			case 59 : 20;
-			default : 0;
-		}
-	}
-
 	public static function getNumSlots(type:Int):Int
 	{
 		return switch ( type )
