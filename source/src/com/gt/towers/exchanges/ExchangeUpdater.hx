@@ -43,7 +43,7 @@ class ExchangeUpdater
 				if( game.player.buildings.keys().length > 0 )
 					item.outcome = game.player.buildings.getRandomKey();
 				else
-					item.outcome = ResourceType.KEY;
+					item.outcome = ResourceType.CURRENCY_SOFT;
 			}
 			else if( item.type == ExchangeType.C22_SPECIAL )
 			{
@@ -113,7 +113,7 @@ class ExchangeUpdater
 		var count = item.outcomes.values()[0];
 		if( ResourceType.isBuilding(item.outcome) )
 			return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
-		else if( (item.outcome == ResourceType.CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.CURRENCY_HARD && count <= 5) || (item.outcome == ResourceType.KEY && count <= 3) )
+		else if( (item.outcome == ResourceType.CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.CURRENCY_HARD && count <= 5) )
 			return 0;
 		return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
 	}

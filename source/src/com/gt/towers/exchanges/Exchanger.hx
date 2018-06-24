@@ -152,9 +152,7 @@ class Exchanger
 				i --;
 			}
 			// not enough requerements
-			if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT  && game.player.get_keys() < ExchangeType.getKeyRequierement(item.outcome))
-				return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
-			else if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY && game.player.get_hards() < timeToHard(item.expiredAt - now) )
+			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY && game.player.get_hards() < timeToHard(item.expiredAt - now) )
 				return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 		}
 		else if( item.category == ExchangeType.C120_MAGICS )
@@ -180,8 +178,6 @@ class Exchanger
 		var i = 0;
 		while ( i < reqKeys.length )
 		{
-			if( reqKeys[i] == ResourceType.KEY )
-				keys += map.get(reqKeys[i]);
 			if( reqKeys[i] == ResourceType.CURRENCY_REAL )
 				reals += map.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_HARD )
@@ -194,7 +190,7 @@ class Exchanger
 				hards += toHard(estimateBookOutcome(reqKeys[i], map.get(reqKeys[i])));
 			i ++;
 		}
-		return keyToHard(keys) + softToHard(softs) + realToHard(reals) + hards ;
+		return softToHard(softs) + realToHard(reals) + hards ;
 	}
 	
 	static public function toSoft(map:IntIntMap) : Int
@@ -207,8 +203,6 @@ class Exchanger
 		var i = 0;
 		while ( i < reqKeys.length )
 		{
-			if( reqKeys[i] == ResourceType.KEY )
-				keys += map.get(reqKeys[i]);
 			if( reqKeys[i] == ResourceType.CURRENCY_REAL )
 				reals += map.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_HARD )
@@ -220,7 +214,7 @@ class Exchanger
 			
 			i ++;
 		}
-		return hardToSoft( keyToHard(keys) + realToHard(reals) + hards ) + softs ;
+		return hardToSoft( realToHard(reals) + hards ) + softs ;
 	}
 	
 	static public function realToHard(count:Int):Int
@@ -247,10 +241,6 @@ class Exchanger
 	{
 		return Math.floor(timeToHard(count) / 20);
 	}
-	static public function keyToHard(count:Int):Int
-	{
-		return count * 5 ;
-	}	
 	static public function cardToSoft(count:Int, improveLevel:Int) : Int
 	{
 		return count * 30 ; 
@@ -287,8 +277,8 @@ class Exchanger
 		{
 			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY )
 				ret.set(ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) );
-			else if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
-				ret.set(ResourceType.KEY, ExchangeType.getKeyRequierement(item.outcome));
+			//else if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
+			//	ret.set(ResourceType.KEY, ExchangeType.getKeyRequierement(item.outcome));
 		}
 		else if( ( item.type == ExchangeType.C43_ADS || item.category == ExchangeType.C100_FREES ) && item.expiredAt > now )
 		{
@@ -416,17 +406,6 @@ class Exchanger
 	
 	private function getBattleBook(openedBooks:Int) : Int
 	{
-		if( game.player.get_keys() > 20 )// consume accumulated keys
-		{
-			var rand = Math.random();
-			if( rand > 0.8 )
-				return ExchangeType.BOOK_59_DRAGON;
-			else if( rand > 0.6 )
-				return ExchangeType.BOOK_57_TREASURE;
-			else if( rand > 0.3 )
-				return ExchangeType.BOOK_54_SEA;
-		}
-		
 		if( openedBooks == 0 )
 			return ExchangeType.BOOK_51_METAL;
 		if( openedBooks % 7 == 0 )

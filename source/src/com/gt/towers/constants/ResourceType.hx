@@ -11,7 +11,7 @@ class ResourceType
 	public static var POINT:Int = 1001;
 	public static var CURRENCY_SOFT:Int = 1002;
 	public static var CURRENCY_HARD:Int = 1003;
-	public static var KEY:Int = 1004;
+//	public static var KEY:Int = 1004;
 	public static var NUM_RESOURCES:Int = 5;
 
 	public static var CURRENCY_REAL:Int = 1101;
@@ -36,7 +36,7 @@ class ResourceType
 	{
 		if ( type == XP ) return "XP";
 		else if ( type == POINT ) return "POINT";
-		else if ( type == KEY ) return "KEY";
+		//else if ( type == KEY ) return "KEY";
 		else if ( type == CURRENCY_SOFT ) return "CURRENCY_SOFT";
 		else if ( type == CURRENCY_HARD ) return "CURRENCY_HARD";
 		else if ( type == CURRENCY_REAL ) return "CURRENCY_REAL";

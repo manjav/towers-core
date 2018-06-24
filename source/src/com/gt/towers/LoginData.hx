@@ -29,7 +29,6 @@ class LoginData
 		resources = new IntIntMap();
 		resources.set(ResourceType.XP, 0);
 		resources.set(ResourceType.POINT, 0);
-		resources.set(ResourceType.KEY, 0);
 		resources.set(ResourceType.CURRENCY_SOFT, 100);
 		resources.set(ResourceType.CURRENCY_HARD, 30);
 		

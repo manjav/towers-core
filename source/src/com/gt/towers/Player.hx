@@ -87,7 +87,6 @@ class Player
 	
 	public function getResource(type:Int):Int { return resources.exists(type) ? resources.get(type) : 0; }
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
-	public function get_keys():Int { return resources.get(ResourceType.KEY); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
 	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
 	public function get_hards():Int { return resources.get(ResourceType.CURRENCY_HARD); }
