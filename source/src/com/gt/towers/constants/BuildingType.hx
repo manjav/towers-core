@@ -41,6 +41,10 @@ class BuildingType
 	public static var B43_CRYSTAL:Int = 43;
 	public static var B44_CRYSTAL:Int = 44;
 	
+	static public var AVAILABLITY_EXISTS:Int = 0;
+	static public var AVAILABLITY_WAIT:Int = -1;
+	static public var AVAILABLITY_NOT:Int = -2;
+	
 	public function new(){}
 	
 	public static function get_category(type:Int):Int

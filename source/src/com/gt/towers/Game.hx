@@ -76,6 +76,12 @@ class Game
 		}
 		return 100;
 	}
+	public function getBuildingAvailablity(type:Int =-1) : Int
+	{
+		if( player.buildings.exists(type) )
+			return BuildingType.AVAILABLITY_EXISTS;
+		return unlockedBuildingAt(type) <= player.get_arena(0) ? BuildingType.AVAILABLITY_WAIT : BuildingType.AVAILABLITY_NOT;
+	}
 	
 	public function fillAllBuildings() : Void
 	{

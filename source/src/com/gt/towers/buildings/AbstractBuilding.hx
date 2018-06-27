@@ -165,7 +165,6 @@ class AbstractBuilding
 			
 		return game.player.buildings.exists(type);
 	}
-
 	
 	public function toSoft(count:Int = 1):Int
 	{
