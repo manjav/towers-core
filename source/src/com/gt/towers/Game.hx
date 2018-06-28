@@ -5,6 +5,7 @@ import com.gt.towers.arenas.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.calculators.FeatureCalculator;
 import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.socials.Lobby;
 import com.gt.towers.utils.maps.IntArenaMap;
@@ -78,6 +79,8 @@ class Game
 	}
 	public function getBuildingAvailablity(type:Int =-1) : Int
 	{
+		if( !ResourceType.isBuilding(type) )
+			return BuildingType.AVAILABLITY_EXISTS;
 		if( player.buildings.exists(type) )
 			return BuildingType.AVAILABLITY_EXISTS;
 		return unlockedBuildingAt(type) <= player.get_arena(0) ? BuildingType.AVAILABLITY_WAIT : BuildingType.AVAILABLITY_NOT;
