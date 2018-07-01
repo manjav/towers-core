@@ -70,7 +70,7 @@ class FieldProvider
 		if( game.appVersion >= 3100 )
 		{
 			battles.set( "battle_1", new Battle_1( 1, "battle_1", "80,150,240,300", "", "0,2,4,6",	"") );
-			battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,300", "", "0",		"0") );
+			battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,300", "", "0",		"") );
 		}
 		else
 		{

@@ -37,8 +37,7 @@ class PrefsTypes
 	
 	public static var T_031_SLOT_FOCUS:Int = 31;
 	public static var T_032_SLOT_OPENED:Int = 32;
-	public static var T_033_BOOK_OPEN:Int = 33;
-	public static var T_034_BOOK_OPENED:Int = 34;
+	public static var T_033_BOOK_OPENED:Int = 33;
 	public static var T_035_DECK_FOCUS:Int = 35;
 	public static var T_036_DECK_SHOWN:Int = 36;
 	public static var T_037_CARD_OPENED:Int = 37;
