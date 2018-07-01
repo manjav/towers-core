@@ -48,17 +48,18 @@ class Exchanger
 		if( item.category == ExchangeType.C110_BATTLES && item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 		{
 			var res = isBattleBookReady(item.type, now);
-			if( res != MessageTypes.RESPONSE_SUCCEED )
-				return res;
-			
-			item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
-			game.player.resources.reduceMap(item.requirements);
-			item.requirements = new IntIntMap();
-			return MessageTypes.RESPONSE_SUCCEED;
+			if( res == MessageTypes.RESPONSE_SUCCEED || ( res == MessageTypes.RESPONSE_ALREADY_SENT && confirmedHards >= timeToHard(ExchangeType.getCooldown(item.outcome)) ) )
+			{
+				item.expiredAt = now + ExchangeType.getCooldown(item.outcome);
+				game.player.resources.reduceMap(item.requirements);
+				item.requirements = new IntIntMap();
+				return res == MessageTypes.RESPONSE_SUCCEED ? res : exchange(item, now, confirmedHards);
+			}
+			return res;
 		}
 		
-		var deductions = game.player.deductions(item.requirements); trace("confirmedHards:", confirmedHards, "deductions:", deductions.toString(), "req:", item.requirements.toString());
-		var needsHard = toHard( deductions );
+		var deductions = game.player.deductions(item.requirements);
+		var needsHard = toHard( deductions );  trace("confirmedHards:", confirmedHards, "needsHard", needsHard, "deductions:", deductions.toString(), "req:", item.requirements.toString());
 		if( !game.player.has(item.requirements) && needsHard > confirmedHards  )
 			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 		
@@ -151,7 +152,7 @@ class Exchanger
 					return MessageTypes.RESPONSE_ALREADY_SENT;
 				i --;
 			}
-			// not enough requerements
+			// not enough requierements
 			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY && game.player.get_hards() < timeToHard(item.expiredAt - now) )
 				return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 		}
@@ -196,7 +197,6 @@ class Exchanger
 	static public function toSoft(map:IntIntMap) : Int
 	{
 		var reqKeys = map.keys();
-		var keys = 0;
 		var softs = 0;
 		var hards = 0;
 		var reals = 0;
@@ -236,10 +236,6 @@ class Exchanger
 	static public function timeToHard(count:Int):Int
 	{
 		return Math.round( count / 600 );
-	}
-	static public function timeToKey(count:Int):Int
-	{
-		return Math.floor(timeToHard(count) / 20);
 	}
 	static public function cardToSoft(count:Int, improveLevel:Int) : Int
 	{
