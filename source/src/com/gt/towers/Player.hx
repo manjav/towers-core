@@ -188,7 +188,7 @@ class Player
 	}
 	
 	public function getTutorStep() : Int { return tutorialMode == -1 ? PrefsTypes.T_162_RANK_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
-	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_035_DECK_FOCUS && getTutorStep() <= PrefsTypes.T_038_CARD_UPGRADED; }
+	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_035_DECK_FOCUS && getTutorStep() < PrefsTypes.T_038_CARD_UPGRADED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function emptyDeck() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
