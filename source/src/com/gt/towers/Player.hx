@@ -61,10 +61,10 @@ class Player
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_3_NOTIFICATION, "true");
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_4_LOCALE, "0");
 		
-		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_30_RATING, "20");
-		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_31_TELEGRAM , "30");
-		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_32_INSTAGRAM, "40");
-		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_33_FRIENDSHIP, "50");
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_30_RATING, "15");
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_31_TELEGRAM , "20");
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_32_INSTAGRAM, "25");
+		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_33_FRIENDSHIP, "30");
 		#end
 	}
 	
