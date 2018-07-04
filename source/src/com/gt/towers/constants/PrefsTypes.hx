@@ -42,9 +42,10 @@ class PrefsTypes
 	public static var T_036_DECK_SHOWN:Int = 36;
 	public static var T_037_CARD_OPENED:Int = 37;
 	public static var T_038_CARD_UPGRADED:Int = 38;
+	public static var T_039_RETURN_TO_BATTLE:Int = 39;
 	
 	public static var T_041_START:Int = 41;
-	public static var T_042_QUEST_IMPROVE:Int = 42;
+	public static var T_042_IMPROVE:Int = 42;
 	public static var T_044_SWIPE:Int = 44;
 	public static var T_045_CAPTURE:Int = 45;
 	public static var T_047_WIN:Int = 47;	
@@ -55,8 +56,7 @@ class PrefsTypes
 	public static var T_161_RANK_FOCUS:Int = 161;
 	public static var T_162_RANK_SHOWN:Int = 162;
 
-	public function new()  {}
-	
+	public function new() {}
 	public static function isSettings(type:Int) : Bool
 	{
 		return type >= 0 && type < 10;

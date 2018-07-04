@@ -77,7 +77,7 @@ class ExchangeType
 		{
 			case 41	: 24	* 3600;
 			case 43	: 2		* 3600;
-			case 51 : 3;
+			case 51 : 2;
 			case 52 : 3		* 3600;
 			case 53 : 8		* 3600;
 			case 54 : 12	* 3600;
