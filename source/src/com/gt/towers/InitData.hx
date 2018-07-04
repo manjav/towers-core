@@ -15,12 +15,12 @@ class InitData
 	public var sessionsCount:Int;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
-	public var quests:IntIntMap;
+	public var operations:IntIntMap;
 	
 	public function new() 
 	{
 		resources = new IntIntMap();
 		buildingsLevel = new IntIntMap();
-		quests = new IntIntMap();
+		operations = new IntIntMap();
 	}
 }
