@@ -22,7 +22,7 @@ class Player
 	public var nickName:String = "no_nickName";
 	public var troopType:Int = -1;
 	public var resources:IntIntMap;
-	public var quests:IntIntMap;
+	public var operations:IntIntMap;
 	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
 	public var hardMode:Bool;
@@ -39,10 +39,10 @@ class Player
 		admin = isAdmin(id);
 		nickName = initData.nickName;
 		
-		// add player resources, quests data
-		resources = initData.resources;// new IntIntMap();
+		// add player resources, operations data
+		resources = initData.resources;
 		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
-		quests = initData.quests;// new IntIntMap();
+		operations = initData.operations;
 		
 		// add player buildings data
 		buildings = new IntBuildingMap();
@@ -68,21 +68,21 @@ class Player
 		#end
 	}
 	
-	public function get_questIndex():Int
+	public function getLastOperation():Int
 	{
-		var lastQuest = 0;
-		var questsKeys = quests.keys();
-		while ( lastQuest < questsKeys.length )
+		var lastOperation = 0;
+		var oKeys = operations.keys();
+		while ( lastOperation < oKeys.length )
 		{
-			if( quests.get( questsKeys[lastQuest] ) == 0 )
-				return lastQuest;
-			lastQuest ++;
+			if( operations.get( oKeys[lastOperation] ) == 0 )
+				return lastOperation;
+			lastOperation ++;
 		}
 		
-		if( lastQuest == game.fieldProvider.quests.keys().length )
-			return lastQuest - 1 ;
+		if( lastOperation == game.fieldProvider.operations.keys().length )
+			return lastOperation - 1 ;
 		
-		return lastQuest ;
+		return lastOperation ;
 	}
 	
 	public function getResource(type:Int):Int { return resources.exists(type) ? resources.get(type) : 0; }
@@ -198,12 +198,12 @@ class Player
 		if( isBot() )
 			return false;
 	#if java
-		if( tutorialMode == 0 && get_questIndex() > 2 )
+		if( tutorialMode == 0 && getLastOperation() > 2 )
 			return false;
 		if( tutorialMode == 1 && get_battleswins() > 1 )
 			return false;
 	#elseif flash
-		if( tutorialMode == 0 && get_questIndex() > 2 && getTutorStep() >= PrefsTypes.T_151_SELECT_NAME_FOCUS )
+		if( tutorialMode == 0 && getLastOperation() > 2 && getTutorStep() >= PrefsTypes.T_151_SELECT_NAME_FOCUS )
 			return false;
 		if( tutorialMode == 1 && get_battleswins() > 1 )
 			return false;

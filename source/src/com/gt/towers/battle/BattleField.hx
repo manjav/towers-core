@@ -37,11 +37,11 @@ class BattleField
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
-		var isQuest = mapName.substr(0, 6) == "quest_";
+		var isOperation = mapName.substr(0, 6) == "quest_";
 		singleMode = game_1.player.buildings.keys().length == 0;
 		
-		if( isQuest )
-			map = game_0.fieldProvider.quests.get(mapName);
+		if( isOperation )
+			map = game_0.fieldProvider.operations.get(mapName);
 		else
 			map = game_0.fieldProvider.battles.get(mapName);
 			
@@ -66,7 +66,7 @@ class BattleField
 		game_0.player.hardMode = false;
 		if ( singleMode )
 		{
-			if ( isQuest )
+			if ( isOperation )
 			{
 				if( map.index == 2 )
 				{

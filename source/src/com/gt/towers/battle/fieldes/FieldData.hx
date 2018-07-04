@@ -15,7 +15,7 @@ class FieldData
 	public var startNum:IntList;
 	public var endNum:IntList;
 	public var times:IntList;
-	public var isQuest:Bool;
+	public var isOperation:Bool;
 #if flash
 	public var images:com.gt.towers.utils.lists.ImageDataList;
 #end
@@ -24,7 +24,7 @@ class FieldData
 	{
 		this.index = index;
 		this.name = name;
-		this.isQuest = name.substr(0, 6) == "quest_";
+		this.isOperation = name.substr(0, 6) == "quest_";
 		this.places = new PlaceDataList();
 		this.times = IntList.parse(times);
 		this.introNum = IntList.parse(introNum);
