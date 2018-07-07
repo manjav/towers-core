@@ -214,17 +214,13 @@ class Player
 	#if flash
 	public function dashboadTabEnabled(index:Int):Bool
 	{
-		//if ( get_questIndex() >= 2 )
+		if( getTutorStep() >= PrefsTypes.T_047_WIN )
 			return true;
-		
-		/*var tuteStep = getTutorStep();
-		if ( index == 0 && inShopTutorial() )
-			return true;
-		if ( index == 1 && (tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_100_FIRST_RUN || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_126_DECK_UPGRADE_BUILDING || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_122_SHOP_FIRST_VIEW || tuteStep == com.gt.towers.constants.PrefsTypes.TUTE_124_DECK_FIRST_VIEW) )
-			return true;
-		if ( index == 2 && inDeckTutorial() )
-			return true;
-		return false;*/
+		if( index == 1 )
+			return inDeckTutorial();
+		if( index ==  2 )
+			return !inDeckTutorial();
+		return false;
 	}
 	#end
 }
