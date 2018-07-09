@@ -379,7 +379,6 @@ class Exchanger
 	
 	private function getFreeBook(openedBooks:Int) : Int
 	{
-		
 		if( openedBooks == 0 || openedBooks == 3 || openedBooks % 7 == 0 )
 			return ExchangeType.BOOK_52_KNIGHT;
 		if( openedBooks % 11 == 0 || openedBooks == 5 )
@@ -394,9 +393,9 @@ class Exchanger
 			return ExchangeType.BOOK_57_TREASURE;
 		if( openedBooks % 81 == 0 )
 			return ExchangeType.BOOK_58_AMBER;
-		if( openedBooks % 81 == 0 )
+		if( openedBooks % 101 == 0 )
 			return ExchangeType.BOOK_59_DRAGON;
-			
+		
 		return ExchangeType.BOOK_51_METAL;
 	}
 	
@@ -404,15 +403,15 @@ class Exchanger
 	{
 		if( openedBooks == 0 )
 			return ExchangeType.BOOK_51_METAL;
-		if( openedBooks % 7 == 0 )
+		if( openedBooks % 5 == 0 )
 			return ExchangeType.BOOK_53_STARS;
-		if( openedBooks % 11 == 0 || openedBooks == 2 )
+		if( openedBooks % 11 == 0 )
 			return ExchangeType.BOOK_54_SEA;
 		if( openedBooks % 19 == 0 )
 			return ExchangeType.BOOK_57_TREASURE;
 		if( openedBooks % 47 == 0 )
 			return ExchangeType.BOOK_59_DRAGON;
-			
+		
 		return ExchangeType.BOOK_52_KNIGHT;
 	}
 }
