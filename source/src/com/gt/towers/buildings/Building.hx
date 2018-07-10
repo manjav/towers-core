@@ -95,7 +95,7 @@ class Building extends AbstractBuilding
 		this.troopType = troopType;
 		setFeatures();
 		#if java
-		if (initialPopulation == -1)
+		if( initialPopulation == -1 )
 			initialPopulation = capacity;
 		
 		_population = initialPopulation;
@@ -119,18 +119,15 @@ class Building extends AbstractBuilding
 		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 		
-		//trace("improved index:", place.index, " this.type:"+this.type, " type:"+type, "equalsCategory:"+equalsCategory(type));
-		if( !equalsCategory(type) )
-		{
-			this.type = type;
+		if( equalsCategory(type) )
+			improveLevel ++;
+		else
 			improveLevel = 1;
-			setFeatures();
-			return true;
-		}
 		
-		this.type ++;
-		improveLevel ++;
+		this.type = type;
+		set_level(game.player.buildings.get(type).get_level());
 		setFeatures();
+		//trace("improved index:", place.index, " this.type:"+this.type, " type:"+type, "equalsCategory:"+equalsCategory(type));
 		return true;
 	}
 	

@@ -23,13 +23,14 @@ class BrithRateCalculator extends BaseCalculator
 			return BASE_VALUE * (battleField.games.get(0).player.hardMode ? 1.3 : 0.7);// bot
 		}
 #end	
+		var ret:Float = BASE_VALUE + 0;
 		if( category == BuildingType.B10_BARRACKS )
-			return BASE_VALUE + Math.log(level) * 0.05 + Math.log(improveLevel) * 0.005;
+			ret= BASE_VALUE + Math.log(level) * 0.03 + Math.log(improveLevel) * 0.005;
 		else if( category == BuildingType.B30_HEAVY )
-			return BASE_VALUE * 0.9;
+			ret= BASE_VALUE * 0.9;
 		else if( category == BuildingType.B40_CRYSTAL )
-			return BASE_VALUE * 0.75;
-		
-		return BASE_VALUE;
+			ret= BASE_VALUE * 0.75;
+		//trace("type", type, " category", category, " level", level, " improveLevel", improveLevel, " ret", ret);
+		return ret;
 	}
 }
