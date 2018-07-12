@@ -79,7 +79,7 @@ class Building extends AbstractBuilding
 	{
 		if( type == this.type)
 			return false;
-		if( type == BuildingType.B01_CAMP)
+		if( type == BuildingType.B01_CAMP )
 			return true;
 		if( !unlocked(type) )
 			return false;
@@ -107,27 +107,19 @@ class Building extends AbstractBuilding
 	{
 		if( !improvable(type) )
 			return false;
-		
-		if( type != BuildingType.B01_CAMP )
-		{
-			if( place.battleField.singleMode && game.player.inTutorial() )
-				_population -= Math.round( capacity * (!game.player.hardMode && game==place.battleField.games.get(0) ? 0.1 : 0.5) );
-			else 
-				_population -= Math.round( capacity * 0.5 );
-		}
-		
 		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
+		if( type != BuildingType.B01_CAMP )
+			_population -= Math.round( capacity * (game.player.inTutorial() && game==place.battleField.games.get(0) ? 0.1 : 0.5) );
 		
 		if( equalsCategory(type) )
 			improveLevel ++;
 		else
 			improveLevel = 1;
-		
 		this.type = type;
-		set_level(game.player.buildings.get(type).get_level());
+		set_level(game.player.buildings.exists(type) ? game.player.buildings.get(type).get_level() : 1);
 		setFeatures();
-		//trace("improved index:", place.index, " this.type:"+this.type, " type:"+type, "equalsCategory:"+equalsCategory(type));
+		//trace("improved index:", place.index, " this.type:" + this.type, " type:" + type, "equalsCategory:" + equalsCategory(type));
 		return true;
 	}
 	
@@ -182,7 +174,7 @@ class Building extends AbstractBuilding
 		
 		var p = place.battleField.games.get(0).player;
 		if( place.battleField.singleMode && p.inTutorial() )
-			_population = !p.hardMode && troop.type == TroopType.T_0 ? capacity * 0.4 : 0.0;
+			_population = !p.hardMode && troop.type == TroopType.T_0 ? capacity * 0.3 : 0.0;
 		else 
 			_population = 0;
 			
