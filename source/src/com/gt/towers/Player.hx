@@ -193,7 +193,7 @@ class Player
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function emptyDeck() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
-	public static function isAdmin(id:Int) : Bool {return (id == 10412 || id == 10487); }
+	public static function isAdmin(id:Int) : Bool {return (id == 10412 || id == 10438 || id == 10487 || id == 96111); }
 	public function inTutorial() : Bool
 	{
 		if( isBot() )
