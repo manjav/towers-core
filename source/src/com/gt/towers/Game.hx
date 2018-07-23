@@ -38,6 +38,16 @@ class Game
 		
 		levels = [0, 20, 50, 100, 200, 400, 1000, 2000, 5000, 10000, 20000, 40000, 80000];
 		
+		fillArenas();
+		player = new Player(this, data);
+		exchanger = new Exchanger(this);
+		lobby = new Lobby(this);
+		calculator = new FeatureCalculator(this);
+		fieldProvider = new FieldProvider(this);
+	}
+	
+	function fillArenas() : Void
+	{
 		arenas = new IntArenaMap();
 	  //				Arena(num,	min,	max, minWinStreak,	unlockCards));
 		arenas.set(0, new Arena(0,	0,		100,	-8,			"11"    	));
@@ -50,12 +60,6 @@ class Game
 		arenas.set(7, new Arena(7,	3001,	4500,	-2,			"43"		));//2400
 		arenas.set(8, new Arena(8,	4501,	7000,	-1, 		"34"		));//2800
 		arenas.set(9, new Arena(9,	7001,	10000,	 0, 		"44"		));//3000
-		
-		player = new Player(this, data);
-		exchanger = new Exchanger(this);
-		lobby = new Lobby(this);
-		calculator = new FeatureCalculator(this);
-		fieldProvider = new FieldProvider(this);
 	}
 	
 	public function unlockedBuildingAt ( type:Int ) : Int
