@@ -1,6 +1,6 @@
 package com.gt.towers;
 import com.gt.towers.utils.maps.IntIntMap;
-import com.gt.towers.utils.maps.IntIntMap;
+import com.gt.towers.utils.maps.IntStrMap;
 
 /**
  * ...
@@ -16,11 +16,13 @@ class InitData
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var operations:IntIntMap;
+	public var prefs:IntStrMap;
 	
 	public function new() 
 	{
 		resources = new IntIntMap();
 		buildingsLevel = new IntIntMap();
 		operations = new IntIntMap();
+		prefs = new IntStrMap();
 	}
 }

@@ -49,11 +49,13 @@ class Player
 		
 		var i:Int = 0;
 		var kies = initData.buildingsLevel.keys();
-		while (i < kies.length)
+		while ( i < kies.length )
 		{
 			buildings.set(kies[i], BuildingType.instantiate( game, kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
 			i++;
 		}
+		
+		// add prefs
 		prefs = new com.gt.towers.utils.maps.IntStrMap();
 		#if flash
 		prefs.set(com.gt.towers.constants.PrefsTypes.SETTINGS_1_MUSIC, "true");
@@ -66,6 +68,14 @@ class Player
 		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_32_INSTAGRAM, "25");
 		prefs.set(com.gt.towers.constants.PrefsTypes.OFFER_33_FRIENDSHIP, "30");
 		#end
+		
+		i = 0;
+		kies = initData.prefs.keys();
+		while ( i < kies.length )
+		{
+			prefs.set(kies[i], initData.prefs.get(kies[i]) );
+			i++;
+		}
 	}
 	
 	public function getLastOperation():Int
