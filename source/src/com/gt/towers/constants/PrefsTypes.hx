@@ -21,6 +21,8 @@ class PrefsTypes
 	public static var AUTH_42_GAMECENTER:Int = 42;
 	public static var AUTH_43_TELEGRAM:Int = 43;
 	
+	public static var OTHERS_91_LOBBY:Int = 91;
+
 	
 	public static var TUTOR:Int = 101;
 	
