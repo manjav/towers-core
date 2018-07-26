@@ -145,7 +145,6 @@ class Building extends AbstractBuilding
 				_population -= gap;
 		}
 		//trace(place.index + " t:" + type," g:" + gap," _p:" + _population," _br:" + birthRate);
-		
 		if( defender != null )
 			defender.update(currentTimeMillis);
 	}

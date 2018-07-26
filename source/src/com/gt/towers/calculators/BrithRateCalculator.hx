@@ -7,7 +7,7 @@ import com.gt.towers.constants.BuildingType;
  */
 class BrithRateCalculator extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 0.04; }
+	public function new (game:Game) { super(game); BASE_VALUE = 0.025; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
 		var category = BuildingType.get_category(type);
@@ -21,11 +21,13 @@ class BrithRateCalculator extends BaseCalculator
 #end	
 		var ret:Float = BASE_VALUE + 0;
 		if( category == BuildingType.B10_BARRACKS )
-			ret = BASE_VALUE + Math.log(level) * 0.03 + Math.log(improveLevel) * 0.005;
+			ret = BASE_VALUE * 1.00 + Math.log(level) * 0.02 + Math.log(improveLevel) * 0.003;
+		else if( category == BuildingType.B20_RAPID )
+			ret = BASE_VALUE * 0.85;
 		else if( category == BuildingType.B30_HEAVY )
-			ret = BASE_VALUE * 0.9;
-		else if( category == BuildingType.B40_CRYSTAL )
 			ret = BASE_VALUE * 0.75;
+		else if( category == BuildingType.B40_CRYSTAL )
+			ret = BASE_VALUE * 0.65;
 		//trace("type", type, " category", category, " level", level, " improveLevel", improveLevel, " ret", ret);
 		return ret;
 	}
