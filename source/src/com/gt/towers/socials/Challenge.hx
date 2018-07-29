@@ -1,5 +1,7 @@
 package com.gt.towers.socials;
+import com.gt.towers.Game;
 import com.gt.towers.constants.ResourceType;
+import com.gt.towers.utils.maps.IntAttendeeMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -8,13 +10,21 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Challenge 
 {
+	public static var STATE_WAIT:Int = 0;
+	public static var STATE_BATTLING:Int = 1;
+	public static var STATE_STARTED:Int = 2;
+	public static var STATE_END:Int = 3;
+	
+	public var state:Int;
 	public var startAt:Int;
 	public var duration:Int;
 	public var rewards:IntIntMap;
 	public var requirements:IntIntMap;
+	public var attendees:IntAttendeeMap;
 
 	public function new() 
 	{
+		
 		rewards = new IntIntMap();
 		rewards.set(1, 56);
 		rewards.set(2, 55);
@@ -30,7 +40,18 @@ class Challenge
 		requirements = new IntIntMap();
 		requirements.set(ResourceType.CURRENCY_HARD, 10);
 		
-		startAt = 1542778310;
+		startAt = 1534778310;
 		duration = 3600 * 4;
+		
+		attendees = new IntAttendeeMap();
+	}
+	
+	public function getState(now:Int):Int
+	{
+		if( startAt > now )
+			return STATE_BATTLING;
+		else if( startAt + duration > now )
+			return STATE_END;
+		return STATE_WAIT;
 	}
 }
