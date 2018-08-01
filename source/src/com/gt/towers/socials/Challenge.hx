@@ -1,7 +1,5 @@
 package com.gt.towers.socials;
-import com.gt.towers.Game;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.utils.maps.IntAttendeeMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -19,30 +17,22 @@ class Challenge
 	public var duration:Int;
 	public var rewards:IntIntMap;
 	public var requirements:IntIntMap;
-	public var attendees:IntAttendeeMap;
+	public var attendees:Array<Attendee>;
+	public var rewardCollected:Bool;
 
 	public function new() 
 	{
-		
 		rewards = new IntIntMap();
 		rewards.set(1, 56);
 		rewards.set(2, 55);
 		rewards.set(3, 54);
 		rewards.set(4, 53);
-		rewards.set(5, 53);
-		rewards.set(6, 53);
-		rewards.set(7, 53);
-		rewards.set(8, 52);
-		rewards.set(9, 52);
-		rewards.set(10, 52);
+		rewards.set(5, 52);
 		
 		requirements = new IntIntMap();
 		requirements.set(ResourceType.CURRENCY_HARD, 10);
 		
-		startAt = 1534778310;
-		duration = 3600 * 4;
-		
-		attendees = new IntAttendeeMap();
+		attendees = new Array<Attendee>();
 	}
 	
 	public function getState(now:Int):Int
@@ -52,5 +42,26 @@ class Challenge
 		else if( now >= startAt )
 			return STATE_STARTED;
 		return STATE_WAIT;
+	}
+	
+	public function getReward(rank:Int) : Int
+	{
+		if( rank <= 3 )
+			return rewards.get(rank);
+		else if( rank > 3 && rank <= 10 )
+			return rewards.get(4);
+		return rewards.get(5);
+	}
+	
+	public function indexOfAttendees(attendeeId:Int) : Int
+	{
+		var i = 0;
+		while ( i < attendees.length )
+		{
+			if( attendees[i].id == attendeeId )
+				return i;
+			i++;
+		}
+		return -1;
 	}
 }
