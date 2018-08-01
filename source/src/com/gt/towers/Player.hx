@@ -6,6 +6,7 @@ import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.StickerType;
 import com.gt.towers.constants.MessageTypes;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -30,6 +31,7 @@ class Player
 	public var tutorialMode:Int = 0;
 	public var hasQuests:Bool = true;
 	public var admin:Bool = false;
+	public var challenges:Array<Challenge>;
 	private var game:Game;
 
 	public function new(game:Game, initData:InitData)

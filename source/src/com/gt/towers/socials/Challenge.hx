@@ -11,9 +11,8 @@ import com.gt.towers.utils.maps.IntIntMap;
 class Challenge 
 {
 	public static var STATE_WAIT:Int = 0;
-	public static var STATE_BATTLING:Int = 1;
-	public static var STATE_STARTED:Int = 2;
-	public static var STATE_END:Int = 3;
+	public static var STATE_STARTED:Int = 1;
+	public static var STATE_END:Int = 2;
 	
 	public var state:Int;
 	public var startAt:Int;
@@ -48,10 +47,10 @@ class Challenge
 	
 	public function getState(now:Int):Int
 	{
-		if( startAt > now )
-			return STATE_BATTLING;
-		else if( startAt + duration > now )
+		if( now >= startAt + duration )
 			return STATE_END;
+		else if( now >= startAt )
+			return STATE_STARTED;
 		return STATE_WAIT;
 	}
 }
