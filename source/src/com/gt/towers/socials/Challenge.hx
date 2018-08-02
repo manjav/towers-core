@@ -12,7 +12,8 @@ class Challenge
 	public static var STATE_STARTED:Int = 1;
 	public static var STATE_END:Int = 2;
 	
-	public var state:Int;
+	public var id:Int;
+	public var type:Int;
 	public var startAt:Int;
 	public var duration:Int;
 	public var rewards:IntIntMap;
@@ -31,8 +32,6 @@ class Challenge
 		
 		requirements = new IntIntMap();
 		requirements.set(ResourceType.CURRENCY_HARD, 10);
-		
-		attendees = new Array<Attendee>();
 	}
 	
 	public function getState(now:Int):Int
