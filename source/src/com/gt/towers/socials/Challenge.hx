@@ -8,6 +8,9 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Challenge 
 {
+	public static var JOIN_HOUR:Int = 16;
+	public static var START_HOUR:Int = 20;
+
 	public static var STATE_WAIT:Int = 0;
 	public static var STATE_STARTED:Int = 1;
 	public static var STATE_END:Int = 2;
@@ -15,7 +18,8 @@ class Challenge
 	public var id:Int;
 	public var type:Int;
 	public var startAt:Int;
-	public var duration:Int;
+	public var duration:Int = 14400;
+	public var capacity:Int;
 	public var rewards:IntIntMap;
 	public var requirements:IntIntMap;
 	public var attendees:Array<Attendee>;
