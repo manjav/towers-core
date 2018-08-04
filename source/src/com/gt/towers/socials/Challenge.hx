@@ -8,8 +8,7 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Challenge 
 {
-	public static var JOIN_HOUR:Int = 16;
-	public static var START_HOUR:Int = 20;
+	public static var START_HOUR:Int = 19;
 
 	public static var STATE_WAIT:Int = 0;
 	public static var STATE_STARTED:Int = 1;
@@ -66,5 +65,13 @@ class Challenge
 			i++;
 		}
 		return -1;
+	}
+	
+	public static function getDuration(type:Int):Int
+	{
+		return switch( type )
+		{
+			default: 14400;
+		}
 	}
 }

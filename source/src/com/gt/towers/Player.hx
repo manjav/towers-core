@@ -31,8 +31,10 @@ class Player
 	public var tutorialMode:Int = 0;
 	public var hasQuests:Bool = true;
 	public var admin:Bool = false;
-	public var challenges:Array<Challenge>;
 	private var game:Game;
+#if flash
+	public var challenges:com.gt.towers.utils.maps.IntChallengeMap;
+#end
 
 	public function new(game:Game, initData:InitData)
 	{
