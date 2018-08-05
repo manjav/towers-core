@@ -8,7 +8,7 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Challenge 
 {
-	public static var START_HOUR:Int = 19;
+	public static var START_HOUR:Int = 20;
 
 	public static var STATE_WAIT:Int = 0;
 	public static var STATE_STARTED:Int = 1;
@@ -33,8 +33,8 @@ class Challenge
 		rewards.set(4, 53);
 		rewards.set(5, 52);
 		
-		requirements = new IntIntMap();
-		requirements.set(ResourceType.CURRENCY_HARD, 10);
+		duration = getDuration(type);
+		requirements = getRequiements(type);
 	}
 	
 	public function getState(now:Int):Int
@@ -46,15 +46,22 @@ class Challenge
 		return STATE_WAIT;
 	}
 	
-	public function getReward(rank:Int) : Int
+	public function getRewardByAttendee(attendeeId:Int) : Int
+	{
+		var rank = indexOfAttendees(attendeeId);
+		if( rank <= -1 )
+			return 0;
+		return getRewardByRank(rank + 1);
+	}
+	
+	public function getRewardByRank(rank:Int) : Int
 	{
 		if( rank <= 3 )
 			return rewards.get(rank);
-		else if( rank > 3 && rank <= 10 )
+		if( rank <= 10 )
 			return rewards.get(4);
 		return rewards.get(5);
-	}
-	
+	}	
 	public function indexOfAttendees(attendeeId:Int) : Int
 	{
 		var i = 0;
@@ -74,4 +81,16 @@ class Challenge
 			default: 14400;
 		}
 	}
+	
+	public static function getRequiements(type:Int):IntIntMap
+	{
+		var ret = new IntIntMap();
+		switch( type )
+		{
+			default:	ret.set(ResourceType.CURRENCY_HARD, 10);
+		}
+		return ret;
+	}
+	
+	
 }
