@@ -261,7 +261,7 @@ class Exchanger
 	
 	function getRequierement(item:ExchangeItem, now:Int) : IntIntMap
 	{
-		if( item.category < ExchangeType.C40_OTHERS || (item.requirements != null && item.requirements.keys().length > 0) )
+		if( item.category < ExchangeType.C40_OTHERS && (item.requirements != null && item.requirements.keys().length > 0) )
 			return item.requirements;
 		
 		var ret = new IntIntMap();

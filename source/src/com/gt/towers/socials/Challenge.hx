@@ -32,6 +32,12 @@ class Challenge
 		rewards.set(3, 54);
 		rewards.set(4, 53);
 		rewards.set(5, 52);
+		
+		#if java
+		capacity = getCapacity(type);
+		duration = getDuration(type);
+		requirements = getRequiements(type);
+		#end
 	}
 	
 	public function getState(now:Int):Int
@@ -71,7 +77,6 @@ class Challenge
 		return -1;
 	}
 	
-	#if java
 	public static function getCapacity(type:Int):Int
 	{
 		return switch( type )
@@ -97,7 +102,4 @@ class Challenge
 		}
 		return ret;
 	}
-	#end
-	
-	
 }
