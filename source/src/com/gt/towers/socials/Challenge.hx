@@ -18,7 +18,7 @@ class Challenge
 	public var type:Int;
 	public var startAt:Int;
 	public var duration:Int = 14400;
-	public var capacity:Int;
+	public var capacity:Int = 50;
 	public var rewards:IntIntMap;
 	public var requirements:IntIntMap;
 	public var attendees:Array<Attendee>;
@@ -32,9 +32,6 @@ class Challenge
 		rewards.set(3, 54);
 		rewards.set(4, 53);
 		rewards.set(5, 52);
-		
-		duration = getDuration(type);
-		requirements = getRequiements(type);
 	}
 	
 	public function getState(now:Int):Int
@@ -74,6 +71,15 @@ class Challenge
 		return -1;
 	}
 	
+	#if java
+	public static function getCapacity(type:Int):Int
+	{
+		return switch( type )
+		{
+			default: 50;
+		}
+	}
+	
 	public static function getDuration(type:Int):Int
 	{
 		return switch( type )
@@ -91,6 +97,7 @@ class Challenge
 		}
 		return ret;
 	}
+	#end
 	
 	
 }
