@@ -17,8 +17,9 @@ class Challenge
 	public var id:Int;
 	public var type:Int;
 	public var startAt:Int;
-	public var duration:Int = 14400;
-	public var capacity:Int = 50;
+	public var waitTime:Int = 7200;
+	public var duration:Int = 28800;
+	public var capacity:Int = 20;
 	public var rewards:IntIntMap;
 	public var requirements:IntIntMap;
 	public var attendees:Array<Attendee>;
@@ -32,12 +33,6 @@ class Challenge
 		rewards.set(3, 54);
 		rewards.set(4, 53);
 		rewards.set(5, 52);
-		
-		#if java
-		capacity = getCapacity(type);
-		duration = getDuration(type);
-		requirements = getRequiements(type);
-		#end
 	}
 	
 	public function getState(now:Int):Int
@@ -77,11 +72,20 @@ class Challenge
 		return -1;
 	}
 	
+	#if java
 	public static function getCapacity(type:Int):Int
 	{
 		return switch( type )
 		{
 			default: 50;
+		}
+	}
+		
+	public static function getWaitTime(type:Int) 
+	{
+		return switch( type )
+		{
+			default: 7200;
 		}
 	}
 	
@@ -102,4 +106,5 @@ class Challenge
 		}
 		return ret;
 	}
+	#end
 }
