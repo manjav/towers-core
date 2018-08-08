@@ -25,12 +25,6 @@ class Challenge
 
 	public function new() 
 	{
-		rewards = new IntIntMap();
-		rewards.set(1, 56);
-		rewards.set(2, 55);
-		rewards.set(3, 54);
-		rewards.set(4, 53);
-		rewards.set(5, 52);
 	}
 	
 	public function getState(now:Int):Int
@@ -75,7 +69,8 @@ class Challenge
 	{
 		return switch( type )
 		{
-			default: 50;
+			case 1:		20;
+			default:	50;
 		}
 	}
 		
@@ -83,7 +78,8 @@ class Challenge
 	{
 		return switch( type )
 		{
-			default: 7200;
+			case 1:		3600 * 24;
+			default:	3600 * 3;
 		}
 	}
 	
@@ -91,8 +87,31 @@ class Challenge
 	{
 		return switch( type )
 		{
-			default: 14400;
+			case 1:		3600 * 120;
+			default:	3600 * 5;
 		}
+	}
+	
+	public static function getRewards(type:Int):IntIntMap
+	{
+		var ret = new IntIntMap();
+		if( type == 1 )
+		{
+			ret.set(1, 56);
+			ret.set(2, 55);
+			ret.set(3, 54);
+			ret.set(4, 53);
+			ret.set(5, 52);
+		}
+		else
+		{
+			ret.set(1, 54);
+			ret.set(2, 53);
+			ret.set(3, 52);
+			ret.set(4, 52);
+			ret.set(5, 51);
+		}
+		return ret;
 	}
 	
 	public static function getRequiements(type:Int):IntIntMap
@@ -100,6 +119,7 @@ class Challenge
 		var ret = new IntIntMap();
 		switch( type )
 		{
+			case 1:		ret.set(ResourceType.CURRENCY_HARD, 10);
 			default:	ret.set(ResourceType.CURRENCY_HARD, 0);
 		}
 		return ret;
