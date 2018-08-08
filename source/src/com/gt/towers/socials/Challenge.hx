@@ -8,8 +8,6 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Challenge 
 {
-	public static var START_HOUR:Int = 20;
-
 	public static var STATE_WAIT:Int = 0;
 	public static var STATE_STARTED:Int = 1;
 	public static var STATE_END:Int = 2;
@@ -102,7 +100,7 @@ class Challenge
 		var ret = new IntIntMap();
 		switch( type )
 		{
-			default:	ret.set(ResourceType.CURRENCY_HARD, 10);
+			default:	ret.set(ResourceType.CURRENCY_HARD, 0);
 		}
 		return ret;
 	}
