@@ -38,14 +38,30 @@ class Challenge
 	
 	public function getRewardByAttendee(attendeeId:Int) : Int
 	{
-		var rank = indexOfAttendees(attendeeId);
-		if( rank <= -1 )
+		sort();
+		var index = indexOfAttendees(attendeeId);
+		if( index <= -1 )
+			return getRewardByRank(5);
+		return getRewardByRank(index + 1);
+	}
+	
+	public function sort() 
+	{
+		attendees.sort(function(a:Attendee, b:Attendee) : Int 
+		{
+			if( a.point > b.point ) return -1;
+			if( a.point < b.point ) return 1;
+			if( a.updateAt > b.updateAt ) return -1;
+			if( a.updateAt < b.updateAt ) return 1;
 			return 0;
-		return getRewardByRank(rank + 1);
+		});
 	}
 	
 	public function getRewardByRank(rank:Int) : Int
 	{
+		trace(rewards.toString(), rank);
+		if( rank <= 0 )
+			return rewards.get(5);
 		if( rank <= 3 )
 			return rewards.get(rank);
 		if( rank <= 10 )
@@ -69,7 +85,7 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		20;
+			case 1:		30;
 			default:	50;
 		}
 	}
@@ -79,7 +95,7 @@ class Challenge
 		return switch( type )
 		{
 			case 1:		3600 * 24;
-			default:	3600 * 3;
+			default:	3600 * 4;
 		}
 	}
 	
@@ -87,8 +103,8 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		3600 * 120;
-			default:	3600 * 5;
+			case 1:		3600 * 144;
+			default:	3600 * 20;
 		}
 	}
 	
@@ -108,7 +124,7 @@ class Challenge
 			ret.set(1, 54);
 			ret.set(2, 53);
 			ret.set(3, 52);
-			ret.set(4, 52);
+			ret.set(4, 51);
 			ret.set(5, 51);
 		}
 		return ret;
