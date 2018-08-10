@@ -261,8 +261,8 @@ class Exchanger
 	
 	function getRequierement(item:ExchangeItem, now:Int) : IntIntMap
 	{
-		if( item.category < ExchangeType.C40_OTHERS && (item.requirements != null && item.requirements.keys().length > 0) )
-			return item.requirements;
+		//if( item.category < ExchangeType.C40_OTHERS && (item.requirements != null && item.requirements.keys().length > 0) )
+		//	return item.requirements;
 		
 		var ret = new IntIntMap();
 		if( item.type == ExchangeType.C42_RENAME )
@@ -280,6 +280,9 @@ class Exchanger
 		{
 			ret.set( ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) * item.numExchanges);
 		}
+		if( ret.keys().length == 0 )
+			return item.requirements;
+		
 		return ret;
 	}
 	
