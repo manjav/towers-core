@@ -23,7 +23,7 @@ class TroopPowerCalculator  extends BaseCalculator
 		{
 			//case 10	:	BASE_VALUE + 0.0 + ( Math.log(level) * 1.0 + Math.log(improveLevel) ) * 0.1;
 			case 20	:	BASE_VALUE * 1.2 + ( Math.log(level) * 1.2 + Math.log(improveLevel) ) * 0.1;
-			case 30	:	BASE_VALUE * 1.8 + ( Math.log(level) * 1.4 + Math.log(improveLevel) ) * 0.3;
+			case 30	:	BASE_VALUE * 1.7 + ( Math.log(level) * 1.4 + Math.log(improveLevel) ) * 0.3;
 			default : BASE_VALUE;
 		}
 	}
