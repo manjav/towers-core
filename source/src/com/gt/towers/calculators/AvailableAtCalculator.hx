@@ -57,6 +57,31 @@ class AvailableAtCalculator extends BaseCalculator
 		}
 	}
 	
+	public static function getChance( type:Int ) : Int
+	{
+		return switch ( type )
+		{
+			case	11	:	0	;
+			case	21	:	3	;
+			case	12	:	5	;
+			case	31	:	8	;
+			case	41	:	11	;
+			case	13	:	14	;
+			case	22	:	18	;
+			case	32	:	23	;
+			case	23	:	28	;
+			case	33	:	34	;
+			case	14	:	41	;
+			case	42	:	48	;
+			case	24	:	56	;
+			case	43	:	70	;
+			case	34	:	95	;
+			case	44	:	130	;
+			
+			default: 1000;
+		}
+	}
+	
 	/*public function getArenaCards(arenaIndex:Int) : IntList
 	{
 		var ret = new IntList();

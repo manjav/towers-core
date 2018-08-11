@@ -111,4 +111,20 @@ class IntList
 		}
 		return ret;
 	}
+	
+	public function toString():String
+	{
+		var size = size();
+		var ret:String = "";
+		var i:Int = 0;
+		while ( i < size )
+		{
+			if( i == 0 )
+				ret += get(i);
+			else
+				ret += "," + get(i);
+			i ++;
+		}
+		return ret;
+	}
 }

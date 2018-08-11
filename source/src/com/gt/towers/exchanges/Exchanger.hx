@@ -2,6 +2,7 @@ package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
 import com.gt.towers.InitData;
+import com.gt.towers.calculators.AvailableAtCalculator;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
@@ -302,12 +303,9 @@ class Exchanger
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
-            if( numSlots == 0  ) // last slot
-            {
-				var randomness = (type - 53) * 0.1; // 0.1 ~ 0.6 based on book type
-				if( openedBook == 0 || ExchangeType.isMagic(type) || Math.random() < randomness )
-					addNewCard(ret, 2);
-			}
+            if( numSlots == 0 && !isDaily ) // last slot
+				addNewCard(ret, 2);
+			
 			addRandomSlot(ret, numCards);
 			numSlots --;
 		}
@@ -345,13 +343,14 @@ class Exchanger
 			}
 			a ++;
 		}
+		
 		a = 0;
 		while( a < allCards.size() )
 		{
-			var randCard = allCards.get(a);
-			if ( !game.player.buildings.exists(randCard) )
+			var newCard = allCards.get(a);
+			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) < game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) )
 			{
-				ret.set( randCard, count );
+				ret.set( newCard, count );
 				return;
 			}
 			a ++;
