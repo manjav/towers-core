@@ -294,7 +294,6 @@ class Exchanger
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
 		var totalCards = ExchangeType.getNumTotalCards(type, arena) + 1;
 		var slotSize = Math.ceil(totalCards / numSlots);
-		var openedBook:Int = game.player.getResource(isDaily ? ResourceType.FREE_CHEST_OPENED : ResourceType.BATTLE_CHEST_OPENED);
 		var numCards:Int = 0;
 		var accCards:Int = 0;
 		while( numSlots >= 0 )
@@ -303,8 +302,9 @@ class Exchanger
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
+		trace("addNewCard",  numSlots, isDaily);
             if( numSlots == 0 && !isDaily ) // last slot
-				addNewCard(ret, 2);
+				addNewCard(ret);
 			
 			addRandomSlot(ret, numCards);
 			numSlots --;
@@ -320,11 +320,13 @@ class Exchanger
 		
 		return ret;
 	}
-	function addNewCard(ret:IntIntMap, count:Int) : Void
+	function addNewCard(map:IntIntMap) : Void
 	{
-		if( game.player.inTutorial() )
+		var openedBook:Int = game.player.getResource(ResourceType.BATTLE_CHEST_OPENED);
+		trace("openedBook", openedBook);
+		if( openedBook == 0 )
 		{
-			ret.set( BuildingType.B11_BARRACKS, 2 );
+			map.set( BuildingType.B11_BARRACKS, 2 );
 			return;
 		}
 		
@@ -348,29 +350,29 @@ class Exchanger
 		while( a < allCards.size() )
 		{
 			var newCard = allCards.get(a);
-			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) < game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) )
+			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) )
 			{
-				ret.set( newCard, count );
+				map.set( newCard, 2 );
 				return;
 			}
 			a ++;
 		}
-		addRandomSlot(ret, count);
+		addRandomSlot(map, 2);
 	}
-	function addRandomSlot(ret:IntIntMap, count:Int) : Void
+	function addRandomSlot(map:IntIntMap, count:Int) : Void
 	{
-		if( game.player.buildings.keys().length <= ret.keys().length )
+		if( game.player.buildings.keys().length <= map.keys().length )
 			return;
 		
 		var random = game.player.getRandomBuilding();
 		if( random == -1 )
 			return;
-		if( ret.exists(random) )
+		if( map.exists(random) )
 		{
-			addRandomSlot( ret, count );
+			addRandomSlot( map, count );
 			return;
 		}
-		ret.set( random, count );
+		map.set( random, count );
 	}
 	#end
 
