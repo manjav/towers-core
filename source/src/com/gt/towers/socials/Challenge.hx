@@ -23,10 +23,7 @@ class Challenge
 	public var attendees:Array<Attendee>;
 	public var rewardCollected:Bool;
 
-	public function new() 
-	{
-	}
-	
+	public function new(){}
 	public function getState(now:Int):Int
 	{
 		if( now >= startAt + duration )
@@ -89,13 +86,13 @@ class Challenge
 			default:	50;
 		}
 	}
-		
+	
 	public static function getWaitTime(type:Int) 
 	{
 		return switch( type )
 		{
 			case 1:		3600 * 24;
-			default:	3600 * 4;
+			default:	3600 * 6;
 		}
 	}
 	
@@ -104,7 +101,7 @@ class Challenge
 		return switch( type )
 		{
 			case 1:		3600 * 144;
-			default:	3600 * 20;
+			default:	3600 * 42;
 		}
 	}
 	
@@ -121,10 +118,10 @@ class Challenge
 		}
 		else
 		{
-			ret.set(1, 54);
-			ret.set(2, 53);
-			ret.set(3, 52);
-			ret.set(4, 51);
+			ret.set(1, 55);
+			ret.set(2, 54);
+			ret.set(3, 53);
+			ret.set(4, 52);
 			ret.set(5, 51);
 		}
 		return ret;
@@ -136,7 +133,7 @@ class Challenge
 		switch( type )
 		{
 			case 1:		ret.set(ResourceType.CURRENCY_HARD, 10);
-			default:	ret.set(ResourceType.CURRENCY_HARD, 0);
+			default:	ret.set(ResourceType.CURRENCY_SOFT, 100);
 		}
 		return ret;
 	}

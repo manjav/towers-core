@@ -109,7 +109,7 @@ class AbstractBuilding
 			ret.set(ResourceType.WIN_STREAK, minWinStreak - playerWinStreak);
 		else
 			ret.set(ResourceType.WIN_STREAK, -4);
-			
+		
 		return ret;
 	}
 	
