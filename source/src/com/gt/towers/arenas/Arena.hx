@@ -1,6 +1,5 @@
 package com.gt.towers.arenas;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.maps.StringFieldMap;
 
 /**
  * ...
@@ -11,9 +10,9 @@ class Arena
 	public var index:Int;
 	public var min:Int;
 	public var max:Int;
+	public var minWinStreak:Int;
 	public var cardsStr:String;
 	public var cards:IntList;
-	public var minWinStreak:Int;
 
 	public function new(index:Int, min:Int, max:Int, minWinStreak:Int, cards:String)
 	{
@@ -23,7 +22,7 @@ class Arena
 		this.cardsStr  = cards;
 		this.minWinStreak = minWinStreak;
 		this.cards = new IntList();
-		if ( cardsStr == "" )
+		if( cardsStr == null || cardsStr == "" )
 			return;
 			
 		var t = 0;
@@ -34,5 +33,4 @@ class Arena
 			t ++;
 		}
 	}
-	
 }

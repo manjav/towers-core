@@ -1,5 +1,7 @@
 package com.gt.towers.socials;
+import com.gt.towers.arenas.Arena;
 import com.gt.towers.constants.ResourceType;
+import com.gt.towers.utils.maps.IntArenaMap;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -18,7 +20,7 @@ class Challenge
 	public var waitTime:Int = 7200;
 	public var duration:Int = 28800;
 	public var capacity:Int = 20;
-	public var rewards:IntIntMap;
+	public var rewards:IntArenaMap;
 	public var requirements:IntIntMap;
 	public var attendees:Array<Attendee>;
 	public var rewardCollected:Bool;
@@ -33,15 +35,6 @@ class Challenge
 		return STATE_WAIT;
 	}
 	
-	public function getRewardByAttendee(attendeeId:Int) : Int
-	{
-		sort();
-		var index = indexOfAttendees(attendeeId);
-		if( index <= -1 )
-			return getRewardByRank(5);
-		return getRewardByRank(index + 1);
-	}
-	
 	public function sort() 
 	{
 		attendees.sort(function(a:Attendee, b:Attendee) : Int 
@@ -54,16 +47,66 @@ class Challenge
 		});
 	}
 	
-	public function getRewardByRank(rank:Int) : Int
+	public function getRewardByAttendee(attendeeId:Int) : IntIntMap
 	{
-		trace(rewards.toString(), rank);
+		sort();
+		var index = indexOfAttendees(attendeeId);
+		if( index <= -1 )
+			return getRewardByRank(5);
+		return getRewardByRank(index + 1);
+	}
+	
+	public function getRewardByRank(rank:Int) : IntIntMap
+	{
+		var ret = new IntIntMap();
+		var ratio = attendees.length / rank / attendees.length;
+	//	if( type == 1 )
+	//	{
+			var prizeKeys = rewards.keys();
+			var i = 0;
+			var prize:Arena = null;
+			while ( i < prizeKeys.length )
+			{
+				prize = rewards.get(prizeKeys[i]);
+				if( rank >= prize.min && rank <= prize.max )
+				{
+					if( prize.minWinStreak == -1 )
+						ret.set(prize.minWinStreak, 0);
+					else if( ResourceType.isBook(prize.minWinStreak) )
+						ret.set(prize.minWinStreak, 1);
+					else
+						ret.set(prize.minWinStreak, Math.floor(ratio * 1000));
+					break; 
+				}
+				i ++;
+			}
+			/*if( rank <= 0 )
+				ret.set(-1, 0);
+			else if( rank <= 3 )
+				ret.set(rewards.get(rank).minWinStreak, 1);
+			else if( rank <= 10 )
+				ret.set(rewards.get(4)., 1);
+			else if( rank <= 20 )
+				ret.set(rewards.get(5), 1);
+			else if( rank <= 40 )
+				ret.set(rewards.get(6), Math.floor(ratio * 1000));		
+			else
+				ret.set(rewards.get(7), 0);
+			
+			return ret;
+		}
+		
 		if( rank <= 0 )
-			return rewards.get(5);
-		if( rank <= 3 )
-			return rewards.get(rank);
-		if( rank <= 10 )
-			return rewards.get(4);
-		return rewards.get(5);
+			ret.set(rewards.get(5), 1);
+		else if( rank <= 3 )
+			ret.set(rewards.get(rank), 1);
+		else if( ratio <= 0.5 )
+			ret.set(rewards.get(4), 1);
+		else
+			ret.set(rewards.get(5), 1);*/
+		
+		trace(rank + " " + ratio + " " + ret.toString());
+		return ret;
 	}	
 	public function indexOfAttendees(attendeeId:Int) : Int
 	{
@@ -82,8 +125,8 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		30;
-			default:	50;
+			case 1:		50;
+			default:	10;
 		}
 	}
 	
@@ -91,7 +134,7 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		3600 * 24;
+			case 1:		3600 * 6;
 			default:	3600 * 6;
 		}
 	}
@@ -101,28 +144,30 @@ class Challenge
 		return switch( type )
 		{
 			case 1:		3600 * 144;
-			default:	3600 * 42;
+			default:	3600 * 5;
 		}
 	}
 	
-	public static function getRewards(type:Int):IntIntMap
+	public static function getRewards(type:Int):IntArenaMap
 	{
-		var ret = new IntIntMap();
+		var ret = new IntArenaMap();
 		if( type == 1 )
 		{
-			ret.set(1, 56);
-			ret.set(2, 55);
-			ret.set(3, 54);
-			ret.set(4, 53);
-			ret.set(5, 52);
+			ret.set(1, new Arena(1,	1,	1,	55,		null));
+			ret.set(2, new Arena(2, 2,	2,	54,		null));
+			ret.set(3, new Arena(3, 3,	3,	53,		null));
+			ret.set(4, new Arena(4, 4,	10,	52,		null));
+			ret.set(5, new Arena(5, 11, 20, 51,		null));
+			ret.set(6, new Arena(6, 21, 40, 1002,	null));
+			ret.set(7, new Arena(7, 41, 50, -1,		null));
 		}
 		else
 		{
-			ret.set(1, 55);
-			ret.set(2, 54);
-			ret.set(3, 53);
-			ret.set(4, 52);
-			ret.set(5, 51);
+			ret.set(1, new Arena(1,	1,	1,	55,		null));
+			ret.set(2, new Arena(2, 2,	3,	54,		null));
+			ret.set(3, new Arena(3, 4,	10,	53,		null));
+			ret.set(4, new Arena(4, 11,	20,	52,		null));
+			ret.set(5, new Arena(5, 21, 50, 51,		null));
 		}
 		return ret;
 	}
@@ -132,10 +177,17 @@ class Challenge
 		var ret = new IntIntMap();
 		switch( type )
 		{
-			case 1:		ret.set(ResourceType.CURRENCY_HARD, 10);
-			default:	ret.set(ResourceType.CURRENCY_SOFT, 100);
+			case 1:		ret.set(ResourceType.CURRENCY_HARD, 0);
+			default:	ret.set(ResourceType.CURRENCY_HARD, 10);
 		}
 		return ret;
+	}
+	#end
+	
+	#if flash
+	public static function getTargetLabel(type:Int) : String
+	{
+		return "challenge_wins";
 	}
 	#end
 }
