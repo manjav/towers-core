@@ -15,7 +15,7 @@ class TroopPowerCalculator  extends BaseCalculator
 		if( category == BuildingType.B00_CAMP )
 		{
 			if( battleField.games.get(0).player.inTutorial() )
-				return BASE_VALUE * (game == battleField.games.get(0) ? 1.7 : 0.6);// bot
+				return BASE_VALUE * (game == battleField.games.get(0) ? 1.75 : 0.6);// bot
 			return BASE_VALUE * 0.9;// normal mode
 		}
 #end
