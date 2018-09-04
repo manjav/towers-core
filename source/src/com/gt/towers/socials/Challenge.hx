@@ -1,5 +1,5 @@
 package com.gt.towers.socials;
-import com.gt.towers.arenas.Arena;
+import com.gt.towers.others.Arena;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.IntArenaMap;
 import com.gt.towers.utils.maps.IntIntMap;

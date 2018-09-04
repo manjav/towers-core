@@ -1,7 +1,7 @@
 package com.gt.towers;
 import com.gt.towers.InitData;
 import com.gt.towers.Player;
-import com.gt.towers.arenas.Arena;
+import com.gt.towers.others.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.calculators.FeatureCalculator;
 import com.gt.towers.constants.BuildingType;

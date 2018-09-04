@@ -1,5 +1,5 @@
 package com.gt.towers.utils.maps;
-import com.gt.towers.arenas.Arena;
+import com.gt.towers.others.Arena;
 
 #if java
 	import java.util.Map;

@@ -1,4 +1,4 @@
-package com.gt.towers.arenas;
+package com.gt.towers.others;
 import com.gt.towers.utils.lists.IntList;
 
 /**
