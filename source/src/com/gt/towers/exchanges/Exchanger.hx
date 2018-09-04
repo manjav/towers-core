@@ -103,12 +103,12 @@ class Exchanger
 		// reset item
 		if( item.category == ExchangeType.C100_FREES )
 		{
+			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);
 			item.numExchanges = item.expiredAt < now ? 1 : item.numExchanges + 1;
 			item.expiredAt = now + ExchangeType.getCooldown(item.type);
 			item.outcome = 0;
 			item.outcomes = new IntIntMap();
 			item.requirements = new IntIntMap();
-			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);
 		}
 		else if( item.category == ExchangeType.C110_BATTLES )
 		{

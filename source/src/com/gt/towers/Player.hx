@@ -29,7 +29,7 @@ class Player
 	public var hardMode:Bool;
 	public var prefs:com.gt.towers.utils.maps.IntStrMap;
 	public var tutorialMode:Int = 0;
-	public var hasQuests:Bool = true;
+	public var hasOperations:Bool = true;
 	public var admin:Bool = false;
 	private var game:Game;
 #if flash
