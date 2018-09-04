@@ -37,7 +37,7 @@ class BattleField
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
-		var isOperation = mapName.substr(0, 6) == "operation_";
+		var isOperation = mapName.substr(0, 10) == "operation_";
 		singleMode = game_1.player.buildings.keys().length == 0;
 		
 		if( isOperation )
