@@ -1,22 +1,11 @@
 package com.gt.towers.utils.maps;
 import com.gt.towers.buildings.Building;
-
-
-#if java
-	import java.util.Map;
-	import java.NativeArray;
-#elseif flash
-	import flash.Vector;
-#end
-
 /**
  * ...
  * @author Mansour Djawadi
  */
-
 class IntBuildingMap
 {
-
 	#if java
 	private var _map:java.util.HashMap<Int, Building>;
 	#elseif flash
@@ -60,12 +49,7 @@ class IntBuildingMap
 	**/
 	public function get(key:Int) :Building
 	{
-		#if java
 		return _map.get(key);
-		#elseif flash
-		return _map.get(key);
-		#end
-		return null;
 	}
 	
 	/**
@@ -89,11 +73,7 @@ class IntBuildingMap
 	**/
 	public function remove(key:Int):Void
 	{
-		#if java
 		_map.remove(key);
-		#elseif flash
-		_map.remove(key);
-		#end
 	}
 
 	#if java
@@ -101,10 +81,10 @@ class IntBuildingMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():NativeArray<Int>
+	public function keys():java.NativeArray<Int>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Int> = new NativeArray<Int>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<Int> = new java.NativeArray<Int>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -117,10 +97,10 @@ class IntBuildingMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<Building>
+	public function values():java.NativeArray<Building>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Building> = new NativeArray<Building>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<Building> = new java.NativeArray<Building>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -136,9 +116,9 @@ class IntBuildingMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():Vector<Int>
+	public function keys():flash.Vector<Int>
 	{
-		var ret:Vector<Int> = new Vector<Int>();
+		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (key in _map.keys())
 			ret.push(key);
 		return ret ;
@@ -147,15 +127,14 @@ class IntBuildingMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<Building>
+	public function values():flash.Vector<Building>
 	{
-		var ret:Vector<Building> = new Vector<Building>();
+		var ret:flash.Vector<Building> = new flash.Vector<Building>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;
 	}
 	#end
-	
 	
 	public function getRandomKey():Int
 	{

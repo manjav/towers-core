@@ -1,16 +1,7 @@
 package com.gt.towers.utils.maps;
 import com.gt.towers.exchanges.ExchangeItem;
-
-#if java
-	import java.util.Map;
-	import java.NativeArray;
-#elseif flash
-	import flash.Vector;
-#end
-
 class IntShopMap
 {
-
 	#if java
 	private var _map:java.util.HashMap<Int, ExchangeItem>;
 	#elseif flash
@@ -54,12 +45,7 @@ class IntShopMap
 	**/
 	public function get(key:Int) :ExchangeItem
 	{
-		#if java
 		return _map.get(key);
-		#elseif flash
-		return _map.get(key);
-		#end
-		return null;
 	}
 	
 	/**
@@ -83,11 +69,7 @@ class IntShopMap
 	**/
 	public function remove(key:Int):Void
 	{
-		#if java
 		_map.remove(key);
-		#elseif flash
-		_map.remove(key);
-		#end
 	}
 
 	#if java
@@ -95,10 +77,10 @@ class IntShopMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():NativeArray<Int>
+	public function keys():java.NativeArray<Int>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Int> = new NativeArray<Int>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<Int> = new java.NativeArray<Int>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -111,10 +93,10 @@ class IntShopMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<ExchangeItem>
+	public function values():java.NativeArray<ExchangeItem>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<ExchangeItem> = new NativeArray<ExchangeItem>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<ExchangeItem> = new java.NativeArray<ExchangeItem>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -130,9 +112,9 @@ class IntShopMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():Vector<Int>
+	public function keys():flash.Vector<Int>
 	{
-		var ret:Vector<Int> = new Vector<Int>();
+		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (key in _map.keys())
 			ret.push(key);
 		return ret ;
@@ -143,7 +125,7 @@ class IntShopMap
 	**/
 	public function values():Vector<ExchangeItem>
 	{
-		var ret:Vector<ExchangeItem> = new Vector<ExchangeItem>();
+		var ret:flash.Vector<ExchangeItem> = new flash.Vector<ExchangeItem>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;

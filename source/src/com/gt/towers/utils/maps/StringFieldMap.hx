@@ -1,18 +1,7 @@
 package com.gt.towers.utils.maps;
 import com.gt.towers.battle.fieldes.FieldData;
-import com.gt.towers.constants.ResourceType;
-import com.gt.towers.utils.GameError;
-
-#if java
-	import java.util.Map;
-	import java.NativeArray;
-#elseif flash
-	import flash.Vector;
-#end
-
 class StringFieldMap
 {
-
 	#if java
 	private var _map:java.util.HashMap<String, FieldData>;
 	#elseif flash
@@ -56,12 +45,7 @@ class StringFieldMap
 	**/
 	public function get(key:String) :FieldData
 	{
-		#if java
 		return _map.get(key);
-		#elseif flash
-		return _map.get(key);
-		#end
-		return null;
 	}
 	
 	/**
@@ -85,11 +69,7 @@ class StringFieldMap
 	**/
 	public function remove(key:String):Void
 	{
-		#if java
 		_map.remove(key);
-		#elseif flash
-		_map.remove(key);
-		#end
 	}
 
 	#if java
@@ -97,10 +77,10 @@ class StringFieldMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():NativeArray<String>
+	public function keys():java.NativeArray<String>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<String> = new NativeArray<String>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<String> = new java.NativeArray<String>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -126,10 +106,10 @@ class StringFieldMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<FieldData>
+	public function values():java.NativeArray<FieldData>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<FieldData> = new NativeArray<FieldData>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<FieldData> = new java.NativeArray<FieldData>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -147,9 +127,9 @@ class StringFieldMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():Vector<String>
+	public function keys():java.Vector<String>
 	{
-		var ret:Vector<String> = new Vector<String>();
+		var ret:java.Vector<String> = new java.Vector<String>();
 		for (key in _map.keys())
 			ret.push(key);
 		return ret ;
@@ -158,9 +138,9 @@ class StringFieldMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<FieldData>
+	public function values():java.Vector<FieldData>
 	{
-		var ret:Vector<FieldData> = new Vector<FieldData>();
+		var ret:java.Vector<FieldData> = new java.Vector<FieldData>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;

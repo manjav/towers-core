@@ -1,26 +1,14 @@
 package com.gt.towers.utils.maps;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.utils.GameError;
-
-#if java
-	import java.util.Map;
-	import java.NativeArray;
-	import com.gt.towers.interfaces.IValueChangeCallback;
-#elseif flash
-	import flash.Vector;
-	import flash.events.EventDispatcher;
-	import com.gt.towers.events.CoreEvent;
-#end
-
 #if java
 class IntIntMap
 #elseif flash
-class IntIntMap extends EventDispatcher
+class IntIntMap extends flash.events.EventDispatcher
 #end
 {
 
 	#if java
-	public var changeCallback:IValueChangeCallback;
+	public var changeCallback:com.gt.towers.interfaces.IValueChangeCallback;
 	private var _map:java.util.HashMap<Int, Int>;
 	#elseif flash
 	private var _map:Map<Int, Int>;
@@ -108,10 +96,10 @@ class IntIntMap extends EventDispatcher
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():NativeArray<Int>
+	public function keys():java.NativeArray<Int>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Int> = new NativeArray<Int>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<Int> = new java.NativeArray<Int>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -124,10 +112,10 @@ class IntIntMap extends EventDispatcher
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<Int>
+	public function values():java.NativeArray<Int>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Int> = new NativeArray<Int>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<Int> = new java.NativeArray<Int>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -143,9 +131,9 @@ class IntIntMap extends EventDispatcher
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():Vector<Int>
+	public function keys():flash.Vector<Int>
 	{
-		var ret:Vector<Int> = new Vector<Int>();
+		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (key in _map.keys())
 			ret.push(key);
 		return ret ;
@@ -154,9 +142,9 @@ class IntIntMap extends EventDispatcher
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<Int>
+	public function values():flash.Vector<Int>
 	{
-		var ret:Vector<Int> = new Vector<Int>();
+		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;
@@ -168,21 +156,6 @@ class IntIntMap extends EventDispatcher
 	{
 		var keys = bundle.keys();
 		var i:Int = 0;
-	/*	if (!bundle.enough())
-		{
-			var ret:IntIntMap = new IntIntMap();
-			var diff:Int = 0;
-			while (i < keys.length)
-			{
-				diff = bundle.get(keys[i]) - get(keys[i]);
-				if (diff > 0)
-					ret.set(keys[i], diff);
-				i++;
-			}
-			throw new GameError(0, "IntIntMap not enough. you need more.");
-			return;
-		}*/
-		
 		while (i < keys.length)
 		{
 			reduce(keys[i], bundle.get(keys[i]));
@@ -191,10 +164,10 @@ class IntIntMap extends EventDispatcher
 	}
 	public function reduce(key:Int, value:Int):Void
 	{
-		if (!exists(key))
+		if( !exists(key) )
 			throw new GameError(1, key + " not found.", key);
 
-		if (key != ResourceType.CURRENCY_REAL && key != ResourceType.POINT && get(key) < value)
+		if( key != ResourceType.CURRENCY_REAL && key != ResourceType.POINT && get(key) < value )
 			throw new GameError(0, key + " not enough. you need " + (value-get(key)) +" more.", key);
 
 		set(key, get(key) - value);
@@ -215,7 +188,7 @@ class IntIntMap extends EventDispatcher
 	{
 		//if (!exists(key))
 		//	throw new GameError(1, "key " + key + " not found.");
-		if (exists(key))
+		if( exists(key) )
 			set(key, get(key) + value);
 		else
 			set(key, value);
@@ -227,14 +200,13 @@ class IntIntMap extends EventDispatcher
 		return keis[ Math.floor( Math.random() * keis.length ) ];
 	}
 	
-	
-	private function dispatchChangeEvent (key:Int, from:Int, to:Int, exists) :Void
+	private function dispatchChangeEvent (key:Int, from:Int, to:Int, exists) : Void
 	{
 		if( from == to )
 			return;
 		
 	#if java
-		if ( changeCallback != null )
+		if( changeCallback != null )
 		{
 			if( exists )
 				changeCallback.update( key, from, to );
@@ -243,7 +215,7 @@ class IntIntMap extends EventDispatcher
 		}
 	#elseif flash
 		//if( hasEventListener ( CoreEvent.CHANGE ) )
-			dispatchEvent(new CoreEvent(CoreEvent.CHANGE, key, from, to) );
+		dispatchEvent(new com.gt.towers.events.CoreEvent(com.gt.towers.events.CoreEvent.CHANGE, key, from, to) );
 	#end
 	}
 	

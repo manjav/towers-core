@@ -1,16 +1,7 @@
 package com.gt.towers.utils.maps;
 import com.gt.towers.others.Arena;
-
-#if java
-	import java.util.Map;
-	import java.NativeArray;
-#elseif flash
-	import flash.Vector;
-#end
-
 class IntArenaMap
 {
-
 	#if java
 	private var _map:java.util.HashMap<Int, Arena>;
 	#elseif flash
@@ -54,12 +45,7 @@ class IntArenaMap
 	**/
 	public function get(key:Int) :Arena
 	{
-		#if java
 		return _map.get(key);
-		#elseif flash
-		return _map.get(key);
-		#end
-		return null;
 	}
 	
 	/**
@@ -83,11 +69,7 @@ class IntArenaMap
 	**/
 	public function remove(key:Int):Void
 	{
-		#if java
 		_map.remove(key);
-		#elseif flash
-		_map.remove(key);
-		#end
 	}
 
 	#if java
@@ -95,10 +77,10 @@ class IntArenaMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():NativeArray<Int>
+	public function keys():java.NativeArray<Int>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Int> = new NativeArray<Int>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<Int> = new java.NativeArray<Int>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -111,10 +93,10 @@ class IntArenaMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():NativeArray<Arena>
+	public function values():java.NativeArray<Arena>
 	{
-		var keis:NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:NativeArray<Arena> = new NativeArray<Arena>(keis.length);
+		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
+		var ret:java.NativeArray<Arena> = new java.NativeArray<Arena>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
@@ -130,9 +112,9 @@ class IntArenaMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():Vector<Int>
+	public function keys():flash.Vector<Int>
 	{
-		var ret:Vector<Int> = new Vector<Int>();
+		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (key in _map.keys())
 			ret.push(key);
 		return ret ;
@@ -141,13 +123,12 @@ class IntArenaMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<Arena>
+	public function values():flash.Vector<Arena>
 	{
-		var ret:Vector<Arena> = new Vector<Arena>();
+		var ret:flash.Vector<Arena> = new flash.Vector<Arena>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;
 	}
 	#end
-	
 }
