@@ -40,7 +40,7 @@ class Exchanger
 	public function exchange (item:ExchangeItem, now:Int, confirmedHards:Int=0):Int
 	{
 		if( item.category == ExchangeType.C100_FREES )
-			findRandomOutcome(item);
+			findRandomOutcome(item, now);
 		
 		// provide requirements
 		item.requirements = getRequierement(item, now);
@@ -128,10 +128,11 @@ class Exchanger
 		return MessageTypes.RESPONSE_SUCCEED;
 	}
 
-	public function findRandomOutcome(item:ExchangeItem) : Void
+	public function findRandomOutcome(item:ExchangeItem, now:Int) : Void
 	{
-		var openedChests = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.FREE_CHEST_OPENED) : game.player.getResource(ResourceType.BATTLE_CHEST_OPENED);
-		item.outcome = item.category == ExchangeType.C110_BATTLES ? getBattleBook(openedChests) : getFreeBook(openedChests);
+		var bookIndex = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.FREE_CHEST_OPENED) : getearnedBattleBooks(now);
+		trace(game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) + " ==> " + bookIndex);
+		item.outcome = item.category == ExchangeType.C110_BATTLES ? getBattleBook(bookIndex) : getFreeBook(bookIndex);
 		item.outcomes = new IntIntMap();
 		item.outcomes.set(item.outcome, game.player.get_arena(0));
 	}
@@ -250,6 +251,20 @@ class Exchanger
 			return 100 * Math.round(count * 0.01);
 		else
 			return 1000 * Math.round(count * 0.001);
+	}
+	
+	public function getearnedBattleBooks(now:Int) : Int
+	{
+		var i = 0;
+		var numClosed = 0;
+		var _items = items.values();
+		while ( i < _items.length )
+		{
+			if( _items[i].category == ExchangeType.C110_BATTLES && _items[i].getState(now) != ExchangeItem.CHEST_STATE_EMPTY )
+				numClosed ++;
+			i ++;
+		}
+		return game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) + numClosed;
 	}
 	
 	static function estimateBookOutcome( type:Int, arena:Int = 0 ) : IntIntMap
@@ -403,17 +418,17 @@ class Exchanger
 		return ExchangeType.BOOK_51_METAL;
 	}
 	
-	private function getBattleBook(openedBooks:Int) : Int
+	private function getBattleBook(earnedBooks:Int) : Int
 	{
-		if( openedBooks == 0 )
+		if( earnedBooks == 0 )
 			return ExchangeType.BOOK_51_METAL;
-		if( openedBooks % 5 == 0 )
+		if( earnedBooks % 4 == 0 )
 			return ExchangeType.BOOK_53_STARS;
-		if( openedBooks % 11 == 0 )
+		if( earnedBooks % 13 == 0 )
 			return ExchangeType.BOOK_54_SEA;
-		if( openedBooks % 19 == 0 )
+		if( earnedBooks % 23 == 0 )
 			return ExchangeType.BOOK_57_TREASURE;
-		if( openedBooks % 47 == 0 )
+		if( earnedBooks % 47 == 0 )
 			return ExchangeType.BOOK_59_DRAGON;
 		
 		return ExchangeType.BOOK_52_KNIGHT;
