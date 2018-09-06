@@ -123,7 +123,7 @@ class IntShopMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():Vector<ExchangeItem>
+	public function values():flash.Vector<ExchangeItem>
 	{
 		var ret:flash.Vector<ExchangeItem> = new flash.Vector<ExchangeItem>();
 		for (value in _map)

@@ -14,14 +14,43 @@ class IntIntMap extends flash.events.EventDispatcher
 	private var _map:Map<Int, Int>;
 	#end
 
+	#if java
+	@:overload
 	public function new()
 	{
-		#if java
 		_map = new java.util.HashMap<Int, Int>();
-		#elseif flash
+	}
+	@:overload
+	public function new(inputString:String)
+	{
+		_map = new java.util.HashMap<Int, Int>();
+		parse(inputString);
+	}
+	#elseif flash
+	public function new(inputString:String=null)
+	{
 		super();
 		_map = new Map<Int, Int>();
-		#end
+		
+		parse(inputString);
+	}
+	#end
+	
+	public function parse(inputString:String) : Void
+	{
+		if( inputString == null || inputString == "" )
+			return;
+		
+		var step:Int = 0;
+		var list:Array<String> = inputString.split(",");
+		var kayVal:Array<String>;
+		while ( step < list.length )
+		{
+			kayVal = list[step].split(":");
+			increase(Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0 );
+			//trace("reqsStr", list[listLen], Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0);
+			step ++;
+		}
 	}
 
 	/**
