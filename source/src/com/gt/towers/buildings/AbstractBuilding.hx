@@ -42,55 +42,26 @@ class AbstractBuilding
 		_level = value;
 	}
 	
-	public function get_upgradeCost():Int
+	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000];
+	static public var  UPGRADE_CARD:Array<Int> = [0,	2,	4,	 10,	 20,	50,		100,	200,	400,	800,	1000];
+	static public function get_upgradeCost(level:Int):Int
 	{
-		var costs = new IntIntMap();
-		if (get_level() < 11)
-		{
-			costs.set(0, 0);
-			costs.set(1, 10);
-			costs.set(2, 20);
-			costs.set(3, 50);
-			costs.set(4, 120);
-			costs.set(5, 300);
-			costs.set(6, 800);
-			costs.set(7, 2000);
-			costs.set(8, 5000);
-			costs.set(9, 10000);
-			costs.set(10, 20000);
-			return costs.get(get_level());
-		}
-		else
-			return Math.floor( Math.pow( 2, get_level() - 9 ) * 10000 );
+		if( level < UPGRADE_COST.length )
+			return UPGRADE_COST[level];
+		return Math.floor( Math.pow( 2, level - 9 ) * 10000 );
 	}
-	
-	public function get_upgradeCards():Int
+	static public function get_upgradeCards(level:Int) : Int
 	{		
-		var cards = new IntIntMap();
-		if (get_level() < 11)
-		{
-			cards.set(0, 0);
-			cards.set(1, 2);
-			cards.set(2, 4);
-			cards.set(3, 10);
-			cards.set(4, 20);
-			cards.set(5, 50);
-			cards.set(6, 100);
-			cards.set(7, 200);
-			cards.set(8, 400);
-			cards.set(9, 800);
-			cards.set(10, 1000);
-			return cards.get(get_level());
-		}
-		else
-			return Math.floor( Math.pow( 2, get_level() - 10 ) * 10000 );
+		if( level < UPGRADE_CARD.length )
+			return UPGRADE_CARD[level];
+		return Math.floor( Math.pow( 2, level - 10 ) * 10000 );
 	}
 	
 	public function get_upgradeRequirements():IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( ResourceType.CURRENCY_SOFT, get_upgradeCost() );
-		ret.set( type, get_upgradeCards() );
+		ret.set( ResourceType.CURRENCY_SOFT,	get_upgradeCost(get_level()) );
+		ret.set( type,							get_upgradeCards(get_level()) );
 		return ret;
 	}
 	
