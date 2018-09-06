@@ -24,9 +24,7 @@ class ResourceType
 	
 	public static var WIN_STREAK:Int = 1211;
 	
-	
 	public function new() {	}
-	
 	static public function isBuilding(type:Int) 
 	{
 		return (type >= 10 && type < 50) || (type >= 60 && type < 1000); 

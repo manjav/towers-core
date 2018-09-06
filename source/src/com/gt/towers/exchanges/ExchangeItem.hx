@@ -31,39 +31,8 @@ class ExchangeItem
 		this.outcomesStr = outsStr;
 		this.requirementsStr = reqsStr;
 		this.category = ExchangeType.getCategory(type);
-		
-		
-		var list:Array<String>;
-		var step:Int;
-		var kayVal:Array<String>;
-		//trace("type", type, "numExchanges", numExchanges, "expiredAt", expiredAt, "reqsStr", reqsStr, "outsStr", outsStr);
-		this.requirements = new IntIntMap();
-		if( reqsStr != "" )
-		{
-			list = reqsStr.split(",");
-			step = 0;
-			while ( step < list.length )
-			{
-				kayVal = list[step].split(":");
-				this.requirements.increase(Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0 );
-				//trace("reqsStr", list[listLen], Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0);
-				step ++;
-			}
-		}
-		
-		this.outcomes = new IntIntMap();
-		if( outsStr != "" )
-		{
-			list = outsStr.split(",");
-			step = 0;
-			while ( step < list.length )
-			{
-				kayVal = list[step].split(":");
-				this.outcomes.increase(Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0 );
-				//trace("outsStr", list[listLen], Std.parseInt(kayVal[0]), kayVal.length > 1 ? Std.parseInt(kayVal[1]) : 0);
-				step ++;
-			}
-		}
+		this.requirements = new IntIntMap(reqsStr);
+		this.outcomes = new IntIntMap(outsStr);
 	}
 	
 	public static var CHEST_STATE_EMPTY:Int = -1;

@@ -127,9 +127,9 @@ class StringFieldMap
 		Returns an Iterator over the keys of `this` Map.
 		The order of keys is undefined.
 	**/
-	public function keys():java.Vector<String>
+	public function keys():flash.Vector<String>
 	{
-		var ret:java.Vector<String> = new java.Vector<String>();
+		var ret:flash.Vector<String> = new flash.Vector<String>();
 		for (key in _map.keys())
 			ret.push(key);
 		return ret ;
@@ -138,9 +138,9 @@ class StringFieldMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():java.Vector<FieldData>
+	public function values():flash.Vector<FieldData>
 	{
-		var ret:java.Vector<FieldData> = new java.Vector<FieldData>();
+		var ret:flash.Vector<FieldData> = new flash.Vector<FieldData>();
 		for (value in _map)
 			ret.push(value);
 		return ret ;
