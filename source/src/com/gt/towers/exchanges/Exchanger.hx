@@ -131,7 +131,6 @@ class Exchanger
 	public function findRandomOutcome(item:ExchangeItem, now:Int) : Void
 	{
 		var bookIndex = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.FREE_CHEST_OPENED) : getearnedBattleBooks(now);
-		trace(game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) + " ==> " + bookIndex);
 		item.outcome = item.category == ExchangeType.C110_BATTLES ? getBattleBook(bookIndex) : getFreeBook(bookIndex);
 		item.outcomes = new IntIntMap();
 		item.outcomes.set(item.outcome, game.player.get_arena(0));

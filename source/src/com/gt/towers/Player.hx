@@ -1,12 +1,10 @@
 package com.gt.towers;
 import com.gt.towers.Game;
-import com.gt.towers.buildings.AbstractBuilding;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.constants.StickerType;
-import com.gt.towers.constants.MessageTypes;
-import com.gt.towers.socials.Challenge;
+import com.gt.towers.others.Quest;
+import com.gt.towers.utils.maps.IntQuestMap;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -15,22 +13,23 @@ import com.gt.towers.utils.maps.IntBuildingMap;
  * ...
  * @author Mansour Djawadi
  */
-
 class Player
 {
 	public var id:Int;
+	public var hardMode:Bool;
+	public var admin:Bool = false;
+	public var tutorialMode:Int = 0;
+	public var hasOperations:Bool = true;
 	public var invitationCode:String;
-	public var nickName:String = "no_nickName";
 	public var troopType:Int = -1;
+	public var prefs:IntStrMap;
+	public var quests:IntQuestMap;
 	public var resources:IntIntMap;
 	public var operations:IntIntMap;
 	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
-	public var hardMode:Bool;
-	public var prefs:com.gt.towers.utils.maps.IntStrMap;
-	public var tutorialMode:Int = 0;
-	public var hasOperations:Bool = true;
-	public var admin:Bool = false;
+	public var nickName:String = "no_nickName";
+
 	private var game:Game;
 #if flash
 	public var challenges:com.gt.towers.utils.maps.IntChallengeMap;

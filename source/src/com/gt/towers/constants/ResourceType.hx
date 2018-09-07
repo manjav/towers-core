@@ -16,6 +16,7 @@ class ResourceType
 
 	public static var CURRENCY_REAL:Int = 1101;
 	
+	public static var OPERATIONS_COUNT:Int = 1200;
 	public static var BATTLES_COUNT:Int = 1201;
 	public static var BATTLES_WINS:Int = 1202;
 	public static var BATTLE_CHEST_OPENED:Int = 1203;
