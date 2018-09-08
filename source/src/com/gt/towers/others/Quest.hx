@@ -1,6 +1,6 @@
 package com.gt.towers.others;
 import com.gt.towers.Player;
-import com.gt.towers.buildings.AbstractBuilding;
+import com.gt.towers.buildings.Card;
 import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
@@ -116,7 +116,7 @@ class Quest
 		var l = level - 1;
 		while ( l > 0 )
 		{
-			ret += AbstractBuilding.get_upgradeCards(l);
+			ret += Card.get_upgradeCards(l);
 			l --;
 		}
 		return ret;

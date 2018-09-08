@@ -14,7 +14,7 @@ import haxe.Int64;
  * ...
  * @author Mansour Djawadi
  */
-class Building extends AbstractBuilding
+class Building extends Card
 {
 #if java
 	var defender:Defender;
@@ -197,7 +197,7 @@ class Building extends AbstractBuilding
 	}
 	#end
 
-	public function getAbstract(type:Int) : AbstractBuilding
+	public function getAbstract(type:Int) : Card
 	{
 		if ( !game.player.buildings.exists(type) )
 			return null;

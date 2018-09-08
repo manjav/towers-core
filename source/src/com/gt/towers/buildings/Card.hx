@@ -11,7 +11,7 @@ import com.gt.towers.utils.maps.IntIntMap;
  * ...
  * @author Mansour Djawadi
  */
-class AbstractBuilding 
+class Card 
 {
 	public var type:Int;
 	public var category:Int;
