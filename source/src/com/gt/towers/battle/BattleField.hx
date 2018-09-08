@@ -64,9 +64,9 @@ class BattleField
 #end
 		
 		game_0.player.hardMode = false;
-		if ( singleMode )
+		if( singleMode )
 		{
-			if ( isOperation )
+			if( isOperation )
 			{
 				if( map.index == 2 )
 				{
@@ -80,7 +80,9 @@ class BattleField
 			}
 			else
 			{
-				var winStreak = game_0.player.resources.exists(ResourceType.WIN_STREAK) ? game_0.player.resources.get(ResourceType.WIN_STREAK) : 0;
+				var winStreak = game_0.player.getResource(ResourceType.WIN_STREAK);
+				if( winStreak < -100000 )
+					winStreak = 214748364;
 				arena = game_0.player.get_arena(0);
 				if( winStreak > 2 )
 					difficulty = arena + winStreak - 2;
@@ -92,8 +94,6 @@ class BattleField
 				if( difficulty != 0 )
 				{
 					var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty));
-					if( ep < 0 && difficulty > 0 )
-						ep = 2147483646;
 					game_1.player.resources.set(ResourceType.POINT, ep );
 				}
 			}
