@@ -21,7 +21,7 @@ class Building extends Card
 #end
 	public var place:Place;
 	public var troopType:Int = -2;
-	
+	public var maxLevel:Int = 10;
 	public var capacity:Int;
 	public var birthRate:Float;
 
@@ -39,9 +39,9 @@ class Building extends Card
 		
 		if( level == 0 )
 		{
-			var abs = getAbstract(type);
+			var abs = getCard(type);
 			if( abs != null && abs.get_level() > 0 )
-				level = abs.get_level();
+				level = game.player.isBot() ? abs.get_level() : cast(Math.min(maxLevel, abs.get_level()), Int);
 			else
 				level = 1;
 		}
@@ -197,7 +197,7 @@ class Building extends Card
 	}
 	#end
 
-	public function getAbstract(type:Int) : Card
+	public function getCard(type:Int) : Card
 	{
 		if ( !game.player.buildings.exists(type) )
 			return null;
