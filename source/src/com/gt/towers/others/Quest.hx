@@ -1,7 +1,6 @@
 package com.gt.towers.others;
 import com.gt.towers.Player;
 import com.gt.towers.buildings.Card;
-import com.gt.towers.buildings.Building;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.IntIntMap;
@@ -12,15 +11,15 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Quest 
 {
-	static public var TYPE_LEAGUEUP:Int = 0;
-	static public var TYPE_LEVELUP:Int = 1;
-	static public var TYPE_BATTLES:Int = 2;
-	static public var TYPE_OPERATIONS:Int = 3;
-	static public var TYPE_FRIENDLY_BATTLES:Int = 4;
-	static public var TYPE_CHALLENGES:Int = 5;
-	static public var TYPE_CARD_COLLECT:Int = 6;
-	static public var TYPE_CARD_UPGRADE:Int = 7;
-	static public var TYPE_BOOK_OPEN:Int = 8;
+	static public var TYPE_0_LEVELUP:Int = 0;
+	static public var TYPE_1_LEAGUEUP:Int = 1;
+	static public var TYPE_2_OPERATIONS:Int = 2;
+	static public var TYPE_3_BATTLES:Int = 3;
+	static public var TYPE_4_FRIENDLY_BATTLES:Int = 4;
+	static public var TYPE_5_CHALLENGES:Int = 5;
+	static public var TYPE_6_CARD_COLLECT:Int = 6;
+	static public var TYPE_7_CARD_UPGRADE:Int = 7;
+	static public var TYPE_8_BOOK_OPEN:Int = 8;
 	
 	/*static public var KEY_LEAGUEUP:Int = 101;
 	static public var KEY_LEVELUP:Int = 102;
@@ -73,21 +72,6 @@ class Quest
 	static public var KEY_BOOK_57_OPEN:Int = 57;
 	static public var KEY_BOOK_58_OPEN:Int = 58;
 	static public var KEY_BOOK_59_OPEN:Int = 59;*/
-	
-	static public function GET_ALL(player:Player):Array<Quest>
-	{
-		var arena:Int = player.get_arena(player.get_point());
-		var level:Int = player.get_level(player.get_xp());
-		var ret:Array<Quest> = [
-		new Quest(TYPE_LEAGUEUP,		ResourceType.POINT,				"1000:5,1002:8",	2,	arena),
-		new Quest(TYPE_LEVELUP,			ResourceType.XP,				"1000:2,1002:9",	2,	level),
-		new Quest(TYPE_CARD_COLLECT,	BuildingType.B11_BARRACKS,		"1000:5,1002:6",	10,	GET_COLLCTED_CARDS(player.buildings.get(11).get_level(), player.getResource(11))),
-		new Quest(TYPE_CARD_UPGRADE,	BuildingType.B11_BARRACKS,		"1000:5,1002:8",	3,	player.buildings.get(11).get_level()),
-		new Quest(TYPE_BATTLES,			ResourceType.BATTLES_COUNT,		"1000:4,1002:4",	10,	player.get_battlesCount()),
-		new Quest(TYPE_OPERATIONS,		ResourceType.OPERATIONS_COUNT,	"1000:4,1002:4",	10,	player.getLastOperation())
-		];
-		return ret;
-	}
 
 	public var id:Int;
 	public var key:Int;
@@ -96,18 +80,45 @@ class Quest
 	public var target:Int;
 	public var collected:Bool;
 	public var rewards:IntIntMap;
-	public function new(type:Int, key:Int, rewards:String, target:Int, value:Int) 
+	public function new(type:Int, key:Int, rewards:String, target:Int, player:Player) 
 	{
 		this.key = key;
 		this.type = type;
-		this.value = value;
+		this.value = GET_CURRENT_VALUE(player, type, key);
 		this.target = target;
 		this.rewards = new IntIntMap(/*passed() ? "" : */rewards);
 	}
-	
+
 	public function passed() : Bool
 	{
 		return value >= target;
+	}
+	
+	static public function GET_ALL(player:Player):Array<Quest>
+	{
+		var ret:Array<Quest> = [
+		new Quest(TYPE_0_LEVELUP,		ResourceType.XP,				"1000:2,1002:9",	2,	player),
+		new Quest(TYPE_1_LEAGUEUP,		ResourceType.POINT,				"1000:5,1002:8",	2,	player),
+		new Quest(TYPE_2_OPERATIONS,	ResourceType.OPERATIONS_COUNT,	"1000:4,1002:4",	10,	player),
+		new Quest(TYPE_3_BATTLES,		ResourceType.BATTLES_COUNT,		"1000:4,1002:4",	10,	player),
+		new Quest(TYPE_6_CARD_COLLECT,	BuildingType.B11_BARRACKS,		"1000:5,1002:6",	10,	player),
+		new Quest(TYPE_7_CARD_UPGRADE,	BuildingType.B11_BARRACKS,		"1000:5,1002:8",	3,	player)
+		];
+		return ret;
+	}
+	
+	static public function GET_CURRENT_VALUE(player:Player, type:Int, key:Int) : Int
+	{
+		return switch ( type )
+		{
+			case 0 :	player.get_level(player.get_xp());
+			case 1 :	player.get_arena(player.get_point());
+			case 2 :	player.getLastOperation();
+			case 3 :	player.get_battlesCount();
+			case 6 :	GET_COLLCTED_CARDS(player.buildings.get(key).get_level(), player.getResource(key));
+			case 7 :	player.buildings.get(key).get_level();
+			default: 	0;
+		}
 	}
 	
 	static public function GET_COLLCTED_CARDS(level:Int, count:Int):Int 
@@ -121,7 +132,6 @@ class Quest
 		}
 		return ret;
 	}
-	
 }
 //'P' plays with card 'C' only
 //'W' wins with card 'C'
