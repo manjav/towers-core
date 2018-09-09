@@ -1,7 +1,6 @@
 package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
-import com.gt.towers.InitData;
 import com.gt.towers.calculators.AvailableAtCalculator;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.MessageTypes;
@@ -18,7 +17,7 @@ import com.gt.towers.utils.maps.IntShopMap;
  */
 class Exchanger 
 {
-	private var game:Game;
+	var game:Game;
 	public var items:IntShopMap;
 #if java
 	public var updater:ExchangeUpdater;
@@ -189,7 +188,7 @@ class Exchanger
 			else if( ResourceType.isBuilding(reqKeys[i])) 
 				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
 			else if ( ResourceType.isBook(reqKeys[i]))
-				hards += toHard(estimateBookOutcome(reqKeys[i], map.get(reqKeys[i])));
+				hards += toHard(estimateBookOutcome(reqKeys[i], map.get(reqKeys[i]), 1));
 			i ++;
 		}
 		return softToHard(softs) + realToHard(reals) + hards ;
@@ -266,11 +265,11 @@ class Exchanger
 		return game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) + numClosed;
 	}
 	
-	static function estimateBookOutcome( type:Int, arena:Int = 0 ) : IntIntMap
+	static function estimateBookOutcome(type:Int, arena:Int, coef:Float) : IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( BuildingType.B10_BARRACKS, ExchangeType.getNumTotalCards(type, arena) );
-		ret.set( ResourceType.CURRENCY_SOFT, ExchangeType.getNumSofts(type, arena) );
+		ret.set( BuildingType.B10_BARRACKS, ExchangeType.getNumTotalCards(type, arena, coef) );
+		ret.set( ResourceType.CURRENCY_SOFT, ExchangeType.getNumSofts(type, arena, coef) );
 		return ret;
 	}
 	
@@ -306,7 +305,7 @@ class Exchanger
 	{
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
-		var totalCards = ExchangeType.getNumTotalCards(type, arena) + 1;
+		var totalCards = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef) + 1;
 		var slotSize = Math.ceil(totalCards / numSlots);
 		var numCards:Int = 0;
 		var accCards:Int = 0;
@@ -316,7 +315,7 @@ class Exchanger
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
-		trace("addNewCard",  numSlots, isDaily);
+			trace("addNewCard",  numSlots, isDaily);
             if( numSlots == 0 && !isDaily ) // last slot
 				addNewCard(ret);
 			
@@ -329,7 +328,7 @@ class Exchanger
             ret.set( ResourceType.CURRENCY_HARD, type - 50 );
         
         // softs
-        var softDec = ExchangeType.getNumSofts(type, arena) * 0.1;
+        var softDec = ExchangeType.getNumSofts(type, arena, game.player.splitTestCoef) * 0.1;
 		ret.set( ResourceType.CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
 		
 		return ret;

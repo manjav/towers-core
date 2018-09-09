@@ -105,9 +105,9 @@ class ExchangeType
 		}
 	}
 
-	public static function getNumTotalCards(type:Int, arena:Int):Int
+	public static function getNumTotalCards(type:Int, arena:Int, coef:Float):Int
 	{
-		return switch ( type )
+		var ret =  switch ( type )
 		{
 			case 51 : 3		+ arena;
 			case 52 : 3		+ arena;
@@ -120,11 +120,12 @@ class ExchangeType
 			case 59 : 150	+ 40	* arena;
 			default : 0;
 		}
+		return Math.floor( ret * coef);
 	}
 
-	public static function getNumSofts(type:Int, arena:Int):Int
+	public static function getNumSofts(type:Int, arena:Int, coef:Float):Int
 	{
-		return Math.round(Math.pow(getNumTotalCards(type, arena), 1.5));
+		return Math.round(Math.pow(getNumTotalCards(type, arena, coef), 1.5));
 	}
 
 	public static function isMagic(type:Int) : Bool
