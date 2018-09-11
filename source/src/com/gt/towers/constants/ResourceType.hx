@@ -16,16 +16,18 @@ class ResourceType
 
 	public static var CURRENCY_REAL:Int = 1101;
 	
-	public static var OPERATIONS_COUNT:Int = 1200;
-	public static var BATTLES_COUNT:Int = 1201;
+	public static var OPERATIONS:Int = 1200;
+	public static var BATTLES:Int = 1201;
 	public static var BATTLES_WINS:Int = 1202;
-	public static var BATTLE_CHEST_OPENED:Int = 1203;
-	public static var BATTLES_COUNT_WEEKLY:Int = 1204;
-	public static var FREE_CHEST_OPENED:Int = 1205;
+	public static var BOOK_OPENED_BATTLE:Int = 1203;
+	public static var BATTLES_WEEKLY:Int = 1204;
+	public static var BOOK_OPENED_FREE:Int = 1205;
+	public static var BATTLES_FRIENDLY:Int = 1206;
+	public static var CHALLENGES:Int = 1207;
 	
 	public static var WIN_STREAK:Int = 1211;
 	
-	public function new() {	}
+	public function new() {}
 	static public function isBuilding(type:Int) 
 	{
 		return (type >= 10 && type < 50) || (type >= 60 && type < 1000); 

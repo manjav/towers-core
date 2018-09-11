@@ -102,7 +102,7 @@ class Exchanger
 		// reset item
 		if( item.category == ExchangeType.C100_FREES )
 		{
-			game.player.resources.increase(ResourceType.FREE_CHEST_OPENED, 1);
+			game.player.resources.increase(ResourceType.BOOK_OPENED_FREE, 1);
 			item.numExchanges = item.expiredAt < now ? 1 : item.numExchanges + 1;
 			item.expiredAt = now + ExchangeType.getCooldown(item.type);
 			item.outcome = 0;
@@ -111,7 +111,7 @@ class Exchanger
 		}
 		else if( item.category == ExchangeType.C110_BATTLES )
 		{
-			game.player.resources.increase(ResourceType.BATTLE_CHEST_OPENED, 1);
+			game.player.resources.increase(ResourceType.BOOK_OPENED_BATTLE, 1);
 			item.outcome = item.expiredAt = 0;
 			item.outcomes = new IntIntMap();
 			item.requirements = new IntIntMap();
@@ -129,7 +129,7 @@ class Exchanger
 
 	public function findRandomOutcome(item:ExchangeItem, now:Int) : Void
 	{
-		var bookIndex = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.FREE_CHEST_OPENED) : getearnedBattleBooks(now);
+		var bookIndex = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.BOOK_OPENED_FREE) : getearnedBattleBooks(now);
 		item.outcome = item.category == ExchangeType.C110_BATTLES ? getBattleBook(bookIndex) : getFreeBook(bookIndex);
 		item.outcomes = new IntIntMap();
 		item.outcomes.set(item.outcome, game.player.get_arena(0));
@@ -262,7 +262,7 @@ class Exchanger
 				numClosed ++;
 			i ++;
 		}
-		return game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) + numClosed;
+		return game.player.getResource(ResourceType.BOOK_OPENED_BATTLE) + numClosed;
 	}
 	
 	static function estimateBookOutcome(type:Int, arena:Int, coef:Float) : IntIntMap
@@ -335,7 +335,7 @@ class Exchanger
 	}
 	function addNewCard(map:IntIntMap) : Void
 	{
-		var openedBook:Int = game.player.getResource(ResourceType.BATTLE_CHEST_OPENED);
+		var openedBook:Int = game.player.getResource(ResourceType.BOOK_OPENED_BATTLE);
 		trace("openedBook", openedBook);
 		if( openedBook == 0 )
 		{
@@ -363,7 +363,7 @@ class Exchanger
 		while( a < allCards.size() )
 		{
 			var newCard = allCards.get(a);
-			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.BATTLE_CHEST_OPENED) )
+			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.BOOK_OPENED_BATTLE) )
 			{
 				map.set( newCard, 2 );
 				return;

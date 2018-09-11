@@ -23,7 +23,7 @@ class Player
 	public var invitationCode:String;
 	public var troopType:Int = -1;
 	public var prefs:IntStrMap;
-	public var quests:IntQuestMap;
+	public var quests:Array<Quest>;
 	public var resources:IntIntMap;
 	public var operations:IntIntMap;
 	public var buildings:IntBuildingMap;
@@ -81,6 +81,8 @@ class Player
 			prefs.set(kies[i], initData.prefs.get(kies[i]) );
 			i++;
 		}
+		
+		quests = new Array<Quest>();
 	}
 	
 	public function getLastOperation():Int
@@ -105,7 +107,7 @@ class Player
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
 	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
 	public function get_hards():Int { return resources.get(ResourceType.CURRENCY_HARD); }
-	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES_COUNT); }
+	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES); }
 	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
 	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
 	public function get_level(xp:Int):Int
@@ -238,5 +240,17 @@ class Player
 			return !inDeckTutorial();
 		return false;
 	}
+
 	#end
+	
+	public function getQuestIndex(type:Float) : Int
+	{
+		var i = 0;
+		while ( i < quests.length )
+		{
+			if( quests[i].type == type )
+				return i;
+		}
+		return -1;
+	}
 }
