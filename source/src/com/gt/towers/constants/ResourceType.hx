@@ -23,7 +23,7 @@ class ResourceType
 	public static var BATTLES_WEEKLY:Int = 1204;
 	public static var BOOK_OPENED_FREE:Int = 1205;
 	public static var BATTLES_FRIENDLY:Int = 1206;
-	public static var CHALLENGES:Int = 1207;
+	public static var CHALLENGES:Int = 1220;
 	
 	public static var WIN_STREAK:Int = 1211;
 	

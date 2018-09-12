@@ -32,10 +32,7 @@ class Card
 	
 	public function get_level():Int
 	{
-		if ( game.player.inFriendlyBattle )
-			return 5;
-		else
-			return _level;
+		return game.player.inFriendlyBattle ? 5 : _level;
 	}	
 	public function set_level(value:Int):Void
 	{
@@ -55,6 +52,17 @@ class Card
 		if( level < UPGRADE_CARD.length )
 			return UPGRADE_CARD[level];
 		return Math.floor( Math.pow( 2, level - 10 ) * 10000 );
+	}
+	static public function getTotalCollected(level:Int, count:Int) : Int 
+	{
+		var ret = count + 0;
+		var l = level - 1;
+		while ( l > 0 )
+		{
+			ret += Card.get_upgradeCards(l);
+			l --;
+		}
+		return ret;
 	}
 	
 	public function get_upgradeRequirements():IntIntMap
@@ -137,6 +145,12 @@ class Card
 		return game.player.buildings.exists(type);
 	}
 	
+	
+	public function count() : Int
+	{
+		return game.player.resources.get(type);
+	}
+
 	public function toSoft(count:Int = 1):Int
 	{
 		return Exchanger.cardToSoft(count, improveLevel);

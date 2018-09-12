@@ -121,7 +121,26 @@ class Challenge
 	}
 	
 	#if java
-	public static function getCapacity(type:Int):Int
+	static public function getlowestJoint(player:Player) : Int
+	{
+		var i = 0;
+		var ret = ResourceType.CHALLENGES + 1;
+		var lowest = 9999999;
+		var joints = 0;
+		while( i < 2 )
+		{
+			joints = player.getResource(ResourceType.CHALLENGES + i + 1 );
+			if( lowest > joints )
+			{
+				lowest = joints;
+				ret = ResourceType.CHALLENGES + i + 1;
+			}
+			i ++;
+		}
+		return ret;
+	}
+	
+	static public function getCapacity(type:Int):Int
 	{
 		return switch( type )
 		{
@@ -130,7 +149,7 @@ class Challenge
 		}
 	}
 	
-	public static function getWaitTime(type:Int) 
+	static public function getWaitTime(type:Int) 
 	{
 		return switch( type )
 		{
@@ -139,7 +158,7 @@ class Challenge
 		}
 	}
 	
-	public static function getDuration(type:Int):Int
+	static public function getDuration(type:Int):Int
 	{
 		return switch( type )
 		{
@@ -148,7 +167,7 @@ class Challenge
 		}
 	}
 	
-	public static function getRewards(type:Int):IntArenaMap
+	static public function getRewards(type:Int):IntArenaMap
 	{
 		var ret = new IntArenaMap();
 		if( type == 1 )
@@ -172,7 +191,7 @@ class Challenge
 		return ret;
 	}
 	
-	public static function getRequiements(type:Int):IntIntMap
+	static public function getRequiements(type:Int):IntIntMap
 	{
 		var ret = new IntIntMap();
 		switch( type )
@@ -185,7 +204,7 @@ class Challenge
 	#end
 	
 	#if flash
-	public static function getTargetLabel(type:Int) : String
+	static public function getTargetLabel(type:Int) : String
 	{
 		return "challenge_wins";
 	}

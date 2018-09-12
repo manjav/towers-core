@@ -53,6 +53,9 @@ class ExchangeType
 	static public var C121_MAGIC:Int = 121;
 	static public var C122_MAGIC:Int = 122;
 	static public var C123_MAGIC:Int = 123;
+	
+	static public var C130_QUESTS:Int = 130;
+	static public var C150_CHALLENGES:Int = 150;
 
 	static public var BOOKS_50:Int = 50;
 	static public var BOOK_51_METAL:Int = 51;

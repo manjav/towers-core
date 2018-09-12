@@ -78,4 +78,17 @@ class IntChallengeMap
 			ret.push(value);
 		return ret ;
 	}
+	
+	public function getStartedChallenge(now : Int) : Int
+	{
+		var i = 0;
+		var keys = keys();
+		while ( i < keys.length )
+		{
+			if( get(keys[i]).getState(now) == Challenge.STATE_STARTED )
+				return keys[i];
+			i ++;
+		}
+		return -1;
+	}
 }

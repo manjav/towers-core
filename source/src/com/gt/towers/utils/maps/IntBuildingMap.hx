@@ -1,5 +1,6 @@
 package com.gt.towers.utils.maps;
 import com.gt.towers.buildings.Building;
+import com.gt.towers.buildings.Card;
 /**
  * ...
  * @author Mansour Djawadi
@@ -119,7 +120,7 @@ class IntBuildingMap
 	public function keys():flash.Vector<Int>
 	{
 		var ret:flash.Vector<Int> = new flash.Vector<Int>();
-		for (key in _map.keys())
+		for( key in _map.keys() )
 			ret.push(key);
 		return ret ;
 	}
@@ -130,18 +131,74 @@ class IntBuildingMap
 	public function values():flash.Vector<Building>
 	{
 		var ret:flash.Vector<Building> = new flash.Vector<Building>();
-		for (value in _map)
+		for( value in _map )
 			ret.push(value);
 		return ret ;
 	}
 	#end
 	
-	public function getRandomKey():Int
+	public function getRandomKey() : Int
 	{
 		var keis = keys();
 		var t = keis[ Math.floor( Math.random() * keis.length ) ];
-		if ( t >= 1000 )
+		if( t >= 1000 )
 			return getRandomKey();
 		return t;
+	}
+	
+	public function getLowestLevel() : Int
+	{
+		var ret = 11;
+		var lvl = 100;
+		var keys = keys();
+		var i = 0;
+		while ( i < keys.length )
+		{
+			if( get(keys[i]).get_level() < lvl )
+			{
+				lvl = get(keys[i]).get_level();
+				ret = keys[i];
+			}
+			i ++;
+		}
+		return ret;
+	}
+	
+	public function getHighestLevel() : Int
+	{
+		var ret = 11;
+		var lvl = 0;
+		var keys = keys();
+		var i = 0;
+		while ( i < keys.length )
+		{
+			if( get(keys[i]).get_level() > lvl )
+			{
+				lvl = get(keys[i]).get_level();
+				ret = keys[i];
+			}
+			i ++;
+		}
+		return ret;
+	}
+	
+	public function getLowestCard() : Int
+	{
+		var ret = 11;
+		var numCards = 9999999;
+		var i = 0;
+		var keys = keys();
+		var collected = 0;
+		while ( i < keys.length )
+		{
+			collected = Card.getTotalCollected(get(keys[i]).get_level(), get(keys[i]).count());
+			if( collected < numCards )
+			{
+				numCards = collected + 0;
+				ret = keys[i];
+			}
+			i ++;
+		}
+		return ret;		
 	}
 }

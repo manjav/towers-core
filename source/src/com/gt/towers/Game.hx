@@ -39,11 +39,11 @@ class Game
 		levels = [0, 20, 50, 100, 200, 400, 1000, 2000, 5000, 10000, 20000, 40000, 80000];
 		
 		fillArenas();
+		fieldProvider = new FieldProvider(this);
 		player = new Player(this, data);
 		exchanger = new Exchanger(this);
 		lobby = new Lobby(this);
 		calculator = new FeatureCalculator(this);
-		fieldProvider = new FieldProvider(this);
 	}
 	
 	function fillArenas() : Void
