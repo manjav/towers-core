@@ -2,8 +2,8 @@ package com.gt.towers.others;
 import com.gt.towers.Player;
 import com.gt.towers.buildings.Card;
 import com.gt.towers.constants.BuildingType;
-import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.ResourceType;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.utils.maps.IntIntMap;
 
@@ -19,25 +19,35 @@ class Quest
 	public var target:Int;
 	public var current:Int;
 	public var nextStep:Int;
-	public var collected:Bool;
+	//public var collected:Bool;
 	public var rewards:IntIntMap;
 
-	public function new(player:Player, id:Int, type:Int, key:Int, nextStep:Int, collected:Bool) 
+#if java
+	public function new(player:Player, type:Int, key:Int, nextStep:Int) 
 	{
+		this.current = Quest.getCurrent(player, type, key);
+		this.target = Quest.getTarget(type, nextStep);
+		this.rewards = Quest.getReward(type, nextStep);
+#elseif flash
+	public function new(id:Int, type:Int, key:Int, nextStep:Int, current:Int, target:Int, rewards:IntIntMap) 
+	{
+		this.current = current;
+		this.target = target;
+		this.rewards = rewards;
 		this.id = id;
+#end
 		this.type = type;
 		this.key = key;
 		this.nextStep = nextStep;
-		this.collected = collected;
-		this.current = Quest.getCurrent(player, type, key);
-		this.target = getTarget(type, nextStep);
-		this.rewards = new IntIntMap();///*passed() ? "" : */rewards);
+		//this.collected = collected;
 	}
 	
 	public function passed() : Bool
 	{
 		return current >= target;
 	}
+
+
 	
 	
 
@@ -52,20 +62,22 @@ class Quest
 	static public var TYPE_8_CARD_UPGRADE:Int = 8;
 	static public var TYPE_9_BOOK_OPEN:Int = 9;
 	
+#if java
+	static public inline var MAX_QUESTS:Int = 4;
 	static public var MAX_STEP:Array<Int> = [20, 10, 4, 100, 100, 20, 10, 10, 100, 100];
 
 	static public function instantiate(type:Int, player:Player) : Quest
 	{
-		var key = Quest.getKey(type);
-		return new Quest(player, -1, type, key, Quest.getNextStep(player, type, key), false);
+		var key = Quest.getKey(player, type);
+		return new Quest(player, type, key, Quest.getNextStep(player, type, key));
 	}	
-
 	
 	static public function fill(player:Player):Void
 	{
-		trace("fill", player.quests.length);
-		if ( player.quests.length >= 4 ){trace("fine");
-		return;}
+		if( player.quests == null )
+			player.quests = new Array<Quest>();
+		if( player.quests.length >= MAX_QUESTS )
+			return;
 			
 		var i = player.quests.length > 0 ? player.quests[player.quests.length - 1].type : -1;
 		if( i == 9 )
@@ -74,11 +86,9 @@ class Quest
 			i ++;
 		while( i < 10 )
 		{
-			trace(i);
-			if( player.getQuestIndex(i) == -1 )
+			if( player.getQuestIndexByType(i) == -1 )
 			{
 				player.quests.push( Quest.instantiate(i, player));
-				trace(i + " pushed");
 				fill(player);
 				return;
 			}
@@ -86,7 +96,7 @@ class Quest
 		}
 	}
 	
-	static public function getKey(type:Int) : Int
+	static public function getKey(player:Player, type:Int):Int
 	{
 		return switch ( type )
 		{
@@ -96,28 +106,10 @@ class Quest
 			case 3 :	ResourceType.BATTLES;
 			case 4 :	ResourceType.BATTLES_WINS;
 			case 5 :	ResourceType.BATTLES_FRIENDLY;
-			case 6 :	ResourceType.CHALLENGES;
-			case 7 :	BuildingType.B11_BARRACKS;
-			case 8 :	BuildingType.B11_BARRACKS;
+			case 6 :	Challenge.getlowestJoint(player);
+			case 7 :	player.buildings.getLowestLevel();
+			case 8 :	player.buildings.getLowestCard();
 			case 9 :	ResourceType.BOOK_OPENED_FREE;
-			default: 	0;
-		}
-	}
-	
-	static public function getCurrent(player:Player, type:Int, key:Int) : Int
-	{
-		return switch ( type )
-		{
-			case 0 :	player.get_level(player.get_xp());
-			case 1 :	player.get_arena(player.get_point());
-			case 2 :	player.getLastOperation();
-			case 3 :	player.get_battlesCount();
-			case 4 :	player.get_battleswins();
-			case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
-			case 6 :	player.getResource(ResourceType.CHALLENGES);
-			case 7 :	getCollectedCards(player.buildings.get(key).get_level(), player.getResource(key));
-			case 8 :	player.buildings.get(key).get_level();
-			case 9 :	player.getResource(key);
 			default: 	0;
 		}
 	}
@@ -133,14 +125,13 @@ class Quest
 			case 4 :	CoreUtils.round( Math.pow(1.4, step) * 7);
 			case 5 :	CoreUtils.round( Math.pow(1.4, step) * 5);
 			case 6 :	step * 5;
-			case 7 :	getCollectedCards(step, 0);
+			case 7 :	Card.getTotalCollected(step, 0);
 			case 8 :	step;
 			case 9 :	CoreUtils.round( Math.pow(1.4, step) * 5);
 			default: 	0;
 		}
 	}
 	
-		
 	static function getNextStep(player:Player, type:Int, key:Int) : Int 
 	{
 		var i = 1;
@@ -154,17 +145,32 @@ class Quest
 		return i;
 	}
 	
-	static public function getCollectedCards(level:Int, count:Int) : Int 
+	static public function getReward(type:Int, step:Int):IntIntMap
 	{
-		var ret = count + 0;
-		var l = level - 1;
-		while ( l > 0 )
-		{
-			ret += Card.get_upgradeCards(l);
-			l --;
-		}
+		var ret:IntIntMap = new IntIntMap();
+		ret.set(ResourceType.XP,			CoreUtils.round( Math.pow(1.4, step) * 1));
+		ret.set(ResourceType.CURRENCY_SOFT,	CoreUtils.round( Math.pow(1.4, step) * 7));
 		return ret;
 	}
+#end
+
+static public function getCurrent(player:Player, type:Int, key:Int) : Int
+{
+	return switch ( type )
+	{
+		case 0 :	player.get_level(player.get_xp());
+		case 1 :	player.get_arena(player.get_point());
+		case 2 :	player.getLastOperation();
+		case 3 :	player.get_battlesCount();
+		case 4 :	player.get_battleswins();
+		case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
+		case 6 :	player.getResource(ResourceType.CHALLENGES + key + 1);
+		case 7 :	Card.getTotalCollected(player.buildings.get(key).get_level(), player.getResource(key));
+		case 8 :	player.buildings.get(key).get_level();
+		case 9 :	player.getResource(key);
+		default: 	0;
+	}
+}
 }
 //'P' plays with card 'C' only
 //'W' wins with card 'C'
