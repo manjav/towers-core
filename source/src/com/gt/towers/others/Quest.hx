@@ -3,6 +3,7 @@ import com.gt.towers.Player;
 import com.gt.towers.buildings.Card;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
+import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.utils.maps.IntIntMap;
@@ -145,6 +146,9 @@ class Quest
 		return i;
 	}
 	
+
+#end
+
 	static public function getReward(type:Int, step:Int):IntIntMap
 	{
 		var ret:IntIntMap = new IntIntMap();
@@ -152,25 +156,31 @@ class Quest
 		ret.set(ResourceType.CURRENCY_SOFT,	CoreUtils.round( Math.pow(1.4, step) * 7));
 		return ret;
 	}
-#end
-
-static public function getCurrent(player:Player, type:Int, key:Int) : Int
-{
-	return switch ( type )
+	
+	static public function getExchangeItem(type:Int, step:Int) : ExchangeItem
 	{
-		case 0 :	player.get_level(player.get_xp());
-		case 1 :	player.get_arena(player.get_point());
-		case 2 :	player.getLastOperation();
-		case 3 :	player.get_battlesCount();
-		case 4 :	player.get_battleswins();
-		case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
-		case 6 :	player.getResource(ResourceType.CHALLENGES + key + 1);
-		case 7 :	Card.getTotalCollected(player.buildings.get(key).get_level(), player.getResource(key));
-		case 8 :	player.buildings.get(key).get_level();
-		case 9 :	player.getResource(key);
-		default: 	0;
+		var ret:ExchangeItem = new ExchangeItem(ResourceType.QUESTS + type + 1);
+		ret.outcomes = getReward(type, step);
+		return ret;
 	}
-}
+
+	static public function getCurrent(player:Player, type:Int, key:Int) : Int
+	{
+		return switch ( type )
+		{
+			case 0 :	player.get_level(player.get_xp());
+			case 1 :	player.get_arena(player.get_point());
+			case 2 :	player.getLastOperation();
+			case 3 :	player.get_battlesCount();
+			case 4 :	player.get_battleswins();
+			case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
+			case 6 :	player.getResource(key);
+			case 7 :	Card.getTotalCollected(player.buildings.get(key).get_level(), player.getResource(key));
+			case 8 :	player.buildings.get(key).get_level();
+			case 9 :	player.getResource(key);
+			default: 	0;
+		}
+	}
 }
 //'P' plays with card 'C' only
 //'W' wins with card 'C'

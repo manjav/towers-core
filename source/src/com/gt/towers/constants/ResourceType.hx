@@ -24,6 +24,7 @@ class ResourceType
 	public static var BOOK_OPENED_FREE:Int = 1205;
 	public static var BATTLES_FRIENDLY:Int = 1206;
 	public static var CHALLENGES:Int = 1220;
+	public static var QUESTS:Int = 1230;
 	
 	public static var WIN_STREAK:Int = 1211;
 	

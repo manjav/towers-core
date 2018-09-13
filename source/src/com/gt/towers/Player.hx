@@ -81,8 +81,6 @@ class Player
 			prefs.set(kies[i], initData.prefs.get(kies[i]) );
 			i++;
 		}
-		
-		quests = new Array<Quest>();
 	}
 	
 	public function getLastOperation():Int
@@ -243,13 +241,25 @@ class Player
 
 	#end
 	
-	public function getQuestIndex(type:Float) : Int
+	public function getQuestIndexByType(type:Int) : Int
 	{
 		var i = 0;
 		while ( i < quests.length )
 		{
 			if( quests[i].type == type )
 				return i;
+			i ++;
+		}
+		return -1;
+	}
+	public function getQuestIndexById(id:Int) : Int
+	{
+		var i = 0;
+		while ( i < quests.length )
+		{
+			if( quests[i].id == id )
+				return i;
+			i ++;
 		}
 		return -1;
 	}

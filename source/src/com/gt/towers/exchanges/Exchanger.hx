@@ -40,7 +40,8 @@ class Exchanger
 	{
 		if( item.category == ExchangeType.C100_FREES )
 			findRandomOutcome(item, now);
-		
+		else if( item.category == ResourceType.CHALLENGES )
+			item.outcomes.set(item.type, 1);
 		// provide requirements
 		item.requirements = getRequierement(item, now);
 		
@@ -172,7 +173,6 @@ class Exchanger
 	static public function toHard(map:IntIntMap) : Int
 	{
 		var reqKeys = map.keys();
-		var keys = 0;
 		var softs = 0;
 		var hards = 0;
 		var reals = 0;

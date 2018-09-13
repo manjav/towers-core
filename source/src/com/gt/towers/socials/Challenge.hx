@@ -1,4 +1,5 @@
 package com.gt.towers.socials;
+import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.others.Arena;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.utils.maps.IntArenaMap;
@@ -123,8 +124,10 @@ class Challenge
 	#if java
 	static public function getlowestJoint(player:Player) : Int
 	{
-		var i = 0;
 		var ret = ResourceType.CHALLENGES + 1;
+		return ret;
+		/*
+		var i = 0;
 		var lowest = 9999999;
 		var joints = 0;
 		while( i < 2 )
@@ -137,7 +140,7 @@ class Challenge
 			}
 			i ++;
 		}
-		return ret;
+		return ret;*/
 	}
 	
 	static public function getCapacity(type:Int):Int
@@ -191,6 +194,14 @@ class Challenge
 		return ret;
 	}
 	
+
+	#elseif flash
+	static public function getTargetLabel(type:Int) : String
+	{
+		return "challenge_wins";
+	}
+	#end
+	
 	static public function getRequiements(type:Int):IntIntMap
 	{
 		var ret = new IntIntMap();
@@ -201,12 +212,12 @@ class Challenge
 		}
 		return ret;
 	}
-	#end
 	
-	#if flash
-	static public function getTargetLabel(type:Int) : String
+	static public function getExchangeItem(type:Int, arena:Int) : ExchangeItem
 	{
-		return "challenge_wins";
+		var ret:ExchangeItem = new ExchangeItem(ResourceType.CHALLENGES + type + 1);
+		ret.outcomes = new IntIntMap("1000:" + 10 * arena);
+		ret.requirements = getRequiements(type);
+		return ret;
 	}
-	#end
 }
