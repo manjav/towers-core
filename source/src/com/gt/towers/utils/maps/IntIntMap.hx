@@ -9,7 +9,7 @@ class IntIntMap extends flash.events.EventDispatcher
 
 	#if java
 	public var changeCallback:com.gt.towers.interfaces.IValueChangeCallback;
-	private var _map:java.util.HashMap<Int, Int>;
+	private var _map:java.util.Map<Int, Int>;
 	#elseif flash
 	private var _map:Map<Int, Int>;
 	#end
@@ -18,12 +18,12 @@ class IntIntMap extends flash.events.EventDispatcher
 	@:overload
 	public function new()
 	{
-		_map = new java.util.HashMap<Int, Int>();
+		_map = new java.util.concurrent.ConcurrentHashMap<Int, Int>();
 	}
 	@:overload
 	public function new(inputString:String)
 	{
-		_map = new java.util.HashMap<Int, Int>();
+		_map = new java.util.concurrent.ConcurrentHashMap<Int, Int>();
 		parse(inputString);
 	}
 	#elseif flash

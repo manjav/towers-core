@@ -3,7 +3,7 @@ import com.gt.towers.others.Arena;
 class IntArenaMap
 {
 	#if java
-	private var _map:java.util.HashMap<Int, Arena>;
+	private var _map:java.util.Map<Int, Arena>;
 	#elseif flash
 	private var _map:Map<Int, Arena>;
 	#end
@@ -11,7 +11,7 @@ class IntArenaMap
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<Int, Arena>();
+		_map = new java.util.concurrent.ConcurrentHashMap<Int, Arena>();
 		#elseif flash
 		_map = new Map<Int, Arena>();
 		#end

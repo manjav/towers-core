@@ -3,7 +3,7 @@ import com.gt.towers.others.Quest;
 class IntQuestMap
 {
 	#if java
-	private var _map:java.util.HashMap<Int, Quest>;
+	private var _map:java.util.Map<Int, Quest>;
 	#elseif flash
 	private var _map:Map<Int, Quest>;
 	#end
@@ -11,7 +11,7 @@ class IntQuestMap
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<Int, Quest>();
+		_map = new java.util.concurrent.ConcurrentHashMap<Int, Quest>();
 		#elseif flash
 		_map = new Map<Int, Quest>();
 		#end

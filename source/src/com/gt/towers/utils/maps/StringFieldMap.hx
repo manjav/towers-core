@@ -3,7 +3,7 @@ import com.gt.towers.battle.fieldes.FieldData;
 class StringFieldMap
 {
 	#if java
-	private var _map:java.util.HashMap<String, FieldData>;
+	private var _map:java.util.Map<String, FieldData>;
 	#elseif flash
 	private var _map:Map<String, FieldData>;
 	#end
@@ -11,7 +11,7 @@ class StringFieldMap
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<String, FieldData>();
+		_map = new java.util.concurrent.ConcurrentHashMap<String, FieldData>();
 		#elseif flash
 		_map = new Map<String, FieldData>();
 		#end

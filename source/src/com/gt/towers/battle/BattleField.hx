@@ -31,7 +31,7 @@ class BattleField
 	public var now:Int64 = 0;
 	public var startAt:Int64 = 0;
 	public var interval:Int = 100;
-	public var troops:java.util.HashMap<Int, Troop>;
+	public var troops:java.util.Map<Int, Troop>;
 	public var troopHitCallback:ITroopHitCallback;
 #end
 
@@ -60,7 +60,7 @@ class BattleField
 		games = new java.util.ArrayList<Game>();
 		games.add(game_0);
 		games.add(game_1);
-		troops = new java.util.HashMap<Int, Troop>();
+		troops = new java.util.concurrent.ConcurrentHashMap<Int, Troop>();
 #end
 		
 		game_0.player.hardMode = false;

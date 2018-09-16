@@ -3,7 +3,7 @@ import com.gt.towers.exchanges.ExchangeItem;
 class IntShopMap
 {
 	#if java
-	private var _map:java.util.HashMap<Int, ExchangeItem>;
+	private var _map:java.util.Map<Int, ExchangeItem>;
 	#elseif flash
 	private var _map:Map<Int, ExchangeItem>;
 	#end
@@ -11,7 +11,7 @@ class IntShopMap
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<Int, ExchangeItem>();
+		_map = new java.util.concurrent.ConcurrentHashMap<Int, ExchangeItem>();
 		#elseif flash
 		_map = new Map<Int, ExchangeItem>();
 		#end

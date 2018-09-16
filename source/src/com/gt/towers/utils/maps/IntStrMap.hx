@@ -9,7 +9,7 @@ class IntStrMap
 {
 
 	#if java
-	private var _map:java.util.HashMap<Int, String>;
+	private var _map:java.util.Map<Int, String>;
 	#elseif flash
 	private var _map:Map<Int, String>;
 	#end
@@ -17,7 +17,7 @@ class IntStrMap
 	public function new()
 	{
 		#if java
-		_map = new java.util.HashMap<Int, String>();
+		_map = new java.util.concurrent.ConcurrentHashMap<Int, String>();
 		#elseif flash
 		_map = new Map<Int, String>();
 		#end
