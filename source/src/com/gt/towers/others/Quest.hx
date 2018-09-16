@@ -1,7 +1,6 @@
 package com.gt.towers.others;
 import com.gt.towers.Player;
 import com.gt.towers.buildings.Card;
-import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.socials.Challenge;
@@ -20,7 +19,6 @@ class Quest
 	public var target:Int;
 	public var current:Int;
 	public var nextStep:Int;
-	//public var collected:Bool;
 	public var rewards:IntIntMap;
 
 #if java
@@ -40,7 +38,6 @@ class Quest
 		this.type = type;
 		this.key = key;
 		this.nextStep = nextStep;
-		//this.collected = collected;
 	}
 	
 	public function passed() : Bool
@@ -49,8 +46,7 @@ class Quest
 	}
 
 
-	
-	
+
 
 	static public var TYPE_0_LEVELUP:Int = 0;
 	static public var TYPE_1_LEAGUEUP:Int = 1;
@@ -65,7 +61,7 @@ class Quest
 	
 #if java
 	static public inline var MAX_QUESTS:Int = 4;
-	static public var MAX_STEP:Array<Int> = [20, 10, 4, 100, 100, 20, 10, 10, 100, 100];
+	static public var MAX_STEP:Array<Int> = [20, 9, 4, 100, 100, 20, 10, 10, 100, 100];
 
 	static public function instantiate(type:Int, player:Player) : Quest
 	{
@@ -77,9 +73,21 @@ class Quest
 	{
 		if( player.quests == null )
 			player.quests = new Array<Quest>();
+		
+		if( player.get_battleswins() < 3 )
+			return;
+		
+		if ( player.quests.length == 0 && player.get_battleswins() < 10 )
+		{
+			player.quests.push( Quest.instantiate(3, player) );
+			player.quests.push( Quest.instantiate(7, player) );
+			player.quests.push( Quest.instantiate(8, player) );
+			player.quests.push( Quest.instantiate(9, player) );
+		}
+			
 		if( player.quests.length >= MAX_QUESTS )
 			return;
-			
+		
 		var i = player.quests.length > 0 ? player.quests[player.quests.length - 1].type : -1;
 		if( i == 9 )
 			i = 0;
@@ -122,13 +130,13 @@ class Quest
 			case 0 :	1 + step;
 			case 1 :	1 + step;
 			case 2 :	step * 10;
-			case 3 :	CoreUtils.round( Math.pow(1.4, step) * 10);
+			case 3 :	CoreUtils.round( Math.pow(1.4, step) * 10) - 4;
 			case 4 :	CoreUtils.round( Math.pow(1.4, step) * 7);
 			case 5 :	CoreUtils.round( Math.pow(1.4, step) * 5);
 			case 6 :	step * 5;
-			case 7 :	Card.getTotalCollected(step, 0);
+			case 7 :	Card.getTotalCollected(step, 0) - 1;
 			case 8 :	step;
-			case 9 :	CoreUtils.round( Math.pow(1.4, step) * 5);
+			case 9 :	CoreUtils.round( Math.pow(1.4, step) * 5) - 2;
 			default: 	0;
 		}
 	}
@@ -166,6 +174,7 @@ class Quest
 
 	static public function getCurrent(player:Player, type:Int, key:Int) : Int
 	{
+		trace("getCurrent", type, key);
 		return switch ( type )
 		{
 			case 0 :	player.get_level(player.get_xp());
