@@ -55,8 +55,8 @@ class PrefsTypes
 	public static var T_151_SELECT_NAME_FOCUS:Int = 151;
 	public static var T_152_NAME_SELECTED:Int = 152;
 	
-	public static var T_161_RANK_FOCUS:Int = 161;
-	public static var T_162_RANK_SHOWN:Int = 162;
+	public static var T_161_QUEST_FOCUS:Int = 161;
+	public static var T_162_QUEST_SHOWN:Int = 162;
 
 	public function new() {}
 	public static function isSettings(type:Int) : Bool

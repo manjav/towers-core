@@ -61,7 +61,7 @@ class Quest
 	
 #if java
 	static public inline var MAX_QUESTS:Int = 4;
-	static public var MAX_STEP:Array<Int> = [20, 9, 4, 100, 100, 20, 10, 10, 100, 100];
+	static public var MAX_STEP:Array<Int> = [20, 8, 4, 100, 100, 20, 10, 10, 100, 100];
 
 	static public function instantiate(type:Int, player:Player) : Quest
 	{
@@ -77,14 +77,14 @@ class Quest
 		if( player.get_battleswins() < 3 )
 			return;
 		
-		if ( player.quests.length == 0 && player.get_battleswins() < 10 )
+		if( player.quests.length == 0 && player.get_battleswins() < 10 )
 		{
-			player.quests.push( Quest.instantiate(3, player) );
-			player.quests.push( Quest.instantiate(7, player) );
-			player.quests.push( Quest.instantiate(8, player) );
-			player.quests.push( Quest.instantiate(9, player) );
+			player.quests.push( Quest.instantiate(TYPE_3_BATTLES,		player) );
+			player.quests.push( Quest.instantiate(TYPE_7_CARD_COLLECT,	player) );
+			player.quests.push( Quest.instantiate(TYPE_8_CARD_UPGRADE,	player) );
+			player.quests.push( Quest.instantiate(TYPE_9_BOOK_OPEN,		player) );
 		}
-			
+		
 		if( player.quests.length >= MAX_QUESTS )
 			return;
 		
@@ -130,7 +130,7 @@ class Quest
 			case 0 :	1 + step;
 			case 1 :	1 + step;
 			case 2 :	step * 10;
-			case 3 :	CoreUtils.round( Math.pow(1.4, step) * 10) - 4;
+			case 3 :	CoreUtils.round( Math.pow(1.3, step) * 10) - 8;
 			case 4 :	CoreUtils.round( Math.pow(1.4, step) * 7);
 			case 5 :	CoreUtils.round( Math.pow(1.4, step) * 5);
 			case 6 :	step * 5;
@@ -174,11 +174,11 @@ class Quest
 
 	static public function getCurrent(player:Player, type:Int, key:Int) : Int
 	{
-		trace("getCurrent", type, key);
+		//trace("getCurrent", type, key);
 		return switch ( type )
 		{
 			case 0 :	player.get_level(player.get_xp());
-			case 1 :	player.get_arena(player.get_point());
+			case 1 :	player.get_arena(player.get_point()) + 1;
 			case 2 :	player.getLastOperation();
 			case 3 :	player.get_battlesCount();
 			case 4 :	player.get_battleswins();

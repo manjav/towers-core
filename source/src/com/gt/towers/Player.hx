@@ -202,7 +202,7 @@ class Player
 		return t;
 	}
 	
-	public function getTutorStep() : Int { return tutorialMode == -1 ? PrefsTypes.T_162_RANK_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
+	public function getTutorStep() : Int { return tutorialMode == -1 ? PrefsTypes.T_162_QUEST_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
 	public function inSlotTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_031_SLOT_FOCUS && getTutorStep() < PrefsTypes.T_035_DECK_FOCUS; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_035_DECK_FOCUS && getTutorStep() < PrefsTypes.T_038_CARD_UPGRADED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
