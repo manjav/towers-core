@@ -2,7 +2,7 @@ package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
 import com.gt.towers.calculators.AvailableAtCalculator;
-import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
@@ -185,7 +185,7 @@ class Exchanger
 				hards += map.get(reqKeys[i]);
 			else if ( reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
-			else if( ResourceType.isBuilding(reqKeys[i])) 
+			else if( ResourceType.isCard(reqKeys[i])) 
 				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
 			else if ( ResourceType.isBook(reqKeys[i]))
 				hards += toHard(estimateBookOutcome(reqKeys[i], map.get(reqKeys[i]), 1));
@@ -209,7 +209,7 @@ class Exchanger
 				hards += map.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
-			else if( ResourceType.isBuilding(reqKeys[i]) ) 
+			else if( ResourceType.isCard(reqKeys[i]) ) 
 				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
 			
 			i ++;
@@ -237,7 +237,7 @@ class Exchanger
 	{
 		return Math.round( count / 600 );
 	}
-	static public function cardToSoft(count:Int, improveLevel:Int) : Int
+	static public function cardToSoft(count:Int, rarity:Int) : Int
 	{
 		return count * 30 ; 
 	}
@@ -268,7 +268,7 @@ class Exchanger
 	static function estimateBookOutcome(type:Int, arena:Int, coef:Float) : IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( BuildingType.B10_BARRACKS, ExchangeType.getNumTotalCards(type, arena, coef) );
+		ret.set( CardTypes.C001, ExchangeType.getNumTotalCards(type, arena, coef) );
 		ret.set( ResourceType.CURRENCY_SOFT, ExchangeType.getNumSofts(type, arena, coef) );
 		return ret;
 	}
@@ -339,7 +339,7 @@ class Exchanger
 		trace("openedBook", openedBook);
 		if( openedBook == 0 )
 		{
-			map.set( BuildingType.B11_BARRACKS, 2 );
+			map.set( CardTypes.C001, 2 );
 			return;
 		}
 		
@@ -363,7 +363,7 @@ class Exchanger
 		while( a < allCards.size() )
 		{
 			var newCard = allCards.get(a);
-			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.BOOK_OPENED_BATTLE) )
+			if( !game.player.cards.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.BOOK_OPENED_BATTLE) )
 			{
 				map.set( newCard, 2 );
 				return;
@@ -374,7 +374,7 @@ class Exchanger
 	}
 	function addRandomSlot(map:IntIntMap, count:Int) : Void
 	{
-		if( game.player.buildings.keys().length <= map.keys().length )
+		if( game.player.cards.keys().length <= map.keys().length )
 			return;
 		
 		var random = game.player.getRandomBuilding();

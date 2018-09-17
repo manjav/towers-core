@@ -40,8 +40,8 @@ class ExchangeUpdater
 		{
 			if( item.type == ExchangeType.C23_SPECIAL )
 			{
-				if( game.player.buildings.keys().length > 0 )
-					item.outcome = game.player.buildings.getRandomKey();
+				if( game.player.cards.keys().length > 0 )
+					item.outcome = game.player.cards.getRandomKey();
 				else
 					item.outcome = ResourceType.CURRENCY_SOFT;
 			}
@@ -78,7 +78,7 @@ class ExchangeUpdater
 	
 	function getOutcomeQuantity(item:ExchangeItem):Int 
 	{
-		if( ResourceType.isBuilding(item.outcome) )
+		if( ResourceType.isCard(item.outcome) )
 			return 3 * ( arena + 1 );
 		else if( ResourceType.isBook(item.outcome) )
 			return 1;
@@ -97,7 +97,7 @@ class ExchangeUpdater
 		if( item.category == ExchangeType.C30_BUNDLES )
 			return 1101;
 		
-		if( ResourceType.isBuilding(item.outcome) )
+		if( ResourceType.isCard(item.outcome) )
 			return 1002;
 		return switch ( item.outcome )
 		{
@@ -111,7 +111,7 @@ class ExchangeUpdater
 	function getPrice(item:ExchangeItem):Int 
 	{
 		var count = item.outcomes.values()[0];
-		if( ResourceType.isBuilding(item.outcome) )
+		if( ResourceType.isCard(item.outcome) )
 			return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
 		else if( (item.outcome == ResourceType.CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.CURRENCY_HARD && count <= 5) )
 			return 0;

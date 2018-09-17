@@ -1,5 +1,5 @@
 package com.gt.towers.calculators;
-import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.utils.lists.IntList;
 
 /**
@@ -85,7 +85,7 @@ class AvailableAtCalculator extends BaseCalculator
 	/*public function getArenaCards(arenaIndex:Int) : IntList
 	{
 		var ret = new IntList();
-		var all = BuildingType.getAll().keys;
+		var all = CardType.getAll().keys;
 		var allSize:Int = all.length;
 		var i = 0;
 		while ( i < allSize )

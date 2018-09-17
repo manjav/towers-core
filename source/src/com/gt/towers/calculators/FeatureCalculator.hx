@@ -10,47 +10,36 @@ class FeatureCalculator
 {
 	public var TIME_SCALE:Float = 1;
 	
-	//private var rarity:RarityCalculator;
-	//private var availableAt:AvailableAtCalculator;
-	//private var elixirSize:ElixirSizeCalculator;
-	private var capacity:CapacityCalculator;
-	//private var deployTime:DeployTimeCalculator;
-	private var birthRate:BrithRateCalculator;
+	public var rarity:RarityCalculator;
+	public var availableAt:AvailableAtCalculator;
+	public var elixirSize:ElixirSizeCalculator;
+	public var deployTime:DeployTimeCalculator;
 	
-	private var troopSpeed:TroopSpeedCalculator;
-	private var troopPower:TroopPowerCalculator;
-	//private var troopHealth:TroopHealthCalculator;
-	private var troopRushGap:TroopRushGapCalculator;
+	public var troopSpeed:SpeedCalculator;
+	public var troopHealth:HealthCalculator;
 	
-	private var damage:DamageCalculator;
-	private var damageGap:DamageGapCalculator;
-	private var damageRadiusMin:DamageRadiusMinCalculator;
-	private var damageRadiusMax:DamageRadiusMaxCalculator;
+	public var damage:DamageCalculator;
+	public var damageGap:DamageGapCalculator;
+	public var damageRadiusMin:DamageRadiusMinCalculator;
+	public var damageRadiusMax:DamageRadiusMinCalculator;
 
 	public function new(game:Game)
 	{
-		//rarity = new RarityCalculator();
-		//availableAt = new AvailableAtCalculator(game);
-		//elixirSize = new ElixirSizeCalculator();
-		capacity = new CapacityCalculator(game);
-		//deployTime = new DeployTimeCalculator();
-		birthRate = new BrithRateCalculator(game);
-		
-		troopSpeed = new TroopSpeedCalculator(game);
-		troopPower = new TroopPowerCalculator(game);
-		//troopHealth = new TroopHealthCalculator();
-		troopRushGap = new TroopRushGapCalculator(game);
-		
-		damage = new DamageCalculator(game);
-		damageGap = new DamageGapCalculator(game);
-		damageRadiusMin = new DamageRadiusMinCalculator(game);
-		damageRadiusMax = new DamageRadiusMaxCalculator(game);
+		rarity = new RarityCalculator(null);
+		availableAt = new AvailableAtCalculator(null);
+		elixirSize = new ElixirSizeCalculator(null);
+		deployTime = new DeployTimeCalculator(null);
+		troopSpeed = new SpeedCalculator(null);
+		troopHealth = new HealthCalculator(null);
+		damage = new DamageCalculator(null);
+		damageGap = new DamageGapCalculator(null);
+		damageRadiusMin = new DamageRadiusMinCalculator(null);
+		damageRadiusMax = new DamageRadiusMinCalculator(null);
 	}
-	public function setField(battleField:BattleField) : Void
+	/*public function setField(battleField:BattleField) : Void
 	{
 		//availableAt.battleField = battleField;
 		capacity.battleField = battleField;
-		birthRate.battleField = battleField;
 		troopSpeed.battleField = battleField;
 		troopPower.battleField = battleField;
 		//troopHealth.battleField = battleField;
@@ -59,53 +48,45 @@ class FeatureCalculator
 		damageGap.battleField = battleField;
 		damageRadiusMin.battleField = battleField;
 		damageRadiusMax.battleField = battleField;
-	}
+	}*/
 	
-	public function get(featureType:Int, buildingType:Int, level:Int, improveLevel:Int ) : Float
+	public function get(featureType:Int, buildingType:Int, level:Int ) : Float
 	{
 		return switch( featureType )
 		{
-			//case 0 : rarity.get(buildingType, level, improveLevel);
-			//case 1 : availableAt.get(buildingType, level, improveLevel);
-			//case 2 : elixirSize.get(buildingType, level, improveLevel);
-			case 3 : capacity.get(buildingType, level, improveLevel);
-			//case 4 : deployTime.get(buildingType, level, improveLevel) * TIME_SCALE;
-			case 5 : birthRate.get(buildingType, level, improveLevel) * TIME_SCALE;
+			case 0 : rarity.get(buildingType);
+			case 1 : availableAt.get(buildingType);
+			case 2 : elixirSize.get(buildingType);
+			case 4 : deployTime.get(buildingType) * TIME_SCALE;
 			
-			case 11: troopSpeed.get(buildingType, level, improveLevel) * TIME_SCALE;
-			case 12: troopPower.get(buildingType, level, improveLevel);
-			//case 13: troopHealth.get(buildingType, level, improveLevel);
-			case 14: troopRushGap.get(buildingType, level, improveLevel) / TIME_SCALE;
+			case 11: troopSpeed.get(buildingType, level) / TIME_SCALE * 0.7;
+			case 13: troopHealth.get(buildingType, level);
 			
-			case 21: damage.get(buildingType, level, improveLevel);
-			case 22: damageGap.get(buildingType, level, improveLevel) / TIME_SCALE;
-			case 23: damageRadiusMin.get(buildingType, level, improveLevel);
-			case 24: damageRadiusMax.get(buildingType, level, improveLevel);
+			case 21: damage.get(buildingType, level);
+			case 22: damageGap.get(buildingType, level) / TIME_SCALE;
+			case 23: damageRadiusMin.get(buildingType, level);
+			case 24: damageRadiusMax.get(buildingType, level);
 			
 			default: 0;
 		}
 	}
 	
-	public function getInt(featureType:Int, buildingType:Int, level:Int, improveLevel:Int ) : Int
+	public function getInt(featureType:Int, CardType:Int, level:Int) : Int
 	{
-		return Math.round( get( featureType, buildingType, level, improveLevel) );
+		return Math.round( get( featureType, CardType, level) );
 	}
 	
 	public function getBaseline(featureType:Int) : Float
 	{
 		return switch( featureType )
 		{
-			//case 0 : rarity.BASE_VALUE;
-			//case 1 : availableAt.BASE_VALUE;
-			//case 2 : elixirSize.BASE_VALUE;
-			case 3 : capacity.BASE_VALUE;
-			//case 4 : deployTime.BASE_VALUE;
-			case 5 : birthRate.BASE_VALUE;
+			case 0 : rarity.BASE_VALUE;
+			case 1 : availableAt.BASE_VALUE;
+			case 2 : elixirSize.BASE_VALUE;
+			case 4 : deployTime.BASE_VALUE;
 			
 			case 11: troopSpeed.BASE_VALUE;
-			case 12: troopPower.BASE_VALUE;
-			//case 13: troopHealth.BASE_VALUE;
-			case 14: troopRushGap.BASE_VALUE;
+			case 13: troopHealth.BASE_VALUE;
 			
 			case 21: damage.BASE_VALUE;
 			case 22: damageGap.BASE_VALUE;

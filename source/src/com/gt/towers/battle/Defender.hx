@@ -1,8 +1,8 @@
-package com.gt.towers.buildings;
+package com.gt.towers.battle;
 import com.gt.towers.battle.Troop;
 import com.gt.towers.buildings.Place;
 import com.gt.towers.calculators.DamageCalculator;
-import com.gt.towers.constants.BuildingFeatureType;
+import com.gt.towers.constants.CardFeatureType;
 import haxe.Int64;
 
 /**
@@ -23,10 +23,10 @@ class Defender
 	public function new(place:Place) 
 	{
 		this.place = place;
-		this.damage				= place.game.calculator.get(BuildingFeatureType.F21_DAMAGE,				place.building.type, place.building.get_level(), place.building.improveLevel);
-		this.damageGap			= place.game.calculator.getInt(BuildingFeatureType.F22_DAMAGE_GAP,		place.building.type, place.building.get_level(), place.building.improveLevel);
-		this.damageRadiusMin	= place.game.calculator.get(BuildingFeatureType.F23_RANGE_RADIUS_MIN,	place.building.type, place.building.get_level(), place.building.improveLevel);
-		this.damageRadiusMax 	= place.game.calculator.get(BuildingFeatureType.F24_RANGE_RADIUS_MAX,	place.building.type, place.building.get_level(), place.building.improveLevel);
+		this.damage				= place.game.calculator.get(CardFeatureType.F21_DAMAGE,				place.building.type, place.building.get_level(), place.building.improveLevel);
+		this.damageGap			= place.game.calculator.getInt(CardFeatureType.F22_DAMAGE_GAP,		place.building.type, place.building.get_level(), place.building.improveLevel);
+		this.damageRadiusMin	= place.game.calculator.get(CardFeatureType.F23_RANGE_RADIUS_MIN,	place.building.type, place.building.get_level(), place.building.improveLevel);
+		this.damageRadiusMax 	= place.game.calculator.get(CardFeatureType.F24_RANGE_RADIUS_MAX,	place.building.type, place.building.get_level(), place.building.improveLevel);
 		//trace("type:" + place.building.type, " level:" + place.building.get_level(), " improveLevel:" + place.building.improveLevel, " damage:" + damage, " damageGap:" +damageGap, " damageRadiusMax:" + damageRadiusMax);
 	}
 	
@@ -36,7 +36,7 @@ class Defender
 		if( readyAt > currentTimeMillis )
 			return;
 		
-		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Troop> > = place.battleField.troops.entrySet().iterator();
+		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Troop> > = place.battleField.units.entrySet().iterator();
 		var numHitTroops:Int = 0;
 		var  troops:java.util.List<Troop> = new java.util.ArrayList<Troop>();
         while ( iterator.hasNext() )
@@ -50,7 +50,7 @@ class Defender
 				//trace("hit id:", troop.id, troop.health, " numHitTroops:"+numHitTroops, " improveLevel:"+place.building.improveLevel );
 				if( numHitTroops >= place.building.improveLevel )
 				{
-					place.battleField.hitTroop(place.index, troops);
+					place.battleField.hitUnit(place.index, troops);
 					break;
 				}
 			}
@@ -69,7 +69,7 @@ class Defender
 	
 	public function estimatePower() : Float
 	{
-		return 5 + place.building.improveLevel * 7 + this.damage / place.game.calculator.getBaseline(BuildingFeatureType.F21_DAMAGE) + place.game.calculator.getBaseline(BuildingFeatureType.F22_DAMAGE_GAP) / this.damageGap + this.damageRadiusMin / place.game.calculator.getBaseline(BuildingFeatureType.F24_RANGE_RADIUS_MAX);
+		return 5 + place.building.improveLevel * 7 + this.damage / place.game.calculator.getBaseline(CardFeatureType.F21_DAMAGE) + place.game.calculator.getBaseline(CardFeatureType.F22_DAMAGE_GAP) / this.damageGap + this.damageRadiusMin / place.game.calculator.getBaseline(CardFeatureType.F24_RANGE_RADIUS_MAX);
 	}
 #end
 }

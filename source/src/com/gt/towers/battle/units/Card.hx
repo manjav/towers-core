@@ -1,6 +1,6 @@
-package com.gt.towers.buildings;
+package com.gt.towers.battle.units;
 import com.gt.towers.Game;
-import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
@@ -11,24 +11,57 @@ import com.gt.towers.utils.maps.IntIntMap;
  * ...
  * @author Mansour Djawadi
  */
-class Card 
+class Card
 {
 	public var type:Int;
-	public var category:Int;
-	public var improveLevel:Int;
-	
 	public var game:Game;
-
-	private var _level:Int;
+	public var maxLevel:Int = 10;
 	
+	public var rarity:Int = 0;
+	public var availableAt:Int = 0;
+	public var elixirSize:Int = 5;
+	public var troopsCount:Int = 10;
+	public var deployTime:Int = 500;
+	//public var troopType:Int = -1;
+	//public var healRate:Float = 0.15;
+	
+	public var troopHealth:Float = 1;
+	public var troopSpeed:Int = 4000;
+	
+	public var damage:Float = 1.05;
+	public var damageGap:Int = 800;
+	public var damageRangeMin:Float = 50;
+	public var damageRangeMax:Float = 180;
+	
+	private var _level:Int;
 	public function new(game:Game, type:Int, level:Int)
 	{
 		this.game = game;
 		this.type = type;
 		this._level = level;
-		this.category = BuildingType.get_category(type);
-		this.improveLevel = BuildingType.get_improve(type);
+		setFeatures();
 	}
+	
+	private function setFeatures():Void
+	{
+		rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, get_level());
+		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, get_level());
+		elixirSize = game.calculator.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, get_level());
+		troopsCount = game.calculator.getInt(CardFeatureType.F03_TROOPS_COUNT, type, get_level());
+		deployTime = game.calculator.getInt(CardFeatureType.F04_DEPLOY_TIME, type, get_level());
+		
+		// troops data
+		troopSpeed = game.calculator.getInt(CardFeatureType.F11_TROOP_SPEED, type, get_level());
+		troopHealth = game.calculator.get(CardFeatureType.F13_TROOP_HEALTH, type, get_level());
+		
+		// defensive data
+		damage = game.calculator.get(CardFeatureType.F21_DAMAGE, type, get_level());
+		damageGap = game.calculator.getInt(CardFeatureType.F22_DAMAGE_GAP, type, get_level());
+		damageRangeMin = game.calculator.get(CardFeatureType.F23_RANGE_RANGE_MIN, type, get_level());
+		damageRangeMax = game.calculator.get(CardFeatureType.F24_RANGE_RANGE_MAX, type, get_level());
+	}
+
+	
 	
 	public function get_level():Int
 	{
@@ -81,7 +114,7 @@ class Card
 		var playerWinStreak = game.player.get_winStreak();
 		
 		// XP rewards
-		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(improveLevel * improveLevel) ) * 30 ) + 4);
+		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(1) ) * 30 ) + 4);
 		
 		// reduce winStreak to make AI difficulty easier
 		if ( playerWinStreak - 9 <= minWinStreak )
@@ -117,32 +150,13 @@ class Card
 		_level ++;
 		return true;
 	}	
-	public function get_unlockAt():Int 
-	{
-		return game.unlockedBuildingAt(type);
-	}
 	public function availabled():Bool 
 	{
-		return get_unlockAt() <= game.player.get_arena(0);
+		return availableAt <= game.player.get_arena(0);
 	}
 	public function unlocked(type:Int=-1):Bool 
 	{
-		if ( type == BuildingType.B01_CAMP )
-			return true;
-			
-		if ( game.player.inFriendlyBattle )
-			return true;
-		#if java
-		if ( game.player.hardMode )
-			return true;
-		#end
-			
-		if ( type == BuildingType.NONE )
-			type = this.type;
-		else if ( type == BuildingType.IMPROVE )
-			type = this.type + 1;
-			
-		return game.player.buildings.exists(type);
+		return game.player.cards.exists(type);
 	}
 	
 	
@@ -153,11 +167,10 @@ class Card
 
 	public function toSoft(count:Int = 1):Int
 	{
-		return Exchanger.cardToSoft(count, improveLevel);
+		return Exchanger.cardToSoft(count, 0);
 	}
 	public function toHard(count:Int = 1):Int
 	{
 		return Exchanger.softToHard( toSoft(count) );
 	}
-
 }

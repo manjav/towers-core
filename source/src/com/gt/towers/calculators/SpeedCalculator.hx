@@ -1,16 +1,16 @@
 package com.gt.towers.calculators;
-import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 
 /**
  * ...
  * @author Mansour Djawadi
  */
-class TroopSpeedCalculator extends BaseCalculator
+class SpeedCalculator extends BaseCalculator
 {
 	public function new (game:Game) { super(game); BASE_VALUE = 12.5; }//2500
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
-		var category = BuildingType.get_category(type);
+		var category = CardTypes.get_category(type);
 		return switch( category )
 		{
 			case 0	: BASE_VALUE * 0.82;

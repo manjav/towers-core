@@ -1,24 +1,23 @@
 package com.gt.towers.utils.maps;
-import com.gt.towers.buildings.Building;
-import com.gt.towers.buildings.Card;
+import com.gt.towers.battle.units.Card;
 /**
  * ...
  * @author Mansour Djawadi
  */
-class IntBuildingMap
+class IntCardMap
 {
 	#if java
-	private var _map:java.util.Map<Int, Building>;
+	private var _map:java.util.Map<Int,Card>;
 	#elseif flash
-	private var _map:Map<Int, Building>;
+	private var _map:Map<Int,Card>;
 	#end
 
 	public function new()
 	{
 		#if java
-		_map = new java.util.concurrent.ConcurrentHashMap<Int, Building>();
+		_map = new java.util.concurrent.ConcurrentHashMap<Int,Card>();
 		#elseif flash
-		_map = new Map<Int, Building>();
+		_map = new Map<Int,Card>();
 		#end
 	}
 
@@ -27,7 +26,7 @@ class IntBuildingMap
 		If `key` already has a mapping, the previous value disappears.
 		If `key` is null, the result is unspecified.
 	**/
-	public function set(key:Int, value:Building) : Void
+	public function set(key:Int, value:Card) : Void
 	{
 		#if java
 		_map.put(key, value);
@@ -48,7 +47,7 @@ class IntBuildingMap
 		used.
 		If `key` is null, the result is unspecified.
 	**/
-	public function get(key:Int) :Building
+	public function get(key:Int) : Card
 	{
 		return _map.get(key);
 	}
@@ -98,14 +97,14 @@ class IntBuildingMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():java.NativeArray<Building>
+	public function values():java.NativeArray<Card>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:java.NativeArray<Building> = new java.NativeArray<Building>(keis.length);
+		var ret:java.NativeArray<Card> = new java.NativeArray<Card>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
-			ret[i] = cast(get(keis[i]), Building);
+			ret[i] = cast(get(keis[i]), Card);
 			i++;
 		}
 		return ret ;
@@ -128,9 +127,9 @@ class IntBuildingMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():flash.Vector<Building>
+	public function values():flash.Vector<Card>
 	{
-		var ret:flash.Vector<Building> = new flash.Vector<Building>();
+		var ret:flash.Vector<Card> = new flash.Vector<Card>();
 		for( value in _map )
 			ret.push(value);
 		return ret ;
@@ -139,8 +138,8 @@ class IntBuildingMap
 	
 	public function getRandomKey() : Int
 	{
-		var keis = keys();
-		var t = keis[ Math.floor( Math.random() * keis.length ) ];
+		var keys = keys();
+		var t = keys[ Math.floor( Math.random() * keys.length ) ];
 		if( t >= 1000 )
 			return getRandomKey();
 		return t;

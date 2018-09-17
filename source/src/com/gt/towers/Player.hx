@@ -1,13 +1,15 @@
 package com.gt.towers;
 import com.gt.towers.Game;
-import com.gt.towers.constants.BuildingType;
+import com.gt.towers.battle.units.Card;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.others.Quest;
 import com.gt.towers.utils.lists.DeckList;
-import com.gt.towers.utils.maps.IntStrMap;
+import com.gt.towers.utils.lists.IntList;
+import com.gt.towers.utils.maps.IntCardMap;
 import com.gt.towers.utils.maps.IntIntMap;
-import com.gt.towers.utils.maps.IntBuildingMap;
+import com.gt.towers.utils.maps.IntStrMap;
 
 /**
  * ...
@@ -26,11 +28,12 @@ class Player
 	public var quests:Array<Quest>;
 	public var resources:IntIntMap;
 	public var operations:IntIntMap;
-	public var buildings:IntBuildingMap;
+	public var cards:IntCardMap;
 	public var inFriendlyBattle:Bool;
 	public var nickName:String = "no_nickName";
 	public var decks:DeckList;
 	public var selectedDeck:Int = 0;
+	public var battleDeck:IntList;
 	public var splitTestCoef:Float = 1;
 
 	private var game:Game;
@@ -53,13 +56,12 @@ class Player
 		decks = initData.decks;
 		
 		// add player buildings data
-		buildings = new IntBuildingMap();
-		
+		cards = new IntCardMap();
 		var i:Int = 0;
 		var kies = initData.buildingsLevel.keys();
 		while ( i < kies.length )
 		{
-			buildings.set(kies[i], BuildingType.instantiate( game, kies[i], null, 0, initData.buildingsLevel.get( kies[i] ) ) );
+			cards.set(kies[i], new Card( game, kies[i], initData.buildingsLevel.get( kies[i] ) ) );
 			i++;
 		}
 		
@@ -141,6 +143,28 @@ class Player
 		return cast(Math.min(arena + 1, arenaKeys.length-1), Int);
 	}
 	
+	public function availabledCards (selectedArena:Int = -1) : IntList
+	{
+		var ret = new IntList();
+		var arena = selectedArena == -1 ? get_arena(0) : selectedArena;
+		var ci = 0;
+		while ( arena >= 0 )
+		{
+			ci = game.arenas.get(arena).cards.size() - 1;
+			while ( ci >= 0 )
+			{
+				ret.push( game.arenas.get(arena).cards.get(ci) );
+				ci --;
+			}
+			arena --;
+		}
+		return ret;
+	}
+	public function get_current_deck():IntList
+	{
+		return decks.get(selectedDeck);
+	}
+	
 	public function has(IntIntMap:IntIntMap) : Bool
 	{
 		var i:Int = 0;
@@ -175,8 +199,8 @@ class Player
 		var i = 0;
 		while ( i < bundleKeys.length )
 		{
-			if( ResourceType.isBuilding(bundleKeys[i]) && !game.player.buildings.exists(bundleKeys[i]) )
-				game.player.buildings.set(bundleKeys[i], BuildingType.instantiate( game, bundleKeys[i], null, 0, -1 ) );
+			if( ResourceType.isCard(bundleKeys[i]) && !game.player.cards.exists(bundleKeys[i]) )
+				game.player.cards.set(bundleKeys[i], new Card(game, bundleKeys[i], bundle.get(bundleKeys[i]) ) );
 			i ++;
 		}
 		resources.increaseMap ( bundle );
@@ -188,7 +212,7 @@ class Player
 		var i = keys.length - 1;
 		while ( i >= 0 )
 		{
-			if( ResourceType.isBuilding(keys[i]) )
+			if( ResourceType.isCard(keys[i]) )
 				break;
 			i --;
 		}
@@ -200,7 +224,7 @@ class Player
 		}
 		
 		var t = resources.getRandomKey();
-		if( !ResourceType.isBuilding(t) )
+		if( !ResourceType.isCard(t) )
 			return getRandomBuilding();
 		return t;
 	}
@@ -209,7 +233,7 @@ class Player
 	public function inSlotTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_031_SLOT_FOCUS && getTutorStep() < PrefsTypes.T_035_DECK_FOCUS; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_035_DECK_FOCUS && getTutorStep() < PrefsTypes.T_038_CARD_UPGRADED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function emptyDeck() : Bool { return !buildings.exists(BuildingType.B11_BARRACKS) || buildings.get(BuildingType.B11_BARRACKS).get_level() <= 1 ; }
+	public function emptyDeck() : Bool { return !cards.exists(CardTypes.C001) || cards.get(CardTypes.C001).get_level() <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
 	public static function isAdmin(id:Int) : Bool {return (id == 10412 || /*id == 10438 ||*/ id == 10487 /*|| id == 96111*/); }
 	public function inTutorial() : Bool

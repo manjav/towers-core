@@ -1,5 +1,5 @@
 package com.gt.towers.interfaces;
-import com.gt.towers.battle.Troop;
+import com.gt.towers.battle.units.Unit;
 
 /**
  * @author Mansour Djawadi
@@ -7,6 +7,6 @@ import com.gt.towers.battle.Troop;
 interface ITroopHitCallback 
 {
 	#if java
-  	function hit(defenderId:Int, troops:java.util.List<Troop>) : Void ;
+  	function hit(defenderId:Int, troops:java.util.List<Unit>) : Void ;
 	#end
 }

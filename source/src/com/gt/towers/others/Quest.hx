@@ -1,6 +1,6 @@
 package com.gt.towers.others;
 import com.gt.towers.Player;
-import com.gt.towers.buildings.Card;
+import com.gt.towers.battle.units.Card;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.socials.Challenge;
@@ -116,8 +116,8 @@ class Quest
 			case 4 :	ResourceType.BATTLES_WINS;
 			case 5 :	ResourceType.BATTLES_FRIENDLY;
 			case 6 :	Challenge.getlowestJoint(player);
-			case 7 :	player.buildings.getLowestLevel();
-			case 8 :	player.buildings.getLowestCard();
+			case 7 :	player.cards.getLowestLevel();
+			case 8 :	player.cards.getLowestCard();
 			case 9 :	ResourceType.BOOK_OPENED_FREE;
 			default: 	0;
 		}
@@ -184,8 +184,8 @@ class Quest
 			case 4 :	player.get_battleswins();
 			case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
 			case 6 :	player.getResource(key);
-			case 7 :	Card.getTotalCollected(player.buildings.get(key).get_level(), player.getResource(key));
-			case 8 :	player.buildings.get(key).get_level();
+			case 7 :	Card.getTotalCollected(player.cards.get(key).get_level(), player.getResource(key));
+			case 8 :	player.cards.get(key).get_level();
 			case 9 :	player.getResource(key);
 			default: 	0;
 		}

@@ -4,12 +4,11 @@ import com.gt.towers.Player;
 import com.gt.towers.others.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.calculators.FeatureCalculator;
-import com.gt.towers.constants.BuildingType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.Exchanger;
 import com.gt.towers.socials.Lobby;
 import com.gt.towers.utils.maps.IntArenaMap;
-import com.gt.towers.utils.maps.IntBuildingMap;
 
 /**
  * ...
@@ -62,7 +61,7 @@ class Game
 		arenas.set(9, new Arena(9,	7001,	10000,	 0, 		"44"		));//3000
 	}
 	
-	public function unlockedBuildingAt ( type:Int ) : Int
+	/*public function unlockedBuildingAt ( type:Int ) : Int
 	{
 		var arenaIndex = 0;
 		var arenaKeys = arenas.keys();
@@ -83,46 +82,9 @@ class Game
 	public function getBuildingAvailablity(type:Int =-1) : Int
 	{
 		if( !ResourceType.isBuilding(type) )
-			return BuildingType.AVAILABLITY_EXISTS;
-		if( player.buildings.exists(type) )
-			return BuildingType.AVAILABLITY_EXISTS;
-		return unlockedBuildingAt(type) <= player.get_arena(0) ? BuildingType.AVAILABLITY_WAIT : BuildingType.AVAILABLITY_NOT;
-	}
-	
-	public function fillAllBuildings() : Void
-	{
-		var baseLevel:Int = Math.round( Math.log( Math.max(1, player.get_point() / 100) ) ) * 5 + 1;
-		var playerArena = player.get_arena(0);
-		var arenaIndex = 0;
-		player.buildings = new IntBuildingMap();
-		while ( arenaIndex < arenas.keys().length )
-		{
-			var arena = arenas.get(arenaIndex);
-			if ( player.get_point() < arena.min )
-				break;
-			
-			var cardsLen:Int = arena.cards.size() - 1;
-			while ( cardsLen >= 0 )
-			{
-				var type = arena.cards.get(cardsLen);
-				var level = playerArena == 0 ? 1 : baseLevel + 4 - BuildingType.get_improve(type);
-				player.buildings.set(type, BuildingType.instantiate( this, type, null, 0, level));
-				cardsLen --;
-			}
-			arenaIndex ++;
-		}
-	}
-	
-	public function logBuildings() : Void
-	{
-		var keys = player.buildings.keys();
-		var len = keys.length - 1;
-		var log = "Id: " + player.id + ", Point: " + player.get_point() + " => ";
-		while ( len >= 0 )
-		{
-			log += " B" + keys[len] + ":" + player.buildings.get(keys[len]).get_level() + "\t";
-			len --;
-		}
-		trace(log);
-	}
+			return CardTypes.AVAILABLITY_EXISTS;
+		if( player.cards.exists(type) )
+			return CardTypes.AVAILABLITY_EXISTS;
+		return unlockedBuildingAt(type) <= player.get_arena(0) ? CardTypes.AVAILABLITY_WAIT : CardTypes.AVAILABLITY_NOT;
+	}*/
 }

@@ -29,11 +29,7 @@ class ResourceType
 	public static var WIN_STREAK:Int = 1211;
 	
 	public function new() {}
-	static public function isBuilding(type:Int) 
-	{
-		return (type >= 10 && type < 50) || (type >= 60 && type < 1000); 
-	}
-	
+
 	static public function getName(type:Int) : String
 	{
 		if ( type == XP ) return "XP";
@@ -45,6 +41,10 @@ class ResourceType
 		else return "TYPE_" + type;
 	}
 	
+	static public function isCard(type:Int) 
+	{
+		return (type >= 10 && type < 50) || (type >= 60 && type < 1000); 
+	}
 	static public function isBook(type:Int) 
 	{
 		return type >= 50 && type < 60;

@@ -1,14 +1,12 @@
 package com.gt.towers.battle;
 import com.gt.towers.Game;
-import com.gt.towers.battle.fieldes.PlaceData;
-import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.FieldProvider;
-import com.gt.towers.buildings.Place;
-import com.gt.towers.constants.BuildingType;
+import com.gt.towers.battle.fieldes.FieldData;
+import com.gt.towers.battle.units.Unit;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.constants.TroopType;
 import com.gt.towers.interfaces.ITroopHitCallback;
-import com.gt.towers.utils.lists.PlaceList;
+import com.gt.towers.utils.lists.FloatList;
+import com.gt.towers.utils.lists.IntList;
 import haxe.Int64;
 
 /**
@@ -17,10 +15,12 @@ import haxe.Int64;
  */
 class BattleField
 {
+	public static var POPULATION_MAX:Int = 10;
+	public static var POPULATION_INIT:Int = 5;
 	private var questProvider:FieldProvider;
 
+	public var elixirBar:FloatList;
 	public var singleMode:Bool;
-	public var places:PlaceList;
 	public var map:FieldData;
 	public var difficulty:Int;
 	public var arena:Int;
@@ -31,14 +31,14 @@ class BattleField
 	public var now:Int64 = 0;
 	public var startAt:Int64 = 0;
 	public var interval:Int = 100;
-	public var troops:java.util.Map<Int, Troop>;
-	public var troopHitCallback:ITroopHitCallback;
+	public var units:java.util.Map<Int, Unit>;
+	public var unitsHitCallback:ITroopHitCallback;
 #end
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
 	{
 		var isOperation = mapName.substr(0, 10) == "operation_";
-		singleMode = game_1.player.buildings.keys().length == 0;
+		singleMode = game_1.player.cards.keys().length == 0;
 		
 		if( isOperation )
 			map = game_0.fieldProvider.operations.get(mapName);
@@ -47,20 +47,15 @@ class BattleField
 			
 		if( hasExtraTime )
 			extraTime = map.times.get(3);
-		
-		places = new PlaceList();
-		var p = 0;
-		var placesLen:Int = map.places.size();
-		var placeData:PlaceData = null;
-		var place:Place = null;
+
 		
 #if java 
-		game_0.calculator.setField(this);
-		game_1.calculator.setField(this);
+		//game_0.calculator.setField(this);
+		//game_1.calculator.setField(this);
 		games = new java.util.ArrayList<Game>();
 		games.add(game_0);
 		games.add(game_1);
-		troops = new java.util.concurrent.ConcurrentHashMap<Int, Troop>();
+		units = new java.util.concurrent.ConcurrentHashMap<Int, Unit>();
 #end
 		
 		game_0.player.hardMode = false;
@@ -98,63 +93,44 @@ class BattleField
 				}
 			}
 			
-			game_1.fillAllBuildings();
 			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
 				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
 		}
-		
-		// log buildings
-		game_0.logBuildings();
-		game_1.logBuildings();
-		
-		// create places and buildings
-		while ( p < placesLen )
-		{
-			placeData = map.places.get( p );
-			place = new Place(placeData.troopType == 1 ? game_1 : game_0, this, placeData.index, (troopType == 1 ? 1080 - placeData.x : placeData.x), (troopType == 1 ? 1920 - placeData.y : placeData.y), placeData.enabled);
-			place.building = BuildingType.instantiate(place.game, placeData.type, place, placeData.index);
-			place.building.createEngine(placeData.troopType);
-			places.push(place);
 			
-			p ++;
-		}
-		
-		// create links of places
-		p = 0;
-		var l = 0;
-		while ( p < placesLen )
-		{
-			placeData = map.places.get( p );
-			places.get(p).links = new PlaceList();
-			l = 0;
-			while ( l < placeData.links.size() )
-			{
-				places.get(p).links.push( places.get( placeData.links.get( l ) ) );
-				l ++;
-			}
-			p ++;
-		}
+		// create decks	
+		addPlayerDeck(game_0, 0);
+		if( singleMode )		
+			addRandomDeck(game_0);
+		else
+			addPlayerDeck(game_1, 1);
+			
+		elixirBar = new FloatList();
+		elixirBar.push(POPULATION_INIT);
+		elixirBar.push(POPULATION_INIT);
 	}
-
-	public function getPlacesByTroopType(troopType:Int, onlyLinked:Bool = false ):PlaceList
+	
+	function addPlayerDeck(game:Game, troopType:Int) : Void
 	{
-		if( troopType == TroopType.NONE && !onlyLinked )
-			return places;
-		
-		var ret:PlaceList = new PlaceList();
-		var p:Int = places.size() - 1;
-		while ( p >= 0 )
+		game.player.battleDeck = game.player.decks.get(game.player.selectedDeck);
+	}
+	
+	function addRandomDeck(game:Game) : Void
+	{
+		game.player.battleDeck = new IntList();
+		var availableCards = game.player.availabledCards(); // random arena
+		var i = 1;
+		while( i < 5 )
 		{
-			//trace(p, troopType,  places.get(p).building.troopType, linked, places.get(p).links.size());
-			if( places.get(p).building.troopType == troopType || troopType == TroopType.NONE )
-				if( !onlyLinked || places.get(p).links.size() > 0 )
-					ret.push(places.get(p));
-			p --;
+			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
+			if( randType > (i * 100 + 100) && randType < (i * 100 + 200) )
+			{
+				game.player.battleDeck.push(randType);
+				i ++;
+			}
 		}
-		return ret;
 	}
 	
 	#if java
@@ -162,16 +138,13 @@ class BattleField
 	{
 		now += interval;
 		
-		// update places and buildnigs	
-		var p:Int = places.size() - 1;
-		while ( p >= 0 )
-		{
-			places.get(p).update(now);
-			p --;
-		}
+		// increase elixir bars
+		var increaseCoef = getDuration() > getTime(2) ? 0.1 : 0.04;
+		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
+		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
 		
 		// update troops	
-		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
+		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Unit>> = units.entrySet().iterator();
         while( iterator.hasNext() )
 			iterator.next().getValue().update(now);
 	}
@@ -181,16 +154,16 @@ class BattleField
 		return now / 1000 - startAt;
 	}
 	
-	public function hitTroop(defenderId:Int, hittdeTroops:java.util.List<Troop>) : Void
+	public function hitUnit(defenderId:Int, hittedUnits:java.util.List<Unit>) : Void
 	{
-		if( troopHitCallback != null )
-			troopHitCallback.hit(defenderId, hittdeTroops);
+		if( unitsHitCallback != null )
+			unitsHitCallback.hit(defenderId, hittedUnits);
 			
-		var index:Int = hittdeTroops.size() - 1;
-        while ( index >= 0 )
+		var index:Int = hittedUnits.size() - 1;
+        while( index >= 0 )
 		{
-			if( hittdeTroops.get(index).health <= 0 )
-				troops.remove(hittdeTroops.get(index).id);
+			if( hittedUnits.get(index).card.troopHealth <= 0 )
+				units.remove(hittedUnits.get(index).id);
 			index --;
 		}
 	}
@@ -211,20 +184,18 @@ class BattleField
             var troop:Troop = iterator.next().getValue();
 			troop.dispose();
 		}*/
-		troops.clear();
+		units.clear();
 	}	
 	/*public function removeTroop(id:Int) : Void
 	{
 		if( troops.containsKey(id) )
 			troops.remove(id);
 	}*/
-
-
 	#end
 	
 	public function getTime(score:Int):Int
 	{
-		if ( map == null || score< 0 || score > 3 )
+		if( map == null || score< 0 || score > 3 )
 			return 0;
 		return map.times.get(score) + extraTime;
 	}
