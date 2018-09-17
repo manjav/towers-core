@@ -4,7 +4,7 @@ import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.others.Quest;
-import com.gt.towers.utils.maps.IntQuestMap;
+import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -29,6 +29,8 @@ class Player
 	public var buildings:IntBuildingMap;
 	public var inFriendlyBattle:Bool;
 	public var nickName:String = "no_nickName";
+	public var decks:DeckList;
+	public var selectedDeck:Int = 0;
 	public var splitTestCoef:Float = 1;
 
 	private var game:Game;
@@ -48,6 +50,7 @@ class Player
 		resources = initData.resources;
 		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
 		operations = initData.operations;
+		decks = initData.decks;
 		
 		// add player buildings data
 		buildings = new IntBuildingMap();
@@ -238,7 +241,6 @@ class Player
 			return !inDeckTutorial();
 		return false;
 	}
-
 	#end
 	
 	public function getQuestIndexByType(type:Int) : Int
