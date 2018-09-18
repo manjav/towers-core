@@ -1,6 +1,7 @@
 package com.gt.towers;
 import com.gt.towers.InitData;
 import com.gt.towers.Player;
+import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.others.Arena;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.calculators.FeatureCalculator;
@@ -28,21 +29,23 @@ class Game
 	public var player:Player;
 	public var lobby:Lobby;
 
-	public function new(){}
+	public function new()
+	{
+		levels = [0, 20, 50, 100, 200, 400, 1000, 2000, 5000, 10000, 20000, 40000, 80000];
+		calculator = new FeatureCalculator();
+	}
 	function init(data:InitData) 
 	{
 		appVersion = data.appVersion;
 		market = data.market;
 		sessionsCount = data.sessionsCount;
 		
-		levels = [0, 20, 50, 100, 200, 400, 1000, 2000, 5000, 10000, 20000, 40000, 80000];
 		
 		fillArenas();
 		fieldProvider = new FieldProvider(this);
 		player = new Player(this, data);
 		exchanger = new Exchanger(this);
 		lobby = new Lobby(this);
-		calculator = new FeatureCalculator(this);
 	}
 	
 	function fillArenas() : Void
@@ -78,13 +81,13 @@ class Game
 			arenaIndex ++;
 		}
 		return 100;
-	}
+	}*/
 	public function getBuildingAvailablity(type:Int =-1) : Int
 	{
-		if( !ResourceType.isBuilding(type) )
+		if( !ResourceType.isCard(type) )
 			return CardTypes.AVAILABLITY_EXISTS;
 		if( player.cards.exists(type) )
 			return CardTypes.AVAILABLITY_EXISTS;
-		return unlockedBuildingAt(type) <= player.get_arena(0) ? CardTypes.AVAILABLITY_WAIT : CardTypes.AVAILABLITY_NOT;
-	}*/
+		return calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1) <= player.get_arena(0) ? CardTypes.AVAILABLITY_WAIT : CardTypes.AVAILABLITY_NOT;
+	}
 }

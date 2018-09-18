@@ -14,6 +14,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class Card
 {
 	public var type:Int;
+	public var level:Int;
 	public var game:Game;
 	public var maxLevel:Int = 10;
 	
@@ -33,43 +34,31 @@ class Card
 	public var damageRangeMin:Float = 50;
 	public var damageRangeMax:Float = 180;
 	
-	private var _level:Int;
 	public function new(game:Game, type:Int, level:Int)
 	{
 		this.game = game;
 		this.type = type;
-		this._level = level;
+		this.level = level;
 		setFeatures();
 	}
 	
 	private function setFeatures():Void
 	{
-		rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, get_level());
-		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, get_level());
-		elixirSize = game.calculator.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, get_level());
-		troopsCount = game.calculator.getInt(CardFeatureType.F03_TROOPS_COUNT, type, get_level());
-		deployTime = game.calculator.getInt(CardFeatureType.F04_DEPLOY_TIME, type, get_level());
+		rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, level);
+		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, level);
+		elixirSize = game.calculator.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, level);
+		troopsCount = game.calculator.getInt(CardFeatureType.F03_TROOPS_COUNT, type, level);
+		deployTime = game.calculator.getInt(CardFeatureType.F04_DEPLOY_TIME, type, level);
 		
 		// troops data
-		troopSpeed = game.calculator.getInt(CardFeatureType.F11_TROOP_SPEED, type, get_level());
-		troopHealth = game.calculator.get(CardFeatureType.F13_TROOP_HEALTH, type, get_level());
+		troopSpeed = game.calculator.getInt(CardFeatureType.F11_TROOP_SPEED, type, level);
+		troopHealth = game.calculator.get(CardFeatureType.F13_TROOP_HEALTH, type, level);
 		
 		// defensive data
-		damage = game.calculator.get(CardFeatureType.F21_DAMAGE, type, get_level());
-		damageGap = game.calculator.getInt(CardFeatureType.F22_DAMAGE_GAP, type, get_level());
-		damageRangeMin = game.calculator.get(CardFeatureType.F23_RANGE_RANGE_MIN, type, get_level());
-		damageRangeMax = game.calculator.get(CardFeatureType.F24_RANGE_RANGE_MAX, type, get_level());
-	}
-
-	
-	
-	public function get_level():Int
-	{
-		return game.player.inFriendlyBattle ? 5 : _level;
-	}	
-	public function set_level(value:Int):Void
-	{
-		_level = value;
+		damage = game.calculator.get(CardFeatureType.F21_DAMAGE, type, level);
+		damageGap = game.calculator.getInt(CardFeatureType.F22_DAMAGE_GAP, type, level);
+		damageRangeMin = game.calculator.get(CardFeatureType.F23_RANGE_RANGE_MIN, type, level);
+		damageRangeMax = game.calculator.get(CardFeatureType.F24_RANGE_RANGE_MAX, type, level);
 	}
 	
 	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000];
@@ -101,8 +90,8 @@ class Card
 	public function get_upgradeRequirements():IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( ResourceType.CURRENCY_SOFT,	get_upgradeCost(get_level()) );
-		ret.set( type,							get_upgradeCards(get_level()) );
+		ret.set( ResourceType.CURRENCY_SOFT,	get_upgradeCost(level) );
+		ret.set( type,							get_upgradeCards(level) );
 		return ret;
 	}
 	
@@ -114,7 +103,7 @@ class Card
 		var playerWinStreak = game.player.get_winStreak();
 		
 		// XP rewards
-		ret.set(ResourceType.XP, Math.round( ( Math.log(get_level() * get_level()) + Math.log(1) ) * 30 ) + 4);
+		ret.set(ResourceType.XP, Math.round( ( Math.log(level * level) + Math.log(1) ) * 30 ) + 4);
 		
 		// reduce winStreak to make AI difficulty easier
 		if ( playerWinStreak - 9 <= minWinStreak )
@@ -125,16 +114,15 @@ class Card
 		return ret;
 	}
 	
-	
 	public function upgradable(confirmedHards:Int=0):Bool 
 	{
-		return _level == -1 || confirmedHards >= Exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
+		return level == -1 || confirmedHards >= Exchanger.toHard( game.player.deductions(get_upgradeRequirements()) );
 	}
 	public function upgrade(confirmedHards:Int=0):Bool
 	{
-		if( _level == -1 )
+		if( level == -1 )
 		{
-			_level = 1;
+			level = 1;
 			return true;
 		}
 		if( !upgradable(confirmedHards) )
@@ -147,7 +135,7 @@ class Card
 		if( res != MessageTypes.RESPONSE_SUCCEED )
 			return false;
 		
-		_level ++;
+		level ++;
 		return true;
 	}	
 	public function availabled():Bool 
@@ -158,7 +146,6 @@ class Card
 	{
 		return game.player.cards.exists(type);
 	}
-	
 	
 	public function count() : Int
 	{

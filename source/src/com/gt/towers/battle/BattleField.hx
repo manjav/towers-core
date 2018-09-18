@@ -4,7 +4,7 @@ import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Unit;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.interfaces.ITroopHitCallback;
+import com.gt.towers.interfaces.IUnitHitCallback;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import haxe.Int64;
@@ -32,7 +32,7 @@ class BattleField
 	public var startAt:Int64 = 0;
 	public var interval:Int = 100;
 	public var units:java.util.Map<Int, Unit>;
-	public var unitsHitCallback:ITroopHitCallback;
+	public var unitsHitCallback:IUnitHitCallback;
 #end
 
 	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)

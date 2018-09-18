@@ -4,7 +4,7 @@ import com.gt.towers.battle.units.Unit;
 /**
  * @author Mansour Djawadi
  */
-interface ITroopHitCallback 
+interface IUnitHitCallback 
 {
 	#if java
   	function hit(defenderId:Int, troops:java.util.List<Unit>) : Void ;

@@ -174,7 +174,7 @@ class Quest
 
 	static public function getCurrent(player:Player, type:Int, key:Int) : Int
 	{
-		//trace("getCurrent", type, key);
+		trace("getCurrent", type, key);
 		return switch ( type )
 		{
 			case 0 :	player.get_level(player.get_xp());
@@ -184,8 +184,8 @@ class Quest
 			case 4 :	player.get_battleswins();
 			case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
 			case 6 :	player.getResource(key);
-			case 7 :	Card.getTotalCollected(player.cards.get(key).get_level(), player.getResource(key));
-			case 8 :	player.cards.get(key).get_level();
+			case 7 :	Card.getTotalCollected(player.cards.get(key).level, player.getResource(key));
+			case 8 :	player.cards.get(key).level;
 			case 9 :	player.getResource(key);
 			default: 	0;
 		}

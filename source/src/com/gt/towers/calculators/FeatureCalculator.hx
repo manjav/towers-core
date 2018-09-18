@@ -23,7 +23,7 @@ class FeatureCalculator
 	public var damageRadiusMin:DamageRadiusMinCalculator;
 	public var damageRadiusMax:DamageRadiusMinCalculator;
 
-	public function new(game:Game)
+	public function new()
 	{
 		rarity = new RarityCalculator(null);
 		availableAt = new AvailableAtCalculator(null);

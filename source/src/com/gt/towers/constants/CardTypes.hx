@@ -7,6 +7,10 @@ import com.gt.towers.utils.lists.IntList;
  */
 class CardTypes 
 {
+	static public var AVAILABLITY_EXISTS:Int = 0;
+    static public var AVAILABLITY_WAIT:Int = -1;
+    static public var AVAILABLITY_NOT:Int = -2;
+
     public static var INITIAL:Int = 401;
 	
     public static var IMPROVE:Int = -2;
@@ -122,8 +126,6 @@ class CardTypes
 		ret.push(203);
 		ret.push(204);
 		ret.push(205);
-		ret.push(206);
-		ret.push(207);
 		ret.push(208);
 		ret.push(209);
 
@@ -157,6 +159,8 @@ class CardTypes
 		ret.push(508);
 		ret.push(509);
 
+		ret.push(206);
+		ret.push(207);
 		return ret;
 	}
 }

@@ -23,11 +23,11 @@ class Defender
 	public function new(place:Place) 
 	{
 		this.place = place;
-		this.damage				= place.game.calculator.get(CardFeatureType.F21_DAMAGE,				place.building.type, place.building.get_level(), place.building.improveLevel);
-		this.damageGap			= place.game.calculator.getInt(CardFeatureType.F22_DAMAGE_GAP,		place.building.type, place.building.get_level(), place.building.improveLevel);
-		this.damageRadiusMin	= place.game.calculator.get(CardFeatureType.F23_RANGE_RADIUS_MIN,	place.building.type, place.building.get_level(), place.building.improveLevel);
-		this.damageRadiusMax 	= place.game.calculator.get(CardFeatureType.F24_RANGE_RADIUS_MAX,	place.building.type, place.building.get_level(), place.building.improveLevel);
-		//trace("type:" + place.building.type, " level:" + place.building.get_level(), " improveLevel:" + place.building.improveLevel, " damage:" + damage, " damageGap:" +damageGap, " damageRadiusMax:" + damageRadiusMax);
+		this.damage				= place.game.calculator.get(CardFeatureType.F21_DAMAGE,				place.building.type, place.building.level, place.building.improveLevel);
+		this.damageGap			= place.game.calculator.getInt(CardFeatureType.F22_DAMAGE_GAP,		place.building.type, place.building.level, place.building.improveLevel);
+		this.damageRadiusMin	= place.game.calculator.get(CardFeatureType.F23_RANGE_RADIUS_MIN,	place.building.type, place.building.level, place.building.improveLevel);
+		this.damageRadiusMax 	= place.game.calculator.get(CardFeatureType.F24_RANGE_RADIUS_MAX,	place.building.type, place.building.level, place.building.improveLevel);
+		//trace("type:" + place.building.type, " level:" + place.building.level, " improveLevel:" + place.building.improveLevel, " damage:" + damage, " damageGap:" +damageGap, " damageRadiusMax:" + damageRadiusMax);
 	}
 	
 #if java

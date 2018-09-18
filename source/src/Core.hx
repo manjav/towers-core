@@ -1,5 +1,6 @@
 package;
 import com.gt.towers.Game;
+import com.gt.towers.interfaces.IUnitHitCallback;
 import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.socials.Challenge;

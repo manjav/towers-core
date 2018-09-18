@@ -233,7 +233,7 @@ class Player
 	public function inSlotTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_031_SLOT_FOCUS && getTutorStep() < PrefsTypes.T_035_DECK_FOCUS; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_035_DECK_FOCUS && getTutorStep() < PrefsTypes.T_038_CARD_UPGRADED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function emptyDeck() : Bool { return !cards.exists(CardTypes.C001) || cards.get(CardTypes.C001).get_level() <= 1 ; }
+	public function emptyDeck() : Bool { return !cards.exists(CardTypes.C001) || cards.get(CardTypes.C001).level <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
 	public static function isAdmin(id:Int) : Bool {return (id == 10412 || /*id == 10438 ||*/ id == 10487 /*|| id == 96111*/); }
 	public function inTutorial() : Bool

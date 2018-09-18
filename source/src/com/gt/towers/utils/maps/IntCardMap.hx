@@ -153,9 +153,9 @@ class IntCardMap
 		var i = 0;
 		while ( i < keys.length )
 		{
-			if( get(keys[i]).get_level() < lvl )
+			if( get(keys[i]).level < lvl )
 			{
-				lvl = get(keys[i]).get_level();
+				lvl = get(keys[i]).level;
 				ret = keys[i];
 			}
 			i ++;
@@ -171,9 +171,9 @@ class IntCardMap
 		var i = 0;
 		while ( i < keys.length )
 		{
-			if( get(keys[i]).get_level() > lvl )
+			if( get(keys[i]).level > lvl )
 			{
-				lvl = get(keys[i]).get_level();
+				lvl = get(keys[i]).level;
 				ret = keys[i];
 			}
 			i ++;
@@ -190,7 +190,7 @@ class IntCardMap
 		var collected = 0;
 		while ( i < keys.length )
 		{
-			collected = Card.getTotalCollected(get(keys[i]).get_level(), get(keys[i]).count());
+			collected = Card.getTotalCollected(get(keys[i]).level, get(keys[i]).count());
 			if( collected < numCards )
 			{
 				numCards = collected + 0;
