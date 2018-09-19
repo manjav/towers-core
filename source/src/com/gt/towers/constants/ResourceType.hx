@@ -43,7 +43,7 @@ class ResourceType
 	
 	static public function isCard(type:Int) 
 	{
-		return (type >= 10 && type < 50) || (type >= 60 && type < 1000); 
+		return (type >= 100 && type < 1000); 
 	}
 	static public function isBook(type:Int) 
 	{

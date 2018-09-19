@@ -19,9 +19,9 @@ class AvailableAtCalculator extends BaseCalculator
 			case	204	:	2	;
 			case	205	:	3	;
 			case	206	:	4	;
-			case	207	:	5	;
-			case	208	:	6	;
-			case	209	:	7	;
+			//case	207	:	5	;
+			//case	208	:	6	;
+			//case	209	:	7	;
 		
 			case	301	:	0	;
 			case	302	:	0	;
@@ -29,9 +29,9 @@ class AvailableAtCalculator extends BaseCalculator
 			case	304	:	2	;
 			case	305	:	3	;
 			case	306	:	4	;
-			case	307	:	5	;
-			case	308	:	6	;
-			case	309	:	8	;
+			//case	307	:	5	;
+			//case	308	:	6	;
+			//case	309	:	8	;
 			
 			case	401	:	0	;
 			case	402	:	0	;
@@ -39,9 +39,9 @@ class AvailableAtCalculator extends BaseCalculator
 			case	404	:	2	;
 			case	405	:	3	;
 			case	406	:	4	;
-			case	407	:	5	;
-			case	408	:	7	;
-			case	409	:	9	;
+			//case	407	:	5	;
+			//case	408	:	7	;
+			//case	409	:	9	;
 		
 			case	501	:	0	;
 			case	502	:	0	;
@@ -49,9 +49,9 @@ class AvailableAtCalculator extends BaseCalculator
 			case	504	:	2	;
 			case	505	:	3	;
 			case	506	:	4	;
-			case	507	:	6	;
-			case	508	:	7	;
-			case	509	:	8	;
+			//case	507	:	6	;
+			//case	508	:	7	;
+			//case	509	:	8	;
 		
 			default : 9;
 		}

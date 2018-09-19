@@ -16,7 +16,7 @@ class FieldProvider
 	public function new(game:Game) 
 	{
 		shires = new StringFieldMap();
-#if flash
+/*#if flash
 		shires.set( "shire_3" , new com.gt.towers.battle.shires.Shire_3( 3, "shire_3" ) );
 		shires.set( "shire_2" , new com.gt.towers.battle.shires.Shire_2( 2, "shire_2" ) );
 		shires.set( "shire_1" , new com.gt.towers.battle.shires.Shire_1( 1, "shire_1" ) );
@@ -63,12 +63,12 @@ class FieldProvider
 		operations.set( "operation_36", new Operation_36( 36, "operation_36", "110,160,240,30" ) );
 		operations.set( "operation_37", new Operation_37( 37, "operation_37", "100,140,210,30" ) );
 		operations.set( "operation_38", new Operation_38( 38, "operation_38", "130,160,200,30" ) );
-		operations.set( "operation_39", new Operation_39( 39, "operation_39", "150,180,220,30" ) );
+		operations.set( "operation_39", new Operation_39( 39, "operation_39", "150,180,220,30" ) );*/
 		
 		
 		battles = new StringFieldMap();
 		battles.set( "battle_1", new Battle_1( 1, "battle_1", "80,150,240,300", "", "0,2,4,6",	"") );
-		battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,300", "", "0",		"") );
+		/*battles.set( "battle_2", new Battle_2( 2, "battle_2", "80,150,240,300", "", "0",		"") );
 		if( game.appVersion >= 3200 )
 		battles.set( "battle_3", new Battle_7( 3, "battle_3", "80,150,240,300", "", "0", 		"0") );
 		else
@@ -194,6 +194,6 @@ class FieldProvider
 		battles.set( "battle_920", new Battle_920( 920, "battle_920", "120,180,240,300" ) );
 		battles.set( "battle_921", new Battle_921( 921, "battle_921", "120,180,240,300" ) );
 		battles.set( "battle_922", new Battle_922( 922, "battle_922", "120,180,240,300" ) );
-		battles.set( "battle_923", new Battle_923( 923, "battle_923", "120,180,240,300" ) );
+		battles.set( "battle_923", new Battle_923( 923, "battle_923", "120,180,240,300" ) );*/
 	}
 }
