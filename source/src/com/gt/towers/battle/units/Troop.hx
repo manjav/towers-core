@@ -36,8 +36,8 @@ class Troop extends Unit
 	
 	public function hit(damage:Float) : Void
 	{
-		card.troopHealth -= damage;
-		if( card.troopHealth <= 0 )
+		card.health -= damage;
+		if( card.health <= 0 )
 			dispose();
 	}
 	

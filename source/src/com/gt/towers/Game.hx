@@ -51,17 +51,17 @@ class Game
 	function fillArenas() : Void
 	{
 		arenas = new IntArenaMap();
-	  //				Arena(num,	min,	max, minWinStreak,	unlockCards));
-		arenas.set(0, new Arena(0,	0,		100,	-8,	calculator.availableAt.getArenaCards(0)));
-		arenas.set(1, new Arena(1,	101,	300,	-7,	calculator.availableAt.getArenaCards(1)));//400
-		arenas.set(2, new Arena(2,	301,	600,	-6,	calculator.availableAt.getArenaCards(2)));//700
-		arenas.set(3, new Arena(3,	601,	1000,	-5,	calculator.availableAt.getArenaCards(3)));//1100
-		arenas.set(4, new Arena(4,	1001,	1500,	-4,	calculator.availableAt.getArenaCards(4)));//1400
-		arenas.set(5, new Arena(5,	1501,	2200,	-3,	calculator.availableAt.getArenaCards(5)));//1700
-		arenas.set(6, new Arena(6,	2201,	3000,	-2,	calculator.availableAt.getArenaCards(6)));//2000
-		arenas.set(7, new Arena(7,	3001,	4500,	-2,	calculator.availableAt.getArenaCards(7)));//2400
-		arenas.set(8, new Arena(8,	4501,	7000,	-1,	calculator.availableAt.getArenaCards(8)));//2800
-		arenas.set(9, new Arena(9,	7001,	10000,	 0,	calculator.availableAt.getArenaCards(9)));//3000
+	  //				Arena(num,	min,	max, minWinStreak));
+		arenas.set(0, new Arena(0,	0,		100,	-8));
+		arenas.set(1, new Arena(1,	101,	300,	-7));//400
+		arenas.set(2, new Arena(2,	301,	600,	-6));//700
+		arenas.set(3, new Arena(3,	601,	1000,	-5));//1100
+		arenas.set(4, new Arena(4,	1001,	1500,	-4));//1400
+		arenas.set(5, new Arena(5,	1501,	2200,	-3));//1700
+		arenas.set(6, new Arena(6,	2201,	3000,	-2));//2000
+		arenas.set(7, new Arena(7,	3001,	4500,	-2));//2400
+		arenas.set(8, new Arena(8,	4501,	7000,	-1));//2800
+		arenas.set(9, new Arena(9,	7001,	10000,	 0));//3000
 
 		
 		

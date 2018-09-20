@@ -1,6 +1,7 @@
 package com.gt.towers;
 import com.gt.towers.Game;
 import com.gt.towers.battle.units.Card;
+import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
@@ -33,7 +34,6 @@ class Player
 	public var nickName:String = "no_nickName";
 	public var decks:DeckList;
 	public var selectedDeck:Int = 0;
-	public var battleDeck:IntList;
 	public var splitTestCoef:Float = 1;
 
 	private var game:Game;
@@ -140,23 +140,27 @@ class Player
 				break;
 			arena --;
 		}
-		return cast(Math.min(arena + 1, arenaKeys.length-1), Int);
+		return cast(Math.min(arena + 1, arenaKeys.length - 1), Int);
 	}
 	
-	public function availabledCards (selectedArena:Int = -1) : IntList
+	public function availabledCards (selectedArena:Int = -1, onlySelectedArena:Bool = false) : IntList
 	{
 		var ret = new IntList();
 		var arena = selectedArena == -1 ? get_arena(0) : selectedArena;
-		var ci = 0;
-		while ( arena >= 0 )
+		var cards = CardTypes.getAll();
+		var i = 0;
+		while ( i < cards.size() )
 		{
-			ci = game.arenas.get(arena).cards.size() - 1;
-			while ( ci >= 0 )
+			if( onlySelectedArena )
 			{
-				ret.push( game.arenas.get(arena).cards.get(ci) );
-				ci --;
+				if( game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) == arena )
+					ret.push(cards.get(i));
 			}
-			arena --;
+			else if( game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) <= arena )
+			{
+				ret.push(cards.get(i));
+			}
+			i ++;
 		}
 		return ret;
 	}
@@ -173,7 +177,7 @@ class Player
 		{
 			if( IntIntMap.get(keis[i]) > resources.get(keis[i]) )
 				return false;
-			i++;
+			i ++;
 		}
 		return true;
 	}

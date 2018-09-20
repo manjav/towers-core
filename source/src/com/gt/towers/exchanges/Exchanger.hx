@@ -345,21 +345,7 @@ class Exchanger
 		
 		// try to find new card
 		var a = 0;
-		var allCards = new IntList();
-		var arena = game.player.get_arena(0);
-		while( a <= arena )
-		{
-			var cards = game.arenas.get (a).cards;
-			var c = 0;
-			while ( c < cards.size() )
-			{
-				allCards.push( cards.get(c) );
-				c ++;
-			}
-			a ++;
-		}
-		
-		a = 0;
+		var allCards = game.player.availabledCards();
 		while( a < allCards.size() )
 		{
 			var newCard = allCards.get(a);

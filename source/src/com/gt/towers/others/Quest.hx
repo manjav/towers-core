@@ -174,7 +174,7 @@ class Quest
 
 	static public function getCurrent(player:Player, type:Int, key:Int) : Int
 	{
-		trace("getCurrent " + type + " " + key);
+		//trace("getCurrent " + type + " " + key);
 		return switch ( type )
 		{
 			case 0 :	player.get_level(player.get_xp());

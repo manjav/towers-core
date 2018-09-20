@@ -127,4 +127,9 @@ class IntList
 		}
 		return ret;
 	}
+	
+	public function randomize() : IntList 
+	{
+		return this;
+	}
 }
