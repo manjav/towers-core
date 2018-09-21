@@ -6,9 +6,9 @@ import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.others.Quest;
-import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntCardMap;
+import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntStrMap;
 
@@ -32,8 +32,8 @@ class Player
 	public var cards:IntCardMap;
 	public var inFriendlyBattle:Bool;
 	public var nickName:String = "no_nickName";
-	public var decks:DeckList;
-	public var selectedDeck:Int = 0;
+	public var decks:IntIntIntMap;
+	public var selectedDeckIndex:Int = 0;
 	public var splitTestCoef:Float = 1;
 
 	private var game:Game;
@@ -164,9 +164,9 @@ class Player
 		}
 		return ret;
 	}
-	public function get_current_deck():IntList
+	public function getSelectedDeck():IntIntMap
 	{
-		return decks.get(selectedDeck);
+		return decks.get(selectedDeckIndex);
 	}
 	
 	public function has(IntIntMap:IntIntMap) : Bool

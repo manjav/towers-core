@@ -105,6 +105,16 @@ class IntIntMap extends flash.events.EventDispatcher
 		#end
 		return false;
 	}
+	
+	public function existsValue(value:Int):Bool
+	{
+		#if java
+		return _map.containsValue(value);
+		#elseif flash
+		return values().indexOf(value) > -1;
+		#end
+		return false;
+	}
 
 	/**
 		Removes the mapping of `key` and returns true if such a mapping existed,
@@ -266,5 +276,10 @@ class IntIntMap extends flash.events.EventDispatcher
 			i ++;
 		}
 		return ret;
+	}
+	
+	public function randomize() : IntIntMap
+	{
+		return this;
 	}
 }

@@ -1,5 +1,5 @@
 package com.gt.towers;
-import com.gt.towers.utils.lists.DeckList;
+import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntStrMap;
 
@@ -18,7 +18,7 @@ class InitData
 	public var buildingsLevel:IntIntMap;
 	public var operations:IntIntMap;
 	public var prefs:IntStrMap;
-	public var decks:DeckList;
+	public var decks:IntIntIntMap;
 	
 	public function new() 
 	{
@@ -26,6 +26,6 @@ class InitData
 		buildingsLevel = new IntIntMap();
 		operations = new IntIntMap();
 		prefs = new IntStrMap();
-		decks = new DeckList();
+		decks = new IntIntIntMap();
 	}
 }

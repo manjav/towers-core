@@ -5,9 +5,10 @@ import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Unit;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.interfaces.IUnitHitCallback;
-import com.gt.towers.utils.lists.DeckList;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
+import com.gt.towers.utils.maps.IntIntIntMap;
+import com.gt.towers.utils.maps.IntIntMap;
 import haxe.Int64;
 
 /**
@@ -26,7 +27,7 @@ class BattleField
 	public var difficulty:Int;
 	public var arena:Int;
 	public var extraTime:Int = 0;
-	public var decks:DeckList;
+	public var decks:IntIntIntMap;
 	
 #if java 
 	public var games:java.util.List<Game>;
@@ -102,12 +103,12 @@ class BattleField
 		}
 		
 		// create decks	
-		decks = new DeckList();
-		decks.push(game_0.player.decks.get(game_0.player.selectedDeck).randomize());
+		decks = new IntIntIntMap();
+		decks.set(0, game_0.player.getSelectedDeck().randomize());
 		if( singleMode )		
-			addRandomDeck(game_0);
+			decks.set(1, game_0.player.getSelectedDeck().randomize());//addRandomDeck(game_0);
 		else
-			decks.push(game_1.player.decks.get(game_1.player.selectedDeck).randomize());
+			decks.set(1, game_1.player.getSelectedDeck().randomize());
 #end
 		
 		elixirBar = new FloatList();
@@ -115,22 +116,21 @@ class BattleField
 		elixirBar.push(POPULATION_INIT);
 	}
 	
-
 	function addRandomDeck(game:Game) : Void
 	{
-		var botDeck = new IntList();
+		var botDeck = new IntIntMap();
 		var availableCards = game.player.availabledCards(); // random arena
 		var i = 1;
-		while( i < 5 )
+		while( i < 9 )
 		{
 			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
 			if( randType > (i * 100 + 100) && randType < (i * 100 + 200) )
 			{
-				botDeck.push(randType);
+				botDeck.set(i, randType);
 				i ++;
 			}
 		}
-		decks.push(botDeck);
+		decks.set(1, botDeck);
 	}
 	
 	#if java
