@@ -23,17 +23,15 @@ class Card
 	public var elixirSize:Int = 5;
 	public var troopsCount:Int = 10;
 	public var deployTime:Int = 500;
-	//public var troopType:Int = -1;
-	//public var healRate:Float = 0.15;
 	
 	public var health:Float = 1;
-	public var troopSpeed:Int = 4000;
+	public var speed:Int = 4000;
 	
-	public var damage:Float = 1.05;
-	public var damageGap:Int = 800;
-	public var damageRangeMin:Float = 50;
-	public var damageRangeMax:Float = 180;
-	public var damageArea:Float = 180;
+	public var bulletDamage:Float = 1.05;
+	public var bulletFireGap:Int = 800;
+	public var bulletRangeMin:Float = 50;
+	public var bulletRangeMax:Float = 180;
+	public var bulletDamageArea:Float = 180;
 	
 	public function new(game:Game, type:Int, level:Int)
 	{
@@ -52,15 +50,15 @@ class Card
 		deployTime = game.calculator.getInt(CardFeatureType.F04_DEPLOY_TIME, type, level);
 		
 		// troops data
-		troopSpeed = game.calculator.getInt(CardFeatureType.F11_SPEED, type, level);
+		speed = game.calculator.getInt(CardFeatureType.F11_SPEED, type, level);
 		health = game.calculator.get(CardFeatureType.F12_HEALTH, type, level);
 		
 		// defensive data
-		damage = game.calculator.get(CardFeatureType.F22_BULLET_DAMAGE, type, level);
-		damageGap = game.calculator.getInt(CardFeatureType.F23_BULLET_FIRE_GAP, type, level);
-		damageArea = game.calculator.getInt(CardFeatureType.F24_BULLET_DAMAGE_AREA, type, level);
-		damageRangeMin = game.calculator.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, level);
-		damageRangeMax = game.calculator.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, level);
+		bulletDamage = game.calculator.get(CardFeatureType.F22_BULLET_DAMAGE, type, level);
+		bulletFireGap = game.calculator.getInt(CardFeatureType.F23_BULLET_FIRE_GAP, type, level);
+		bulletDamageArea = game.calculator.getInt(CardFeatureType.F24_BULLET_DAMAGE_AREA, type, level);
+		//bulletRangeMin = game.calculator.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, level);
+		bulletRangeMax = game.calculator.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, level);
 	}
 	
 	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000];
