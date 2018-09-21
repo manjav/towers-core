@@ -9,9 +9,8 @@ class UnitEvent
 	//static public var UPGRADE:Int = 1;
 	static public var DEPLOYMENT_STARTED:Int = 11;
 	static public var DEPLOYMENT_COMPLETE:Int = 12;
-	
-	//static public var OCCUPIED:Int = 32;
-	//static public var BEST_FIGHT_TIME:Int = 33;
+	static public var ATTACK:Int = 13;
+
 
 	public function new() {}
 }

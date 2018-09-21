@@ -34,6 +34,7 @@ class BattleField
 	public var now:Int64 = 0;
 	public var startAt:Int64 = 0;
 	public var interval:Int = 100;
+	public var unitId:Int = 0;
 	public var units:java.util.Map<Int, Unit>;
 	public var unitsHitCallback:IUnitHitCallback;
 #end
@@ -154,16 +155,24 @@ class BattleField
 		return now / 1000 - startAt;
 	}
 	
-	public function hitUnit(defenderId:Int, hittedUnits:java.util.List<Unit>) : Void
+	public function deploy(type:Int, side:Int) : Void
+	{
+		var unit = new Unit(unitId, games.get(side).player.cards.get(type), this);
+		units.put(unitId, unit);
+		unitId ++;
+	}
+	
+	public function hitUnit(affender:Unit, hitUnits:java.util.List<Unit>) : Void
 	{
 		if( unitsHitCallback != null )
-			unitsHitCallback.hit(defenderId, hittedUnits);
+			unitsHitCallback.hit(affender.id, hitUnits);
 			
-		var index:Int = hittedUnits.size() - 1;
+		var index:Int = hitUnits.size() - 1;
         while( index >= 0 )
 		{
-			if( hittedUnits.get(index).card.health <= 0 )
-				units.remove(hittedUnits.get(index).id);
+			hitUnits.get(index).hit(affender.card.bulletDamage);
+			if( hitUnits.get(index).disposed )
+				units.remove(hitUnits.get(index).id);
 			index --;
 		}
 	}

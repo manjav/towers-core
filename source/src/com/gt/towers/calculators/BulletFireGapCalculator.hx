@@ -12,6 +12,6 @@ class BulletFireGapCalculator  extends BaseCalculator
 /*		if( CardTypes.get_category(type) != CardTypes.B40_CRYSTAL )
 			return BASE_VALUE ;
 		
-*/		return BASE_VALUE + improveLevel * 100 - Math.log(level) * 40;
+*/		return BASE_VALUE;// + improveLevel * 100 - Math.log(level) * 40;
 	}
 }
