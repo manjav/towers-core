@@ -3,10 +3,10 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Unit;
+import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.interfaces.IUnitHitCallback;
 import com.gt.towers.utils.lists.FloatList;
-import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import haxe.Int64;
@@ -155,11 +155,20 @@ class BattleField
 		return now / 1000 - startAt;
 	}
 	
-	public function deploy(type:Int, side:Int) : Void
+	public function deployUnit(type:Int, side:Int, x:Float, y:Float) : Int
 	{
-		var unit = new Unit(unitId, games.get(side).player.cards.get(type), this);
+		trace(type, side, games.size(), elixirBar.size());
+		if( !games.get(side).player.cards.exists(type) )
+			return MessageTypes.RESPONSE_NOT_FOUND;
+		var card = games.get(side).player.cards.get(type);
+		if( elixirBar.get(side) < card.elixirSize )
+			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+		
+		var unit = new Unit(unitId, card, this);
+		unit.deploy(now, x, y, side);
 		units.put(unitId, unit);
 		unitId ++;
+		return unit.id;
 	}
 	
 	public function hitUnit(affender:Unit, hitUnits:java.util.List<Unit>) : Void

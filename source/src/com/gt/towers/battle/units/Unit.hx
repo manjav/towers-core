@@ -14,6 +14,7 @@ class Unit
 	public var id:Int;
     public var x:Float;
     public var y:Float;
+    public var health:Float;
 	public var side:Int;
 	public var card:Card;
 	var battleField:BattleField;
@@ -30,6 +31,7 @@ class Unit
 	{
 		this.id = id;
 		this.card = card;
+		this.health = card.health;
 		this.battleField = battleFIeld;
 	}
 	
@@ -46,8 +48,28 @@ class Unit
 		decide(currentTimeMillis);
 	}
 
+	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= deploy -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	public function deploy(currentTimeMillis:Int64, x:Float, y:Float, side:Int):Bool
+	{
+		if( !deployable() )
+			return false;
+		this.x = x;
+		this.y = y;
+		dispatchEvent(id, UnitEvent.DEPLOYMENT_STARTED, null);
+		battleField.elixirBar.set(side, battleField.elixirBar.get(side) - card.elixirSize );
+		deployTime = currentTimeMillis + card.deployTime;
+		//trace(" type:" + type + " population:" + get_population() + " card.type:" + card.type + " card.index:" + card.index + " card.troopType:" + card.troopType + " transformTime:" + transformTime);
+		return true;
+	}
+	function finalizeDeployment() : Void
+	{
+		if( deployTime <= 0 )
+			return;
+		deployTime = 0;
+		dispatchEvent(id, UnitEvent.DEPLOYMENT_COMPLETE, null);
+	}
 	
-	
+
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= decide -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function decide(currentTimeMillis:Int64) 
 	{
@@ -63,28 +85,6 @@ class Unit
 		moveAhead(currentTimeMillis);
 	}
 
-
-	
-	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= deploy -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	public function deploy(currentTimeMillis:Int64) : Bool
-	{
-		if( !deployable() )
-			return false;
-		
-		dispatchEvent(id, UnitEvent.DEPLOYMENT_STARTED, null);
-		battleField.elixirBar.set(side, battleField.elixirBar.get(side) - card.elixirSize );
-		deployTime = currentTimeMillis + card.deployTime;
-		//trace(" type:" + type + " population:" + get_population() + " card.type:" + card.type + " card.index:" + card.index + " card.troopType:" + card.troopType + " transformTime:" + transformTime);
-		return true;
-	}
-	function finalizeDeployment() : Void
-	{
-		if( deployTime <= 0 )
-			return;
-		deployTime = 0;
-		dispatchEvent(id, UnitEvent.DEPLOYMENT_COMPLETE, null);
-	}
-	
 	
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function getNearestEnemy() : Unit 
@@ -120,8 +120,8 @@ class Unit
 	
 	public function hit(damage:Float) : Void
 	{
-		card.health -= damage;
-		if( card.health <= 0 )
+		health -= damage;
+		if( health <= 0 )
 			dispose();
 	}
 
