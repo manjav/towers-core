@@ -43,12 +43,11 @@ class Unit extends flash.events.EventDispatcher
 		this.id = id;
 		this.battleField = battleFIeld;
 		this.side = side;
-		this.x = x;
-		this.y = y;
 		this.card = card;
 		this.health = card.health;
 		this.currentTimeMillis = battleField.now;
 		this.deployTime = currentTimeMillis + card.deployTime;
+		setPosition(x, y, true);
 	}
 	
 	public function update( currentTimeMillis:Float ) : Void
@@ -61,9 +60,7 @@ class Unit extends flash.events.EventDispatcher
 		
 		this.currentTimeMillis = currentTimeMillis;
 		finalizeDeployment();
-#if java
 		decide();
-#end
 	}
 
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= deploy -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -77,7 +74,6 @@ class Unit extends flash.events.EventDispatcher
 	
 
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= decide -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-#if java
 	function decide() 
 	{
 		if( attackTime < currentTimeMillis )
@@ -96,10 +92,26 @@ class Unit extends flash.events.EventDispatcher
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function getNearestEnemy() : Unit 
 	{
-		var unit:Unit = null;
-		var ret:Unit = null;
-		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = battleField.units._map.entrySet().iterator();
 		var distance:Float = 2000;
+		var ret:Unit = null;
+		var i = 0;
+		var values = battleField.units.values();
+		var len = values.length;
+		while ( i < len )
+		{
+			if( this.side != values[i].side )
+			{
+				var dis = com.gt.towers.utils.CoreUtils.getDistance(this, values[i]);
+				if( distance > dis )
+				{
+					distance = dis;
+					ret = values[i];
+				}
+			}
+			i ++;
+		}
+		
+		/*var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = battleField.units._map.entrySet().iterator();
         while( iterator.hasNext() )
         {
             unit = iterator.next().getValue();
@@ -112,19 +124,20 @@ class Unit extends flash.events.EventDispatcher
 					ret = unit;
 				}
 			}
-		}
+		}*/
 		return ret;
 	}
 	
 	function attack(enemy:Unit) : Void
 	{
+#if java
 		fireEvent(id, UnitEvent.ATTACK, enemy);
 		var units:java.util.List<Unit> = new java.util.ArrayList<Unit>();
 		units.add(enemy);
 		battleField.hitUnit(this, units);
 		attackTime = currentTimeMillis + card.bulletFireGap;
-	}
 #end
+	}
 	
 	public function hit(damage:Float) : Void
 	{
@@ -137,10 +150,21 @@ class Unit extends flash.events.EventDispatcher
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= move -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function moveAhead() : Void
 	{
-		y += (side == 0 ? -1 : 1) * card.speed;
+		setPosition(-1, y + (side == 0 ? -1 : 1) * card.speed * BattleField.INTERVAL);
+	}
+	
+	public function setPosition(x:Float, y:Float, forced:Bool = false) : Bool
+	{
+		if ( !forced && ( x < 0 || x == this.x ) && ( y < 0 || y == this.y ) )
+			return false;
+		if( x > 0 )
+			this.x = x;
+		if( y > 0 )
+			this.y = y;
+		return true;
 	}
 
-	private function fireEvent (dispatcherId:Int, type:String, data:Any) :Void
+	private function fireEvent (dispatcherId:Int, type:String, data:Any) : Void
 	{
 #if java
 		if( eventCallback != null )

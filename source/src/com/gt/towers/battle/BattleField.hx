@@ -145,7 +145,7 @@ class BattleField
 			iterator.next().getValue().update(now);
 		
 		// increase elixir bars
-		var increaseCoef = getDuration() > getTime(2) ? 0.06 : 0.03;
+		var increaseCoef = getDuration() > getTime(2) ? 0.06 : 0.06;
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
 		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
 	#elseif flash
