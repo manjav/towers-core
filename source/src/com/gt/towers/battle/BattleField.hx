@@ -9,6 +9,7 @@ import com.gt.towers.interfaces.IUnitHitCallback;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
+import com.gt.towers.utils.maps.IntUnitMap;
 import haxe.Int64;
 
 /**
@@ -19,6 +20,7 @@ class BattleField
 {
 	public static var POPULATION_MAX:Int = 10;
 	public static var POPULATION_INIT:Int = 5;
+	public static var INTERVAL:Int = 100;
 	private var questProvider:FieldProvider;
 
 	public var elixirBar:FloatList;
@@ -28,14 +30,13 @@ class BattleField
 	public var arena:Int;
 	public var extraTime:Int = 0;
 	public var decks:IntIntIntMap;
+	public var units:IntUnitMap;
+	public var now:Float = 0;
+	public var startAt:Float = 0;
 	
 #if java 
 	public var games:java.util.List<Game>;
-	public var now:Int64 = 0;
-	public var startAt:Int64 = 0;
-	public var interval:Int = 100;
 	public var unitId:Int = 0;
-	public var units:java.util.Map<Int, Unit>;
 	public var unitsHitCallback:IUnitHitCallback;
 #end
 
@@ -51,15 +52,14 @@ class BattleField
 			
 		if( hasExtraTime )
 			extraTime = map.times.get(3);
-
 		
+		units = new IntUnitMap();
 #if java 
 		//game_0.calculator.setField(this);
 		//game_1.calculator.setField(this);
 		games = new java.util.ArrayList<Game>();
 		games.add(game_0);
 		games.add(game_1);
-		units = new java.util.concurrent.ConcurrentHashMap<Int, Unit>();
 		
 		game_0.player.hardMode = false;
 		if( singleMode )
@@ -134,22 +134,27 @@ class BattleField
 		decks.set(1, botDeck);
 	}
 	
-	#if java
 	public function update() : Void
 	{
-		now += interval;
+		now += INTERVAL;
+		
+	#if java
+		// update troops	
+		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Unit>> = units._map.entrySet().iterator();
+        while( iterator.hasNext() )
+			iterator.next().getValue().update(now);
 		
 		// increase elixir bars
 		var increaseCoef = getDuration() > getTime(2) ? 0.06 : 0.03;
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
 		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
-		
-		// update troops	
-		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Unit>> = units.entrySet().iterator();
-        while( iterator.hasNext() )
-			iterator.next().getValue().update(now);
+	#elseif flash
+		for (value in units._map)
+			value.update(now);
+	#end
 	}
 	
+	#if java
 	public function getDuration() : Int64
 	{
 		return now / 1000 - startAt;
@@ -157,16 +162,15 @@ class BattleField
 	
 	public function deployUnit(type:Int, side:Int, x:Float, y:Float) : Int
 	{
-		trace(type, side, games.size(), elixirBar.size());
 		if( !games.get(side).player.cards.exists(type) )
 			return MessageTypes.RESPONSE_NOT_FOUND;
 		var card = games.get(side).player.cards.get(type);
 		if( elixirBar.get(side) < card.elixirSize )
 			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 		
-		var unit = new Unit(unitId, card, this);
-		unit.deploy(now, x, y, side);
-		units.put(unitId, unit);
+		var unit = new Unit(unitId, this, card, side, x, y);
+		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
+		units.set(unitId, unit);
 		unitId ++;
 		return unit.id;
 	}
@@ -202,7 +206,7 @@ class BattleField
             var troop:Troop = iterator.next().getValue();
 			troop.dispose();
 		}*/
-		units.clear();
+		units._map.clear();
 	}	
 	/*public function removeTroop(id:Int) : Void
 	{

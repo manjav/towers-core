@@ -5,5 +5,5 @@ package com.gt.towers.events;
  */
 interface EventCallback 
 {
-  	function dispatch(dispatcherId:Int, type:Int, data:Any) : Void ;
+  	function dispatch(dispatcherId:Int, type:String, data:Any) : Void ;
 }

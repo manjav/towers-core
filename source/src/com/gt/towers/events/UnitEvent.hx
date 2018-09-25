@@ -1,16 +1,28 @@
 package com.gt.towers.events;
-
 /**
  * ...
- * @author ...
+ * @author Mansour Djawadi
  */
+
+ #if java
 class UnitEvent 
+#elseif flash
+class UnitEvent extends flash.events.Event
+#end
 {
-	//static public var UPGRADE:Int = 1;
-	static public var DEPLOYMENT_STARTED:Int = 11;
-	static public var DEPLOYMENT_COMPLETE:Int = 12;
-	static public var ATTACK:Int = 13;
+static public var DEPLOY:String = "deploy";
+static public var ATTACK:String = "attack";
+static public var HIT:String = "hit";
+static public var DISPOSE:String = "dispose";
 
-
-	public function new() {}
+ #if java
+public function new() {}
+#elseif flash
+public var data:Any;
+public function new(type:String, data:Any = null)
+{
+	super(type, false, false);
+	this.data = data;
+}
+#end
 }

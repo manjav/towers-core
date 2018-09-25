@@ -2,41 +2,56 @@ package com.gt.towers.battle.units;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.events.UnitEvent;
-import com.gt.towers.utils.CoreUtils;
 import haxe.Int64;
 
 /**
  * ...
  * @author Mansour Djawadi
  */
-class Unit 
+#if java
+class Unit
+#elseif flash
+class Unit extends flash.events.EventDispatcher
+#end
+
 {
+	static public var STATE_WAIT:Int = 0;
+	static public var STATE_MOVE:Int = 1;
+	static public var STATE_ATTACK:Int = 2;
+	
 	public var id:Int;
     public var x:Float;
     public var y:Float;
-    public var health:Float;
 	public var side:Int;
+    public var health:Float;
 	public var card:Card;
-	var battleField:BattleField;
+	public var battleField:BattleField;
+	public var disposed:Bool;
 	
-	var deployTime:Int64 = -1;
-	var attackTime:Int64;
-	//var currentTimeMillis:Int64;
+	var currentTimeMillis:Float;
+	var deployTime:Float = -1;
+	var attackTime:Float;
 #if java
 	public var eventCallback:com.gt.towers.events.EventCallback;
-	public var disposed:Bool;
 #end
 
-	public function new(id:Int, card:Card, battleFIeld:BattleField) 
+	public function new(id:Int, battleFIeld:BattleField, card:Card, side:Int, x:Float, y:Float) 
 	{
+#if flash
+		super();
+#end
 		this.id = id;
+		this.battleField = battleFIeld;
+		this.side = side;
+		this.x = x;
+		this.y = y;
 		this.card = card;
 		this.health = card.health;
-		this.battleField = battleFIeld;
+		this.currentTimeMillis = battleField.now;
+		this.deployTime = currentTimeMillis + card.deployTime;
 	}
 	
-#if java
-	public function update( currentTimeMillis:Int64 ) : Void
+	public function update( currentTimeMillis:Float ) : Void
 	{
 		if( disposed )
 			return;
@@ -44,45 +59,37 @@ class Unit
 		if( deployTime == -1 || deployTime > currentTimeMillis )
 			return;
 		
+		this.currentTimeMillis = currentTimeMillis;
 		finalizeDeployment();
-		decide(currentTimeMillis);
+#if java
+		decide();
+#end
 	}
 
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= deploy -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	public function deploy(currentTimeMillis:Int64, x:Float, y:Float, side:Int):Bool
-	{
-		if( !deployable() )
-			return false;
-		this.x = x;
-		this.y = y;
-		dispatchEvent(id, UnitEvent.DEPLOYMENT_STARTED, null);
-		battleField.elixirBar.set(side, battleField.elixirBar.get(side) - card.elixirSize );
-		deployTime = currentTimeMillis + card.deployTime;
-		//trace(" type:" + type + " population:" + get_population() + " card.type:" + card.type + " card.index:" + card.index + " card.troopType:" + card.troopType + " transformTime:" + transformTime);
-		return true;
-	}
 	function finalizeDeployment() : Void
 	{
 		if( deployTime <= 0 )
 			return;
 		deployTime = 0;
-		dispatchEvent(id, UnitEvent.DEPLOYMENT_COMPLETE, null);
+		fireEvent(id, UnitEvent.DEPLOY, null);
 	}
 	
 
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= decide -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	function decide(currentTimeMillis:Int64) 
+#if java
+	function decide() 
 	{
 		if( attackTime < currentTimeMillis )
 		{
 			var enemy = getNearestEnemy();
 			if( enemy != null )
 			{
-				attack(currentTimeMillis, enemy);
+				attack(enemy);
 				return;
 			}
 		}
-		moveAhead(currentTimeMillis);
+		moveAhead();
 	}
 
 	
@@ -91,14 +98,14 @@ class Unit
 	{
 		var unit:Unit = null;
 		var ret:Unit = null;
-		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = battleField.units.entrySet().iterator();
+		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = battleField.units._map.entrySet().iterator();
 		var distance:Float = 2000;
         while( iterator.hasNext() )
         {
             unit = iterator.next().getValue();
 			if( side != unit.side )
 			{
-				var dis = CoreUtils.getDistance(this, unit);
+				var dis = com.gt.towers.utils.CoreUtils.getDistance(this, unit);
 				if ( distance > dis )
 				{
 					distance = dis;
@@ -109,46 +116,43 @@ class Unit
 		return ret;
 	}
 	
-	function attack(currentTimeMillis:Int64, enemy:Unit) : Void
+	function attack(enemy:Unit) : Void
 	{
-		dispatchEvent(id, UnitEvent.ATTACK, enemy);
+		fireEvent(id, UnitEvent.ATTACK, enemy);
 		var units:java.util.List<Unit> = new java.util.ArrayList<Unit>();
 		units.add(enemy);
 		battleField.hitUnit(this, units);
 		attackTime = currentTimeMillis + card.bulletFireGap;
 	}
+#end
 	
 	public function hit(damage:Float) : Void
 	{
 		health -= damage;
+		fireEvent(id, UnitEvent.HIT, damage);
 		if( health <= 0 )
 			dispose();
 	}
 
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= move -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	function moveAhead(currentTimeMillis:Int64) : Void
+	function moveAhead() : Void
 	{
 		y += (side == 0 ? -1 : 1) * card.speed;
 	}
-	
-	private function dispatchEvent (dispatcherId:Int, type:Int, data:Any) :Void
+
+	private function fireEvent (dispatcherId:Int, type:String, data:Any) :Void
 	{
+#if java
 		if( eventCallback != null )
 			eventCallback.dispatch( dispatcherId, type, data );
+#elseif flash
+		dispatchEvent(new UnitEvent(type, data));
+#end
 	}
 	
 	public function dispose() : Void
 	{
+		fireEvent(id, UnitEvent.DISPOSE, null);
 		disposed = true;
 	}
-#end
-	
-	public function deployable() : Bool
-	{
-		//if( place.battlefield.elixirBar.get(troopType) < card.elixirSize )
-		//	return false;
-		return true;
-	}
-
-
 }
