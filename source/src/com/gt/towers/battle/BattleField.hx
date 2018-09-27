@@ -20,7 +20,7 @@ class BattleField
 {
 	public static var POPULATION_MAX:Int = 10;
 	public static var POPULATION_INIT:Int = 5;
-	public static var INTERVAL:Int = 100;
+	//public static var INTERVAL:Int = 100;
 	private var questProvider:FieldProvider;
 
 	public var elixirBar:FloatList;
@@ -33,6 +33,7 @@ class BattleField
 	public var units:IntUnitMap;
 	public var now:Float = 0;
 	public var startAt:Float = 0;
+	public var deltaTime:Int = 100;
 	
 #if java 
 	public var games:java.util.List<Game>;
@@ -134,23 +135,24 @@ class BattleField
 		decks.set(1, botDeck);
 	}
 	
-	public function update() : Void
+	public function update(deltaTime:Int) : Void
 	{
-		now += INTERVAL;
+		this.deltaTime = deltaTime;
+		this.now += deltaTime;
 		
 	#if java
 		// update troops	
 		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Unit>> = units._map.entrySet().iterator();
         while( iterator.hasNext() )
-			iterator.next().getValue().update(now);
+			iterator.next().getValue().update();
 		
 		// increase elixir bars
-		var increaseCoef = getDuration() > getTime(2) ? 0.06 : 0.06;
+		var increaseCoef = (getDuration() > getTime(2) ? 0.0001 : 0.002) * deltaTime;
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
 		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
 	#elseif flash
 		for (value in units._map)
-			value.update(now);
+			value.update();
 	#end
 	}
 	

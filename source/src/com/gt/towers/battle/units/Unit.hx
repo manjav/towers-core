@@ -2,7 +2,6 @@ package com.gt.towers.battle.units;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.events.UnitEvent;
-import haxe.Int64;
 
 /**
  * ...
@@ -27,38 +26,36 @@ class Unit extends flash.events.EventDispatcher
 	public var card:Card;
 	public var battleField:BattleField;
 	public var disposed:Bool;
+	public var movable:Bool = true;
 	
-	var currentTimeMillis:Float;
 	var deployTime:Float = -1;
 	var attackTime:Float;
 #if java
 	public var eventCallback:com.gt.towers.events.EventCallback;
 #end
 
-	public function new(id:Int, battleFIeld:BattleField, card:Card, side:Int, x:Float, y:Float) 
+	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float) 
 	{
 #if flash
 		super();
 #end
 		this.id = id;
-		this.battleField = battleFIeld;
+		this.battleField = battleField;
 		this.side = side;
 		this.card = card;
 		this.health = card.health;
-		this.currentTimeMillis = battleField.now;
-		this.deployTime = currentTimeMillis + card.deployTime;
+		this.deployTime = battleField.now + card.deployTime;
 		setPosition(x, y, true);
 	}
 	
-	public function update( currentTimeMillis:Float ) : Void
+	public function update() : Void
 	{
 		if( disposed )
 			return;
 		
-		if( deployTime == -1 || deployTime > currentTimeMillis )
+		if( deployTime == -1 || deployTime > battleField.now )
 			return;
 		
-		this.currentTimeMillis = currentTimeMillis;
 		finalizeDeployment();
 		decide();
 	}
@@ -76,7 +73,7 @@ class Unit extends flash.events.EventDispatcher
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= decide -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function decide() 
 	{
-		if( attackTime < currentTimeMillis )
+		if( attackTime < battleField.now )
 		{
 			var enemy = getNearestEnemy();
 			if( enemy != null )
@@ -135,7 +132,7 @@ class Unit extends flash.events.EventDispatcher
 		var units:java.util.List<Unit> = new java.util.ArrayList<Unit>();
 		units.add(enemy);
 		battleField.hitUnit(this, units);
-		attackTime = currentTimeMillis + card.bulletFireGap;
+		attackTime = battleField.now + card.bulletFireGap;
 #end
 	}
 	
@@ -150,12 +147,13 @@ class Unit extends flash.events.EventDispatcher
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= move -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function moveAhead() : Void
 	{
-		setPosition(-1, y + (side == 0 ? -1 : 1) * card.speed * BattleField.INTERVAL);
+		if( movable )
+			setPosition(-1, y + (side == 0 ? -1 : 1) * card.speed * battleField.deltaTime);
 	}
 	
 	public function setPosition(x:Float, y:Float, forced:Bool = false) : Bool
 	{
-		if ( !forced && ( x < 0 || x == this.x ) && ( y < 0 || y == this.y ) )
+		if( !forced && ( x < 0 || x == this.x ) && ( y < 0 || y == this.y ) )
 			return false;
 		if( x > 0 )
 			this.x = x;
