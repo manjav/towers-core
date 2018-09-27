@@ -45,6 +45,8 @@ class Unit extends flash.events.EventDispatcher
 		this.card = card;
 		this.health = card.health;
 		this.deployTime = battleField.now + card.deployTime;
+		x = ( side == battleField.side ) ? x : (1080 - x);
+		y = ( side == battleField.side ) ? y : (1920 - y);
 		setPosition(x, y, true);
 	}
 	
@@ -148,7 +150,7 @@ class Unit extends flash.events.EventDispatcher
 	function moveAhead() : Void
 	{
 		if( movable )
-			setPosition(-1, y + (side == 0 ? -1 : 1) * card.speed * battleField.deltaTime);
+			setPosition(-1, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)));
 	}
 	
 	public function setPosition(x:Float, y:Float, forced:Bool = false) : Bool

@@ -34,6 +34,7 @@ class BattleField
 	public var now:Float = 0;
 	public var startAt:Float = 0;
 	public var deltaTime:Int = 100;
+	public var side:Int = 0;
 	
 #if java 
 	public var games:java.util.List<Game>;
@@ -41,11 +42,11 @@ class BattleField
 	public var unitsHitCallback:IUnitHitCallback;
 #end
 
-	public function new(game_0:Game, game_1:Game, mapName:String, troopType:Int, hasExtraTime:Bool)
+	public function new(game_0:Game, game_1:Game, mapName:String, side:Int, hasExtraTime:Bool)
 	{
 		var isOperation = mapName.substr(0, 10) == "operation_";
 		singleMode = game_1.player.cards.keys().length == 0;
-		
+		this.side = side;
 		if( isOperation )
 			map = game_0.fieldProvider.operations.get(mapName);
 		else
@@ -169,7 +170,7 @@ class BattleField
 		var card = games.get(side).player.cards.get(type);
 		if( elixirBar.get(side) < card.elixirSize )
 			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
-		
+		//trace(unitId, type, side, x, y);
 		var unit = new Unit(unitId, this, card, side, x, y);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
 		units.set(unitId, unit);

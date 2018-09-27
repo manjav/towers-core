@@ -24,7 +24,6 @@ class Player
 	public var tutorialMode:Int = 0;
 	public var hasOperations:Bool = true;
 	public var invitationCode:String;
-	public var troopType:Int = -1;
 	public var prefs:IntStrMap;
 	public var quests:Array<Quest>;
 	public var resources:IntIntMap;
