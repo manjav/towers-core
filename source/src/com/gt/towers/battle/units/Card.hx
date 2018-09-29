@@ -160,4 +160,9 @@ class Card
 	{
 		return Exchanger.softToHard( toSoft(count) );
 	}
+	
+	public function toString():String
+	{
+		return "type:" + type + " level:" + level + " elixirSize:" + elixirSize + " deployTime:" + deployTime + " health:" + health + " speed:" + speed + " bulletDamage:" + bulletDamage + " bulletFireGap:" + bulletFireGap + " bulletRangeMax:" + bulletRangeMax;
+	}
 }
