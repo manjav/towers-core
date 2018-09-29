@@ -62,7 +62,7 @@ class FeatureCalculator
 			case 4 : deployTime.get(buildingType) * TIME_SCALE;
 			
 			case 11: speed.get(buildingType, level) / TIME_SCALE;
-			case 13: health.get(buildingType, level);
+			case 12: health.get(buildingType, level);
 			
 			case 21: bulletSpeed.get(buildingType, level) / TIME_SCALE;
 			case 22: bulletDamage.get(buildingType, level);
@@ -90,7 +90,7 @@ class FeatureCalculator
 			case 4 : deployTime.BASE_VALUE;
 			
 			case 11: speed.BASE_VALUE;
-			case 13: health.BASE_VALUE;
+			case 12: health.BASE_VALUE;
 			
 			case 21: bulletSpeed.BASE_VALUE;
 			case 22: bulletDamage.BASE_VALUE;

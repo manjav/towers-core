@@ -10,6 +10,6 @@ class BulletDamageCalculator extends BaseCalculator
 	{
 		/*if( CardTypes.get_category(type) != CardTypes.B40_CRYSTAL )
 			return BASE_VALUE ;*/
-		return BASE_VALUE + ( Math.log(level) * 1.8 + Math.log(improveLevel) ) * 0.3;
+		return BASE_VALUE ;// + ( Math.log(level) * 1.8 + Math.log(improveLevel) ) * 0.3;
 	}
 }

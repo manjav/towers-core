@@ -6,7 +6,7 @@ package com.gt.towers.calculators;
  */
 class HealthCalculator  extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 1; }
+	public function new (game:Game) { super(game); BASE_VALUE = 10; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{	
 		var factor:Float = switch( type )
@@ -51,8 +51,8 @@ class HealthCalculator  extends BaseCalculator
 			case	508	:	1	;
 			case	509	:	1	;
 		
-			default : BASE_VALUE;
+			default : 1;
 		}
-		return BASE_VALUE * factor + Math.log(level) * 0.25;
+		return BASE_VALUE  * factor;// + Math.log(level) * 0.25;
 	}
 }
