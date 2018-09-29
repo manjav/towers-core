@@ -45,8 +45,8 @@ class Unit extends flash.events.EventDispatcher
 		this.card = card;
 		this.health = card.health;
 		this.deployTime = battleField.now + card.deployTime;
-		x = ( side == battleField.side ) ? x : (1080 - x);
-		y = ( side == battleField.side ) ? y : (1920 - y);
+		x = ( side == battleField.side ) ? x : (BattleField.WIDTH - x);
+		y = ( side == battleField.side ) ? y : (BattleField.HEIGHT - y);
 		setPosition(x, y, true);
 	}
 	

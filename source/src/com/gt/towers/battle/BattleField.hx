@@ -21,6 +21,8 @@ class BattleField
 {
 	public static var POPULATION_MAX:Int = 10;
 	public static var POPULATION_INIT:Int = 5;
+	public static var WIDTH:Int = 1080;
+	public static var HEIGHT:Int = 1440;
 	private var questProvider:FieldProvider;
 
 	public var elixirBar:FloatList;
