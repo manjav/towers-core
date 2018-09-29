@@ -28,8 +28,8 @@ class Unit extends flash.events.EventDispatcher
 	public var disposed:Bool;
 	public var movable:Bool = true;
 	
-	var deployTime:Float = -1;
-	var attackTime:Float;
+	var deployTime:Float = 0;
+	var attackTime:Float = 0;
 #if java
 	public var eventCallback:com.gt.towers.events.EventCallback;
 #end
@@ -53,10 +53,15 @@ class Unit extends flash.events.EventDispatcher
 	public function update() : Void
 	{
 		if( disposed )
+		{
+			trace(id + " disposed.");
 			return;
-		
-		if( deployTime == -1 || deployTime > battleField.now )
+		}		
+		if( deployTime > battleField.now )
+		{
+			//trace(id + " under deployment");
 			return;
+		}
 		
 		finalizeDeployment();
 		decide();
@@ -65,7 +70,7 @@ class Unit extends flash.events.EventDispatcher
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= deploy -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function finalizeDeployment() : Void
 	{
-		if( deployTime <= 0 )
+		if( deployTime == 0 )
 			return;
 		deployTime = 0;
 		fireEvent(id, UnitEvent.DEPLOY, null);
@@ -75,36 +80,44 @@ class Unit extends flash.events.EventDispatcher
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= decide -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function decide() 
 	{
+		var dec = id + ":    ";
+		var target:Unit;
 		if( attackTime < battleField.now )
 		{
-			var enemy = getNearestEnemy();
-			if( enemy != null )
+			var enemyId = getNearestEnemy();
+			dec += "enemyId " + enemyId;
+			if( enemyId > -1 && battleField.units.exists(enemyId) )
 			{
-				attack(enemy);
+				target = battleField.units.get(enemyId);
+				attack(target);
+				dec += "   " + health + " <=> " + target.health ;
+	//			trace(dec);
 				return;
 			}
+			dec += "   moved.";
+			moveAhead();
 		}
-		moveAhead();
+		//trace(dec);
 	}
 
 	
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	function getNearestEnemy() : Unit 
+	function getNearestEnemy() : Int
 	{
-		var distance:Float = 2000;
-		var ret:Unit = null;
+		var distance:Float = card.bulletRangeMax;
+		var ret:Int = -1;
 		var i = 0;
 		var values = battleField.units.values();
 		var len = values.length;
 		while ( i < len )
 		{
-			if( this.side != values[i].side )
+			if( !values[i].disposed && this.side != values[i].side )
 			{
 				var dis = com.gt.towers.utils.CoreUtils.getDistance(this, values[i]);
-				if( distance > dis )
+				if( dis <= distance )
 				{
 					distance = dis;
-					ret = values[i];
+					ret = values[i].id;
 				}
 			}
 			i ++;
@@ -130,20 +143,20 @@ class Unit extends flash.events.EventDispatcher
 	function attack(enemy:Unit) : Void
 	{
 #if java
-		fireEvent(id, UnitEvent.ATTACK, enemy);
 		var units:java.util.List<Unit> = new java.util.ArrayList<Unit>();
 		units.add(enemy);
 		battleField.hitUnit(this, units);
-		attackTime = battleField.now + card.bulletFireGap;
 #end
+		fireEvent(id, UnitEvent.ATTACK, enemy.id);
+		attackTime = battleField.now + card.bulletFireGap;
 	}
 	
 	public function hit(damage:Float) : Void
 	{
 		health -= damage;
-		fireEvent(id, UnitEvent.HIT, damage);
 		if( health <= 0 )
 			dispose();
+		fireEvent(id, UnitEvent.HIT, damage);
 	}
 
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= move -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -168,7 +181,7 @@ class Unit extends flash.events.EventDispatcher
 	{
 #if java
 		if( eventCallback != null )
-			eventCallback.dispatch( dispatcherId, type, data );
+			eventCallback.dispatch(dispatcherId, type, data);
 #elseif flash
 		dispatchEvent(new UnitEvent(type, data));
 #end
@@ -176,7 +189,7 @@ class Unit extends flash.events.EventDispatcher
 	
 	public function dispose() : Void
 	{
-		fireEvent(id, UnitEvent.DISPOSE, null);
 		disposed = true;
+		fireEvent(id, UnitEvent.DISPOSE, null);
 	}
 }

@@ -7,6 +7,7 @@ import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.interfaces.IUnitHitCallback;
 import com.gt.towers.utils.lists.FloatList;
+import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntUnitMap;
@@ -20,7 +21,6 @@ class BattleField
 {
 	public static var POPULATION_MAX:Int = 10;
 	public static var POPULATION_INIT:Int = 5;
-	//public static var INTERVAL:Int = 100;
 	private var questProvider:FieldProvider;
 
 	public var elixirBar:FloatList;
@@ -56,10 +56,12 @@ class BattleField
 			extraTime = map.times.get(3);
 		
 		units = new IntUnitMap();
-#if java 
+#if java
+
+		//waitingUnits = new java.util.concurrent.ConcurrentHashMap();
 		//game_0.calculator.setField(this);
 		//game_1.calculator.setField(this);
-		games = new java.util.ArrayList<Game>();
+		games = new java.util.ArrayList();
 		games.add(game_0);
 		games.add(game_1);
 		
@@ -141,28 +143,40 @@ class BattleField
 		this.deltaTime = deltaTime;
 		this.now += deltaTime;
 		
-	#if java
-		// update troops	
-		var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Unit>> = units._map.entrySet().iterator();
-        while( iterator.hasNext() )
-			iterator.next().getValue().update();
+		// update units	
+		var deadUnits = new IntList();
+		var keys = units.keys();
+		var i = keys.length - 1;
+		while ( i >= 0 )
+		{
+			if( units.get(keys[i]).disposed )
+				deadUnits.push(keys[i]);
+			else
+				units.get(keys[i]).update();
+			i --;
+		}
+		// remove dead units
+		i = deadUnits.size() - 1;
+		while ( i >= 0 )
+		{
+			units.remove(deadUnits.get(i));
+			i --;
+		}
 		
 		// increase elixir bars
-		var increaseCoef = (getDuration() > getTime(2) ? 0.0001 : 0.002) * deltaTime;
+		//#if java
+		var increaseCoef = (getDuration() > getTime(2) ? 0.001 : 0.0005) * deltaTime;
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
 		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
-	#elseif flash
-		for (value in units._map)
-			value.update();
-	#end
+		//trace("elixirBar " + elixirBar.get(0) + " " + elixirBar.get(1));
+		//#end
 	}
 	
-	#if java
-	public function getDuration() : Int64
+	public function getDuration() : Float
 	{
 		return now / 1000 - startAt;
-	}
-	
+	}	
+	#if java
 	public function deployUnit(type:Int, side:Int, x:Float, y:Float) : Int
 	{
 		if( !games.get(side).player.cards.exists(type) )
@@ -170,7 +184,7 @@ class BattleField
 		var card = games.get(side).player.cards.get(type);
 		if( elixirBar.get(side) < card.elixirSize )
 			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
-		//trace(unitId, type, side, x, y);
+		trace("id:" + unitId, " type:" + type, " side:" + side, " x:"+x, " y:"+y);
 		var unit = new Unit(unitId, this, card, side, x, y);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
 		units.set(unitId, unit);
@@ -178,19 +192,21 @@ class BattleField
 		return unit.id;
 	}
 	
-	public function hitUnit(affender:Unit, hitUnits:java.util.List<Unit>) : Void
+	public function hitUnit(offender:Unit, hitUnits:java.util.List<Unit>) : Void
 	{
 		if( unitsHitCallback != null )
-			unitsHitCallback.hit(affender.id, hitUnits);
+			unitsHitCallback.hit(offender.id, hitUnits);
 			
 		var index:Int = hitUnits.size() - 1;
+		var res = "Offender: " + offender.id;
         while( index >= 0 )
 		{
-			hitUnits.get(index).hit(affender.card.bulletDamage);
-			if( hitUnits.get(index).disposed )
-				units.remove(hitUnits.get(index).id);
+			res += "|" + hitUnits.get(index).id + " (" + hitUnits.get(index).health + ") => ";
+			hitUnits.get(index).hit(offender.card.bulletDamage);
+			res += "(" + hitUnits.get(index).health + ")";
 			index --;
 		}
+		//trace(res);
 	}
 
 	public function dispose() 
@@ -216,8 +232,23 @@ class BattleField
 		if( troops.containsKey(id) )
 			troops.remove(id);
 	}*/
-	#end
 	
+	public function getSide(id:Int):Int
+	{
+		var gLen = games.size() - 1;
+		while( gLen >= 0 )
+		{
+			if( id == games.get(gLen).player.id )
+				return gLen;
+			gLen --;
+		}
+		return 0;
+	}
+	#end
+	public function getColorIndex(side:Int):Int
+	{
+		return side == this.side ? 0 : 1;
+	}
 	public function getTime(score:Int):Int
 	{
 		if( map == null || score< 0 || score > 3 )

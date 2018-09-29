@@ -56,7 +56,7 @@ class Card
 		// defensive data
 		bulletDamage = game.calculator.get(CardFeatureType.F22_BULLET_DAMAGE, type, level);
 		bulletFireGap = game.calculator.getInt(CardFeatureType.F23_BULLET_FIRE_GAP, type, level);
-		bulletDamageArea = game.calculator.getInt(CardFeatureType.F24_BULLET_DAMAGE_AREA, type, level);
+		bulletDamageArea = game.calculator.get(CardFeatureType.F24_BULLET_DAMAGE_AREA, type, level);
 		//bulletRangeMin = game.calculator.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, level);
 		bulletRangeMax = game.calculator.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, level);
 	}

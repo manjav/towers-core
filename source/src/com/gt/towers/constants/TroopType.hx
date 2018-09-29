@@ -26,5 +26,4 @@ class TroopType
 	public static var NUM_TYPES:Int = 2;
 	
 	public function new(){}
-	
 }
