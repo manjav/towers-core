@@ -41,23 +41,18 @@ class StickerType
 		//ret.push( S5_ALL_YOU_GOT );
 		ret.push( S6_HAHAHA );
 		ret.push( game.player.inFriendlyBattle ? S7_REVENGE : S8_CURSED );
-		
-		if( game.appVersion >= 2070 )
-		{
-			//ret.push( S9_I_AFRAID );
-			ret.push( S10_DO_YOU_ANY );
-			ret.push( S11_NOVICE );
-			ret.push( S12_PRACTICE );
-			//ret.push( S13_DISCONNECTED );
-			ret.push( S14_PROFESSIONAL );
-			ret.push( S15_DONT_FORCE );
-			ret.push( S16_I_SEE_YOU_SMALL );
-		}
+		//ret.push( S9_I_AFRAID );
+		ret.push( S10_DO_YOU_ANY );
+		ret.push( S11_NOVICE );
+		ret.push( S12_PRACTICE );
+		//ret.push( S13_DISCONNECTED );
+		ret.push( S14_PROFESSIONAL );
+		ret.push( S15_DONT_FORCE );
+		ret.push( S16_I_SEE_YOU_SMALL );
 		return ret;
 	}
 	
 #elseif java
-
 	public static function getRandomStart(ratio:Float, game:Game) : Int
 	{
 		var ret = new Array();
@@ -66,28 +61,20 @@ class StickerType
 			ret.push( S0_LUCKKY );
 			//ret.push( S4_OOPS );
 			ret.push( S8_CURSED );
-			
-			if( game.appVersion >= 2070 )
-			{
-				//ret.push( S9_I_AFRAID );
-				ret.push( S14_PROFESSIONAL );
-			}
+			//ret.push( S9_I_AFRAID );
+			ret.push( S14_PROFESSIONAL );
 		}
 		else if( ratio > 0 )
 		{
 			ret.push( S2_THREAT );
 			//ret.push( S5_ALL_YOU_GOT );
 			ret.push( S6_HAHAHA );
-			
-			if( game.appVersion >= 2070 )
-			{
-				//ret.push( S9_I_AFRAID );
-				ret.push( S10_DO_YOU_ANY );
-				ret.push( S11_NOVICE );
-				ret.push( S12_PRACTICE );
-				ret.push( S15_DONT_FORCE );
-				ret.push( S16_I_SEE_YOU_SMALL );
-			}
+			//ret.push( S9_I_AFRAID );
+			ret.push( S10_DO_YOU_ANY );
+			ret.push( S11_NOVICE );
+			ret.push( S12_PRACTICE );
+			ret.push( S15_DONT_FORCE );
+			ret.push( S16_I_SEE_YOU_SMALL );
 		}
 		else
 		{
