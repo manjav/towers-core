@@ -19,8 +19,8 @@ class FeatureCalculator
 	var bulletDamage:BulletDamageCalculator;
 	var bulletFireGap:BulletFireGapCalculator;
 	var bulletRangeMin:BulletRangeMinCalculator;
-	var bulletRangeMax:BulletRangeMinCalculator;
-	var bulletDamageArea:BulletRangeMinCalculator;
+	var bulletRangeMax:BulletRangeMaxCalculator;
+	var bulletDamageArea:BulletDamageAreaCalculator;
 
 	public function new()
 	{
@@ -34,9 +34,9 @@ class FeatureCalculator
 		bulletSpeed = new BulletSpeedCalculator(null);
 		bulletDamage = new BulletDamageCalculator(null);
 		bulletFireGap = new BulletFireGapCalculator(null);
-		bulletDamageArea = new BulletRangeMinCalculator(null);
 		bulletRangeMin = new BulletRangeMinCalculator(null);
-		bulletRangeMax = new BulletRangeMinCalculator(null);
+		bulletRangeMax = new BulletRangeMaxCalculator(null);
+		bulletDamageArea = new BulletDamageAreaCalculator(null);
 	}
 	/*public function setField(battleField:BattleField) : Void
 	{

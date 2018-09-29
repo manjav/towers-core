@@ -12,13 +12,13 @@ class ElixirSizeCalculator  extends BaseCalculator
 		return switch( type )
 		{
 			case 101 : 3;
-			case 102 : 4;
-			case 103 : 5;
-			case 104 : 2;
-			case 105 : 6;
-			case 106 : 4;
-			case 107 : 2;
-			case 108 : 4;
+			case 102 : 5;
+			case 103 : 3;
+			case 104 : 4;
+			case 105 : 4;
+			case 106 : 3;
+			case 107 : 4;
+			case 108 : 2;
 			case 109 : 5;
 			case 110 : 4;
 			case 111 : 5;
