@@ -2,6 +2,7 @@ package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
+import com.gt.towers.battle.units.Card;
 import com.gt.towers.battle.units.Unit;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
@@ -23,6 +24,7 @@ class BattleField
 	public static var POPULATION_INIT:Int = 5;
 	public static var WIDTH:Int = 1080;
 	public static var HEIGHT:Int = 1440;
+	public static var PADDING:Int = 150;
 	private var questProvider:FieldProvider;
 
 	public var elixirBar:FloatList;
@@ -107,6 +109,14 @@ class BattleField
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
 				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
+			
+			var cards = game_0.player.cards.keys();
+			var i = 0;
+			while ( i < cards.length )
+			{
+				game_1.player.cards.set(cards[i], game_0.player.cards.get(cards[i]));
+				i ++;
+			}
 		}
 		
 		// create decks	
@@ -177,16 +187,17 @@ class BattleField
 	public function getDuration() : Float
 	{
 		return now / 1000 - startAt;
-	}	
+	}
+	
 	#if java
 	public function deployUnit(type:Int, side:Int, x:Float, y:Float) : Int
 	{
-		if( !games.get(side).player.cards.exists(type) )
-			return MessageTypes.RESPONSE_NOT_FOUND;
-		var card = games.get(side).player.cards.get(type);
-		if( elixirBar.get(side) < card.elixirSize )
-			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+		var response = cardAvailabled(side, type);
+		if( response != MessageTypes.RESPONSE_SUCCEED )
+			return response;
+		
 		trace("id:" + unitId, " type:" + type, " side:" + side, " x:"+x, " y:"+y);
+        var card = games.get(side).player.cards.get(type);
 		var unit = new Unit(unitId, this, card, side, x, y);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
 		units.set(unitId, unit);
@@ -211,24 +222,7 @@ class BattleField
 		//trace(res);
 	}
 
-	public function dispose() 
-	{
-		/*var p:Int = places.size() - 1;
-		while ( p >= 0 )
-		{
-			places.get(p).dispose();
-			p --;
-		}*/
-		
-		// dispose troops
-		/*var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
-        while( iterator.hasNext() )
-        {
-            var troop:Troop = iterator.next().getValue();
-			troop.dispose();
-		}*/
-		units._map.clear();
-	}	
+
 	/*public function removeTroop(id:Int) : Void
 	{
 		if( troops.containsKey(id) )
@@ -246,7 +240,38 @@ class BattleField
 		}
 		return 0;
 	}
+	
+	public function cardAvailabled(side:Int, type:Int) : Int
+	{
+		if( !games.get(side).player.cards.exists(type) )
+			return MessageTypes.RESPONSE_NOT_FOUND;
+		if( !decks.get(side).existsValue(type) )
+			return MessageTypes.RESPONSE_NOT_ALLOWED;
+		
+		return elixirBar.get(side) >= games.get(side).player.cards.get(type).elixirSize ? MessageTypes.RESPONSE_SUCCEED : MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+	}
+	
 	#end
+	public function dispose() 
+	{
+		/*var p:Int = places.size() - 1;
+		while ( p >= 0 )
+		{
+			places.get(p).dispose();
+			p --;
+		}*/
+		
+		// dispose troops
+		/*var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
+        while( iterator.hasNext() )
+        {
+            var troop:Troop = iterator.next().getValue();
+			troop.dispose();
+		}*/
+		units.clear();
+	}
+
+	
 	public function getColorIndex(side:Int):Int
 	{
 		return side == this.side ? 0 : 1;
