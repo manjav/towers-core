@@ -65,7 +65,7 @@ class IntUnitMap
 		#end
 		return false;
 	}
-
+	
 	/**
 		Removes the mapping of `key` and returns true if such a mapping existed,
 		false otherwise.
@@ -135,4 +135,16 @@ class IntUnitMap
 		return ret ;
 	}
 	#end
+	
+	/**
+		Remove all elements from map.
+	**/
+	public function clear() : Void
+	{
+		#if java
+		_map.clear();
+		#elseif flash
+		_map = new Map<Int,Unit>();
+		#end
+	}
 }
