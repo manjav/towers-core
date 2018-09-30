@@ -111,7 +111,7 @@ class Unit extends flash.events.EventDispatcher
 		var len = values.length;
 		while ( i < len )
 		{
-			if( !values[i].disposed && this.side != values[i].side )
+			if( !values[i].disposed && this.side != values[i].side && values[i].deployTime == 0 )
 			{
 				var dis = com.gt.towers.utils.CoreUtils.getDistance(this, values[i]);
 				if( dis <= distance )
