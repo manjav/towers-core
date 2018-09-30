@@ -167,7 +167,7 @@ class BattleField
 		
 		// increase elixir bars
 		//#if java
-		var increaseCoef = (getDuration() > getTime(2) ? 0.001 : 0.0005) * deltaTime;
+		var increaseCoef = (getDuration() > getTime(2) ? 0.00066 : 0.00033) * deltaTime;
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
 		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
 		//trace("elixirBar " + elixirBar.get(0) + " " + elixirBar.get(1));
