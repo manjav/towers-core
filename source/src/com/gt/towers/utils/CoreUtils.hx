@@ -1,5 +1,4 @@
 package com.gt.towers.utils;
-import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.units.Unit;
 
 /**
@@ -40,10 +39,8 @@ class CoreUtils
 		return Math.floor(value / 100000) * 100000;
 	}
 	
-	
-	
 	static public function getDistance(source:Unit, destination:Unit) : Float
 	{
-		return Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow(source.y - destination.y, 2) );
+		return Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow((source.y - destination.y) * 1.4285, 2) );
 	}
 }
