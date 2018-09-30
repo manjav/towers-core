@@ -11,14 +11,14 @@ class DeployTimeCalculator  extends BaseCalculator
 	{
 		var ret = switch( type )
 		{
-			case 101 : 0.6;
-			case 102 : 1;
-			case 103 : 0.7;
-			case 104 : 0.8;
-			case 105 : 1;
-			case 106 : 0.8;
-			case 107 : 0.9;
-			case 108 : 1;
+			case	101	:	0.8	;
+			case	102	:	1	;
+			case	103	:	0.8	;
+			case	104	:	0.8	;
+			case	105	:	1.2	;
+			case	106	:	0.8	;
+			case	107	:	1	;
+			case	108	:	1	;
 			case 109 : 5;
 			case 110 : 4;
 			case 111 : 5;

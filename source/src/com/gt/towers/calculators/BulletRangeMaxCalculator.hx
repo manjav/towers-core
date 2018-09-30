@@ -12,14 +12,14 @@ class BulletRangeMaxCalculator extends BaseCalculator
 		
 		var ret =  switch( type )
 		{
-			case 101 : 2.5;
-			case 102 : 1;
-			case 103 : 1.3;
-			case 104 : 0.88;
-			case 105 : 0.8;
-			case 106 : 1;
-			case 107 : 1.4;
-			case 108 : 1.3;
+			case	101	:	2	;
+			case	102	:	0.8	;
+			case	103	:	1.3	;
+			case	104	:	1	;
+			case	105	:	1.2	;
+			case	106	:	1	;
+			case	107	:	1.4	;
+			case	108	:	1.7	;
 			case 109 : 5;
 			case 110 : 4;
 			case 111 : 5;
