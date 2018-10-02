@@ -192,4 +192,13 @@ class Unit extends flash.events.EventDispatcher
 		disposed = true;
 		fireEvent(id, UnitEvent.DISPOSE, null);
 	}
+	
+	#if java
+	public function toString():String
+	#elseif flash
+	public override function toString():String
+	#end
+	{
+		return "type:" + card.type + " x:" + x + " y:" + y + " side:" + side + " level:" + card.level + " elixirSize:" + card.elixirSize + " deployTime:" + card.deployTime + " health:" + health + " speed:" + card.speed + " bulletDamage:" + card.bulletDamage + " bulletFireGap:" + card.bulletFireGap + " bulletRangeMax:" + card.bulletRangeMax;
+	}
 }

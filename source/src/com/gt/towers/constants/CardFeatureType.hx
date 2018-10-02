@@ -10,7 +10,7 @@ class CardFeatureType
 	public static var F00_RARITY:Int = 0;
 	public static var F01_AVAILABLE_AT:Int = 1;
 	public static var F02_ELIXIR_SIZE = 2;
-	public static var F03_TROOPS_COUNT = 3;
+	public static var F03_QUANTITY = 3;
 	public static var F04_DEPLOY_TIME = 4;
 	//public static var F05_BIRTH_RATE = 5;
 	
@@ -34,7 +34,7 @@ class CardFeatureType
 		{
 			_all = new com.gt.towers.utils.lists.IntList();
 			
-			_all.push( F03_TROOPS_COUNT );
+			_all.push( F03_QUANTITY );
 			
 			_all.push( F11_SPEED );
 			_all.push( F12_HEALTH );

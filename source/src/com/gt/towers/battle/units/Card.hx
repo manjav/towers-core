@@ -21,7 +21,7 @@ class Card
 	public var rarity:Int = 0;
 	public var availableAt:Int = 0;
 	public var elixirSize:Int = 5;
-	public var troopsCount:Int = 10;
+	public var quantity:Int = 1;
 	public var deployTime:Int = 500;
 	
 	public var health:Float = 1;
@@ -46,7 +46,7 @@ class Card
 		rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, level);
 		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, level);
 		elixirSize = game.calculator.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, level);
-		troopsCount = game.calculator.getInt(CardFeatureType.F03_TROOPS_COUNT, type, level);
+		quantity = game.calculator.getInt(CardFeatureType.F03_QUANTITY, type, level);
 		deployTime = game.calculator.getInt(CardFeatureType.F04_DEPLOY_TIME, type, level);
 		
 		// troops data

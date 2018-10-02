@@ -1,4 +1,5 @@
 package com.gt.towers.calculators;
+import com.gt.towers.calculators.QuantityCalculator;
 /**
  * ...
  * @author Mansour Djawadi
@@ -10,6 +11,7 @@ class FeatureCalculator
 	var rarity:RarityCalculator;
 	var availableAt:AvailableAtCalculator;
 	var elixirSize:ElixirSizeCalculator;
+	var quantity:QuantityCalculator;
 	var deployTime:DeployTimeCalculator;
 	
 	var speed:SpeedCalculator;
@@ -27,6 +29,7 @@ class FeatureCalculator
 		rarity = new RarityCalculator(null);
 		availableAt = new AvailableAtCalculator(null);
 		elixirSize = new ElixirSizeCalculator(null);
+		quantity = new QuantityCalculator(null);
 		deployTime = new DeployTimeCalculator(null);
 		speed = new SpeedCalculator(null);
 		health = new HealthCalculator(null);
@@ -59,6 +62,7 @@ class FeatureCalculator
 			case 0 : rarity.get(buildingType);
 			case 1 : availableAt.get(buildingType);
 			case 2 : elixirSize.get(buildingType);
+			case 3 : quantity.get(buildingType);
 			case 4 : deployTime.get(buildingType) * TIME_SCALE;
 			
 			case 11: speed.get(buildingType, level) / TIME_SCALE;
@@ -87,6 +91,7 @@ class FeatureCalculator
 			case 0 : rarity.BASE_VALUE;
 			case 1 : availableAt.BASE_VALUE;
 			case 2 : elixirSize.BASE_VALUE;
+			case 3 : quantity.BASE_VALUE;
 			case 4 : deployTime.BASE_VALUE;
 			
 			case 11: speed.BASE_VALUE;
