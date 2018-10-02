@@ -7,6 +7,7 @@ import com.gt.towers.battle.units.Unit;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.interfaces.IUnitHitCallback;
+import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntIntMap;
@@ -196,13 +197,19 @@ class BattleField
 		if( response != MessageTypes.RESPONSE_SUCCEED )
 			return response;
 		
-		//trace("id:" + unitId, " type:" + type, " side:" + side, " x:"+x, " y:"+y);
         var card = games.get(side).player.cards.get(type);
-		var unit = new Unit(unitId, this, card, side, x, y);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
-		units.set(unitId, unit);
-		unitId ++;
-		return unit.id;
+		var i = card.quantity - 1;
+		while ( i >= 0 )
+		{
+			var unit = new Unit(unitId, this, card, side, CoreUtils.getXPosition(card.quantity, i, x), CoreUtils.getYPosition(card.quantity, i, y));
+			units.set(unitId, unit);
+			//trace("id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
+			unitId ++;
+			i --;
+		}
+
+		return unitId - 1;
 	}
 	
 	public function hitUnit(offender:Unit, hitUnits:java.util.List<Unit>) : Void
