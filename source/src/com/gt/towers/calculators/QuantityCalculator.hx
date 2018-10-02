@@ -4,16 +4,16 @@ package com.gt.towers.calculators;
  * ...
  * @author Mansour Djawadi
  */
-class AimLockCalculator extends BaseCalculator
+class QuantityCalculator  extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 1; }
+	public function new (game:Game) { super(game); BASE_VALUE = 10; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
-		var ret = switch ( type )
+		return switch ( type )
 		{
 			case	101	:	1	;
 			case	102	:	1	;
-			case	103	:	1	;
+			case	103	:	3	;
 			case	104	:	1	;
 			case	105	:	1	;
 			case	106	:	1	;
@@ -37,8 +37,7 @@ class AimLockCalculator extends BaseCalculator
 			case	158	:	1	;
 			case	159	:	1	;
 			
-			default: 1;
+			default: 0;
 		}
-		return ret * 0.06;
 	}
 }

@@ -11,14 +11,14 @@ class SizeCalculator extends BaseCalculator
 	{
 		var ret = switch ( type )
 		{
-			case	101	:	1	;
-			case	102	:	0.5;
-			case	103	:	1.1	;
-			case	104	:	1	;
-			case	105	:	0.7	;
-			case	106	:	1.2	;
-			case	107	:	0.6	;
-			case	108	:	1	;
+			case	101	:	10	;
+			case	102	:	13;
+			case	103	:	6	;
+			case	104	:	9	;
+			case	105	:	11	;
+			case	106	:	8	;
+			case	107	:	8	;
+			case	108	:	9	;
 			case	109	:	1	;
 			case	110	:	1	;
 			case	111	:	1	;
