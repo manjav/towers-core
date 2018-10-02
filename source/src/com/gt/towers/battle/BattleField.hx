@@ -196,7 +196,7 @@ class BattleField
 		if( response != MessageTypes.RESPONSE_SUCCEED )
 			return response;
 		
-		trace("id:" + unitId, " type:" + type, " side:" + side, " x:"+x, " y:"+y);
+		//trace("id:" + unitId, " type:" + type, " side:" + side, " x:"+x, " y:"+y);
         var card = games.get(side).player.cards.get(type);
 		var unit = new Unit(unitId, this, card, side, x, y);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
@@ -250,29 +250,28 @@ class BattleField
 		
 		return elixirBar.get(side) >= games.get(side).player.cards.get(type).elixirSize ? MessageTypes.RESPONSE_SUCCEED : MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 	}
-	
 	#end
-	public function dispose() 
+	
+	public function reset() : Void
 	{
-		/*var p:Int = places.size() - 1;
-		while ( p >= 0 )
+		dispose();
+		elixirBar.set(0, POPULATION_INIT);
+		elixirBar.set(1, POPULATION_INIT);
+	}
+	
+	public function dispose() : Void
+	{
+		var keys = units.keys();
+		var i = keys.length - 1;
+		while ( i >= 0 )
 		{
-			places.get(p).dispose();
-			p --;
-		}*/
-		
-		// dispose troops
-		/*var iterator : java.util.Iterator<java.util.Map.Map_Entry<Int, Troop>> = troops.entrySet().iterator();
-        while( iterator.hasNext() )
-        {
-            var troop:Troop = iterator.next().getValue();
-			troop.dispose();
-		}*/
+			units.get(keys[i]).dispose();
+			i --;
+		}
 		units.clear();
 	}
-
 	
-	public function getColorIndex(side:Int):Int
+	public function getColorIndex(side:Int) : Int
 	{
 		return side == this.side ? 0 : 1;
 	}
