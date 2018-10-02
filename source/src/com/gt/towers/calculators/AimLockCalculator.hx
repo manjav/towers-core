@@ -12,12 +12,12 @@ class AimLockCalculator extends BaseCalculator
 		var ret = switch ( type )
 		{
 			case	101	:	1	;
-			case	102	:	0.5;
-			case	103	:	1.1	;
+			case	102	:	1	;
+			case	103	:	1	;
 			case	104	:	1	;
-			case	105	:	0.7	;
-			case	106	:	1.2	;
-			case	107	:	0.6	;
+			case	105	:	1	;
+			case	106	:	1	;
+			case	107	:	1	;
 			case	108	:	1	;
 			case	109	:	1	;
 			case	110	:	1	;

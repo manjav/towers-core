@@ -13,10 +13,10 @@ class DeployTimeCalculator  extends BaseCalculator
 		{
 			case	101	:	0.8	;
 			case	102	:	1	;
-			case	103	:	0.8	;
-			case	104	:	0.8	;
+			case	103	:	1	;
+			case	104	:	1	;
 			case	105	:	1.2	;
-			case	106	:	0.8	;
+			case	106	:	1	;
 			case	107	:	1	;
 			case	108	:	1	;
 			case 109 : 5;
