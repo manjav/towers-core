@@ -13,7 +13,6 @@ import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntUnitMap;
-import haxe.Int64;
 
 /**
  * ...
@@ -38,7 +37,7 @@ class BattleField
 	public var units:IntUnitMap;
 	public var now:Float = 0;
 	public var startAt:Float = 0;
-	public var deltaTime:Int = 100;
+	public var deltaTime:Int = 20;
 	public var side:Int = 0;
 	
 #if java 

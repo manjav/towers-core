@@ -39,6 +39,6 @@ class HealthCalculator  extends BaseCalculator
 			
 			default: BASE_VALUE;
 		}
-		return 5  * ret;
+		return 3  * ret;
 	}
 }
