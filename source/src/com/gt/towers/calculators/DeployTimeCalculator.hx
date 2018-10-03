@@ -38,6 +38,6 @@ class DeployTimeCalculator  extends BaseCalculator
 			case 159 : 5;
 			default : BASE_VALUE;
 		}
-		return ret * 850;
+		return ret * 2000;
 	}
 }
