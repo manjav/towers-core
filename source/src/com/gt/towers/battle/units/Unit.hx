@@ -1,67 +1,35 @@
 package com.gt.towers.battle.units;
 import com.gt.towers.battle.BattleField;
+import com.gt.towers.battle.GameObject;
 import com.gt.towers.battle.units.Card;
-import com.gt.towers.events.UnitEvent;
+import com.gt.towers.events.BattleEvent;
 
 /**
  * ...
  * @author Mansour Djawadi
  */
-#if java
-class Unit
-#elseif flash
-class Unit extends flash.events.EventDispatcher
-#end
-
+class Unit extends GameObject
 {
-	static public var STATE_WAIT:Int = 0;
-	static public var STATE_MOVE:Int = 1;
-	static public var STATE_ATTACK:Int = 2;
-	
-	public var id:Int;
-    public var x:Float;
-    public var y:Float;
-	public var side:Int;
     public var health:Float;
-	public var card:Card;
-	public var battleField:BattleField;
-	public var disposed:Bool;
-	public var movable:Bool = true;
-	
-	var deployTime:Float = 0;
 	var attackTime:Float = 0;
-#if java
-	public var eventCallback:com.gt.towers.events.EventCallback;
-#end
+	var cachedEnemy:Int = -1;
 
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float) 
 	{
-#if flash
-		super();
-#end
-		this.id = id;
-		this.battleField = battleField;
-		this.side = side;
-		this.card = card;
-		this.health = card.health;
-		this.deployTime = battleField.now + card.deployTime;
 		x = ( side == battleField.side ) ? x : (BattleField.WIDTH - x);
 		y = ( side == battleField.side ) ? y : (BattleField.HEIGHT - y);
-		setPosition(x, y, true);
+		super(id, battleField, card, side, x, y);
+		this.deployTime = battleField.now + card.deployTime;
+		this.health = card.health;
 	}
 	
-	public function update() : Void
+	override public function update() : Void
 	{
 		if( disposed )
-		{
-			trace(id + " disposed.");
 			return;
-		}		
+		
 		if( deployTime > battleField.now )
-		{
-			//trace(id + " under deployment");
 			return;
-		}
 		
 		finalizeDeployment();
 		decide();
@@ -73,7 +41,7 @@ class Unit extends flash.events.EventDispatcher
 		if( deployTime == 0 )
 			return;
 		deployTime = 0;
-		fireEvent(id, UnitEvent.DEPLOY, null);
+		fireEvent(id, BattleEvent.DEPLOY, null);
 	}
 	
 
@@ -84,14 +52,14 @@ class Unit extends flash.events.EventDispatcher
 		var target:Unit;
 		if( attackTime < battleField.now )
 		{
-			var enemyId = getNearestEnemy();
-			dec += "enemyId " + enemyId;
-			if( enemyId > -1 && battleField.units.exists(enemyId) )
+			cachedEnemy = getNearestEnemy();
+			dec += "enemyId " + cachedEnemy;
+			if( cachedEnemy > -1 && battleField.units.exists(cachedEnemy) )
 			{
-				target = battleField.units.get(enemyId);
+				target = battleField.units.get(cachedEnemy);
 				attack(target);
 				dec += "   " + health + " <=> " + target.health ;
-	//			trace(dec);
+				//trace(dec);
 				return;
 			}
 			dec += "   moved.";
@@ -104,6 +72,9 @@ class Unit extends flash.events.EventDispatcher
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function getNearestEnemy() : Int
 	{
+		if( cachedEnemy != -1 && battleField.units.exists(cachedEnemy) && !battleField.units.get(cachedEnemy).disposed )
+			return cachedEnemy;
+		
 		var distance:Float = card.bulletRangeMax;
 		var ret:Int = -1;
 		var i = 0;
@@ -113,7 +84,7 @@ class Unit extends flash.events.EventDispatcher
 		{
 			if( !values[i].disposed && this.side != values[i].side && values[i].deployTime == 0 )
 			{
-				var dis = com.gt.towers.utils.CoreUtils.getDistance(this, values[i]);
+				var dis = com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, values[i].x, values[i].y);
 				if( dis <= distance )
 				{
 					distance = dis;
@@ -122,33 +93,16 @@ class Unit extends flash.events.EventDispatcher
 			}
 			i ++;
 		}
-		
-		/*var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = battleField.units._map.entrySet().iterator();
-        while( iterator.hasNext() )
-        {
-            unit = iterator.next().getValue();
-			if( side != unit.side )
-			{
-				var dis = com.gt.towers.utils.CoreUtils.getDistance(this, unit);
-				if ( distance > dis )
-				{
-					distance = dis;
-					ret = unit;
-				}
-			}
-		}*/
 		return ret;
 	}
 	
 	function attack(enemy:Unit) : Void
 	{
 #if java
-		var units:java.util.List<Unit> = new java.util.ArrayList<Unit>();
-		units.add(enemy);
-		battleField.hitUnit(this, units);
+		battleField.addBullet(card, side, x, y, enemy.x, enemy.y);
 #end
-		fireEvent(id, UnitEvent.ATTACK, enemy.id);
-		attackTime = battleField.now + card.bulletFireGap;
+		fireEvent(id, BattleEvent.ATTACK, enemy);
+		attackTime = battleField.now + card.bulletShootGap;
 	}
 	
 	public function hit(damage:Float) : Void
@@ -156,41 +110,13 @@ class Unit extends flash.events.EventDispatcher
 		health -= damage;
 		if( health <= 0 )
 			dispose();
-		fireEvent(id, UnitEvent.HIT, damage);
+		fireEvent(id, BattleEvent.HIT, damage);
 	}
 
-	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= move -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function moveAhead() : Void
 	{
 		if( movable )
 			setPosition(-1, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)));
-	}
-	
-	public function setPosition(x:Float, y:Float, forced:Bool = false) : Bool
-	{
-		if( !forced && ( x < 0 || x == this.x ) && ( y < 0 || y == this.y ) )
-			return false;
-		if( x > 0 )
-			this.x = x;
-		if( y > 0 )
-			this.y = y;
-		return true;
-	}
-
-	private function fireEvent (dispatcherId:Int, type:String, data:Any) : Void
-	{
-#if java
-		if( eventCallback != null )
-			eventCallback.dispatch(dispatcherId, type, data);
-#elseif flash
-		dispatchEvent(new UnitEvent(type, data));
-#end
-	}
-	
-	public function dispose() : Void
-	{
-		disposed = true;
-		fireEvent(id, UnitEvent.DISPOSE, null);
 	}
 	
 	#if java
@@ -199,6 +125,6 @@ class Unit extends flash.events.EventDispatcher
 	public override function toString():String
 	#end
 	{
-		return "type:" + card.type + " x:" + x + " y:" + y + " side:" + side + " level:" + card.level + " elixirSize:" + card.elixirSize + " deployTime:" + card.deployTime + " health:" + health + " speed:" + card.speed + " bulletDamage:" + card.bulletDamage + " bulletFireGap:" + card.bulletFireGap + " bulletRangeMax:" + card.bulletRangeMax;
+		return "type:" + card.type + " x:" + x + " y:" + y + " side:" + side + " level:" + card.level + " elixirSize:" + card.elixirSize + " deployTime:" + card.deployTime + " health:" + health + " speed:" + card.speed + " bulletDamage:" + card.bulletDamage + " bulletFireGap:" + card.bulletShootGap + " bulletRangeMax:" + card.bulletRangeMax;
 	}
 }

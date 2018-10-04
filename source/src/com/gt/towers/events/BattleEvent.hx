@@ -4,10 +4,10 @@ package com.gt.towers.events;
  * @author Mansour Djawadi
  */
 
- #if java
-class UnitEvent 
+#if java
+class BattleEvent 
 #elseif flash
-class UnitEvent extends flash.events.Event
+class BattleEvent extends flash.events.Event
 #end
 {
 static public var DEPLOY:String = "deploy";

@@ -24,7 +24,7 @@ class Defender
 	{
 		this.place = place;
 		this.damage				= place.game.calculator.get(CardFeatureType.F22_BULLET_DAMAGE,				place.building.type, place.building.level, place.building.improveLevel);
-		this.damageGap			= place.game.calculator.getInt(CardFeatureType.F23_BULLET_FIRE_GAP,		place.building.type, place.building.level, place.building.improveLevel);
+		this.damageGap			= place.game.calculator.getInt(CardFeatureType.F23_BULLET_SHOOT_GAP,		place.building.type, place.building.level, place.building.improveLevel);
 		this.damageRadiusMin	= place.game.calculator.get(CardFeatureType.F23_RANGE_RADIUS_MIN,	place.building.type, place.building.level, place.building.improveLevel);
 		this.damageRadiusMax 	= place.game.calculator.get(CardFeatureType.F24_RANGE_RADIUS_MAX,	place.building.type, place.building.level, place.building.improveLevel);
 		//trace("type:" + place.building.type, " level:" + place.building.level, " improveLevel:" + place.building.improveLevel, " damage:" + damage, " damageGap:" +damageGap, " damageRadiusMax:" + damageRadiusMax);
@@ -69,7 +69,7 @@ class Defender
 	
 	public function estimatePower() : Float
 	{
-		return 5 + place.building.improveLevel * 7 + this.damage / place.game.calculator.getBaseline(CardFeatureType.F22_BULLET_DAMAGE) + place.game.calculator.getBaseline(CardFeatureType.F23_BULLET_FIRE_GAP) / this.damageGap + this.damageRadiusMin / place.game.calculator.getBaseline(CardFeatureType.F24_RANGE_RADIUS_MAX);
+		return 5 + place.building.improveLevel * 7 + this.damage / place.game.calculator.getBaseline(CardFeatureType.F22_BULLET_DAMAGE) + place.game.calculator.getBaseline(CardFeatureType.F23_BULLET_SHOOT_GAP) / this.damageGap + this.damageRadiusMin / place.game.calculator.getBaseline(CardFeatureType.F24_RANGE_RADIUS_MAX);
 	}
 #end
 }

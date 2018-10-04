@@ -1,6 +1,7 @@
 package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
+import com.gt.towers.battle.bullets.Bullet;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.battle.units.Unit;
@@ -10,6 +11,7 @@ import com.gt.towers.interfaces.IUnitHitCallback;
 import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
+import com.gt.towers.utils.maps.IntBulletMap;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntUnitMap;
@@ -20,11 +22,11 @@ import com.gt.towers.utils.maps.IntUnitMap;
  */
 class BattleField
 {
-	public static var POPULATION_MAX:Int = 10;
-	public static var POPULATION_INIT:Int = 5;
-	public static var WIDTH:Int = 1080;
-	public static var HEIGHT:Int = 1440;
-	public static var PADDING:Int = 150;
+	static public var POPULATION_MAX:Int = 10;
+	static public var POPULATION_INIT:Int = 5;
+	static public var WIDTH:Int = 1080;
+	static public var HEIGHT:Int = 1440;
+	static public var PADDING:Int = 150;
 	private var questProvider:FieldProvider;
 
 	public var elixirBar:FloatList;
@@ -35,15 +37,16 @@ class BattleField
 	public var extraTime:Int = 0;
 	public var decks:IntIntIntMap;
 	public var units:IntUnitMap;
+	public var bullets:IntBulletMap;
 	public var now:Float = 0;
 	public var startAt:Float = 0;
-	public var deltaTime:Int = 20;
+	public var deltaTime:Int = 25;
 	public var side:Int = 0;
-	
+	private var bulletId:Int = 0;
 #if java 
 	public var games:java.util.List<Game>;
-	public var unitId:Int = 0;
 	public var unitsHitCallback:IUnitHitCallback;
+	private var unitId:Int = 0;
 #end
 
 	public function new(game_0:Game, game_1:Game, mapName:String, side:Int, hasExtraTime:Bool)
@@ -60,8 +63,8 @@ class BattleField
 			extraTime = map.times.get(3);
 		
 		units = new IntUnitMap();
+		bullets = new IntBulletMap();
 #if java
-
 		//waitingUnits = new java.util.concurrent.ConcurrentHashMap();
 		//game_0.calculator.setField(this);
 		//game_1.calculator.setField(this);
@@ -155,7 +158,8 @@ class BattleField
 		this.deltaTime = deltaTime;
 		this.now += deltaTime;
 		
-		// update units	
+		
+		// -=-=-=-=-=-=-=-  UPDATE AND REMOVE UNITS  -=-=-=-=-=-=-=-=-=-
 		var deadUnits = new IntList();
 		var keys = units.keys();
 		var i = keys.length - 1;
@@ -175,13 +179,34 @@ class BattleField
 			i --;
 		}
 		
-		// increase elixir bars
-		//#if java
+		
+		// -=-=-=-=-=-=-=-=-  UPDATE AND REMOVE BULLETS  -=-=-=-=-=-=-=-=-
+		var explodedBullets = new IntList();
+		keys = bullets.keys();
+		i = keys.length - 1;
+		while ( i >= 0 )
+		{
+			if( bullets.get(keys[i]).disposed )
+				explodedBullets.push(keys[i]);
+			else
+				bullets.get(keys[i]).update();
+			i --;
+		}
+		// remove exploded bullets
+		i = explodedBullets.size() - 1;
+		while ( i >= 0 )
+		{
+			bullets.remove(explodedBullets.get(i));
+			i --;
+		}
+		
+		
+		// -=-=-=-=-=-=-=-=-=-=-  INCREASE ELIXIRS  -=-=-=-=-=-=-=-=-=-=-=-
 		var increaseCoef = (getDuration() > getTime(2) ? 0.00066 : 0.00033) * deltaTime;
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
 		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
-		//trace("elixirBar " + elixirBar.get(0) + " " + elixirBar.get(1));
-		//#end
+		
+		//trace("units: " + units.keys().length + "  bullets: " + bullets.keys().length);
 	}
 	
 	public function getDuration() : Float
@@ -203,37 +228,43 @@ class BattleField
 		{
 			var unit = new Unit(unitId, this, card, side, CoreUtils.getXPosition(card.quantity, i, x), CoreUtils.getYPosition(card.quantity, i, y));
 			units.set(unitId, unit);
-			//trace("id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
+			trace("deploy id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
 			unitId ++;
 			i --;
 		}
-
 		return unitId - 1;
 	}
 	
-	public function hitUnit(offender:Unit, hitUnits:java.util.List<Unit>) : Void
+	public function addBullet(card:Card, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 
 	{
-		if( unitsHitCallback != null )
-			unitsHitCallback.hit(offender.id, hitUnits);
-			
-		var index:Int = hitUnits.size() - 1;
-		var res = "Offender: " + offender.id;
-        while( index >= 0 )
-		{
-			res += "|" + hitUnits.get(index).id + " (" + hitUnits.get(index).health + ") => ";
-			hitUnits.get(index).hit(offender.card.bulletDamage);
-			res += "(" + hitUnits.get(index).health + ")";
-			index --;
-		}
-		//trace(res);
+		bullets.set(bulletId, new Bullet(this, bulletId, card, side, x, y, dx, dy));
+		bulletId ++;
 	}
-
-
-	/*public function removeTroop(id:Int) : Void
+	
+	public function explodeBullet(bullet:Bullet) : Void
 	{
-		if( troops.containsKey(id) )
-			troops.remove(id);
-	}*/
+		var u:Unit;
+		var distance:Float = 0;
+		var res = "Bullet: " + bullet.id;
+		var hitUnits:java.util.List<java.lang.Integer> = new java.util.ArrayList();
+		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = units._map.entrySet().iterator();
+        while ( iterator.hasNext() )
+		{
+			u = iterator.next().getValue();
+			distance = CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y);
+			res += " ,  dis: " + distance + "==" + bullet.card.bulletDamageArea;
+            if( u.side != bullet.side && distance <= bullet.card.bulletDamageArea && distance >= -bullet.card.bulletDamageArea )
+			{
+				res += "|" + u.id + " (" + u.health + ") => ";
+				u.hit(bullet.card.bulletDamage);
+				res += "(" + u.health + ")";
+				hitUnits.add(u.id);
+			}
+		}
+		trace(res);
+		if( unitsHitCallback != null )
+			unitsHitCallback.hit(bullet.id, bullet.card.bulletDamage, hitUnits);
+	}
 	
 	public function getSide(id:Int):Int
 	{
@@ -267,6 +298,7 @@ class BattleField
 	
 	public function dispose() : Void
 	{
+		// dispose all units
 		var keys = units.keys();
 		var i = keys.length - 1;
 		while ( i >= 0 )
@@ -275,6 +307,16 @@ class BattleField
 			i --;
 		}
 		units.clear();
+		
+		// dispose all bullets
+		keys = bullets.keys();
+		i = keys.length - 1;
+		while ( i >= 0 )
+		{
+			bullets.get(keys[i]).dispose();
+			i --;
+		}
+		bullets.clear();
 	}
 	
 	public function getColorIndex(side:Int) : Int

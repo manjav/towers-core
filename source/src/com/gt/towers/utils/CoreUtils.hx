@@ -39,9 +39,9 @@ class CoreUtils
 		return Math.floor(value / 100000) * 100000;
 	}
 	
-	static public function getDistance(source:Unit, destination:Unit) : Float
+	static public function getDistance(sx:Float, sy:Float, dx:Float, dy:Float) : Float
 	{
-		return Math.sqrt(Math.pow(source.x - destination.x, 2) + Math.pow((source.y - destination.y) * 1.4285, 2) );
+		return Math.sqrt(Math.pow(sx - dx, 2) + Math.pow((sy - dy) * 1.4285, 2) );
 	}
 	
 	static var GAP:Float = 70;

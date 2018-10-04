@@ -19,10 +19,12 @@ class FeatureCalculator
 	
 	var bulletSpeed:BulletSpeedCalculator;
 	var bulletDamage:BulletDamageCalculator;
-	var bulletFireGap:BulletFireGapCalculator;
+	var bulletShootGap:BulletShootGapCalculator;
+	var bulletShootDelay:BulletShootDelayCalculator;
 	var bulletRangeMin:BulletRangeMinCalculator;
 	var bulletRangeMax:BulletRangeMaxCalculator;
 	var bulletDamageArea:BulletDamageAreaCalculator;
+	var bulletExplodeDelay:BulletExplodeDelayCalculator;
 
 	public function new()
 	{
@@ -36,24 +38,13 @@ class FeatureCalculator
 		
 		bulletSpeed = new BulletSpeedCalculator(null);
 		bulletDamage = new BulletDamageCalculator(null);
-		bulletFireGap = new BulletFireGapCalculator(null);
+		bulletShootGap = new BulletShootGapCalculator(null);
+		bulletShootDelay = new BulletShootDelayCalculator(null);
 		bulletRangeMin = new BulletRangeMinCalculator(null);
 		bulletRangeMax = new BulletRangeMaxCalculator(null);
 		bulletDamageArea = new BulletDamageAreaCalculator(null);
+		bulletExplodeDelay = new BulletExplodeDelayCalculator(null);
 	}
-	/*public function setField(battleField:BattleField) : Void
-	{
-		//availableAt.battleField = battleField;
-		capacity.battleField = battleField;
-		troopSpeed.battleField = battleField;
-		troopPower.battleField = battleField;
-		//troopHealth.battleField = battleField;
-		troopRushGap.battleField = battleField;
-		damage.battleField = battleField;
-		damageGap.battleField = battleField;
-		damageRadiusMin.battleField = battleField;
-		damageRadiusMax.battleField = battleField;
-	}*/
 	
 	public function get(featureType:Int, buildingType:Int, level:Int = 1) : Float
 	{
@@ -70,10 +61,12 @@ class FeatureCalculator
 			
 			case 21: bulletSpeed.get(buildingType, level) / TIME_SCALE;
 			case 22: bulletDamage.get(buildingType, level);
-			case 23: bulletFireGap.get(buildingType, level) * TIME_SCALE;
-			case 24: bulletDamageArea.get(buildingType, level);
+			case 23: bulletShootGap.get(buildingType, level) * TIME_SCALE;
+			case 24: bulletShootDelay.get(buildingType, level) * TIME_SCALE;
 			case 25: bulletRangeMin.get(buildingType, level);
 			case 26: bulletRangeMax.get(buildingType, level);
+			case 27: bulletDamageArea.get(buildingType, level);
+			case 28: bulletExplodeDelay.get(buildingType, level);
 			
 			default: 0;
 		}
@@ -99,10 +92,12 @@ class FeatureCalculator
 			
 			case 21: bulletSpeed.BASE_VALUE;
 			case 22: bulletDamage.BASE_VALUE;
-			case 23: bulletFireGap.BASE_VALUE;
-			case 24: bulletDamageArea.BASE_VALUE;
+			case 23: bulletShootGap.BASE_VALUE;
+			case 24: bulletShootDelay.BASE_VALUE;
 			case 25: bulletRangeMin.BASE_VALUE;
 			case 26: bulletRangeMax.BASE_VALUE;
+			case 27: bulletDamageArea.BASE_VALUE;
+			case 28: bulletExplodeDelay.BASE_VALUE;
 			
 			default: 0;
 		}
@@ -112,13 +107,13 @@ class FeatureCalculator
 	{
 		return switch( featureType )
 		{
-			case 5 : 1000;
+/*			case 5 : 1000;
 			case 11: 4;
 			case 12: 50;
 			case 21: 50;
 			case 22: 0.15;
 			case 23: 0.2;
-			case 24: 0.2;
+			case 24: 0.2;*/
 			default: 1;
 		}
 	}

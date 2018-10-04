@@ -4,7 +4,7 @@ package com.gt.towers.calculators;
  * ...
  * @author Mansour Djawadi
  */
-class BulletFireGapCalculator  extends BaseCalculator
+class BulletShootGapCalculator  extends BaseCalculator
 {
 	public function new (game:Game) { super(game); BASE_VALUE = 720; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
@@ -13,8 +13,8 @@ class BulletFireGapCalculator  extends BaseCalculator
 		{
 			case	101	:	2	;
 			case	102	:	2	;
-			case	103	:	0.7	;
-			case	104	:	0.5	;
+			case	103	:	0.8	;
+			case	104	:	0.7	;
 			case	105	:	2.5	;
 			case	106	:	2	;
 			case	107	:	3	;
@@ -38,6 +38,6 @@ class BulletFireGapCalculator  extends BaseCalculator
 			case 159 : 5;
 			default : BASE_VALUE;
 		}
-		return ret * 1000 ;
+		return ret * 1500 ;
 	}
 }

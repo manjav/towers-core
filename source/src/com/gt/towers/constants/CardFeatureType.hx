@@ -21,10 +21,12 @@ class CardFeatureType
 	
 	public static var F21_BULLET_SPEED:Int = 21;
 	public static var F22_BULLET_DAMAGE:Int = 22;
-	public static var F23_BULLET_FIRE_GAP:Int = 23;
-	public static var F24_BULLET_DAMAGE_AREA:Int = 24;
+	public static var F23_BULLET_SHOOT_GAP:Int = 23;
+	public static var F24_BULLET_SHOOT_DELAY:Int = 24;
 	public static var F25_BULLET_RANGE_MIN:Int = 25;
 	public static var F26_BULLET_RANGE_MAX:Int = 26;
+	public static var F27_BULLET_DAMAGE_AREA:Int = 27;
+	public static var F28_BULLET_EXPLODE_DElAY:Int = 28;
 	
 #if flash
 	private static var _all:com.gt.towers.utils.lists.IntList;
@@ -38,14 +40,14 @@ class CardFeatureType
 			
 			_all.push( F11_SPEED );
 			_all.push( F12_HEALTH );
-			//_all.push( F13_TROOP_POWER );
-			//_all.push( F14_TROOP_RUSH_GAP );
 			
 			_all.push( F22_BULLET_DAMAGE );
-			_all.push( F23_BULLET_FIRE_GAP );
-			_all.push( F24_BULLET_DAMAGE_AREA );
+			_all.push( F23_BULLET_SHOOT_GAP );
+			_all.push( F24_BULLET_SHOOT_DELAY );
 			_all.push( F25_BULLET_RANGE_MIN );
 			_all.push( F26_BULLET_RANGE_MAX );
+			_all.push( F27_BULLET_DAMAGE_AREA );
+			_all.push( F28_BULLET_EXPLODE_DElAY );
 		}
 		return _all;
 	}

@@ -27,11 +27,14 @@ class Card
 	public var health:Float = 1;
 	public var speed:Float = 1;
 	
+	public var bulletSpeed:Float = 1.0;
 	public var bulletDamage:Float = 1.05;
-	public var bulletFireGap:Int = 800;
+	public var bulletShootGap:Int = 800;
+	public var bulletShootDelay:Int = 500;
 	public var bulletRangeMin:Float = 50;
 	public var bulletRangeMax:Float = 180;
 	public var bulletDamageArea:Float = 180;
+	public var bulletExplodDelay:Float = 0;
 	
 	public function new(game:Game, type:Int, level:Int)
 	{
@@ -54,11 +57,14 @@ class Card
 		health = game.calculator.get(CardFeatureType.F12_HEALTH, type, level);
 		
 		// defensive data
+		bulletSpeed = game.calculator.get(CardFeatureType.F21_BULLET_SPEED, type, level);
 		bulletDamage = game.calculator.get(CardFeatureType.F22_BULLET_DAMAGE, type, level);
-		bulletFireGap = game.calculator.getInt(CardFeatureType.F23_BULLET_FIRE_GAP, type, level);
-		bulletDamageArea = game.calculator.get(CardFeatureType.F24_BULLET_DAMAGE_AREA, type, level);
+		bulletShootGap = game.calculator.getInt(CardFeatureType.F23_BULLET_SHOOT_GAP, type, level);
+		bulletShootDelay = game.calculator.getInt(CardFeatureType.F24_BULLET_SHOOT_DELAY, type, level);
 		//bulletRangeMin = game.calculator.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, level);
 		bulletRangeMax = game.calculator.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, level);
+		bulletDamageArea = game.calculator.get(CardFeatureType.F27_BULLET_DAMAGE_AREA, type, level);
+		bulletExplodDelay = game.calculator.getInt(CardFeatureType.F28_BULLET_EXPLODE_DElAY, type, level);
 	}
 	
 	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000];
@@ -163,6 +169,6 @@ class Card
 	
 	public function toString():String
 	{
-		return "type:" + type + " level:" + level + " elixirSize:" + elixirSize + " deployTime:" + deployTime + " health:" + health + " speed:" + speed + " bulletDamage:" + bulletDamage + " bulletFireGap:" + bulletFireGap + " bulletRangeMax:" + bulletRangeMax;
+		return "type:" + type + " level:" + level + " elixirSize:" + elixirSize + " deployTime:" + deployTime + " health:" + health + " speed:" + speed + " bulletDamage:" + bulletDamage + " bulletFireGap:" + bulletShootGap + " bulletRangeMax:" + bulletRangeMax;
 	}
 }
