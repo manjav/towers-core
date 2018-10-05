@@ -228,7 +228,7 @@ class BattleField
 		{
 			var unit = new Unit(unitId, this, card, side, CoreUtils.getXPosition(card.quantity, i, x), CoreUtils.getYPosition(card.quantity, i, y));
 			units.set(unitId, unit);
-			trace("deploy id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
+			//trace("deploy id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
 			unitId ++;
 			i --;
 		}
@@ -261,7 +261,7 @@ class BattleField
 				hitUnits.add(u.id);
 			}
 		}
-		trace(res);
+		//trace(res);
 		if( unitsHitCallback != null )
 			unitsHitCallback.hit(bullet.id, bullet.card.bulletDamage, hitUnits);
 	}
