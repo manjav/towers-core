@@ -5,11 +5,9 @@ package com.gt.towers.calculators;
  */
 class BulletRangeMaxCalculator extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 200; }
+	public function new (game:Game) { super(game); BASE_VALUE = 1; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
-		//return BASE_VALUE + Math.log(level) * 12 + Math.log(improveLevel) * 24;
-		
 		var ret =  switch( type )
 		{
 			case	101	:	1.5 ;

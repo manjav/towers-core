@@ -39,6 +39,5 @@ class BulletDamageCalculator extends BaseCalculator
 			default : BASE_VALUE;
 		}
 		return ret * 0.6;
-	}
-	
+	}	
 }
