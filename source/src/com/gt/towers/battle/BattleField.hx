@@ -67,7 +67,6 @@ class BattleField
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
 		
-
 #if java
 		//waitingUnits = new java.util.concurrent.ConcurrentHashMap();
 		//game_0.calculator.setField(this);
@@ -83,7 +82,7 @@ class BattleField
 			{
 				p = map.places.get(unitId);
 				var card = new Card(games.get(p.side), p.type, games.get(p.side).player.get_level(0));
-				units.set(unitId, new Unit(unitId, this, card, p.side, p.x, p.y));
+				units.set(unitId, new Unit(unitId, this, card, p.side, p.x, p.y));trace(units.get(unitId).toString());
 				unitId ++;
 			}
 		}
