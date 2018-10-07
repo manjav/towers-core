@@ -8,9 +8,13 @@ import com.gt.towers.utils.lists.PlaceDataList;
  */
 class FieldData
 {
+	static public var TYPE_OPERATION:String = "operation";
+	static public var TYPE_TOUCHDOWN:String = "touchdown";
+	static public var TYPE_HEADQUARTER:String = "headquarter";
+
 	public var index:Int;
 	public var times:IntList;
-	public var isOperation:Bool;
+	public var type:String;
 	public var places:PlaceDataList;
 #if flash
 	public var name:String;
@@ -23,7 +27,7 @@ class FieldData
 	public function new(index:Int, name:String, times:String = "", introNum:String = "", startNum:String = "", endNum:String = "") 
 	{
 		this.index = index;
-		this.isOperation = name.substr(0, 10) == "operation_";
+		this.type = name.split("_")[0];
 		this.places = new PlaceDataList();
 		this.times = IntList.parse(times);
 #if flash
@@ -34,7 +38,7 @@ class FieldData
 		this.images = new com.gt.towers.utils.lists.ImageDataList();
 #end
 	}
-	
+	/*
 	public function getSwipeTutorPlaces(): PlaceDataList
 	{
 		var ret = new PlaceDataList();
@@ -63,5 +67,10 @@ class FieldData
 			i ++;
 		}
 		return null;
+	}*/
+	
+	public function isOperation() : Bool
+	{
+		return type == TYPE_OPERATION;
 	}
 }

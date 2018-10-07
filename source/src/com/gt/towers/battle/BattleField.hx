@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.bullets.Bullet;
 import com.gt.towers.battle.fieldes.FieldData;
+import com.gt.towers.battle.fieldes.PlaceData;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.battle.units.Unit;
 import com.gt.towers.constants.MessageTypes;
@@ -49,21 +50,24 @@ class BattleField
 	private var unitId:Int = 0;
 #end
 
-	public function new(game_0:Game, game_1:Game, mapName:String, side:Int, hasExtraTime:Bool)
+	public function new(game_0:Game, game_1:Game, type:String, index:Int, side:Int)
 	{
-		var isOperation = mapName.substr(0, 10) == "operation_";
+		var mapName = type + "_" + index;
 		singleMode = game_1.player.cards.keys().length == 0;
 		this.side = side;
-		if( isOperation )
+		if( type == FieldData.TYPE_OPERATION )
 			map = game_0.fieldProvider.operations.get(mapName);
-		else
-			map = game_0.fieldProvider.battles.get(mapName);
-			
-		if( hasExtraTime )
-			extraTime = map.times.get(3);
+		else if( type == FieldData.TYPE_TOUCHDOWN )
+			map = game_0.fieldProvider.touchdowns.get(mapName);
+		else if( type == FieldData.TYPE_HEADQUARTER )
+			map = game_0.fieldProvider.headquarters.get(mapName);
+		
+		extraTime = map.times.get(3);
 		
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
+		
+
 #if java
 		//waitingUnits = new java.util.concurrent.ConcurrentHashMap();
 		//game_0.calculator.setField(this);
@@ -72,10 +76,22 @@ class BattleField
 		games.add(game_0);
 		games.add(game_1);
 		
+		if( type == FieldData.TYPE_HEADQUARTER )
+		{
+			var p:PlaceData;
+			while ( unitId < map.places.size() )
+			{
+				p = map.places.get(unitId);
+				var card = new Card(games.get(p.side), p.type, games.get(p.side).player.get_level(0));
+				units.set(unitId, new Unit(unitId, this, card, p.side, p.x, p.y));
+				unitId ++;
+			}
+		}
+		
 		game_0.player.hardMode = false;
 		if( singleMode )
 		{
-			if( isOperation )
+			if( type == FieldData.TYPE_OPERATION )
 			{
 				if( map.index == 2 )
 				{
