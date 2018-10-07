@@ -21,6 +21,7 @@ class CardTypes
 	
 	public static var C100:Int = 100;
 	
+	// troops
 	public static var C101:Int = 101;
 	public static var C102:Int = 102;
 	public static var C103:Int = 103;
@@ -37,6 +38,7 @@ class CardTypes
 	public static var C114:Int = 114;
 	public static var C115:Int = 115;
 	
+	// spells
 	public static var C151:Int = 151;
 	public static var C152:Int = 152;
 	public static var C153:Int = 153;
@@ -47,6 +49,10 @@ class CardTypes
 	public static var C158:Int = 158;
 	public static var C159:Int = 159;
 
+	// buildings
+	public static var C201:Int = 201;
+
+	
 	
 	public function new() {}
 	

@@ -2,6 +2,7 @@ package com.gt.towers.battle.units;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.GameObject;
 import com.gt.towers.battle.units.Card;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.events.BattleEvent;
 
 /**
@@ -21,6 +22,7 @@ class Unit extends GameObject
 		super(id, battleField, card, side, x, y);
 		this.deployTime = battleField.now + card.deployTime;
 		this.health = card.health;
+		this.movable = card.type < CardTypes.C201;
 	}
 	
 	override public function update() : Void
