@@ -36,6 +36,8 @@ class BulletShootGapCalculator  extends BaseCalculator
 			case 157 : 2;
 			case 158 : 4;
 			case 159 : 5;
+			
+			case 201 : 0.7 ;
 			default : BASE_VALUE;
 		}
 		return ret * 1500 ;

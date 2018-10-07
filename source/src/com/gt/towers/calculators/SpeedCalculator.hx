@@ -37,6 +37,8 @@ class SpeedCalculator extends BaseCalculator
 			case	158	:	1	;
 			case	159	:	1	;
 			
+			case	201	:	0	;
+			
 			default: 1;
 		}
 		return ret * 0.06;
