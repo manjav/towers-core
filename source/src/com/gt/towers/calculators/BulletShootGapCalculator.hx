@@ -11,12 +11,12 @@ class BulletShootGapCalculator  extends BaseCalculator
 	{
 			var ret = switch( type )
 		{
-			case	101	:	2	;
+			case	101	:	2.16	;
 			case	102	:	2	;
-			case	103	:	0.8	;
-			case	104	:	0.7	;
-			case	105	:	2.5	;
-			case	106	:	2	;
+			case	103	:	0.7	;
+			case	104	:	2	;
+			case	105	:	2.3	;
+			case	106	:	2.6	;
 			case	107	:	3	;
 			case	108	:	0.6	;
 			case 109 : 5;
@@ -36,6 +36,8 @@ class BulletShootGapCalculator  extends BaseCalculator
 			case 157 : 2;
 			case 158 : 4;
 			case 159 : 5;
+			
+			case 201 : 0.7 ;
 			default : BASE_VALUE;
 		}
 		return ret * 1500 ;

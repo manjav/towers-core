@@ -39,6 +39,6 @@ class SizeCalculator extends BaseCalculator
 			
 			default: 1;
 		}
-		return ret * 0.06;
+		return ret * 0.1;
 	}
 }

@@ -18,7 +18,7 @@ class QuantityCalculator  extends BaseCalculator
 			case	105	:	1	;
 			case	106	:	1	;
 			case	107	:	1	;
-			case	108	:	1	;
+			case	108	:	2	;
 			case	109	:	1	;
 			case	110	:	1	;
 			case	111	:	1	;
@@ -36,6 +36,8 @@ class QuantityCalculator  extends BaseCalculator
 			case	157	:	1	;
 			case	158	:	1	;
 			case	159	:	1	;
+			
+			case	201	:	1	;
 			
 			default: 0;
 		}

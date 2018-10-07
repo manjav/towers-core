@@ -10,14 +10,14 @@ class BulletSpeedCalculator extends BaseCalculator
 	{
 		var ret = switch( type )
 		{
-			case	101	:	8.00	;
-			case	102	:	1.67	;
-			case	103	:	1.41	;
-			case	104	:	0.48	;
-			case	105	:	2.24	;
-			case	106	:	1.00	;
-			case	107	:	4.65	;
-			case	108	:	6.24	;
+			case	101	:	2	;
+			case	102	:	0.7	;
+			case	103	:	1.7	;
+			case	104	:	1.6	;
+			case	105	:	1	;
+			case	106	:	0.5	;
+			case	107	:	0.7	;
+			case	108	:	2	;
 			case 109 : 5;
 			case 110 : 4;
 			case 111 : 5;
@@ -37,6 +37,6 @@ class BulletSpeedCalculator extends BaseCalculator
 			case 159 : 5;
 			default : BASE_VALUE;
 		}
-		return ret * 10;
+		return ret * 20;
 	}
 }
