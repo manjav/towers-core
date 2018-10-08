@@ -25,8 +25,8 @@ class BattleField
 {
 	static public var POPULATION_MAX:Int = 10;
 	static public var POPULATION_INIT:Int = 5;
-	static public var WIDTH:Int = 1080;
-	static public var HEIGHT:Int = 1440;
+	static public var WIDTH:Int = 960;
+	static public var HEIGHT:Int = 1280;
 	static public var PADDING:Int = 150;
 	private var questProvider:FieldProvider;
 
