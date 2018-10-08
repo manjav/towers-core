@@ -36,7 +36,7 @@ class BulletRangeMaxCalculator extends BaseCalculator
 			case 158 : 4;
 			case 159 : 5;
 				
-			case 201 : 102 ;
+			case 201 : 1.7 ;
 			
 			default : BASE_VALUE;
 		}
