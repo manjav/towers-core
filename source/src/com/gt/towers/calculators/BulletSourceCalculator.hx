@@ -8,7 +8,7 @@ class BulletSourceCalculator
 {
 	public function new () {}
 	#if flash
-	public function getPoint( type:Int, rotation:Int ) : flash.geom.Point 
+	static public function getPoint( type:Int, rotation:Int ) : flash.geom.Point 
 	{
 		var rad = CoreUtils.getRadString(rotation);
 		if( rad == "000" )
