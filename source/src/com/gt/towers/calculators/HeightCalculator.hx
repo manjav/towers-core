@@ -11,14 +11,14 @@ class HeightCalculator extends BaseCalculator
 	{
 		var ret = switch ( type )
 		{
-			case	101	:	1	;
-			case	102	:	1	;
-			case	103	:	1	;
-			case	104	:	1	;
-			case	105	:	1	;
-			case	106	:	1	;
-			case	107	:	1	;
-			case	108	:	1	;
+			case	101	:	0.5	;
+			case	102	:	0.55;
+			case	103	:	0.35	;
+			case	104	:	0.5	;
+			case	105	:	0.45	;
+			case	106	:	0.5	;
+			case	107	:	0.4	;
+			case	108	:	0.6	;
 			case	109	:	1	;
 			case	110	:	1	;
 			case	111	:	1	;
