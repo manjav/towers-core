@@ -19,8 +19,8 @@ class BulletDamageCalculator extends BaseCalculator
 			case	106	:	0.7	;
 			case	107	:	2.65	;
 			case	108	:	0.15	;
-			case 109 : 5;
-			case 110 : 4;
+			case 109 : 2.6;
+			case 110 : 1.75;
 			case 111 : 5;
 			case 112 : 2;
 			case 113 : 3;
