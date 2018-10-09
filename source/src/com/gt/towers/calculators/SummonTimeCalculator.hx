@@ -4,7 +4,7 @@ package com.gt.towers.calculators;
  * ...
  * @author Mansour Djawadi
  */
-class DeployTimeCalculator  extends BaseCalculator
+class SummonTimeCalculator  extends BaseCalculator
 {
 	public function new (game:Game) { super(game); BASE_VALUE = 800; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 

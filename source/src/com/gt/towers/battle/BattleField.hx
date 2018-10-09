@@ -230,7 +230,7 @@ class BattleField
 	}
 	
 	#if java
-	public function deployUnit(type:Int, side:Int, x:Float, y:Float) : Int
+	public function summonUnit(type:Int, side:Int, x:Float, y:Float) : Int
 	{
 		var response = cardAvailabled(side, type);
 		if( response != MessageTypes.RESPONSE_SUCCEED )

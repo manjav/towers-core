@@ -22,11 +22,12 @@ class Card
 	public var availableAt:Int = 0;
 	public var elixirSize:Int = 5;
 	public var quantity:Int = 1;
-	public var deployTime:Int = 500;
+	public var summonTime:Int = 500;
 	
-	public var height:Float = 50;
 	public var health:Float = 1;
 	public var speed:Float = 1;
+	public var sizeH:Float = 50;
+	public var sizeV:Float = 50;
 	
 	public var bulletSpeed:Float = 1.0;
 	public var bulletDamage:Float = 1.05;
@@ -51,12 +52,13 @@ class Card
 		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, level);
 		elixirSize = game.calculator.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, level);
 		quantity = game.calculator.getInt(CardFeatureType.F03_QUANTITY, type, level);
-		deployTime = game.calculator.getInt(CardFeatureType.F04_DEPLOY_TIME, type, level);
+		summonTime = game.calculator.getInt(CardFeatureType.F04_SUMMON_TIME, type, level);
 		
 		// troops data
 		speed = game.calculator.get(CardFeatureType.F11_SPEED, type, level);
 		health = game.calculator.get(CardFeatureType.F12_HEALTH, type, level);
-		height = game.calculator.get(CardFeatureType.F13_HEIGHT, type, level);
+		sizeH = game.calculator.get(CardFeatureType.F13_SIZE_H, type, level);
+		sizeV = game.calculator.get(CardFeatureType.F14_SIZE_V, type, level);
 		
 		// defensive data
 		bulletSpeed = game.calculator.get(CardFeatureType.F21_BULLET_SPEED, type, level);
@@ -171,6 +173,6 @@ class Card
 	
 	public function toString():String
 	{
-		return "type:" + type + " level:" + level + " elixirSize:" + elixirSize + " deployTime:" + deployTime + " health:" + health + " speed:" + speed + " bulletDamage:" + bulletDamage + " bulletFireGap:" + bulletShootGap + " bulletRangeMax:" + bulletRangeMax;
+		return "type:" + type + " level:" + level + " elixirSize:" + elixirSize + " summonTime:" + summonTime + " health:" + health + " speed:" + speed + " bulletDamage:" + bulletDamage + " bulletFireGap:" + bulletShootGap + " bulletRangeMax:" + bulletRangeMax;
 	}
 }

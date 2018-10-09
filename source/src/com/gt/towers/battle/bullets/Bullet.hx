@@ -18,7 +18,7 @@ class Bullet extends GameObject
 	public function new(battleField:BattleField, id:Int, card:Card, side:Int, x:Float, y:Float, dx:Float, dy:Float) 
 	{
 		super(id, battleField, card, side, x, y);
-		this.deployTime = battleField.now + card.bulletShootDelay;
+		this.summonTime = battleField.now + card.bulletShootDelay;
 		this.dx = dx;
 		this.dy = dy;
 		var angle:Float = Math.atan2(dy - y, dx - x);

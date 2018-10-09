@@ -4,7 +4,7 @@ package com.gt.towers.calculators;
  * ...
  * @author Mansour Djawadi
  */
-class HeightCalculator extends BaseCalculator
+class SizeVCalculator extends BaseCalculator
 {
 	public function new (game:Game) { super(game); BASE_VALUE = 1; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
@@ -41,6 +41,6 @@ class HeightCalculator extends BaseCalculator
 			
 			default: 1;
 		}
-		return ret * 100;
+		return ret * 80;
 	}
 }

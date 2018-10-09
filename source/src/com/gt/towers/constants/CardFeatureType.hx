@@ -11,12 +11,13 @@ class CardFeatureType
 	public static var F01_AVAILABLE_AT:Int = 1;
 	public static var F02_ELIXIR_SIZE = 2;
 	public static var F03_QUANTITY = 3;
-	public static var F04_DEPLOY_TIME = 4;
+	public static var F04_SUMMON_TIME = 4;
 	//public static var F05_BIRTH_RATE = 5;
 	
 	public static var F11_SPEED:Int = 11;
 	public static var F12_HEALTH:Int = 12;
-	public static var F13_HEIGHT:Int = 13;
+	public static var F13_SIZE_H:Int = 13;
+	static public var F14_SIZE_V:Int = 14;
 	//public static var F13_POWER:Int = 13;
 	//public static var F14_RUSH_GAP:Int = 14;
 	
@@ -41,7 +42,8 @@ class CardFeatureType
 			
 			_all.push( F11_SPEED );
 			_all.push( F12_HEALTH );
-			_all.push( F13_HEIGHT );
+			_all.push( F13_SIZE_H );
+			_all.push( F14_SIZE_V );
 			
 			_all.push( F22_BULLET_DAMAGE );
 			_all.push( F23_BULLET_SHOOT_GAP );

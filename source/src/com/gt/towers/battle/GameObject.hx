@@ -19,7 +19,7 @@ class GameObject
 	public var card:Card;
 	public var disposed:Bool;
 	public var movable:Bool = true;
-	public var deployTime:Float = 0;
+	public var summonTime:Float = 0;
 	public var battleField:BattleField;
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float) 
 	{

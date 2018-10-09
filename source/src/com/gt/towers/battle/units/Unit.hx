@@ -20,7 +20,7 @@ class Unit extends GameObject
 		x = ( side == battleField.side ) ? x : (BattleField.WIDTH - x);
 		y = ( side == battleField.side ) ? y : (BattleField.HEIGHT - y);
 		super(id, battleField, card, side, x, y);
-		this.deployTime = battleField.now + card.deployTime;
+		this.summonTime = battleField.now + card.summonTime;
 		this.health = card.health;
 		this.movable = card.type < CardTypes.C201;
 	}
@@ -30,7 +30,7 @@ class Unit extends GameObject
 		if( disposed )
 			return;
 		
-		if( deployTime > battleField.now )
+		if( summonTime > battleField.now )
 			return;
 		
 		finalizeDeployment();
@@ -40,9 +40,9 @@ class Unit extends GameObject
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= deploy -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function finalizeDeployment() : Void
 	{
-		if( deployTime == 0 )
+		if( summonTime == 0 )
 			return;
-		deployTime = 0;
+		summonTime = 0;
 		fireEvent(id, BattleEvent.DEPLOY, null);
 	}
 	
@@ -86,7 +86,7 @@ class Unit extends GameObject
 		var len = values.length;
 		while ( i < len )
 		{
-			if( !values[i].disposed && this.side != values[i].side && values[i].deployTime == 0 )
+			if( !values[i].disposed && this.side != values[i].side && values[i].summonTime == 0 )
 			{
 				var dis = com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, values[i].x, values[i].y);
 				if( dis <= distance )
@@ -130,6 +130,6 @@ class Unit extends GameObject
 	public override function toString():String
 	#end
 	{
-		return "type:" + card.type + " x:" + x + " y:" + y + " side:" + side + " level:" + card.level + " elixirSize:" + card.elixirSize + " deployTime:" + card.deployTime + " health:" + health + " speed:" + card.speed + " bulletDamage:" + card.bulletDamage + " bulletFireGap:" + card.bulletShootGap + " bulletRangeMax:" + card.bulletRangeMax;
+		return "type:" + card.type + " x:" + x + " y:" + y + " side:" + side + " level:" + card.level + " elixirSize:" + card.elixirSize + " summonTime:" + card.summonTime + " health:" + health + " speed:" + card.speed + " bulletDamage:" + card.bulletDamage + " bulletFireGap:" + card.bulletShootGap + " bulletRangeMax:" + card.bulletRangeMax;
 	}
 }

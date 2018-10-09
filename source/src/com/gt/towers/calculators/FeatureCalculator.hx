@@ -1,5 +1,6 @@
 package com.gt.towers.calculators;
-import com.gt.towers.calculators.HeightCalculator;
+import com.gt.towers.calculators.SizeHCalculator;
+import com.gt.towers.calculators.SizeVCalculator;
 import com.gt.towers.calculators.QuantityCalculator;
 /**
  * ...
@@ -13,11 +14,12 @@ class FeatureCalculator
 	var availableAt:AvailableAtCalculator;
 	var elixirSize:ElixirSizeCalculator;
 	var quantity:QuantityCalculator;
-	var deployTime:DeployTimeCalculator;
+	var summonTime:SummonTimeCalculator;
 	
 	var speed:SpeedCalculator;
 	var health:HealthCalculator;
-	var height:HeightCalculator;
+	var sizeH:SizeHCalculator;
+	var sizeV:SizeVCalculator;
 	
 	var bulletSpeed:BulletSpeedCalculator;
 	var bulletDamage:BulletDamageCalculator;
@@ -34,10 +36,12 @@ class FeatureCalculator
 		availableAt = new AvailableAtCalculator(null);
 		elixirSize = new ElixirSizeCalculator(null);
 		quantity = new QuantityCalculator(null);
-		deployTime = new DeployTimeCalculator(null);
+		summonTime = new SummonTimeCalculator(null);
+		
 		speed = new SpeedCalculator(null);
 		health = new HealthCalculator(null);
-		height = new HeightCalculator(null);
+		sizeH = new SizeHCalculator(null);
+		sizeV = new SizeVCalculator(null);
 		
 		bulletSpeed = new BulletSpeedCalculator(null);
 		bulletDamage = new BulletDamageCalculator(null);
@@ -57,11 +61,12 @@ class FeatureCalculator
 			case 1 : availableAt.get(buildingType);
 			case 2 : elixirSize.get(buildingType);
 			case 3 : quantity.get(buildingType);
-			case 4 : deployTime.get(buildingType) * TIME_SCALE;
+			case 4 : summonTime.get(buildingType) * TIME_SCALE;
 			
 			case 11: speed.get(buildingType, level) / TIME_SCALE;
 			case 12: health.get(buildingType, level);
-			case 13: height.get(buildingType, level);
+			case 13: sizeH.get(buildingType, level);
+			case 14: sizeV.get(buildingType, level);
 			
 			case 21: bulletSpeed.get(buildingType, level) / TIME_SCALE;
 			case 22: bulletDamage.get(buildingType, level);
@@ -89,7 +94,7 @@ class FeatureCalculator
 			case 1 : availableAt.BASE_VALUE;
 			case 2 : elixirSize.BASE_VALUE;
 			case 3 : quantity.BASE_VALUE;
-			case 4 : deployTime.BASE_VALUE;
+			case 4 : summonTime.BASE_VALUE;
 			
 			case 11: speed.BASE_VALUE;
 			case 12: health.BASE_VALUE;
