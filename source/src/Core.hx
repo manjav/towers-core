@@ -7,6 +7,7 @@ import com.gt.towers.socials.Challenge;
 import com.gt.towers.others.Quest;
 import com.gt.towers.constants.SegmentType;
 import com.gt.towers.constants.StickerType;
+import com.gt.towers.calculators.BulletSourceCalculator;
 
 #if java
 import com.gt.towers.LoginData;

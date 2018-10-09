@@ -16,6 +16,7 @@ class CardFeatureType
 	
 	public static var F11_SPEED:Int = 11;
 	public static var F12_HEALTH:Int = 12;
+	public static var F13_HEIGHT:Int = 13;
 	//public static var F13_POWER:Int = 13;
 	//public static var F14_RUSH_GAP:Int = 14;
 	
@@ -40,6 +41,7 @@ class CardFeatureType
 			
 			_all.push( F11_SPEED );
 			_all.push( F12_HEALTH );
+			_all.push( F13_HEIGHT );
 			
 			_all.push( F22_BULLET_DAMAGE );
 			_all.push( F23_BULLET_SHOOT_GAP );

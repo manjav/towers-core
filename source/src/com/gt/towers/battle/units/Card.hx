@@ -24,6 +24,7 @@ class Card
 	public var quantity:Int = 1;
 	public var deployTime:Int = 500;
 	
+	public var height:Float = 50;
 	public var health:Float = 1;
 	public var speed:Float = 1;
 	
@@ -55,6 +56,7 @@ class Card
 		// troops data
 		speed = game.calculator.get(CardFeatureType.F11_SPEED, type, level);
 		health = game.calculator.get(CardFeatureType.F12_HEALTH, type, level);
+		height = game.calculator.get(CardFeatureType.F13_HEIGHT, type, level);
 		
 		// defensive data
 		bulletSpeed = game.calculator.get(CardFeatureType.F21_BULLET_SPEED, type, level);

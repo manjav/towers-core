@@ -1,4 +1,5 @@
 package com.gt.towers.calculators;
+import com.gt.towers.calculators.HeightCalculator;
 import com.gt.towers.calculators.QuantityCalculator;
 /**
  * ...
@@ -16,6 +17,7 @@ class FeatureCalculator
 	
 	var speed:SpeedCalculator;
 	var health:HealthCalculator;
+	var height:HeightCalculator;
 	
 	var bulletSpeed:BulletSpeedCalculator;
 	var bulletDamage:BulletDamageCalculator;
@@ -35,6 +37,7 @@ class FeatureCalculator
 		deployTime = new DeployTimeCalculator(null);
 		speed = new SpeedCalculator(null);
 		health = new HealthCalculator(null);
+		height = new HeightCalculator(null);
 		
 		bulletSpeed = new BulletSpeedCalculator(null);
 		bulletDamage = new BulletDamageCalculator(null);
@@ -58,6 +61,7 @@ class FeatureCalculator
 			
 			case 11: speed.get(buildingType, level) / TIME_SCALE;
 			case 12: health.get(buildingType, level);
+			case 13: height.get(buildingType, level);
 			
 			case 21: bulletSpeed.get(buildingType, level) / TIME_SCALE;
 			case 22: bulletDamage.get(buildingType, level);
