@@ -52,18 +52,20 @@ class Unit extends GameObject
 	{
 		var dec = id + ":    ";
 		var target:Unit;
-		if( attackTime < battleField.now )
+		cachedEnemy = getNearestEnemy();
+		if( cachedEnemy > -1 )
 		{
-			cachedEnemy = getNearestEnemy();
 			dec += "enemyId " + cachedEnemy;
-			if( cachedEnemy > -1 && battleField.units.exists(cachedEnemy) )
+			if( attackTime < battleField.now )
 			{
 				target = battleField.units.get(cachedEnemy);
 				attack(target);
 				dec += "   " + health + " <=> " + target.health ;
 				//trace(dec);
-				return;
 			}
+		}
+		else
+		{
 			dec += "   moved.";
 			moveAhead();
 		}
@@ -117,6 +119,7 @@ class Unit extends GameObject
 
 	function moveAhead() : Void
 	{
+		attackTime = battleField.now;
 		if( movable )
 			setPosition(-1, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)));
 	}

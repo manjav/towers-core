@@ -27,7 +27,7 @@ class BattleField
 	static public var POPULATION_INIT:Int = 5;
 	static public var WIDTH:Int = 960;
 	static public var HEIGHT:Int = 1280;
-	static public var PADDING:Int = 150;
+	static public var PADDING:Int = 100;
 	private var questProvider:FieldProvider;
 
 	public var elixirBar:FloatList;
