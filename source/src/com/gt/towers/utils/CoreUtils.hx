@@ -108,11 +108,11 @@ class CoreUtils
 			return switch ( i )
 			{
 				case 0: y;
-				case 1: y - GAP;
-				case 2: y - GAP;
-				case 3: y - (GAP * 2.0);
-				case 4: y - (GAP * 2.0);
-				case 5: y - (GAP * 2.0);
+				case 1: y + GAP;
+				case 2: y + GAP;
+				case 3: y + (GAP * 2.0);
+				case 4: y + (GAP * 2.0);
+				case 5: y + (GAP * 2.0);
 				default : y;
 			}
 		}
