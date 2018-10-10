@@ -44,7 +44,7 @@ class CoreUtils
 		return Math.sqrt(Math.pow(sx - dx, 2) + Math.pow((sy - dy) * 1.4285, 2) );
 	}
 	
-	static var GAP:Float = 50;
+	static var GAP:Float = 40;
 	static public function getXPosition(max:Int, i:Int, x:Float) : Float
 	{
 		if( max == 2 )
@@ -66,6 +66,19 @@ class CoreUtils
 				default : x;
 			}
 		}
+		if( max == 6 )
+		{
+			return switch ( i )
+			{
+				case 0: x;
+				case 1: x - GAP;
+				case 2: x + GAP;
+				case 3: x;
+				case 4: x + (GAP * 2.0);
+				case 5: x - (GAP * 2.0);
+				default : x;
+			}
+		}
 		return x;
 	}
 	
@@ -75,8 +88,8 @@ class CoreUtils
 		{
 			return switch ( i )
 			{
-				case 0: y - GAP;
-				case 1: y + GAP;
+				case 0: y;
+				case 1: y;
 				default : y;
 			}
 		}
@@ -87,6 +100,19 @@ class CoreUtils
 				case 0: y - GAP;
 				case 1: y + GAP;
 				case 2: y + GAP;
+				default : y;
+			}
+		}
+		if( max == 6 )
+		{
+			return switch ( i )
+			{
+				case 0: y;
+				case 1: y - GAP;
+				case 2: y - GAP;
+				case 3: y - (GAP * 2.0);
+				case 4: y - (GAP * 2.0);
+				case 5: y - (GAP * 2.0);
 				default : y;
 			}
 		}
