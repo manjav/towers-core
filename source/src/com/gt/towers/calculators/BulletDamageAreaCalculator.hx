@@ -40,6 +40,6 @@ class BulletDamageAreaCalculator extends BaseCalculator
 			
 			default : BASE_VALUE;
 		}
-		return ret * 10;
+		return ret * 20;
 	}
 }
