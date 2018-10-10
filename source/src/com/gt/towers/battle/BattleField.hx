@@ -268,7 +268,7 @@ class BattleField
 			u = iterator.next().getValue();
 			distance = CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y);
 			res += " ,  dis: " + distance + "==" + bullet.card.bulletDamageArea;
-            if( u.side != bullet.side && distance <= bullet.card.bulletDamageArea && distance >= -bullet.card.bulletDamageArea )
+            if( u.side != bullet.side && Math.abs(distance - u.card.sizeH) <= bullet.card.bulletDamageArea )
 			{
 				res += "|" + u.id + " (" + u.health + ") => ";
 				u.hit(bullet.card.bulletDamage);
