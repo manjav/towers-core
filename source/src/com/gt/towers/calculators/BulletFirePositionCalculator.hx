@@ -11,7 +11,6 @@ class BulletFirePositionCalculator
 	static public function getPoint( type:Int, rotation:Int ) : flash.geom.Point 
 	{
 		var rad = CoreUtils.getRadString(rotation);
-		trace(type + " rotation: " + rotation + " rad: " + rad );
 		if( rad == "000" )
 		{
 		return switch( type )
