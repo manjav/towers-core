@@ -4,21 +4,21 @@ package com.gt.towers.calculators;
  * ...
  * @author Mansour Djawadi
  */
-class HealthCalculator  extends BaseCalculator
+class SizeHCalculator extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 1; }
+	public function new (game:Game) { super(game); BASE_VALUE = 50; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
-	{	
+	{
 		var ret = switch ( type )
 		{
-			case	101	:	0.5	;
-			case	102	:	2.9	;
-			case	103	:	0.27;
-			case	104	:	1.02;
-			case	105	:	1.7;
-			case	106	:	1;
-			case	107	:	1.7	;
-			case	108	:	1;
+			case	101	:	10	;
+			case	102	:	13;
+			case	103	:	6	;
+			case	104	:	9	;
+			case	105	:	11	;
+			case	106	:	8	;
+			case	107	:	8	;
+			case	108	:	9	;
 			case	109	:	1	;
 			case	110	:	1	;
 			case	111	:	1	;
@@ -37,10 +37,8 @@ class HealthCalculator  extends BaseCalculator
 			case	158	:	1	;
 			case	159	:	1	;
 			
-			case	201	:	10	;
-			
-			default: BASE_VALUE;
+			default: 1;
 		}
-		return 3  * ret;
+		return ret * 3.5;
 	}
 }

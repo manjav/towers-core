@@ -4,13 +4,14 @@ import com.gt.towers.utils.CoreUtils;
  * ...
  * @author Mansour Djawadi
  */
-class BulletSourceCalculator
+class BulletFirePositionCalculator
 {
 	public function new () {}
 	#if flash
 	static public function getPoint( type:Int, rotation:Int ) : flash.geom.Point 
 	{
 		var rad = CoreUtils.getRadString(rotation);
+		trace(type + " rotation: " + rotation + " rad: " + rad );
 		if( rad == "000" )
 		{
 		return switch( type )
