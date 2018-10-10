@@ -13,7 +13,7 @@ class QuantityCalculator  extends BaseCalculator
 		{
 			case	101	:	1	;
 			case	102	:	1	;
-			case	103	:	3	;
+			case	103	:	6	;
 			case	104	:	1	;
 			case	105	:	1	;
 			case	106	:	1	;
