@@ -40,7 +40,6 @@ class Game
 		market = data.market;
 		sessionsCount = data.sessionsCount;
 		
-		
 		fillArenas();
 		fieldProvider = new FieldProvider(this);
 		player = new Player(this, data);
@@ -62,9 +61,6 @@ class Game
 		arenas.set(7, new Arena(7,	3001,	4500,	-2));//2400
 		arenas.set(8, new Arena(8,	4501,	7000,	-1));//2800
 		arenas.set(9, new Arena(9,	7001,	10000,	 0));//3000
-
-		
-		
 	}
 	
 	/*public function unlockedBuildingAt ( type:Int ) : Int
