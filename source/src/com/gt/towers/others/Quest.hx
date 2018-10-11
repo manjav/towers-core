@@ -50,7 +50,7 @@ class Quest
 
 	static public var TYPE_0_LEVELUP:Int = 0;
 	static public var TYPE_1_LEAGUEUP:Int = 1;
-	static public var TYPE_2_OPERATIONS:Int = 2;
+	//static public var TYPE_2_OPERATIONS:Int = 2;
 	static public var TYPE_3_BATTLES:Int = 3;
 	static public var TYPE_4_BATTLE_WINS:Int = 4;
 	static public var TYPE_5_FRIENDLY_BATTLES:Int = 5;
