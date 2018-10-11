@@ -6,21 +6,21 @@ package com.gt.towers.calculators;
  */
 class SizeHCalculator extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 15; }
+	public function new (game:Game) { super(game); BASE_VALUE = 25; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
 		return switch ( type )
 		{
-			case	101	:	25	;
-			case	102	:	35  ;
-			case	103	:	20	;
-			case	104	:	15	;
-			case	105	:	15	;
-			case	106	:	15	;
-			case	107	:	35	;
+			case	101	:	35	;
+			case	102	:	45  ;
+			case	103	:	25	;
+			case	104	:	25	;
+			case	105	:	25	;
+			case	106	:	25	;
+			case	107	:	45	;
 			case	108	:	25	;
 			
-			case	201	:	50	;
+			case	201	:	70	;
 			
 			default: BASE_VALUE;
 		}
