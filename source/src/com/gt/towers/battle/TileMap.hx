@@ -1,4 +1,5 @@
 package com.gt.towers.battle;
+import com.gt.towers.battle.Tile;
 
 /**
 * ...
@@ -7,14 +8,16 @@ package com.gt.towers.battle;
 class TileMap
 {
 	static public var STATE_EMPTY:Int = 0;
-	static public var STATE_OCCUPIED:Int = 1;
-	static public var STATE_TARGET:Int = 2;
+	static public var STATE_OCCUPIED:Int = 0xFF0000;
+	static public var STATE_TARGET:Int = 0x00FF00;
+	static public var STATE_START:Int = 0xFFFF00;
 
 	public var width:Int = 30;
 	public var height:Int = 40;
 	public var tileWidth:Int;
-	public var tileHeight:Int = 40;
+	public var tileHeight:Int;
 	var map:Array<Array<Int>>;
+	var target:Tile;
 	public function new() 
 	{
 		tileWidth = Math.floor( BattleField.WIDTH / width );
@@ -62,69 +65,55 @@ class TileMap
 		while ( true )
 		{
 			var last:Int = ret[ret.length - 1].last;
-			if ( last == 0 )
+			if( last == 0 )
 				break;
 			ret.push(queue[last]);
 		}
 		return ret;
 	}
 
-	private function checkQueue( startIndex:Int, counter:Int, queue:Array<Tile> ) : Void
+	private function checkQueue( startIndex:Int, cost:Int, queue:Array<Tile> ) : Void
 	{
 		var lastQueueLength:Int = queue.length;
 		var i:Int = startIndex;
-		var coordinate:Tile;
-		//trace(startIndex + " " + counter);
 		
 		//check neigbours of the queue element
 		while ( i < lastQueueLength )
 		{
-		//check top
-			if( queue[i].j != 0 && map[queue[i].i][queue[i].j - 1] != STATE_OCCUPIED )
-			{
-				coordinate = new Tile(queue[i].i, queue[i].j - 1, counter, i);
-				//if this coordinate is the start finish algorythm as the shortest path was just found
-				if( map[coordinate.i][coordinate.j] == STATE_TARGET )
-					return;
-				
-				if( canBeAddedToQueue(coordinate, queue) )
-					queue.push(coordinate);
-			}
-		
-		//check right
-			if( queue[i].i != map.length - 1 && map[queue[i].i + 1][queue[i].j] != STATE_OCCUPIED )
-			{
-				coordinate = new Tile(queue[i].i + 1, queue[i].j, counter, i);
-				if( map[coordinate.i][coordinate.j] == STATE_TARGET )
-					return;
-				if( canBeAddedToQueue(coordinate, queue) )
-					queue.push(coordinate);
-			}
-		
-		//check bottom
-			if( queue[i].j != map[queue[i].i].length - 1 && map[queue[i].i][queue[i].j + 1] != STATE_OCCUPIED )
-			{
-				coordinate = new Tile(queue[i].i, queue[i].j + 1, counter, i);
-				if( map[coordinate.i][coordinate.j] == STATE_TARGET )
-					return;
-				if( canBeAddedToQueue(coordinate, queue) )
-					queue.push(coordinate);
-			}
-		
-		//check left
-			if( queue[i].i != 0 && map[queue[i].i - 1][queue[i].j] != STATE_OCCUPIED )
-			{
-				coordinate = new Tile(queue[i].i - 1, queue[i].j, counter, i);
-				if( map[coordinate.i][coordinate.j] == STATE_TARGET )
-					return;
-				if( canBeAddedToQueue(coordinate, queue) )
-					queue.push(coordinate);
-			}
-		
+			checkTile(queue[i].i,		queue[i].j - 1, cost + 0.00, i, queue); // top
+			checkTile(queue[i].i + 1,	queue[i].j - 1, cost + 0.42, i, queue); // top-right
+			checkTile(queue[i].i + 1,	queue[i].j,		cost + 0.00, i, queue); // right
+			checkTile(queue[i].i + 1,	queue[i].j + 1, cost + 0.42, i, queue); // right-bottom
+			checkTile(queue[i].i,		queue[i].j + 1, cost + 0.00, i, queue); // bottom
+			checkTile(queue[i].i - 1,	queue[i].j + 1, cost + 0.42, i, queue); // left-bottom
+			checkTile(queue[i].i - 1,	queue[i].j, 	cost + 0.00, i, queue); // left
+			checkTile(queue[i].i - 1,	queue[i].j - 1,	cost + 0.42, i, queue); // left-top
+			
 			i ++;
 		}
 		
-		checkQueue(lastQueueLength, counter + 1, queue);
+		checkQueue(lastQueueLength, cost + 1, queue);
+	}
+	
+	public function checkTile(i:Int, j:Int, cost:Float, last:Int, queue:Array<Tile>) : Void
+	{
+		if( i < 0 || j < 0 || i == width || j == height || map[i][j] == STATE_OCCUPIED )
+			return;
+		
+		//if this coordinate is the start finish algorythm as the shortest path was just found
+		if ( map[i][j] == STATE_TARGET )
+		{
+			if ( target == null || target.cost < cost )
+			{
+				target = new Tile(i, j, cost, last);
+				queue.push(target);
+			}
+			return;
+		}
+		
+		var coordinate = new Tile(i, j, cost, last);
+		if( canBeAddedToQueue(coordinate, queue) )
+			queue.push(coordinate);
 	}
 
 	/**
