@@ -61,7 +61,7 @@ class TileMap
 		
 		// remove wrong ways
 		var ret:Array<Tile> = new Array<Tile>();
-		ret.push(queue[queue.length - 1]);
+		ret.push(target);
 		while ( true )
 		{
 			var last:Int = ret[ret.length - 1].last;
@@ -91,8 +91,8 @@ class TileMap
 			
 			i ++;
 		}
-		
-		checkQueue(lastQueueLength, cost + 1, queue);
+		if( target == null )
+			checkQueue(lastQueueLength, cost + 1, queue);
 	}
 	
 	public function checkTile(i:Int, j:Int, cost:Float, last:Int, queue:Array<Tile>) : Void
@@ -101,9 +101,9 @@ class TileMap
 			return;
 		
 		//if this coordinate is the start finish algorythm as the shortest path was just found
-		if ( map[i][j] == STATE_TARGET )
+		if( map[i][j] == STATE_TARGET )
 		{
-			if ( target == null || target.cost < cost )
+			if( target == null || target.cost > cost )
 			{
 				target = new Tile(i, j, cost, last);
 				queue.push(target);
@@ -127,7 +127,7 @@ class TileMap
 		var i:Int = queue.length - 1;
 		while ( i >= 0 )
 		{
-			if( coordinate.i == queue[i].i && coordinate.j == queue[i].j)
+			if( coordinate.i == queue[i].i && coordinate.j == queue[i].j )
 			{
 				if( coordinate.cost >= queue[i].cost )
 					return false;
