@@ -12,7 +12,7 @@ class QuantityCalculator  extends BaseCalculator
 		return switch ( type )
 		{
 			case	101	:	1	;
-			case	102	:	1	;
+			case	102	:	4	;
 			case	103	:	6	;
 			case	104	:	1	;
 			case	105	:	1	;
