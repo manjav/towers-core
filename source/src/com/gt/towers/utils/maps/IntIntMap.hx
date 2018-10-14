@@ -280,6 +280,19 @@ class IntIntMap extends flash.events.EventDispatcher
 	
 	public function randomize() : IntIntMap
 	{
-		return this;
+		var ret = new IntIntMap();
+		var keys = keys();
+		var len = keys.length;
+		var i:Int = 0;
+		while ( i < len )
+		{
+			var a = keys[Std.random(len)];
+			if( ret.existsValue(get(a)) )
+				continue;
+			ret.set(keys[i], get(a));
+			i ++;
+		}
+		//trace( toString() + " <::> " + ret.toString() );
+		return ret;
 	}
 }
