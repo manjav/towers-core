@@ -44,7 +44,7 @@ class BattleField
 	public var deltaTime:Int = 25;
 	public var side:Int = 0;
 	private var bulletId:Int = 0;
-	private var tileMap:TileMap;
+	//private var tileMap:TileMap;
 #if java 
 	public var games:java.util.List<Game>;
 	public var unitsHitCallback:IUnitHitCallback;
@@ -65,7 +65,7 @@ class BattleField
 		
 		extraTime = map.times.get(3);
 		
-		tileMap = new TileMap();
+		//tileMap = new TileMap();
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
 		
