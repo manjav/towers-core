@@ -6,7 +6,7 @@ package com.gt.towers.calculators;
  */
 class SummonTimeCalculator  extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 800; }
+	public function new (game:Game) { super(game); BASE_VALUE = 1; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
 		var ret = switch( type )
@@ -19,25 +19,11 @@ class SummonTimeCalculator  extends BaseCalculator
 			case	106	:	1	;
 			case	107	:	1	;
 			case	108	:	1	;
-			case 109 : 1.7;
-			case 110 : 2;
-			case 111 : 5;
-			case 112 : 2;
-			case 113 : 3;
-			case 114 : 4;
-			case 115 : 2;
+			case	109	:	1	;
 			
-			case 151 : 3;
-			case 152 : 4;
-			case 153 : 5;
-			case 154 : 2;
-			case 155 : 6;
-			case 156 : 4;
-			case 157 : 2;
-			case 158 : 4;
-			case 159 : 5;
+			case	151	:	1	;
 			
-			case 201 : 0 ;
+			case	201	:	1	;
 			
 			default : BASE_VALUE;
 		}

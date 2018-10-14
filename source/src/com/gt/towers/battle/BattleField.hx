@@ -262,19 +262,21 @@ class BattleField
 	{
 		var u:Unit;
 		var distance:Float = 0;
-		var res = "Bullet: " + bullet.id;
+		var res = "Bullet=> type: " + bullet.card.type + ", id:" + bullet.id;
 		var hitUnits:java.util.List<java.lang.Integer> = new java.util.ArrayList();
 		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = units._map.entrySet().iterator();
         while ( iterator.hasNext() )
 		{
 			u = iterator.next().getValue();
+			if( u.disposed )
+				continue;
 			distance = Math.abs(CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y)) - bullet.card.bulletDamageArea - u.card.sizeH;
 			res += " ,  distance: " + distance + ", bulletDamageArea:" + bullet.card.bulletDamageArea + ", sizeH:" + u.card.sizeH;
-            if( u.side != bullet.side && distance <= 0 )
+            if( ((bullet.card.bulletDamage < 0 && u.side == bullet.side) || (bullet.card.bulletDamage >= 0 && u.side != bullet.side)) && distance <= 0 )
 			{
-				res += "|" + u.id + " (" + u.health + ") => ";
+				//res += "|" + u.id + " (" + u.health + ") => ";
 				u.hit(bullet.card.bulletDamage);
-				res += "(" + u.health + ")";
+				//res += "(" + u.health + ")";
 				hitUnits.add(u.id);
 			}
 		}

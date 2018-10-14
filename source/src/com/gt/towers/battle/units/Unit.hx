@@ -86,13 +86,16 @@ class Unit extends GameObject
 		var len = values.length;
 		while ( i < len )
 		{
-			if( !values[i].disposed && this.side != values[i].side && values[i].summonTime == 0 )
+			if( !values[i].disposed && values[i].summonTime == 0 )
 			{
-				var dis = com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, values[i].x, values[i].y);
-				if( dis <= distance )
+				if( (card.bulletDamage >= 0 && this.side != values[i].side) || (card.bulletDamage < 0 && this.side == values[i].side && values[i].card.type != CardTypes.C109 && values[i].card.type < CardTypes.C201 && values[i].health < values[i].card.health) )
 				{
-					distance = dis;
-					ret = values[i].id;
+					var dis = com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, values[i].x, values[i].y);
+					if( dis <= distance )
+					{
+						distance = dis;
+						ret = values[i].id;
+					}
 				}
 			}
 			i ++;
@@ -111,7 +114,7 @@ class Unit extends GameObject
 	
 	public function hit(damage:Float) : Void
 	{
-		health -= damage;
+		health = Math.min(health - damage, card.health);
 		if( health <= 0 )
 			dispose();
 		fireEvent(id, BattleEvent.HIT, damage);

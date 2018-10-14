@@ -37,7 +37,7 @@ class SizeHCalculator extends BaseCalculator
 			case	158	:	1	;
 			case	159	:	1	;
 			
-			default: 1;
+			default: BASE_VALUE;
 		}
 		return ret * 20;
 	}

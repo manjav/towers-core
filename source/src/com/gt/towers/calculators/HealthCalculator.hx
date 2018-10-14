@@ -19,28 +19,14 @@ class HealthCalculator  extends BaseCalculator
 			case	106	:	1;
 			case	107	:	1.7	;
 			case	108	:	1;
-			case	109	:	1	;
-			case	110	:	1	;
-			case	111	:	1	;
-			case	112	:	1	;
-			case	113	:	1	;
-			case	114	:	1	;
-			case	115	:	1	;
+			case	109	:	0.4	;
 			
 			case	151	:	1	;
-			case	152	:	1	;
-			case	153	:	1	;
-			case	154	:	1	;
-			case	155	:	1	;
-			case	156	:	1	;
-			case	157	:	1	;
-			case	158	:	1	;
-			case	159	:	1	;
 			
 			case	201	:	5	;
 			
 			default: BASE_VALUE;
 		}
-		return 3  * ret;
+		return ret * 3;
 	}
 }
