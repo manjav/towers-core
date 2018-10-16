@@ -145,7 +145,7 @@ class Player
 	public function availabledCards (selectedArena:Int = -1, onlySelectedArena:Bool = false) : IntList
 	{
 		var ret = new IntList();
-		var arena = selectedArena == -1 ? get_arena(0) : selectedArena;
+		var arena = selectedArena == -1 ? get_arena(get_point()) : selectedArena;
 		var cards = CardTypes.getAll();
 		var i = 0;
 		while ( i < cards.size() )

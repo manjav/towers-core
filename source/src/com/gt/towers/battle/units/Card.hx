@@ -49,7 +49,7 @@ class Card
 	
 	private function setFeatures():Void
 	{
-		var _level = type == 201 ? game.player.get_level(game.player.get_xp()) : level;
+		var _level = type == 201 ? (game.player.get_level(game.player.get_xp()) + 1) : level;
 		
 		rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, _level);
 		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, _level);
