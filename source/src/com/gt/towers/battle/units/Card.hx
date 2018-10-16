@@ -48,27 +48,29 @@ class Card
 	
 	private function setFeatures():Void
 	{
-		rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, level);
-		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, level);
-		elixirSize = game.calculator.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, level);
-		quantity = game.calculator.getInt(CardFeatureType.F03_QUANTITY, type, level);
-		summonTime = game.calculator.getInt(CardFeatureType.F04_SUMMON_TIME, type, level);
+		var _level = type == 201 ? game.player.get_level(game.player.get_xp()) : level;
+		
+		rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, _level);
+		availableAt = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, _level);
+		elixirSize = game.calculator.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, _level);
+		quantity = game.calculator.getInt(CardFeatureType.F03_QUANTITY, type, _level);
+		summonTime = game.calculator.getInt(CardFeatureType.F04_SUMMON_TIME, type, _level);
 		
 		// troops data
-		speed = game.calculator.get(CardFeatureType.F11_SPEED, type, level);
-		health = game.calculator.get(CardFeatureType.F12_HEALTH, type, level);
-		sizeH = game.calculator.get(CardFeatureType.F13_SIZE_H, type, level);
-		sizeV = game.calculator.get(CardFeatureType.F14_SIZE_V, type, level);
+		speed = game.calculator.get(CardFeatureType.F11_SPEED, type, _level);
+		health = game.calculator.get(CardFeatureType.F12_HEALTH, type, _level);
+		sizeH = game.calculator.get(CardFeatureType.F13_SIZE_H, type, _level);
+		sizeV = game.calculator.get(CardFeatureType.F14_SIZE_V, type, _level);
 		
 		// defensive data
-		bulletSpeed = game.calculator.get(CardFeatureType.F21_BULLET_SPEED, type, level);
-		bulletDamage = game.calculator.get(CardFeatureType.F22_BULLET_DAMAGE, type, level);
-		bulletShootGap = game.calculator.getInt(CardFeatureType.F23_BULLET_SHOOT_GAP, type, level);
-		bulletShootDelay = game.calculator.getInt(CardFeatureType.F24_BULLET_SHOOT_DELAY, type, level);
-		//bulletRangeMin = game.calculator.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, level);
-		bulletRangeMax = game.calculator.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, level);
-		bulletDamageArea = game.calculator.get(CardFeatureType.F27_BULLET_DAMAGE_AREA, type, level);
-		bulletExplodDelay = game.calculator.getInt(CardFeatureType.F28_BULLET_EXPLODE_DElAY, type, level);
+		bulletSpeed = game.calculator.get(CardFeatureType.F21_BULLET_SPEED, type, _level);
+		bulletDamage = game.calculator.get(CardFeatureType.F22_BULLET_DAMAGE, type, _level);
+		bulletShootGap = game.calculator.getInt(CardFeatureType.F23_BULLET_SHOOT_GAP, type, _level);
+		bulletShootDelay = game.calculator.getInt(CardFeatureType.F24_BULLET_SHOOT_DELAY, type, _level);
+		//bulletRangeMin = game.calculator.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, _level);
+		bulletRangeMax = game.calculator.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, _level);
+		bulletDamageArea = game.calculator.get(CardFeatureType.F27_BULLET_DAMAGE_AREA, type, _level);
+		bulletExplodDelay = game.calculator.getInt(CardFeatureType.F28_BULLET_EXPLODE_DElAY, type, _level);
 	}
 	
 	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000];
