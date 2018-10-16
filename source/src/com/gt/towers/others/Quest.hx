@@ -95,7 +95,7 @@ class Quest
 			i ++;
 		while( i < 10 )
 		{
-			if( player.getQuestIndexByType(i) == -1 )
+			if( player.getQuestIndexByType(i) == -1 && i != 2 )
 			{
 				player.quests.push( Quest.instantiate(i, player));
 				fill(player);
@@ -111,7 +111,7 @@ class Quest
 		{
 			case 0 :	ResourceType.XP;
 			case 1 :	ResourceType.POINT;
-			case 2 :	ResourceType.OPERATIONS;
+			//case 2 :	ResourceType.OPERATIONS;
 			case 3 :	ResourceType.BATTLES;
 			case 4 :	ResourceType.BATTLES_WINS;
 			case 5 :	ResourceType.BATTLES_FRIENDLY;
@@ -129,7 +129,7 @@ class Quest
 		{
 			case 0 :	1 + step;
 			case 1 :	1 + step;
-			case 2 :	step * 10;
+			//case 2 :	step * 10;
 			case 3 :	CoreUtils.round( Math.pow(1.3, step) * 10) - 8;
 			case 4 :	CoreUtils.round( Math.pow(1.4, step) * 7);
 			case 5 :	CoreUtils.round( Math.pow(1.4, step) * 5);
@@ -179,7 +179,7 @@ class Quest
 		{
 			case 0 :	player.get_level(player.get_xp());
 			case 1 :	player.get_arena(player.get_point()) + 1;
-			case 2 :	player.getLastOperation();
+			//case 2 :	player.getLastOperation();
 			case 3 :	player.get_battlesCount();
 			case 4 :	player.get_battleswins();
 			case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
