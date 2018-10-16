@@ -111,19 +111,4 @@ class FeatureCalculator
 			default: 0;
 		}
 	}
-	
-	public function getUIFactor(featureType:Int) : Float
-	{
-		return switch( featureType )
-		{
-/*			case 5 : 1000;
-			case 11: 4;
-			case 12: 50;
-			case 21: 50;
-			case 22: 0.15;
-			case 23: 0.2;
-			case 24: 0.2;*/
-			default: 1;
-		}
-	}
 }

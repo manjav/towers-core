@@ -58,21 +58,30 @@ class CardFeatureType
 	
 	public static function getRelatedTo(buildingType:Int):com.gt.towers.utils.lists.IntList
 	{
-		/*var ret = new com.gt.towers.utils.lists.IntList();
-		ret.push( F03_TROOPS_COUNT );
-		ret.push( F11_SPEED );
-		ret.push( F13_POWER );
+		var ret = new com.gt.towers.utils.lists.IntList();
+		ret.push( F22_BULLET_DAMAGE );
+		ret.push( F23_BULLET_SHOOT_GAP );
 		ret.push( F12_HEALTH );
-		if ( buildingType >= CardTypes.C500 )
-		{
-			ret.push( F22_BULLET_DAMAGE );
-			ret.push( F23_BULLET_FIRE_GAP );
-			ret.push( F24_RANGE_RANGE_MAX );
-		}*/
-		return getAll();
+		return ret;
 	}
 	
-	public static function getChangables(game:Game, type:Int, level:Int):com.gt.towers.utils.lists.IntList
+	static public function getUIFactor(featureType:Int) : Float
+	{
+		return switch( featureType )
+		{
+			/*case 5 : 1000;
+			case 11: 4;
+			case 12: 50;
+			case 21: 50;
+			case 23: 0.2;
+			case 24: 0.2;*/
+			case 22: 10;
+			case 23: 0.1;
+			default: 1;
+		}
+	}
+	
+	/*public static function getChangables(game:Game, type:Int, level:Int):com.gt.towers.utils.lists.IntList
 	{
 		var ret = new com.gt.towers.utils.lists.IntList();
 		var all = getAll();
@@ -84,6 +93,6 @@ class CardFeatureType
 			i ++;
 		}
 		return ret;
-	}
+	}*/
 #end
 }
