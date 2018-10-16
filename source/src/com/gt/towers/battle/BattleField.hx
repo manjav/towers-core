@@ -142,7 +142,8 @@ class BattleField
 		decks = new IntIntIntMap();
 		decks.set(0, game_0.player.getSelectedDeck().randomize());
 		if( singleMode )		
-			decks.set(1, game_0.player.getSelectedDeck().randomize());//addRandomDeck(game_0);
+			decks.set(1, game_0.player.getSelectedDeck().randomize());
+			//addRandomDeck(game_0);
 		else
 			decks.set(1, game_1.player.getSelectedDeck().randomize());
 #end
@@ -156,15 +157,14 @@ class BattleField
 	{
 		var botDeck = new IntIntMap();
 		var availableCards = game.player.availabledCards(); // random arena
-		var i = 1;
-		while( i < 9 )
+		var i = 0;
+		while( i < 8 )
 		{
 			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
-			if( randType > (i * 100 + 100) && randType < (i * 100 + 200) )
-			{
-				botDeck.set(i, randType);
-				i ++;
-			}
+			if( botDeck.existsValue(randType) ) 
+				continue;
+			botDeck.set(i, randType);
+			i ++;
 		}
 		decks.set(1, botDeck);
 	}
