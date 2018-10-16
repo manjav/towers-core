@@ -43,7 +43,6 @@ class BattleField
 	public var startAt:Float = 0;
 	public var deltaTime:Int = 25;
 	public var side:Int = 0;
-	private var bulletId:Int = 0;
 	//private var tileMap:TileMap;
 #if java 
 	public var games:java.util.List<Game>;
@@ -252,17 +251,17 @@ class BattleField
 		return unitId - 1;
 	}
 	
-	public function addBullet(card:Card, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 
+	public function addBullet(unit:Unit, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 
 	{
-		bullets.set(bulletId, new Bullet(this, bulletId, card, side, x, y, dx, dy));
-		bulletId ++;
+		bullets.set(unit.bulletId, new Bullet(this, unit.bulletId, unit.card, side, x, y, dx, dy));
+		unit.bulletId ++;
 	}
 	
 	public function explodeBullet(bullet:Bullet) : Void
 	{
 		var u:Unit;
 		var distance:Float = 0;
-		var res = "Bullet=> type: " + bullet.card.type + ", id:" + bullet.id;
+		//var res = "Bullet=> type: " + bullet.card.type + ", id:" + bullet.id + ", damage:" + bullet.card.bulletDamage;
 		var hitUnits:java.util.List<java.lang.Integer> = new java.util.ArrayList();
 		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = units._map.entrySet().iterator();
         while ( iterator.hasNext() )
@@ -271,7 +270,7 @@ class BattleField
 			if( u.disposed )
 				continue;
 			distance = Math.abs(CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y)) - bullet.card.bulletDamageArea - u.card.sizeH;
-			res += " ,  distance: " + distance + ", bulletDamageArea:" + bullet.card.bulletDamageArea + ", sizeH:" + u.card.sizeH;
+			//res += " ,  distance: " + distance + ", bulletDamageArea:" + bullet.card.bulletDamageArea + ", sizeH:" + u.card.sizeH;
             if( ((bullet.card.bulletDamage < 0 && u.side == bullet.side) || (bullet.card.bulletDamage >= 0 && u.side != bullet.side)) && distance <= 0 )
 			{
 				//res += "|" + u.id + " (" + u.health + ") => ";
@@ -280,6 +279,7 @@ class BattleField
 				hitUnits.add(u.id);
 			}
 		}
+		//if( bullet.card.type == 109 )
 		//trace(res);
 		if( unitsHitCallback != null )
 			unitsHitCallback.hit(bullet.id, bullet.card.bulletDamage, hitUnits);

@@ -12,6 +12,7 @@ import com.gt.towers.events.BattleEvent;
 class Unit extends GameObject
 {
     public var health:Float;
+	public var bulletId:Int = 0;
 	var attackTime:Float = 0;
 	var cachedEnemy:Int = -1;
 
@@ -23,6 +24,7 @@ class Unit extends GameObject
 		this.summonTime = battleField.now + card.summonTime;
 		this.health = card.health;
 		this.movable = card.type < CardTypes.C201;
+		bulletId = id * 10000;
 	}
 	
 	override public function update() : Void
@@ -106,7 +108,7 @@ class Unit extends GameObject
 	function attack(enemy:Unit) : Void
 	{
 #if java
-		battleField.addBullet(card, side, x, y, enemy.x, enemy.y);
+		battleField.addBullet(this, side, x, y, enemy.x, enemy.y);
 #end
 		fireEvent(id, BattleEvent.ATTACK, enemy);
 		attackTime = battleField.now + card.bulletShootGap;

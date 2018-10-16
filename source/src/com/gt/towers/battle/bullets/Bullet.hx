@@ -38,7 +38,7 @@ class Bullet extends GameObject
 	
 	function move() : Void
 	{
-		if( explodeTime > -1 )
+		if( explodeTime > -1 || summonTime > battleField.now )
 			return;
 			
 		setPosition(x + deltaX, y + deltaY);
