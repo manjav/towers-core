@@ -1,5 +1,6 @@
 package com.gt.towers.battle.units;
 import com.gt.towers.Game;
+import com.gt.towers.calculators.RarityCalculator;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
@@ -73,27 +74,31 @@ class Card
 		bulletExplodDelay = game.calculator.getInt(CardFeatureType.F28_BULLET_EXPLODE_DElAY, type, _level);
 	}
 	
-	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000];
-	static public var  UPGRADE_CARD:Array<Int> = [0,	2,	4,	 10,	 20,	50,		100,	200,	400,	800,	1000];
-	static public function get_upgradeCost(level:Int):Int
+	static var RARITY_START_LEVEL = [0, 2, 6, 9];
+	static public var RARITY_COUNT = [1, 10, 200, 4000];
+	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000,	50000,	100000];
+	static public var  UPGRADE_CARD:Array<Int> = [0,	2,	4,	 10,	 20,	50,		100,	200,	400,	800,	1000,	2000,	5000];
+	static public function get_upgradeCost(level:Int, rarity:Int = 0):Int
 	{
-		if( level < UPGRADE_COST.length )
-			return UPGRADE_COST[level];
-		return Math.floor( Math.pow( 2, level - 9 ) * 10000 );
+		var lvl = Math.round(Math.max(1, level - RARITY_START_LEVEL[rarity]));
+		if( lvl < UPGRADE_COST.length )
+			return UPGRADE_COST[lvl];
+		return Math.floor( Math.pow( 2, lvl - 9 ) * 100000 );
 	}
-	static public function get_upgradeCards(level:Int) : Int
+	static public function get_upgradeCards(level:Int, rarity:Int = 0) : Int
 	{		
-		if( level < UPGRADE_CARD.length )
-			return UPGRADE_CARD[level];
-		return Math.floor( Math.pow( 2, level - 10 ) * 10000 );
+		var lvl = Math.round(Math.max(1, level - RARITY_START_LEVEL[rarity]));
+		if( lvl < UPGRADE_CARD.length )
+			return UPGRADE_CARD[lvl];
+		return Math.floor( Math.pow( 2, lvl - 10 ) * 10000 );
 	}
-	static public function getTotalCollected(level:Int, count:Int) : Int 
+	static public function getTotalCollected(level:Int, count:Int, rarity:Int = 0) : Int 
 	{
 		var ret = count + 0;
 		var l = level - 1;
 		while ( l > 0 )
 		{
-			ret += Card.get_upgradeCards(l);
+			ret += Card.get_upgradeCards(l, rarity);
 			l --;
 		}
 		return ret;
@@ -102,8 +107,8 @@ class Card
 	public function get_upgradeRequirements():IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( ResourceType.CURRENCY_SOFT,	get_upgradeCost(level) );
-		ret.set( type,							get_upgradeCards(level) );
+		ret.set( ResourceType.CURRENCY_SOFT,	get_upgradeCost(level, rarity) );
+		ret.set( type,							get_upgradeCards(level, rarity) );
 		return ret;
 	}
 	

@@ -75,7 +75,8 @@ class CardFeatureType
 			case 21: 50;
 			case 23: 0.2;
 			case 24: 0.2;*/
-			case 22: 10;
+			case 12: 50;
+			case 22: 100;
 			case 23: 0.1;
 			default: 1;
 		}

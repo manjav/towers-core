@@ -209,13 +209,13 @@ class Player
 		resources.increaseMap ( bundle );
 	}
 	
-	public function getRandomBuilding():Int
+	public function getRandomCard(rarity:Int):Int
 	{
 		var keys = resources.keys();
 		var i = keys.length - 1;
 		while ( i >= 0 )
 		{
-			if( ResourceType.isCard(keys[i]) )
+			if( ResourceType.isCard(keys[i]) && game.calculator.getInt(CardFeatureType.F00_RARITY, keys[i]) != rarity )
 				break;
 			i --;
 		}
@@ -228,7 +228,7 @@ class Player
 		
 		var t = resources.getRandomKey();
 		if( !ResourceType.isCard(t) )
-			return getRandomBuilding();
+			return getRandomCard(rarity);
 		return t;
 	}
 	

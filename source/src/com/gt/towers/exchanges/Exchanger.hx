@@ -1,7 +1,9 @@
 package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
+import com.gt.towers.battle.units.Card;
 import com.gt.towers.calculators.AvailableAtCalculator;
+import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
@@ -268,7 +270,7 @@ class Exchanger
 	static function estimateBookOutcome(type:Int, arena:Int, coef:Float) : IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( CardTypes.C001, ExchangeType.getNumTotalCards(type, arena, coef) );
+		ret.set( CardTypes.C001, ExchangeType.getNumTotalCards(type, arena, coef, 0) );
 		ret.set( ResourceType.CURRENCY_SOFT, ExchangeType.getNumSofts(type, arena, coef) );
 		return ret;
 	}
@@ -305,13 +307,29 @@ class Exchanger
 	{
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
-		var totalCards = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef) + 1;
+		var numRars = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef, 1);
+		var numEpics = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef, 2);
+		var totalCards = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef, 0) + 1 - numRars - numEpics;
 		var slotSize = Math.ceil(totalCards / numSlots);
 		var numCards:Int = 0;
 		var accCards:Int = 0;
+		var rarity:Int;
 		while( numSlots >= 0 )
 		{
+			rarity = 0;
 			numCards = numSlots > 0 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
+			if( numEpics > 0 )
+			{
+				rarity = 2;
+				numCards = Std.int(Math.min(numEpics, numCards));
+				numEpics = 0;
+			}
+			else if( numRars > 0 )
+			{
+				rarity = 1;
+				numCards = Std.int(Math.min(numRars, numCards));
+				numRars = 0;
+			}
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
@@ -319,7 +337,7 @@ class Exchanger
             if( numSlots == 0 && !isDaily ) // last slot
 				addNewCard(ret);
 			
-			addRandomSlot(ret, numCards);
+			addRandomSlot(ret, numCards, rarity);
 			numSlots --;
 		}
 		
@@ -356,21 +374,27 @@ class Exchanger
 			}
 			a ++;
 		}
-		addRandomSlot(map, 2);
+		addRandomSlot(map, 2, 0);
 	}
-	function addRandomSlot(map:IntIntMap, count:Int) : Void
+	function addRandomSlot(map:IntIntMap, count:Int, rarity:Int) : Void
 	{
 		if( game.player.cards.keys().length <= map.keys().length )
 			return;
 		
-		var random = game.player.getRandomBuilding();
+		var random = game.player.getRandomCard(rarity);
 		if( random == -1 )
-			return;
-		if( map.exists(random) )
 		{
-			addRandomSlot( map, count );
+			if( rarity > 0 )
+				addRandomSlot( map, count, rarity - 1 );
 			return;
 		}
+		
+		if( map.exists(random) )
+		{
+			addRandomSlot( map, count, Std.int(Math.max(0, rarity - 1)) );
+			return;
+		}
+		
 		map.set( random, count );
 	}
 	#end
