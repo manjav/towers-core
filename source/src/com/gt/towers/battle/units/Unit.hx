@@ -78,8 +78,11 @@ class Unit extends GameObject
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function getNearestEnemy() : Int
 	{
-		if( cachedEnemy != -1 && battleField.units.exists(cachedEnemy) && !battleField.units.get(cachedEnemy).disposed )
-			return cachedEnemy;
+		if ( cachedEnemy != -1 && battleField.units.exists(cachedEnemy) && !battleField.units.get(cachedEnemy).disposed )
+		{
+			if( com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, battleField.units.get(cachedEnemy).x, battleField.units.get(cachedEnemy).y) <= card.bulletRangeMax )
+				return cachedEnemy;
+		}
 		
 		var distance:Float = card.bulletRangeMax;
 		var ret:Int = -1;
@@ -124,7 +127,7 @@ class Unit extends GameObject
 
 	function moveAhead() : Void
 	{
-		attackTime = battleField.now;
+		//attackTime = battleField.now;
 		if( movable )
 			setPosition(-1, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)));
 	}
