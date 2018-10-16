@@ -6,7 +6,7 @@ package com.gt.towers.calculators;
  */
 class SpeedCalculator extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 1; }
+	public function new (game:Game) { super(game); BASE_VALUE = 1.0; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
 		var ret = switch ( type )
@@ -19,13 +19,13 @@ class SpeedCalculator extends BaseCalculator
 			case	106	:	1.1	;
 			case	107	:	0.6	;
 			case	108	:	1	;
-			case	109	:	1	;
+			case	109	:	0.9	;
 			
 			case	151	:	1	;
 			
 			case	201	:	0	;
 			
-			default: 1;
+			default: BASE_VALUE;
 		}
 		return ret * 0.06;
 	}

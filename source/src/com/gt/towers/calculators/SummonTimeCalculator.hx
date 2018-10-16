@@ -23,7 +23,7 @@ class SummonTimeCalculator  extends BaseCalculator
 			
 			case	151	:	1	;
 			
-			case	201	:	1	;
+			case	201	:	0	;
 			
 			default : BASE_VALUE;
 		}
