@@ -184,7 +184,7 @@ class BattleField
 		var i = keys.length - 1;
 		while ( i >= 0 )
 		{
-			if( units.get(keys[i]).disposed )
+			if( units.get(keys[i]).disposed() )
 				deadUnits.push(keys[i]);
 			else
 				units.get(keys[i]).update();
@@ -205,7 +205,7 @@ class BattleField
 		i = keys.length - 1;
 		while ( i >= 0 )
 		{
-			if( bullets.get(keys[i]).disposed )
+			if( bullets.get(keys[i]).disposed() )
 				explodedBullets.push(keys[i]);
 			else
 				bullets.get(keys[i]).update();
@@ -281,7 +281,7 @@ class BattleField
         while ( iterator.hasNext() )
 		{
 			u = iterator.next().getValue();
-			if( u.disposed )
+			if( u.disposed() )
 				continue;
 			distance = Math.abs(CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y)) - bullet.card.bulletDamageArea - u.card.sizeH;
 			//res += " ,  distance: " + distance + ", bulletDamageArea:" + bullet.card.bulletDamageArea + ", sizeH:" + u.card.sizeH;

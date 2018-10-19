@@ -28,17 +28,29 @@ class Bullet extends GameObject
 
 	override public function update() : Void
 	{
-		if( disposed )
+		if( disposed() )
 			return;
+		if( summonTime > battleField.now )
+			return;
+		
+		finalizeDeployment();
 		move();
 		if( explodeTime > -1 && explodeTime < battleField.now )
 			explode();
 	}
 
+	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= deploy -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	function finalizeDeployment() : Void
+	{
+		if( summonTime == 0 )
+			return;
+		summonTime = 0;
+		setState(GameObject.STATE_1_DIPLOYED);
+	}
 	
 	function move() : Void
 	{
-		if( explodeTime > -1 || summonTime > battleField.now )
+		if( explodeTime > -1 )
 			return;
 			
 		setPosition(x + deltaX, y + deltaY);
@@ -59,7 +71,6 @@ class Bullet extends GameObject
 	
 	function explode() 
 	{
-		fireEvent(id, BattleEvent.DISPOSE, null);
 #if java
 		battleField.explodeBullet(this);
 #end

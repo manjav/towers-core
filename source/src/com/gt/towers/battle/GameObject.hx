@@ -12,12 +12,19 @@ class GameObject
 {
 	public var eventCallback:com.gt.towers.events.EventCallback;
 #end
+	static public var NaN:Int = -1000000;
+	static public var STATE_0_INITIALIZED:Int = 0;
+	static public var STATE_1_DIPLOYED:Int = 1;
+	static public var STATE_2_MOVING:Int = 2;
+	static public var STATE_3_WAITING:Int = 3;
+	static public var STATE_4_DIPOSED:Int = 4;
+	
 	public var id:Int;
     public var x:Float;
     public var y:Float;
 	public var side:Int;
 	public var card:Card;
-	public var disposed:Bool;
+	public var state:Int;
 	public var movable:Bool = true;
 	public var summonTime:Float = 0;
 	public var battleField:BattleField;
@@ -39,16 +46,27 @@ class GameObject
 	
 	public function setPosition(x:Float, y:Float, forced:Bool = false) : Bool
 	{
-		if( !forced && ( x < 0 || x == this.x ) && ( y < 0 || y == this.y ) )
+		if( !forced && ( x <= NaN || x == this.x ) && ( y <= NaN || y == this.y ) )
 			return false;
-		if( x > 0 )
+		if( x > NaN )
 			this.x = x;
-		if( y > 0 )
+		if( y > NaN )
 			this.y = y;
+		if( !forced )
+			setState(GameObject.STATE_2_MOVING);
 		return true;
 	}
 	
-	private function fireEvent (dispatcherId:Int, type:String, data:Any) : Void
+	function setState(state:Int) : Bool
+	{
+		if( this.state == state )
+			return false;
+		this.state = state;
+		fireEvent(id, com.gt.towers.events.BattleEvent.STATE_CHANGE, state);
+		return true;
+	}
+	
+	function fireEvent (dispatcherId:Int, type:String, data:Any) : Void
 	{
 #if java
 		if( eventCallback != null )
@@ -57,10 +75,14 @@ class GameObject
 		dispatchEvent(new com.gt.towers.events.BattleEvent(type, data));
 #end
 	}
-	
+
 	public function dispose() : Void
 	{
-		disposed = true;
-		fireEvent(id, com.gt.towers.events.BattleEvent.DISPOSE, null);
+		setState(GameObject.STATE_4_DIPOSED);
+	}
+	
+	public function disposed() : Bool
+	{
+		return state == GameObject.STATE_4_DIPOSED;
 	}
 }

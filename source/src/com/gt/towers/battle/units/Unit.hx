@@ -29,7 +29,7 @@ class Unit extends GameObject
 	
 	override public function update() : Void
 	{
-		if( disposed )
+		if( disposed() )
 			return;
 		
 		if( summonTime > battleField.now )
@@ -45,7 +45,7 @@ class Unit extends GameObject
 		if( summonTime == 0 )
 			return;
 		summonTime = 0;
-		fireEvent(id, BattleEvent.DEPLOY, null);
+		setState(GameObject.STATE_1_DIPLOYED);
 	}
 	
 
@@ -65,6 +65,10 @@ class Unit extends GameObject
 				dec += "   " + health + " <=> " + target.health ;
 				//trace(dec);
 			}
+			else
+			{
+				setState(GameObject.STATE_3_WAITING);
+			}
 		}
 		else
 		{
@@ -78,7 +82,7 @@ class Unit extends GameObject
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function getNearestEnemy() : Int
 	{
-		if ( cachedEnemy != -1 && battleField.units.exists(cachedEnemy) && !battleField.units.get(cachedEnemy).disposed )
+		if ( cachedEnemy != -1 && battleField.units.exists(cachedEnemy) && !battleField.units.get(cachedEnemy).disposed() )
 		{
 			if( com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, battleField.units.get(cachedEnemy).x, battleField.units.get(cachedEnemy).y) <= card.bulletRangeMax )
 				return cachedEnemy;
@@ -91,7 +95,7 @@ class Unit extends GameObject
 		var len = values.length;
 		while ( i < len )
 		{
-			if( !values[i].disposed && values[i].summonTime == 0 )
+			if( !values[i].disposed() && values[i].summonTime == 0 )
 			{
 				if( (card.bulletDamage >= 0 && this.side != values[i].side) || (card.bulletDamage < 0 && this.side == values[i].side && values[i].card.type != CardTypes.C109 && values[i].card.type < CardTypes.C201 && values[i].health < values[i].card.health) )
 				{
