@@ -6,7 +6,7 @@ package com.gt.towers.calculators;
  */
 class QuantityCalculator  extends BaseCalculator
 {
-	public function new (game:Game) { super(game); BASE_VALUE = 10; }
+	public function new (game:Game) { super(game); BASE_VALUE = 1; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
 		return switch ( type )

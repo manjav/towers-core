@@ -29,6 +29,8 @@ class FeatureCalculator
 	var bulletRangeMax:BulletRangeMaxCalculator;
 	var bulletDamageArea:BulletDamageAreaCalculator;
 	var bulletExplodeDelay:BulletExplodeDelayCalculator;
+	var bulletfirePosition:BulletFirePositionCalculator;
+
 
 	public function new()
 	{
@@ -51,6 +53,7 @@ class FeatureCalculator
 		bulletRangeMax = new BulletRangeMaxCalculator(null);
 		bulletDamageArea = new BulletDamageAreaCalculator(null);
 		bulletExplodeDelay = new BulletExplodeDelayCalculator(null);
+		bulletfirePosition = new BulletFirePositionCalculator(null);
 	}
 	
 	public function get(featureType:Int, buildingType:Int, level:Int = 1) : Float
@@ -76,6 +79,7 @@ class FeatureCalculator
 			case 26: bulletRangeMax.get(buildingType, level);
 			case 27: bulletDamageArea.get(buildingType, level);
 			case 28: bulletExplodeDelay.get(buildingType, level);
+			case 29: bulletfirePosition.get(buildingType, level);
 			
 			default: 0;
 		}
@@ -107,6 +111,7 @@ class FeatureCalculator
 			case 26: bulletRangeMax.BASE_VALUE;
 			case 27: bulletDamageArea.BASE_VALUE;
 			case 28: bulletExplodeDelay.BASE_VALUE;
+			case 29: bulletfirePosition.BASE_VALUE;
 			
 			default: 0;
 		}

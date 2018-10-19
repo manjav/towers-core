@@ -119,4 +119,9 @@ class CardTypes
 		}
 		return ret;
 	}
+	
+	static public function isSpell(type:Int) : Bool
+	{
+		return type > 150 && type < 200;
+	}
 }

@@ -4,9 +4,20 @@ import com.gt.towers.utils.CoreUtils;
  * ...
  * @author Mansour Djawadi
  */
-class BulletFirePositionCalculator
+class BulletFirePositionCalculator extends BaseCalculator
 {
-	public function new () {}
+	public function new (game:Game) { super(game); BASE_VALUE = 0.0; }
+	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
+	{
+		return switch ( type )
+		{
+			case	151	:	-1000	;
+			case	152	:	 1000	;
+			
+			default: BASE_VALUE;
+		}
+	}
+	
 	#if flash
 	static public function getPoint( type:Int, rotation:Int ) : flash.geom.Point 
 	{

@@ -21,7 +21,9 @@ class SummonTimeCalculator  extends BaseCalculator
 			case	108	:	1	;
 			case	109	:	1	;
 			
-			case	151	:	1	;
+			case	151	:	0	;
+			case	152	:	0	;
+			case	153	:	0	;
 			
 			case	201	:	0	;
 			

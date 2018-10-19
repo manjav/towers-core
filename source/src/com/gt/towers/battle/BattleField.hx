@@ -6,6 +6,8 @@ import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.fieldes.PlaceData;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.battle.units.Unit;
+import com.gt.towers.constants.CardFeatureType;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.interfaces.IUnitHitCallback;
@@ -43,6 +45,7 @@ class BattleField
 	public var startAt:Float = 0;
 	public var deltaTime:Int = 25;
 	public var side:Int = 0;
+	public var spellId:Int = 1000000;
 	//private var tileMap:TileMap;
 #if java 
 	public var games:java.util.List<Game>;
@@ -239,6 +242,10 @@ class BattleField
 		
         var card = games.get(side).player.cards.get(type);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
+		
+		if( CardTypes.isSpell(type) )
+			return addSpell(card, side, x, y);
+		
 		var i = card.quantity - 1;
 		while ( i >= 0 )
 		{
@@ -249,6 +256,13 @@ class BattleField
 			i --;
 		}
 		return unitId - 1;
+	}
+	
+	function addSpell(card:Card, side:Int, x:Float, y:Float) : Int
+	{
+		bullets.set(spellId, new Bullet(this, spellId, card, side, x, y + games.get(side).calculator.get(CardFeatureType.F28_BULLET_FIRE_POSITION, card.type, 0), x, y));
+		spellId ++;
+		return spellId - 1;
 	}
 	
 	public function addBullet(unit:Unit, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 

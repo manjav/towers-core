@@ -129,7 +129,7 @@ class Unit extends GameObject
 	{
 		//attackTime = battleField.now;
 		if( movable )
-			setPosition(-1, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)));
+			setPosition(GameObject.NaN, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)));
 	}
 	
 	#if java

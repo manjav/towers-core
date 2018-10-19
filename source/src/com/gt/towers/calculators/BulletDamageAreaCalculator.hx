@@ -18,7 +18,10 @@ class BulletDamageAreaCalculator extends BaseCalculator
 			case	106	:	140	;
 			case	107	:	20	;
 			case	108	:	15	;
-			case	109	:	60	;
+			case	109	:	45	;
+			
+			case	151	:	80	;
+			case	152	:	220	;
 			
 			case 201 : 20 ;
 			
