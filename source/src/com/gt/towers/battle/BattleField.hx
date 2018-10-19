@@ -1,17 +1,7 @@
 package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
-import com.gt.towers.battle.bullets.Bullet;
 import com.gt.towers.battle.fieldes.FieldData;
-import com.gt.towers.battle.fieldes.PlaceData;
-import com.gt.towers.battle.units.Card;
-import com.gt.towers.battle.units.Unit;
-import com.gt.towers.constants.CardFeatureType;
-import com.gt.towers.constants.CardTypes;
-import com.gt.towers.constants.MessageTypes;
-import com.gt.towers.constants.ResourceType;
-import com.gt.towers.interfaces.IUnitHitCallback;
-import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntBulletMap;
@@ -57,7 +47,7 @@ class BattleField
 	//private var tileMap:TileMap;
 #if java 
 	public var games:java.util.List<Game>;
-	public var unitsHitCallback:IUnitHitCallback;
+	public var unitsHitCallback:com.gt.towers.interfaces.IUnitHitCallback;
 	private var unitId:Int = 0;
 #end
 
@@ -73,8 +63,6 @@ class BattleField
 		else if( type == FieldData.TYPE_HEADQUARTER )
 			map = game_0.fieldProvider.headquarters.get(mapName);
 		
-		extraTime = map.times.get(3);
-		
 		//tileMap = new TileMap();
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
@@ -89,12 +77,12 @@ class BattleField
 		
 		if( type == FieldData.TYPE_HEADQUARTER )
 		{
-			var p:PlaceData;
+			var p:com.gt.towers.battle.fieldes.PlaceData;
 			while ( unitId < map.places.size() )
 			{
 				p = map.places.get(unitId);
-				var card = new Card(games.get(p.side), p.type, games.get(p.side).player.get_level(0));
-				units.set(unitId, new Unit(unitId, this, card, p.side, p.x, p.y));trace(units.get(unitId).toString());
+				var card = new com.gt.towers.battle.units.Card(games.get(p.side), p.type, games.get(p.side).player.get_level(0));
+				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, p.side, p.x, p.y));trace(units.get(unitId).toString());
 				unitId ++;
 			}
 		}
@@ -116,7 +104,7 @@ class BattleField
 			}
 			else
 			{
-				var winStreak = game_0.player.getResource(ResourceType.WIN_STREAK);
+				var winStreak = game_0.player.getResource(com.gt.towers.constants.ResourceType.WIN_STREAK);
 				if( winStreak < -100000 )
 					winStreak = 214748364;
 				arena = game_0.player.get_arena(0);
@@ -130,14 +118,14 @@ class BattleField
 				if( difficulty != 0 )
 				{
 					var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty));
-					game_1.player.resources.set(ResourceType.POINT, ep );
+					game_1.player.resources.set(com.gt.towers.constants.ResourceType.POINT, ep );
 				}
 			}
 			
 			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
-				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
+				game_1.player.resources.set(com.gt.towers.constants.ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
 			
 			var cards = game_0.player.cards.keys();
@@ -248,19 +236,19 @@ class BattleField
 	public function summonUnit(type:Int, side:Int, x:Float, y:Float) : Int
 	{
 		var response = cardAvailabled(side, type);
-		if( response != MessageTypes.RESPONSE_SUCCEED )
+		if( response != com.gt.towers.constants.MessageTypes.RESPONSE_SUCCEED )
 			return response;
 		
         var card = games.get(side).player.cards.get(type);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
 		
-		if( CardTypes.isSpell(type) )
+		if( com.gt.towers.constants.CardTypes.isSpell(type) )
 			return addSpell(card, side, x, y);
 		
 		var i = card.quantity - 1;
 		while ( i >= 0 )
 		{
-			var unit = new Unit(unitId, this, card, side, CoreUtils.getXPosition(card.quantity, i, x), CoreUtils.getYPosition(card.quantity, i, y));
+			var unit = new com.gt.towers.battle.units.Unit(unitId, this, card, side, com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y));
 			units.set(unitId, unit);
 			//trace("deploy id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
 			unitId ++;
@@ -269,32 +257,32 @@ class BattleField
 		return unitId - 1;
 	}
 	
-	function addSpell(card:Card, side:Int, x:Float, y:Float) : Int
+	function addSpell(card:com.gt.towers.battle.units.Card, side:Int, x:Float, y:Float) : Int
 	{
-		bullets.set(spellId, new Bullet(this, spellId, card, side, x, y + games.get(side).calculator.get(CardFeatureType.F28_BULLET_FIRE_POSITION, card.type, 0), x, y));
+		bullets.set(spellId, new com.gt.towers.battle.bullets.Bullet(this, spellId, card, side, x, y + games.get(side).calculator.get(com.gt.towers.constants.CardFeatureType.F28_BULLET_FIRE_POSITION, card.type, 0), x, y));
 		spellId ++;
 		return spellId - 1;
 	}
 	
-	public function addBullet(unit:Unit, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 
+	public function addBullet(unit:com.gt.towers.battle.units.Unit, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 
 	{
-		bullets.set(unit.bulletId, new Bullet(this, unit.bulletId, unit.card, side, x, y, dx, dy));
+		bullets.set(unit.bulletId, new com.gt.towers.battle.bullets.Bullet(this, unit.bulletId, unit.card, side, x, y, dx, dy));
 		unit.bulletId ++;
 	}
 	
-	public function explodeBullet(bullet:Bullet) : Void
+	public function explodeBullet(bullet:com.gt.towers.battle.bullets.Bullet) : Void
 	{
-		var u:Unit;
+		var u:com.gt.towers.battle.units.Unit;
 		var distance:Float = 0;
 		//var res = "Bullet=> type: " + bullet.card.type + ", id:" + bullet.id + ", damage:" + bullet.card.bulletDamage;
 		var hitUnits:java.util.List<java.lang.Integer> = new java.util.ArrayList();
-		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, Unit> > = units._map.entrySet().iterator();
+		var iterator : java.util.Iterator < java.util.Map.Map_Entry<Int, com.gt.towers.battle.units.Unit> > = units._map.entrySet().iterator();
         while ( iterator.hasNext() )
 		{
 			u = iterator.next().getValue();
 			if( u.disposed() )
 				continue;
-			distance = Math.abs(CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y)) - bullet.card.bulletDamageArea - u.card.sizeH;
+			distance = Math.abs(com.gt.towers.utils.CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y)) - bullet.card.bulletDamageArea - u.card.sizeH;
 			//res += " ,  distance: " + distance + ", bulletDamageArea:" + bullet.card.bulletDamageArea + ", sizeH:" + u.card.sizeH;
             if( ((bullet.card.bulletDamage < 0 && u.side == bullet.side) || (bullet.card.bulletDamage >= 0 && u.side != bullet.side)) && distance <= 0 )
 			{
@@ -325,11 +313,11 @@ class BattleField
 	public function cardAvailabled(side:Int, type:Int) : Int
 	{
 		if( !games.get(side).player.cards.exists(type) )
-			return MessageTypes.RESPONSE_NOT_FOUND;
+			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_FOUND;
 		if( !decks.get(side).existsValue(type) )
-			return MessageTypes.RESPONSE_NOT_ALLOWED;
+			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ALLOWED;
 		
-		return elixirBar.get(side) >= games.get(side).player.cards.get(type).elixirSize ? MessageTypes.RESPONSE_SUCCEED : MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+		return elixirBar.get(side) >= games.get(side).player.cards.get(type).elixirSize ? com.gt.towers.constants.MessageTypes.RESPONSE_SUCCEED : com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 	}
 	#end
 	
@@ -369,10 +357,10 @@ class BattleField
 	{
 		return side == this.side ? 0 : 1;
 	}
-	public function getTime(score:Int):Int
+	public function getTime(index:Int):Int
 	{
-		if( map == null || score< 0 || score > 3 )
+		if( map == null || index < 0 || index > 3 )
 			return 0;
-		return map.times.get(score) + extraTime;
+		return map.times.get(index) + extraTime;
 	}
 }
