@@ -30,8 +30,16 @@ class BattleField
 	static public var WIDTH:Int = 960;
 	static public var HEIGHT:Int = 1280;
 	static public var PADDING:Int = 100;
+	
+	static public var STATE_0_WAITING:Int = 0;
+	static public var STATE_1_CREATED:Int = 1;
+	static public var STATE_2_STARTED:Int = 2;
+	static public var STATE_3_ENDED:Int = 3;
+	static public var STATE_4_DISPOSED:Int = 4;
+	
 	private var questProvider:FieldProvider;
 
+	public var state:Int = 0;
 	public var elixirBar:FloatList;
 	public var singleMode:Bool;
 	public var map:FieldData;
@@ -174,6 +182,9 @@ class BattleField
 	
 	public function update(deltaTime:Int) : Void
 	{
+		if( state < STATE_1_CREATED || state > STATE_2_STARTED )
+			return;
+		
 		this.deltaTime = deltaTime;
 		this.now += deltaTime;
 		
@@ -327,10 +338,12 @@ class BattleField
 		dispose();
 		elixirBar.set(0, POPULATION_INIT);
 		elixirBar.set(1, POPULATION_INIT);
+		state = STATE_2_STARTED;
 	}
 	
 	public function dispose() : Void
 	{
+		state = STATE_4_DISPOSED;
 		// dispose all units
 		var keys = units.keys();
 		var i = keys.length - 1;
