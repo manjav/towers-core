@@ -29,7 +29,6 @@ class CardFeatureType
 	public static var F26_BULLET_RANGE_MAX:Int = 26;
 	public static var F27_BULLET_DAMAGE_AREA:Int = 27;
 	public static var F28_BULLET_EXPLODE_DElAY:Int = 28;
-	public static var F28_BULLET_FIRE_POSITION:Int = 29;
 	
 #if flash
 	private static var _all:com.gt.towers.utils.lists.IntList;
