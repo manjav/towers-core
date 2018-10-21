@@ -20,6 +20,8 @@ class FocusLatencyCalculator extends BaseCalculator
 			case	107	:	3	;
 			case	108	:	0.6	;
 			case	109	:	1	;
+			case	110	:	1	;
+			case	111	:	1	;
 			
 			case	201	:	1	;
 			default: BASE_VALUE;

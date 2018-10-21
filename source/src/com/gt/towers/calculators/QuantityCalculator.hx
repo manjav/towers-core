@@ -20,8 +20,11 @@ class QuantityCalculator  extends BaseCalculator
 			case	107	:	1	;
 			case	108	:	2	;
 			case	109	:	1	;
+			case	110	:	3	;
+			case	111	:	2	;
 			
 			case	151	:	1	;
+			case	152	:	1	;
 			
 			case	201	:	1	;
 			

@@ -20,8 +20,8 @@ class SpeedCalculator extends BaseCalculator
 			case	107	:	0.60;
 			case	108	:	1.00;
 			case	109	:	0.80;
-			
-			case	151	:	1	;
+			case	110	:	1.10;
+			case	111	:	1;
 			
 			case	201	:	0	;
 			

@@ -20,6 +20,8 @@ class SizeHCalculator extends BaseCalculator
 			case	107	:	45	;
 			case	108	:	25	;
 			case	109	:	40	;
+			case	110	:	25	;
+			case	111	:	40	;
 			
 			case	201	:	70	;
 			

@@ -49,27 +49,16 @@ class AvailableAtCalculator extends BaseCalculator
 			case	103	:	0	;
 			case	104	:	0	;
 			case	105	:	0	;
-			case	106	:	1	;
-			case	107	:	2	;
-			case	108	:	10	;
-			case	109	:	20	;
-			case	110	:	40	;
-			case	111	:	50	;
-			case	112	:	90	;
-			case	113	:	100	;
-			case	114	:	130	;
-			case	115	:	140	;
-			
-			case	151	:	0	;
-			case	152	:	4	;
-			case	153	:	30	;
-			case	154	:	70	;
-			case	155	:	80	;
-			case	156	:	110	;
-			case	157	:	120	;
-			case	158	:	160	;
-			case	159	:	180	;
-			
+			case	106	:	0	;
+			case	107	:	0	;
+			case	108	:	0	;
+			case	109	:	1	;
+			case	110	:	1	;
+			case	111	:	2	;
+
+			case	151	:	3	;
+			case	152	:	3	;
+
 			default: 1000;
 		}
 	}
