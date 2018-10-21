@@ -149,7 +149,6 @@ class BattleField
 		else
 			decks.set(1, game_1.player.getSelectedDeck().randomize());
 #end
-		
 		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
 		elixirBar.push(POPULATION_INIT);
