@@ -16,11 +16,11 @@ class Unit extends GameObject
 	var attackTime:Float = 0;
 	var cachedEnemy:Int = -1;
 
-	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float) 
+	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
 	{
 		x = ( side == battleField.side ) ? x : (BattleField.WIDTH - x);
 		y = ( side == battleField.side ) ? y : (BattleField.HEIGHT - y);
-		super(id, battleField, card, side, x, y);
+		super(id, battleField, card, side, x, y, z);
 		this.summonTime = battleField.now + card.summonTime;
 		this.health = card.health;
 		this.movable = card.type < CardTypes.C201;
@@ -133,7 +133,7 @@ class Unit extends GameObject
 	{
 		//attackTime = battleField.now;
 		if( movable )
-			setPosition(GameObject.NaN, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)));
+			setPosition(GameObject.NaN, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)), GameObject.NaN);
 	}
 	
 	#if java

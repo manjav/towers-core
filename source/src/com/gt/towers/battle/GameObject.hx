@@ -22,13 +22,14 @@ class GameObject
 	public var id:Int;
     public var x:Float;
     public var y:Float;
+    public var z:Float = 0;
 	public var side:Int;
 	public var card:Card;
 	public var state:Int;
 	public var movable:Bool = true;
 	public var summonTime:Float = 0;
 	public var battleField:BattleField;
-	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float) 
+	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
 	{
 		#if flash
 			super();
@@ -37,21 +38,23 @@ class GameObject
 		this.battleField = battleField;
 		this.side = side;
 		this.card = card;
-		setPosition(x, y, true);
+		setPosition(x, y, z, true);
 	}
 	
 	public function update() : Void
 	{
 	}
 	
-	public function setPosition(x:Float, y:Float, forced:Bool = false) : Bool
+	public function setPosition(x:Float, y:Float, z:Float, forced:Bool = false) : Bool
 	{
-		if( !forced && ( x <= NaN || x == this.x ) && ( y <= NaN || y == this.y ) )
+		if( !forced && ( x <= NaN || x == this.x ) && ( y <= NaN || y == this.y ) && ( z <= NaN || z == this.z ) )
 			return false;
 		if( x > NaN )
 			this.x = x;
 		if( y > NaN )
 			this.y = y;
+		if( z > NaN )
+			this.z = z;
 		if( !forced )
 			setState(GameObject.STATE_2_MOVING);
 		return true;

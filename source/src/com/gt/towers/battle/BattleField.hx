@@ -2,6 +2,7 @@ package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
+import com.gt.towers.calculators.BulletFirePositionCalculator;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntBulletMap;
@@ -26,6 +27,8 @@ class BattleField
 	static public var STATE_2_STARTED:Int = 2;
 	static public var STATE_3_ENDED:Int = 3;
 	static public var STATE_4_DISPOSED:Int = 4;
+	
+	static public var CAMERA_ANGLE:Float = 0.766;// sin 50
 	
 	private var questProvider:FieldProvider;
 
@@ -82,7 +85,7 @@ class BattleField
 			{
 				p = map.places.get(unitId);
 				var card = new com.gt.towers.battle.units.Card(games.get(p.side), p.type, games.get(p.side).player.get_level(0));
-				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, p.side, p.x, p.y));trace(units.get(unitId).toString());
+				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, p.side, p.x, p.y, 0));
 				unitId ++;
 			}
 		}
@@ -246,9 +249,9 @@ class BattleField
 			return addSpell(card, side, x, y);
 		
 		var i = card.quantity - 1;
-		while ( i >= 0 )
+		while( i >= 0 )
 		{
-			var unit = new com.gt.towers.battle.units.Unit(unitId, this, card, side, com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y));
+			var unit = new com.gt.towers.battle.units.Unit(unitId, this, card, side, com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y), 0);
 			units.set(unitId, unit);
 			//trace("deploy id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
 			unitId ++;
@@ -259,14 +262,20 @@ class BattleField
 	
 	function addSpell(card:com.gt.towers.battle.units.Card, side:Int, x:Float, y:Float) : Int
 	{
-		bullets.set(spellId, new com.gt.towers.battle.bullets.Bullet(this, spellId, card, side, x, y + games.get(side).calculator.get(com.gt.towers.constants.CardFeatureType.F28_BULLET_FIRE_POSITION, card.type, 0), x, y));
+		var offset = BulletFirePositionCalculator.getPoint(card.type, 0);
+		offset.y *= (side == this.side) ? 1 : -1;
+		offset.x *= (side == this.side) ? 1 : -1;
+		var _x = side == this.side ? x : BattleField.WIDTH - x;
+		var _y = side == this.side ? y : BattleField.HEIGHT - y;
+		var spell = new com.gt.towers.battle.bullets.Bullet(this, spellId, card, side, _x + offset.x, _y + offset.y, offset.z, _x, _y, 0);
+		bullets.set(spellId, spell);
 		spellId ++;
 		return spellId - 1;
 	}
 	
 	public function addBullet(unit:com.gt.towers.battle.units.Unit, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 
 	{
-		bullets.set(unit.bulletId, new com.gt.towers.battle.bullets.Bullet(this, unit.bulletId, unit.card, side, x, y, dx, dy));
+		bullets.set(unit.bulletId, new com.gt.towers.battle.bullets.Bullet(this, unit.bulletId, unit.card, side, x, y, 0, dx, dy, 0));
 		unit.bulletId ++;
 	}
 	

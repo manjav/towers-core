@@ -9,21 +9,38 @@ import com.gt.towers.events.BattleEvent;
  */
 class Bullet extends GameObject
 {
+	var sx:Float;
+	var sy:Float;
+	var sz:Float;
+	var fx:Float;
+	var fy:Float;
+	var fz:Float;
 	var dx:Float;
 	var dy:Float;
+	var dz:Float;
 	var deltaX:Float;
 	var deltaY:Float;
+	var deltaZ:Float;
 	var explodeTime:Float = -1;
 
-	public function new(battleField:BattleField, id:Int, card:Card, side:Int, x:Float, y:Float, dx:Float, dy:Float) 
+	public function new(battleField:BattleField, id:Int, card:Card, side:Int, x:Float, y:Float, z:Float, fx:Float, fy:Float, fz:Float) 
 	{
-		super(id, battleField, card, side, x, y);
+		super(id, battleField, card, side, x, y, z);
 		this.summonTime = battleField.now + card.bulletShootDelay;
-		this.dx = dx;
-		this.dy = dy;
-		var angle:Float = Math.atan2(dy - y, dx - x);
+		this.sx = this.x;
+		this.sy = this.y;
+		this.sz = this.z;
+		this.fx = fx;
+		this.fy = fy;
+		this.fz = fz;
+		dx = fx - sx;
+		dy = fy - sy;
+		dz = fz - sz;
+		var angle:Float = Math.atan2(dy, dx);
         deltaX = card.bulletSpeed * Math.cos(angle);
         deltaY = card.bulletSpeed * Math.sin(angle);
+		angle = Math.atan2(dz, dx);
+        deltaZ = card.bulletSpeed * Math.sin(angle);
 	}
 
 	override public function update() : Void
@@ -52,18 +69,19 @@ class Bullet extends GameObject
 	{
 		if( explodeTime > -1 )
 			return;
-			
-		setPosition(x + deltaX, y + deltaY);
-		//if ( type == 0 )
-		//    trace(id, x, y, deltaX, deltaY);
-		if( deltaX > 0 && x > dx || deltaX < 0 && x < dx || deltaY > 0 && y > dy || deltaY < 0 && y < dy )
+		
+		setPosition(dx != 0 ? x + deltaX : GameObject.NaN, dy != 0 ? y + deltaY : GameObject.NaN, dz != 0 ? z + deltaZ : GameObject.NaN);
+		//if( card.type == 152 )
+			//trace("sx:" + sx, " x:" + x, " fx:" + fx, " dx:" + dx, " deltaX:" + deltaX + "    sy:" + sy, " y:" + y, " fy:" + fy, " dy:" + dy, " deltaY:" + deltaY + "    sz:" + sz, " z:" + z, " fz:" + fz, " dz:" + dz, " deltaZ:" + deltaZ);
+		if( (deltaX >= 0 && x >= fx || deltaX < 0 && x <= fx) && (deltaY >= 0 && y >= fy || deltaY < 0 && y <= fy) && (deltaZ >= 0 && z >= fz || deltaZ < 0 && z <= fz) )
 			hit();
 	}	
 	
 	function hit() 
 	{
-		x = dx;
-		y = dy;
+		x = fx;
+		y = fy;
+		z = fz;
 		//trace("Bullet " + id + " exploded.");
 		explodeTime = battleField.now + card.bulletExplodDelay;
 		fireEvent(id, BattleEvent.HIT, null);
