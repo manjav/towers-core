@@ -28,7 +28,7 @@ class BattleField
 	static public var STATE_3_ENDED:Int = 3;
 	static public var STATE_4_DISPOSED:Int = 4;
 	
-	static public var CAMERA_ANGLE:Float = 0.766;// sin 50
+	static public var CAMERA_ANGLE:Float = 0.766;// sin of 50 angle
 	
 	private var questProvider:FieldProvider;
 
