@@ -2,7 +2,6 @@ package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
-import com.gt.towers.calculators.BulletFirePositionCalculator;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntBulletMap;
@@ -25,8 +24,9 @@ class BattleField
 	static public var STATE_0_WAITING:Int = 0;
 	static public var STATE_1_CREATED:Int = 1;
 	static public var STATE_2_STARTED:Int = 2;
-	static public var STATE_3_ENDED:Int = 3;
-	static public var STATE_4_DISPOSED:Int = 4;
+	static public var STATE_3_PAUSED:Int = 3;
+	static public var STATE_4_ENDED:Int = 4;
+	static public var STATE_5_DISPOSED:Int = 5;
 	
 	static public var CAMERA_ANGLE:Float = 0.766;// sin of 50 angle
 	
@@ -47,6 +47,7 @@ class BattleField
 	public var deltaTime:Int = 25;
 	public var side:Int = 0;
 	public var spellId:Int = 1000000;
+	var resetTime:Float = -1;
 	//private var tileMap:TileMap;
 #if java 
 	public var games:java.util.List<Game>;
@@ -54,23 +55,29 @@ class BattleField
 	private var unitId:Int = 0;
 #end
 
-	public function new(game_0:Game, game_1:Game, type:String, index:Int, side:Int)
+	public function new(){}
+	public function initialize(game_0:Game, game_1:Game, type:String, index:Int, side:Int, now:Float, hasExtraTime:Bool) : Void
 	{
+		this.side = side;
+		this.now = now;
+		this.startAt = now / 1000;
+		this.resetTime = now + 2000000;
+		
 		var mapName = type + "_" + index;
 		singleMode = game_1.player.cards.keys().length == 0;
-		this.side = side;
 		if( type == FieldData.TYPE_OPERATION )
 			map = game_0.fieldProvider.operations.get(mapName);
 		else if( type == FieldData.TYPE_TOUCHDOWN )
 			map = game_0.fieldProvider.touchdowns.get(mapName);
 		else if( type == FieldData.TYPE_HEADQUARTER )
 			map = game_0.fieldProvider.headquarters.get(mapName);
+		extraTime = hasExtraTime ? map.times.get(3) : 0;
 		
 		//tileMap = new TileMap();
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
 		
-#if java
+		#if java
 		//waitingUnits = new java.util.concurrent.ConcurrentHashMap();
 		//game_0.calculator.setField(this);
 		//game_1.calculator.setField(this);
@@ -172,12 +179,17 @@ class BattleField
 	
 	public function update(deltaTime:Int) : Void
 	{
-		if( state < STATE_1_CREATED || state > STATE_2_STARTED )
+		if( state < STATE_1_CREATED || state > STATE_3_PAUSED )
 			return;
 		
 		this.deltaTime = deltaTime;
 		this.now += deltaTime;
 		
+		if( resetTime <= this.now )
+			reset();
+		
+		if( state > STATE_2_STARTED )
+			return;
 		
 		// -=-=-=-=-=-=-=-  UPDATE AND REMOVE UNITS  -=-=-=-=-=-=-=-=-=-
 		var deadUnits = new IntList();
@@ -261,7 +273,7 @@ class BattleField
 	
 	function addSpell(card:com.gt.towers.battle.units.Card, side:Int, x:Float, y:Float) : Int
 	{
-		var offset = BulletFirePositionCalculator.getPoint(card.type, 0);
+		var offset = com.gt.towers.calculators.BulletFirePositionCalculator.getPoint(card.type, 0);
 		offset.y *= (side == this.side) ? 1 : -1;
 		offset.x *= (side == this.side) ? 1 : -1;
 		var _x = side == this.side ? x : BattleField.WIDTH - x;
@@ -329,8 +341,18 @@ class BattleField
 	}
 	#end
 	
-	public function reset() : Void
+	public function requestReset() : Void
 	{
+		if( state > STATE_2_STARTED )
+			return;
+		trace("requestReset " + resetTime);
+		resetTime = now + 2000;
+		state = STATE_3_PAUSED;
+	}
+	function reset() : Void
+	{
+		trace("reset " + resetTime);
+		resetTime = now + 2000000;
 		dispose();
 		elixirBar.set(0, POPULATION_INIT);
 		elixirBar.set(1, POPULATION_INIT);
@@ -339,7 +361,7 @@ class BattleField
 	
 	public function dispose() : Void
 	{
-		state = STATE_4_DISPOSED;
+		state = STATE_5_DISPOSED;
 		// dispose all units
 		var keys = units.keys();
 		var i = keys.length - 1;
