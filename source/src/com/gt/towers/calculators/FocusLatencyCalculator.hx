@@ -12,7 +12,7 @@ class FocusLatencyCalculator extends BaseCalculator
 		var ret = switch ( type )
 		{
 			case	101	:	2	;
-			case	102	:	2;
+			case	102	:	2	;
 			case	103	:	0.7	;
 			case	104	:	2	;
 			case	105	:	2.5	;
