@@ -52,18 +52,18 @@ class Unit extends GameObject
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= decide -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function decide() 
 	{
-		var dec = id + ":    ";
+		//var log = id + ":    ";
 		var target:Unit;
 		cachedEnemy = getNearestEnemy();
 		if( cachedEnemy > -1 )
 		{
-			dec += "enemyId " + cachedEnemy;
+			//log += "enemyId " + cachedEnemy;
 			if( attackTime < battleField.now )
 			{
 				target = battleField.units.get(cachedEnemy);
 				attack(target);
-				dec += "   " + health + " <=> " + target.health ;
-				//trace(dec);
+				//log += "   " + health + " <=> " + target.health ;
+				//trace(log);
 			}
 			else
 			{
@@ -72,10 +72,10 @@ class Unit extends GameObject
 		}
 		else
 		{
-			dec += "   moved.";
+			//log += "   moved.";
 			moveAhead();
 		}
-		//trace(dec);
+		//trace(log);
 	}
 
 	
