@@ -10,7 +10,7 @@ class BulletSpeedCalculator extends BaseCalculator
 	{
 		var ret = switch( type )
 		{
-			case	101	:	2.0	;
+			case	101	:	3.0	;
 			case	102	:	0.7	;
 			case	103	:	1.7	;
 			case	104	:	1.6	;
