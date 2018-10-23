@@ -9,7 +9,7 @@ class SizeHCalculator extends BaseCalculator
 	public function new (game:Game) { super(game); BASE_VALUE = 25; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
 	{
-		return switch ( type )
+		var ret = return switch ( type )
 		{
 			case	101	:	35	;
 			case	102	:	45  ;
@@ -27,5 +27,7 @@ class SizeHCalculator extends BaseCalculator
 			
 			default: BASE_VALUE;
 		}
+		
+		return ret * 20.00;
 	}
 }
