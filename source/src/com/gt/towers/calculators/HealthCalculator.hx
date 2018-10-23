@@ -27,6 +27,6 @@ class HealthCalculator  extends BaseCalculator
 			
 			default: BASE_VALUE;
 		}
-		return (ret + Math.log(level) * 0.585) * 1.2;
+		return (ret + Math.log(level) * 0.585) * 1.5;
 	}
 }
