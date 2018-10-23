@@ -27,6 +27,6 @@ class BulletShootDelayCalculator  extends BaseCalculator
 			
 			default	: BASE_VALUE;
 		}
-		return ret * 300 ;
+		return ret * 700 ;
 	}
 }
