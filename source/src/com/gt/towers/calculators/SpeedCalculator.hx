@@ -27,6 +27,6 @@ class SpeedCalculator extends BaseCalculator
 			
 			default: BASE_VALUE;
 		}
-		return ret * 0.055;
+		return ret * 0.05;
 	}
 }
