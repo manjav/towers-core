@@ -1,6 +1,7 @@
 package com.gt.towers.battle.bullets;
 import com.gt.towers.battle.GameObject;
 import com.gt.towers.battle.units.Card;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.events.BattleEvent;
 
 /**
@@ -62,6 +63,12 @@ class Bullet extends GameObject
 		if( summonTime == 0 )
 			return;
 		summonTime = 0;
+		var unitId:Int = Std.int((id - id % 10000) / 10000);
+		if( !CardTypes.isSpell(card.type) && (!battleField.units.exists(unitId) || battleField.units.get(unitId).disposed()) )
+		{
+			dispose();
+			return;
+		}
 		setState(GameObject.STATE_1_DIPLOYED);
 	}
 	
