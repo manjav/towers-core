@@ -183,7 +183,7 @@ class IntCardMap
 	
 	public function getLowestCard() : Int
 	{
-		var ret = 11;
+		var ret = 101;
 		var numCards = 9999999;
 		var i = 0;
 		var keys = keys();

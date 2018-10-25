@@ -43,15 +43,15 @@ class ExchangeUpdater
 				if( game.player.cards.keys().length > 0 )
 					item.outcome = game.player.cards.getRandomKey();
 				else
-					item.outcome = ResourceType.CURRENCY_SOFT;
+					item.outcome = ResourceType.R3_CURRENCY_SOFT;
 			}
 			else if( item.type == ExchangeType.C22_SPECIAL )
 			{
-				item.outcome = ResourceType.CURRENCY_HARD;
+				item.outcome = ResourceType.R4_CURRENCY_HARD;
 			}
 			else if( item.type == ExchangeType.C21_SPECIAL )
 			{
-				item.outcome = ResourceType.CURRENCY_SOFT;
+				item.outcome = ResourceType.R3_CURRENCY_SOFT;
 			}
 			
 			item.expiredAt = now + 86400;
@@ -85,26 +85,26 @@ class ExchangeUpdater
 		
 		return switch ( item.outcome )
 		{
-			case 1002	: 10 * ( arena + 1 );
-			case 1003	: 1 * Math.ceil( (arena + 1) * 0.3 );
-			case 1004	: 1 * Math.ceil( (arena + 1) * 0.3 );
-			default		: 10;
+			case 3	: 10 * ( arena + 1 );
+			case 4	: 1 * Math.ceil( (arena + 1) * 0.3 );
+			case 5	: 1 * Math.ceil( (arena + 1) * 0.3 );
+			default	: 10;
 		}
 	}
 	
 	function getRequirementType(item:ExchangeItem) : Int 
 	{
 		if( item.category == ExchangeType.C30_BUNDLES )
-			return 1101;
+			return ResourceType.R5_CURRENCY_REAL;
 		
 		if( ResourceType.isCard(item.outcome) )
-			return 1002;
+			return ResourceType.R3_CURRENCY_SOFT;
 		return switch ( item.outcome )
 		{
-			case 1002	: 1003;
-			case 1003	: 1101;
-			case 1004	: 1003;
-			default		: 1002;
+			case 3	: ResourceType.R4_CURRENCY_HARD;
+			case 4	: ResourceType.R5_CURRENCY_REAL;
+			case 5	: ResourceType.R4_CURRENCY_HARD;
+			default	: ResourceType.R3_CURRENCY_SOFT;
 		}
 	}
 	
@@ -113,7 +113,7 @@ class ExchangeUpdater
 		var count = item.outcomes.values()[0];
 		if( ResourceType.isCard(item.outcome) )
 			return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
-		else if( (item.outcome == ResourceType.CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.CURRENCY_HARD && count <= 5) )
+		else if( (item.outcome == ResourceType.R3_CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.R4_CURRENCY_HARD && count <= 5) )
 			return 0;
 		return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
 	}

@@ -11,7 +11,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1100.1014121432";//do not change len.
+	public var coreVersion:String = "1100.1025171916";//do not change len.
 	public var noticeVersion:Int = 1100;
 	public var forceVersion:Int = 1100;
 	public var resources:IntIntMap;
@@ -27,10 +27,10 @@ class LoginData
 		buildingsLevel = new IntIntMap();
 		
 		resources = new IntIntMap();
-		resources.set(ResourceType.XP, 0);
-		resources.set(ResourceType.POINT, 0);
-		resources.set(ResourceType.CURRENCY_SOFT, 100);
-		resources.set(ResourceType.CURRENCY_HARD, 30);
+		resources.set(ResourceType.R1_XP, 0);
+		resources.set(ResourceType.R2_POINT, 0);
+		resources.set(ResourceType.R3_CURRENCY_SOFT, 100);
+		resources.set(ResourceType.R4_CURRENCY_HARD, 30);
 		resources.set(CardTypes.C101, 1);
 		resources.set(CardTypes.C102, 1);
 		resources.set(CardTypes.C103, 1);
@@ -58,8 +58,8 @@ class LoginData
 		resources.set(CardTypes.C107, 1);
 		resources.set(CardTypes.C108, 1);
 		resources.set(CardTypes.C109, 1);
-		var i = 1201;
-		while ( i < 1207 )
+		var i = ResourceType.R11_OPERATIONS;
+		while ( i <= ResourceType.R16_WIN_RATE )
 		{
 			resources.set(i, 4);
 			i ++;

@@ -46,11 +46,11 @@ class Player
 		id = initData.id;
 		admin = isAdmin(id);
 		nickName = initData.nickName;
-		splitTestCoef = (id > 120100 && id % 2 == 0) ? 0.5 : 1;
+		splitTestCoef = (id > 10010 && id % 2 == 0) ? 0.5 : 1;
 		
 		// add player resources, operations data
 		resources = initData.resources;
-		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
+		resources.set(ResourceType.R5_CURRENCY_REAL, 2147483647);
 		operations = initData.operations;
 		decks = initData.decks;
 		
@@ -105,13 +105,13 @@ class Player
 	}
 	
 	public function getResource(type:Int):Int { return resources.exists(type) ? resources.get(type) : 0; }
-	public function get_xp():Int { return resources.get(ResourceType.XP); }
-	public function get_point():Int { return resources.get(ResourceType.POINT); }
-	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
-	public function get_hards():Int { return resources.get(ResourceType.CURRENCY_HARD); }
-	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES); }
-	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
-	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
+	public function get_xp():Int { return resources.get(ResourceType.R1_XP); }
+	public function get_point():Int { return resources.get(ResourceType.R2_POINT); }
+	public function get_softs():Int { return resources.get(ResourceType.R3_CURRENCY_SOFT); }
+	public function get_hards():Int { return resources.get(ResourceType.R4_CURRENCY_HARD); }
+	public function get_battlesCount():Int { return resources.get(ResourceType.R12_BATTLES); }
+	public function get_battleswins():Int { return resources.get(ResourceType.R13_BATTLES_WINS); }
+	public function get_winStreak():Int { return resources.get(ResourceType.R16_WIN_RATE); }
 	public function get_level(xp:Int):Int
 	{
 		if( xp == 0 )
@@ -203,7 +203,7 @@ class Player
 		while ( i < bundleKeys.length )
 		{
 			if( ResourceType.isCard(bundleKeys[i]) && !game.player.cards.exists(bundleKeys[i]) )
-				game.player.cards.set(bundleKeys[i], new Card(game, bundleKeys[i], bundle.get(bundleKeys[i]) ) );
+				cards.set(bundleKeys[i], new Card(game, bundleKeys[i], bundle.get(bundleKeys[i]) ) );
 			i ++;
 		}
 		resources.increaseMap ( bundle );
@@ -222,7 +222,7 @@ class Player
 		
 		if( i == -1 )
 		{
-			trace("player " + id +" has not any buildng.");
+			trace("player " + id + " has not any buildng.");
 			return -1;
 		}
 		
@@ -238,7 +238,7 @@ class Player
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function emptyDeck() : Bool { return !cards.exists(CardTypes.C001) || cards.get(CardTypes.C001).level <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
-	public static function isAdmin(id:Int) : Bool {return (id == 10412 || /*id == 10438 ||*/ id == 10487 /*|| id == 96111*/); }
+	public static function isAdmin(id:Int) : Bool {return (id < 10010); }
 	public function inTutorial() : Bool
 	{
 		if( isBot() )
