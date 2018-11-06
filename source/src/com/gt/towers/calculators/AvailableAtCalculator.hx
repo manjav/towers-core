@@ -15,9 +15,9 @@ class AvailableAtCalculator extends BaseCalculator
 			case	103	:	0	;
 			case	104	:	0	;
 			case	105	:	0	;
-			case	106	:	1	;
+			case	106	:	0	;
 			case	107	:	1	;
-			case	108	:	2	;
+			case	108	:	1	;
 			case	109	:	2	;
 			case	110	:	3	;
 			case	111	:	3	;
