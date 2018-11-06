@@ -168,27 +168,27 @@ class Player
 		return decks.get(selectedDeckIndex);
 	}
 	
-	public function has(IntIntMap:IntIntMap) : Bool
+	public function has(map:IntIntMap) : Bool
 	{
 		var i:Int = 0;
-		var keis = IntIntMap.keys();
+		var keis = map.keys();
 		while ( i < keis.length )
 		{
-			if( IntIntMap.get(keis[i]) > resources.get(keis[i]) )
+			if( map.get(keis[i]) > resources.get(keis[i]) )
 				return false;
 			i ++;
 		}
 		return true;
 	}
 	
-	public function deductions(IntIntMap:IntIntMap) : IntIntMap
+	public function deductions(map:IntIntMap) : IntIntMap
 	{
 		var ret = new IntIntMap();
-		var keis = IntIntMap.keys();
+		var keis = map.keys();
 		var i = 0;
 		while ( i < keis.length )
 		{
-			var remain = IntIntMap.get(keis[i]) - resources.get(keis[i]);
+			var remain = map.get(keis[i]) - resources.get(keis[i]);
 			if( remain > 0 )
 				ret.set(keis[i], remain);
 			i ++;
@@ -291,5 +291,26 @@ class Player
 			i ++;
 		}
 		return -1;
+	}
+	
+	public function fillCards() : Void
+	{
+		var myArenaIndex:Int = Std.int(Math.max(1, game.player.get_arena(0)));
+		if( myArenaIndex > 3 )
+			myArenaIndex = 3;
+		
+		var cardTypes = game.player.availabledCards(myArenaIndex);
+		var numCards:Int = cardTypes.size();
+		var baseLevel:Int = Std.int( Math.log( Math.max(1, get_point() / 100) ) ) * 5 + 1;
+		var i = 0;
+		cards = new IntCardMap();
+        while ( i < numCards )
+        {
+			var type:Int = cardTypes.get(i);
+			var level:Int = myArenaIndex == 0 ? 1 : baseLevel + myArenaIndex - game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1);
+			//trace("t:" + type + " l:" + level + " a:" + myArenaIndex + " bl:" + baseLevel + " p:" + get_point());
+			cards.set(type, new Card(game, type, level));
+            i ++;
+        }
 	}
 }

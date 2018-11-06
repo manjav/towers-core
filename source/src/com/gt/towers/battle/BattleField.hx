@@ -132,18 +132,12 @@ class BattleField
 				}
 			}
 			
+			game_1.player.fillCards();
+			
 			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
-			}
-			
-			var cards = game_0.player.cards.keys();
-			var i = 0;
-			while ( i < cards.length )
-			{
-				game_1.player.cards.set(cards[i], game_0.player.cards.get(cards[i]));
-				i ++;
 			}
 		}
 		
@@ -152,7 +146,7 @@ class BattleField
 		decks.set(0, game_0.player.getSelectedDeck().randomize());
 		if( singleMode )		
 			//decks.set(1, game_0.player.getSelectedDeck().randomize());
-			addRandomDeck(game_0);
+			addRandomDeck(game_1);
 		else
 			decks.set(1, game_1.player.getSelectedDeck().randomize());
 #end
@@ -164,19 +158,18 @@ class BattleField
 	function addRandomDeck(game:Game) : Void
 	{
 		var botDeck = new IntIntMap();
-		var arena = Math.max(1, game.player.get_arena(0));
-		var availableCards = game.player.availabledCards(cast(arena, Int) ); // random arena
+		var allCards = game.player.cards.keys();
+		
 		var i = 0;
 		while( i < 8 )
 		{
-			var randType = availableCards.get(Math.floor ( Math.random() * availableCards.size() ));
-			trace("addRandomDeck " + randType);
+			var randType = allCards[Math.floor ( Math.random() * allCards.length )];
 			if( botDeck.existsValue(randType) ) 
 				continue;
+			//trace("addRandomDeck " + randType, game.player.cards.get(randType).level);
 			botDeck.set(i, randType);
 			i ++;
 		}
-		trace("addRandomDeck");
 		decks.set(1, botDeck);
 	}
 	

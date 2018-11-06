@@ -153,8 +153,6 @@ class Quest
 		}
 		return i;
 	}
-	
-
 #end
 
 	static public function getReward(type:Int, step:Int):IntIntMap
