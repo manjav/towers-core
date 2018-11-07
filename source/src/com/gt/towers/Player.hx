@@ -301,16 +301,36 @@ class Player
 		
 		var cardTypes = game.player.availabledCards(myArenaIndex);
 		var numCards:Int = cardTypes.size();
-		var baseLevel:Int = Std.int( Math.log( Math.max(1, get_point() / 100) ) ) * 5 + 1;
+		var baseLevel = get_point() * 0.005 + 1;
+		var roundBase = Math.floor(baseLevel); 
+		var ratio = baseLevel % 1;
+		var log = "BOT => point:" + get_point() + " base-level: " + baseLevel;
 		var i = 0;
 		cards = new IntCardMap();
         while ( i < numCards )
         {
 			var type:Int = cardTypes.get(i);
-			var level:Int = myArenaIndex == 0 ? 1 : baseLevel + myArenaIndex - game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1);
-			//trace("t:" + type + " l:" + level + " a:" + myArenaIndex + " bl:" + baseLevel + " p:" + get_point());
+			var rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, 1);
+			var availabled = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1);
+			var level:Int = Math.round(Math.max(1, roundBase - rarity - availabled + (Math.random() < ratio ? 1 : 0)));
+			//log += (" ," + type + ":" + level);
 			cards.set(type, new Card(game, type, level));
             i ++;
         }
+		
+		i = 0;
+		var allCards = cards.keys();
+		var deck = new IntIntMap();
+		while( i < 8 )
+		{
+			var randType = allCards[Math.floor ( Math.random() * allCards.length )];
+			if( deck.existsValue(randType) ) 
+				continue;
+			log += " " + randType + ":" + cards.get(randType).level;
+			deck.set(i, randType);
+			i ++;
+		}
+		decks.set(0, deck);
+		trace(log);
 	}
 }

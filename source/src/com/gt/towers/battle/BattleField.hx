@@ -144,33 +144,11 @@ class BattleField
 		// create decks	
 		decks = new IntIntIntMap();
 		decks.set(0, game_0.player.getSelectedDeck().randomize());
-		if( singleMode )		
-			//decks.set(1, game_0.player.getSelectedDeck().randomize());
-			addRandomDeck(game_1);
-		else
-			decks.set(1, game_1.player.getSelectedDeck().randomize());
+		decks.set(1, game_1.player.getSelectedDeck().randomize());
 #end
 		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
 		elixirBar.push(POPULATION_INIT);
-	}
-	
-	function addRandomDeck(game:Game) : Void
-	{
-		var botDeck = new IntIntMap();
-		var allCards = game.player.cards.keys();
-		
-		var i = 0;
-		while( i < 8 )
-		{
-			var randType = allCards[Math.floor ( Math.random() * allCards.length )];
-			if( botDeck.existsValue(randType) ) 
-				continue;
-			//trace("addRandomDeck " + randType, game.player.cards.get(randType).level);
-			botDeck.set(i, randType);
-			i ++;
-		}
-		decks.set(1, botDeck);
 	}
 	
 	public function update(deltaTime:Int) : Void
@@ -341,13 +319,11 @@ class BattleField
 	{
 		if( state > STATE_2_STARTED )
 			return;
-		trace("requestReset " + resetTime);
 		resetTime = now + 2000;
 		state = STATE_3_PAUSED;
 	}
 	function reset() : Void
 	{
-		trace("reset " + resetTime);
 		resetTime = now + 2000000;
 		dispose();
 		elixirBar.set(0, POPULATION_INIT);
