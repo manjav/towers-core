@@ -9,13 +9,17 @@ import com.gt.towers.utils.maps.StringFieldMap;
 
 class FieldProvider 
 {
-	public var shires:StringFieldMap;
-	public var operations:StringFieldMap;
-	public var touchdowns:StringFieldMap;
-	public var headquarters:StringFieldMap;
+	static public var shires:StringFieldMap;
+	static public var operations:StringFieldMap;
+	static public var touchdowns:StringFieldMap;
+	static public var headquarters:StringFieldMap;
+	static var initialized:Bool;
 	
-	public function new(game:Game) 
+	static public function init() 
 	{
+		if( initialized )
+			return;
+		initialized = true;
 		shires = new StringFieldMap();
 /*#if flash
 		shires.set( "shire_3" , new com.gt.towers.battle.shires.Shire_3( 3, "shire_3" ) );

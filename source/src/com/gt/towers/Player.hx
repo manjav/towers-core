@@ -1,5 +1,6 @@
 package com.gt.towers;
 import com.gt.towers.Game;
+import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
@@ -91,6 +92,7 @@ class Player
 	{
 		var lastOperation = 0;
 		var oKeys = operations.keys();
+		var totalOperations = FieldProvider.operations.keys().length;
 		while ( lastOperation < oKeys.length )
 		{
 			if( operations.get( oKeys[lastOperation] ) == 0 )
@@ -98,7 +100,7 @@ class Player
 			lastOperation ++;
 		}
 		
-		if( lastOperation == game.fieldProvider.operations.keys().length )
+		if( lastOperation == totalOperations )
 			return lastOperation - 1 ;
 		
 		return lastOperation ;

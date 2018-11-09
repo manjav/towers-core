@@ -19,7 +19,5 @@ import com.gt.towers.LoginData;
  */
 class Core
 {
-	static function main()
-	{
-	}
+	static function main(){}
 }

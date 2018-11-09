@@ -22,7 +22,6 @@ class Game
 	public var market:String;
 	public var sessionsCount:Int;
 	public var exchanger:Exchanger;
-	public var fieldProvider:FieldProvider;
 	public var calculator:FeatureCalculator;
 	public var levels:Array<Int>;
 	public var arenas:IntArenaMap;
@@ -39,9 +38,8 @@ class Game
 		appVersion = data.appVersion;
 		market = data.market;
 		sessionsCount = data.sessionsCount;
-		
+		FieldProvider.init();
 		fillArenas();
-		fieldProvider = new FieldProvider(this);
 		player = new Player(this, data);
 		exchanger = new Exchanger(this);
 		lobby = new Lobby(this);

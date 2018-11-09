@@ -66,11 +66,11 @@ class BattleField
 		var mapName = type + "_" + index;
 		singleMode = game_1.player.cards.keys().length == 0;
 		if( type == FieldData.TYPE_OPERATION )
-			map = game_0.fieldProvider.operations.get(mapName);
+			map = FieldProvider.operations.get(mapName);
 		else if( type == FieldData.TYPE_TOUCHDOWN )
-			map = game_0.fieldProvider.touchdowns.get(mapName);
+			map = FieldProvider.touchdowns.get(mapName);
 		else if( type == FieldData.TYPE_HEADQUARTER )
-			map = game_0.fieldProvider.headquarters.get(mapName);
+			map = FieldProvider.headquarters.get(mapName);
 		extraTime = hasExtraTime ? map.times.get(3) : 0;
 		
 		//tileMap = new TileMap();
