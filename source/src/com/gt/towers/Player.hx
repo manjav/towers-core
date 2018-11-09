@@ -1,5 +1,6 @@
 package com.gt.towers;
 import com.gt.towers.Game;
+import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
@@ -94,7 +95,7 @@ class Player
 			lastOperation ++;
 		}
 		
-		if( lastOperation == game.fieldProvider.operations.keys().length )
+		if( lastOperation == FieldProvider.operations.keys().length )
 			return lastOperation - 1 ;
 		
 		return lastOperation ;

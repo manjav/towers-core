@@ -41,9 +41,9 @@ class BattleField
 		singleMode = game_1.player.buildings.keys().length == 0;
 		
 		if( isOperation )
-			map = game_0.fieldProvider.operations.get(mapName);
+			map = FieldProvider.operations.get(mapName);
 		else
-			map = game_0.fieldProvider.battles.get(mapName);
+			map = FieldProvider.battles.get(mapName);
 			
 		if( hasExtraTime )
 			extraTime = map.times.get(3);
