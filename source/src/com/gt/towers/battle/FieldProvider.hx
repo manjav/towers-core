@@ -13,6 +13,7 @@ class FieldProvider
 	static public var operations:StringFieldMap;
 	static public var touchdowns:StringFieldMap;
 	static public var headquarters:StringFieldMap;
+	static public var map:String;
 	static var initialized:Bool;
 	
 	static public function init() 

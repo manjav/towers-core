@@ -1,4 +1,4 @@
-package com.gt.towers.battle;
+package com.gt.towers.battle.tilemap;
 
 /**
  * ...
@@ -10,6 +10,8 @@ class Tile
 	public var j:Int;
 	public var cost:Float;
 	public var last:Int;
+	public var x:Float;
+	public var y:Float;
 	public function new(i:Int, j:Int, cost:Float, last:Int) 
 	{
 		this.i = i;

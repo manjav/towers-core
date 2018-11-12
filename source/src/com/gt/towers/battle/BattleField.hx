@@ -2,12 +2,14 @@ package com.gt.towers.battle;
 import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
+import com.gt.towers.battle.tilemap.TileMap;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntBulletMap;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntUnitMap;
+import haxe.Json;
 
 /**
  * ...
@@ -47,8 +49,9 @@ class BattleField
 	public var deltaTime:Int = 25;
 	public var side:Int = 0;
 	public var spellId:Int = 1000000;
+	public var tileMap:TileMap;
+	public var json:Dynamic;
 	var resetTime:Float = -1;
-	//private var tileMap:TileMap;
 #if java 
 	public var games:java.util.List<Game>;
 	public var unitsHitCallback:com.gt.towers.interfaces.IUnitHitCallback;
@@ -73,7 +76,13 @@ class BattleField
 			map = FieldProvider.headquarters.get(mapName);
 		extraTime = hasExtraTime ? map.times.get(3) : 0;
 		
-		//tileMap = new TileMap();
+		// parse json layout and occupy tile map
+		tileMap = new TileMap();
+		json = Json.parse(FieldProvider.map);
+		var obstacles:Array<Dynamic> = json.layout.children[1].children;
+		for ( obs in obstacles )
+			tileMap.occupy(obs.params.x, obs.params.y, 50 * obs.params.scaleX, 50 * obs.params.scaleY);
+		
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
 		

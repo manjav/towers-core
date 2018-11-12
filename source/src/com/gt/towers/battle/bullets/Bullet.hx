@@ -19,8 +19,6 @@ class Bullet extends GameObject
 	var dx:Float;
 	var dy:Float;
 	var dz:Float;
-	var deltaX:Float;
-	var deltaY:Float;
 	var deltaZ:Float;
 	var explodeTime:Float = -1;
 

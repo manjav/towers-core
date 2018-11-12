@@ -1,6 +1,8 @@
 package com.gt.towers.battle.units;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.GameObject;
+import com.gt.towers.battle.tilemap.Tile;
+import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.events.BattleEvent;
@@ -15,6 +17,8 @@ class Unit extends GameObject
 	public var bulletId:Int = 0;
 	var attackTime:Float = 0;
 	var cachedEnemy:Int = -1;
+	var targetTile:Tile;
+	var path:Array<Tile>;
 
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
 	{
@@ -23,8 +27,22 @@ class Unit extends GameObject
 		super(id, battleField, card, side, x, y, z);
 		this.summonTime = battleField.now + card.summonTime;
 		this.health = card.health;
+		this.bulletId = id * 10000;
 		this.movable = card.type < CardTypes.C201;
-		bulletId = id * 10000;
+		if( !this.movable )
+			return;
+		this.targetTile = battleField.tileMap.getTile(battleField.map.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
+		var tile = battleField.tileMap.getTile(this.x, this.y);
+		this.path = battleField.tileMap.findPath(targetTile.i, targetTile.j, tile.i, tile.j);
+		estimateAngle();
+		
+		/*trace(tile.i + " " + tile.j + "    " + targetTile.i + " " + targetTile.j);
+		var i = 0;
+		while ( i < path.length )
+		{
+			trace(path[i].toString());
+			i ++;
+		}*/
 	}
 	
 	override public function update() : Void
@@ -73,11 +91,34 @@ class Unit extends GameObject
 		else
 		{
 			//log += "   moved.";
-			moveAhead();
+			move();
 		}
 		//trace(log);
 	}
 
+	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= movement -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	function estimateAngle() : Void 
+	{
+		var angle:Float = Math.atan2(path[0].y - y, path[0].x - x);
+        deltaX = card.speed * Math.cos(angle);
+        deltaY = card.speed * Math.sin(angle);
+		//trace("side:" + side + "  x:" + x + " " + path[0].x + " ,  y:" + y + " " + path[0].y + " ,  delta:" + deltaX + " " + deltaY);
+	}
+	
+	function move() : Void
+	{
+		if( !movable )
+			return;
+		
+		if( (side == 0 && y < path[0].y) || (side == 1 && y > path[0].y) )
+		{
+			path.shift();
+			estimateAngle();
+			return;
+		}
+		setPosition(x + deltaX * battleField.deltaTime, y + deltaY * battleField.deltaTime, GameObject.NaN);
+//		setPosition(GameObject.NaN, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)), GameObject.NaN);
+	}
 	
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function getNearestEnemy() : Int
@@ -129,13 +170,6 @@ class Unit extends GameObject
 		fireEvent(id, BattleEvent.HIT, damage);
 	}
 
-	function moveAhead() : Void
-	{
-		//attackTime = battleField.now;
-		if( movable )
-			setPosition(GameObject.NaN, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)), GameObject.NaN);
-	}
-	
 	#if java
 	public function toString():String
 	#elseif flash

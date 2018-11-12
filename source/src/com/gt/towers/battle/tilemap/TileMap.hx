@@ -1,9 +1,8 @@
-package com.gt.towers.battle;
-import com.gt.towers.battle.Tile;
+package com.gt.towers.battle.tilemap;
 
 /**
 * ...
-* @author ...
+* @author Mansour Djawadi
 */
 class TileMap
 {
@@ -48,11 +47,13 @@ class TileMap
 		return map[i][j];
 	}
 
-	public function findPath(i:Int, j:Int, removeWrongs:Bool = true) : Array<Tile>
+	public function findPath(destI:Int, destJ:Int, sourceI:Int, sourceJ:Int, removeWrongs:Bool = true) : Array<Tile>
 	{
-		var queue:Array<Tile> = new Array<Tile>();
-		queue.push(new Tile(i, j, 0, 0));
+		set(destI, destJ, STATE_START);
+		set(sourceI, sourceJ, STATE_TARGET);
 		
+		var queue:Array<Tile> = new Array<Tile>();
+		queue.push(new Tile(destI, destJ, 0, 0));
 		//run recursive function to find the shortest path
 		checkQueue(0, 1, queue);
 		
@@ -61,14 +62,21 @@ class TileMap
 		
 		// remove wrong ways
 		var ret:Array<Tile> = new Array<Tile>();
+		target.x = target.i * tileWidth + tileWidth * 0.5;
+		target.y = target.j * tileHeight + tileHeight * 0.5;
 		ret.push(target);
 		while ( true )
 		{
 			var last:Int = ret[ret.length - 1].last;
+			queue[last].x = queue[last].i * tileWidth + tileWidth * 0.5;
+			queue[last].y = queue[last].j * tileHeight + tileHeight * 0.5;
+			ret.push(queue[last]);
 			if( last == 0 )
 				break;
-			ret.push(queue[last]);
 		}
+		set(destI, destJ, STATE_EMPTY);
+		set(sourceI, sourceJ, STATE_EMPTY);
+		target = null;
 		return ret;
 	}
 
@@ -97,7 +105,7 @@ class TileMap
 	
 	public function checkTile(i:Int, j:Int, cost:Float, last:Int, queue:Array<Tile>) : Void
 	{
-		if( i < 0 || j < 0 || i == width || j == height || map[i][j] == STATE_OCCUPIED )
+		if( i < 0 || j < 0 || i >= width || j >= height || map[i][j] == STATE_OCCUPIED )
 			return;
 		
 		//if this coordinate is the start finish algorythm as the shortest path was just found
@@ -138,5 +146,31 @@ class TileMap
 			i --;
 		}
 		return true;
+	}
+	
+	public function getTile(x:Float, y:Float) : Tile
+	{
+		if( x < 0 || y < 0 || x > BattleField.WIDTH || y > BattleField.HEIGHT )
+			return null;
+		var t:Tile = new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
+		return t;
+	}
+	
+	public function occupy(x:Float, y:Float, width:Float, height:Float) : Void
+	{
+		var from = getTile(x, y);
+		var to = getTile(x + width, y + height);
+		var i:Int = from.i;
+		var j:Int;
+		while ( i <= to.i )
+		{
+			j = from.j;
+			while ( j <= to.j )
+			{
+				map[i][j] = STATE_OCCUPIED;
+				j ++;
+			}
+			i ++;
+		}
 	}
 }
