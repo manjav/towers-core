@@ -150,10 +150,15 @@ class TileMap
 	
 	public function getTile(x:Float, y:Float) : Tile
 	{
-		if( x < 0 || y < 0 || x > BattleField.WIDTH || y > BattleField.HEIGHT )
-			return null;
-		var t:Tile = new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
-		return t;
+		if( x < 0 )
+			x = 0;
+		if( y < 0 )
+			y = 0;
+		if( x > BattleField.WIDTH - 1 )
+			x = BattleField.WIDTH - 1;
+		if( y > BattleField.HEIGHT - 1)
+			y = BattleField.HEIGHT - 1;
+		return new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
 	}
 	
 	public function occupy(x:Float, y:Float, width:Float, height:Float) : Void
