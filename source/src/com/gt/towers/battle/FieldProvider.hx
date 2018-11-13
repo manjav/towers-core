@@ -13,7 +13,6 @@ class FieldProvider
 	static public var operations:StringFieldMap;
 	static public var touchdowns:StringFieldMap;
 	static public var headquarters:StringFieldMap;
-	static public var map:String;
 	static var initialized:Bool;
 	
 	static public function init() 
@@ -73,9 +72,22 @@ class FieldProvider
 		
 		
 		touchdowns = new StringFieldMap();
-		touchdowns.set( "touchdown_1", new Battle_1( 1, "touchdown_1", "60,120,180,240", "", "0,2,4,6",	"") );
+		touchdowns.set( "touchdown_1", new FieldData( 1, "touchdown_1", "60,120,180,240", "", "0,2,4,6",	"", "touchdown_0") );
 		
 		headquarters = new StringFieldMap();
-		headquarters.set( "headquarter_1", new HQ_1( 1, "headquarter_1", "60,120,180,240", "", "0,2,4,6",	"") );
+		headquarters.set( "headquarter_1", new FieldData( 1, "headquarter_1", "60,120,180,240", "", "0,2,4,6",	"",  "headquarter_0") );
+	}
+	
+	static public function getField(type:String, index:Int) : FieldData
+	{
+		var mapName = type + "_" + index;
+		var field:FieldData = null;
+		if( type == FieldData.TYPE_OPERATION )
+			field = FieldProvider.operations.get(mapName);
+		else if( type == FieldData.TYPE_TOUCHDOWN )
+			field = FieldProvider.touchdowns.get(mapName);
+		else if( type == FieldData.TYPE_HEADQUARTER )
+			field = FieldProvider.headquarters.get(mapName);
+		return field;
 	}
 }

@@ -31,7 +31,7 @@ class Unit extends GameObject
 		this.movable = card.type < CardTypes.C201;
 		if( !this.movable )
 			return;
-		this.targetTile = battleField.tileMap.getTile(battleField.map.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
+		this.targetTile = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
 		var tile = battleField.tileMap.getTile(this.x, this.y);
 		this.path = battleField.tileMap.findPath(targetTile.i, targetTile.j, tile.i, tile.j);
 		estimateAngle();

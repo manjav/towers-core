@@ -7,7 +7,6 @@ import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntBulletMap;
 import com.gt.towers.utils.maps.IntIntIntMap;
-import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntUnitMap;
 import haxe.Json;
 
@@ -37,7 +36,7 @@ class BattleField
 	public var state:Int = 0;
 	public var elixirBar:FloatList;
 	public var singleMode:Bool;
-	public var map:FieldData;
+	public var field:FieldData;
 	public var difficulty:Int;
 	public var arena:Int;
 	public var extraTime:Int = 0;
@@ -59,26 +58,19 @@ class BattleField
 #end
 
 	public function new(){}
-	public function initialize(game_0:Game, game_1:Game, type:String, index:Int, side:Int, now:Float, hasExtraTime:Bool) : Void
+	public function initialize(game_0:Game, game_1:Game, field:FieldData, side:Int, now:Float, hasExtraTime:Bool) : Void
 	{
 		this.side = side;
 		this.now = now;
 		this.startAt = now / 1000;
 		this.resetTime = now + 2000000;
-		
-		var mapName = type + "_" + index;
-		singleMode = game_1.player.cards.keys().length == 0;
-		if( type == FieldData.TYPE_OPERATION )
-			map = FieldProvider.operations.get(mapName);
-		else if( type == FieldData.TYPE_TOUCHDOWN )
-			map = FieldProvider.touchdowns.get(mapName);
-		else if( type == FieldData.TYPE_HEADQUARTER )
-			map = FieldProvider.headquarters.get(mapName);
-		extraTime = hasExtraTime ? map.times.get(3) : 0;
+		this.field = field;
+		this.singleMode = game_1.player.cards.keys().length == 0;
+		this.extraTime = hasExtraTime ? field.times.get(3) : 0;
 		
 		// parse json layout and occupy tile map
 		tileMap = new TileMap();
-		json = Json.parse(FieldProvider.map);
+		json = Json.parse(field.mapLayout);
 		var obstacles:Array<Dynamic> = json.layout.children[1].children;
 		for ( obs in obstacles )
 			tileMap.occupy(obs.params.x, obs.params.y, 50 * obs.params.scaleX, 50 * obs.params.scaleY);
@@ -94,14 +86,12 @@ class BattleField
 		games.add(game_0);
 		games.add(game_1);
 		
-		if( type == FieldData.TYPE_HEADQUARTER )
+		if( field.type == FieldData.TYPE_HEADQUARTER )
 		{
-			var p:com.gt.towers.battle.fieldes.PlaceData;
-			while ( unitId < map.places.size() )
+			while ( unitId < 2 )
 			{
-				p = map.places.get(unitId);
-				var card = new com.gt.towers.battle.units.Card(games.get(p.side), p.type, games.get(p.side).player.get_level(0));
-				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, p.side, p.x, p.y, 0));
+				var card = new com.gt.towers.battle.units.Card(games.get(unitId), 201, games.get(unitId).player.get_level(0));
+				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, unitId, 480, 1210, 0));
 				unitId ++;
 			}
 		}
@@ -109,9 +99,9 @@ class BattleField
 		game_0.player.hardMode = false;
 		if( singleMode )
 		{
-			if( type == FieldData.TYPE_OPERATION )
+			if( field.type == FieldData.TYPE_OPERATION )
 			{
-				if( map.index == 2 )
+				if( field.index == 2 )
 				{
 					game_0.player.hardMode = game_0.player.emptyDeck();
 					difficulty = game_0.player.hardMode ? 14 : 0;
@@ -119,7 +109,7 @@ class BattleField
 					//map.places.get(0).enabled = game_0.player.hardMode;
 				}
 				else
-					difficulty = Math.round(map.index / 5) - 1;
+					difficulty = Math.round(field.index / 5) - 1;
 			}
 			else
 			{
@@ -301,7 +291,7 @@ class BattleField
 			unitsHitCallback.hit(bullet.id, bullet.card.bulletDamage, hitUnits);
 	}
 	
-	public function getSide(id:Int):Int
+	public function getSide(id:Int) : Int
 	{
 		var gLen = games.size() - 1;
 		while( gLen >= 0 )
@@ -370,8 +360,8 @@ class BattleField
 	}
 	public function getTime(index:Int):Int
 	{
-		if( map == null || index < 0 || index > 3 )
+		if( field == null || index < 0 || index > 3 )
 			return 0;
-		return map.times.get(index) + extraTime;
+		return field.times.get(index) + extraTime;
 	}
 }
