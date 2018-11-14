@@ -1,4 +1,5 @@
 package com.gt.towers.battle.tilemap;
+import com.gt.towers.battle.tilemap.Tile;
 
 /**
 * ...
@@ -161,6 +162,11 @@ class TileMap
 		return new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
 	}
 	
+	public function inMap(i:Int, j:Int) : Bool
+	{
+		return i > -1 && j > -1 && i < width - 1 && j < height - 1;
+	}
+	
 	public function occupy(x:Float, y:Float, width:Float, height:Float) : Void
 	{
 		var from = getTile(x, y);
@@ -172,10 +178,97 @@ class TileMap
 			j = from.j;
 			while ( j <= to.j )
 			{
-				map[i][j] = STATE_OCCUPIED;
+				set(i, j, STATE_OCCUPIED);
 				j ++;
 			}
 			i ++;
 		}
+	}
+	
+	public function findTile(x:Float, y:Float, state:Int = 0) : Tile
+	{
+		var tile = getTile(x, y);
+		if( get(tile.i, tile.j) == STATE_EMPTY )
+			return tile;
+		trace(tile.i +"," + tile.j + " start finding...");
+		if( !lookingAround(tile) )
+			return null;
+		return tile;
+	}
+	
+	function lookingAround (tile:Tile, step:Int = 1, state:Int = 0) : Bool
+	{
+		// vertical check
+		var i:Int = 0;
+		while ( i <= step )
+		{
+			if( checkAndFillState(tile.i + step, tile.j + i, tile, state) )
+				return true;
+			if( checkAndFillState(tile.i - step, tile.j + i, tile, state) )
+				return true;
+			if( i == 0 )
+			{
+				i ++;
+				continue;
+			}
+			if( checkAndFillState(tile.i + step, tile.j - i, tile, state) )
+				return true;
+			if( checkAndFillState(tile.i - step, tile.j - i, tile, state) )
+				return true;
+			i ++;
+		}
+		
+		i = 0;
+		while ( i < step )
+		{
+			if( checkAndFillState(tile.i + i, tile.j + step, tile, state) )
+				return true;
+			if( checkAndFillState(tile.i + i, tile.j - step, tile, state) )
+				return true;
+			if( i == 0 )
+			{
+				i ++;
+				continue;
+			}
+			if( checkAndFillState(tile.i - i, tile.j + step, tile, state) )
+				return true;
+			if( checkAndFillState(tile.i - i, tile.j - step, tile, state) )
+				return true;
+			i ++;
+		}
+		
+		
+		/*while ( i < step )
+		{	
+			var j:Int = 0;
+			while ( j < step )
+			{
+				if( ( i == 0 || j == 0 || i == step - 1 || j == step - 1 ) )
+				{
+					//trace("i:" + i + ", j:" + j + ", step:" + step + " " + (tile.i - start + i) + "," + (tile.j - start + j));
+					if( checkAndFillState(tile.i - start + i, tile.j - start + j, tile, state) )
+						return;
+				}
+				j ++;
+			}
+			i ++;
+		}*/
+		
+		if( step < 15 )
+			return lookingAround(tile, step + 1, state);
+		return false;
+	}
+
+	
+	function checkAndFillState(i:Int, j:Int, tile:Tile, state:Int) 
+	{
+		//trace("i:" + i + ", j:" + j + ", ti:" + tile.i + ", tj:" + tile.j);
+		if( inMap(i, j ) && get(i, j) == state )
+		{
+			tile.i = i;
+			tile.j = j;
+			return true;
+		}
+		return false;
 	}
 }
