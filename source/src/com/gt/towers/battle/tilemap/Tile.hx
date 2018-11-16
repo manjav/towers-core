@@ -22,6 +22,6 @@ class Tile
 	
 	public function toString() : String
 	{
-		return "(i:" + i + ", j:" + j + ", cost:" + cost + ", last:" + last + ")";
+		return "(i:" + i + ", j:" + j + ", cost:" + cost + ", last:" + last + ", x:" + x + ", y:" + y + ")";
 	}
 }

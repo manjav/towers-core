@@ -63,14 +63,12 @@ class TileMap
 		
 		// remove wrong ways
 		var ret:Array<Tile> = new Array<Tile>();
-		target.x = target.i * tileWidth + tileWidth * 0.5;
-		target.y = target.j * tileHeight + tileHeight * 0.5;
+		setTilePosition(target);
 		ret.push(target);
 		while ( true )
 		{
 			var last:Int = ret[ret.length - 1].last;
-			queue[last].x = queue[last].i * tileWidth + tileWidth * 0.5;
-			queue[last].y = queue[last].j * tileHeight + tileHeight * 0.5;
+			setTilePosition(queue[last]);
 			ret.push(queue[last]);
 			if( last == 0 )
 				break;
@@ -159,7 +157,15 @@ class TileMap
 			x = BattleField.WIDTH - 1;
 		if( y > BattleField.HEIGHT - 1)
 			y = BattleField.HEIGHT - 1;
-		return new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
+		var t = new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
+		setTilePosition(t);
+		return t;
+	}
+	
+	function setTilePosition(tile:Tile) : Void
+	{
+		tile.x = tile.i * tileWidth + tileWidth * 0.5;
+		tile.y = tile.j * tileHeight + tileHeight * 0.5;
 	}
 	
 	public function inMap(i:Int, j:Int) : Bool
@@ -190,9 +196,10 @@ class TileMap
 		var tile = getTile(x, y);
 		if( get(tile.i, tile.j) == STATE_EMPTY )
 			return tile;
-		trace(tile.i +"," + tile.j + " start finding...");
+		//trace(tile.i +"," + tile.j + " start finding...");
 		if( !lookingAround(tile) )
 			return null;
+		setTilePosition(tile);
 		return tile;
 	}
 	
@@ -237,28 +244,10 @@ class TileMap
 			i ++;
 		}
 		
-		
-		/*while ( i < step )
-		{	
-			var j:Int = 0;
-			while ( j < step )
-			{
-				if( ( i == 0 || j == 0 || i == step - 1 || j == step - 1 ) )
-				{
-					//trace("i:" + i + ", j:" + j + ", step:" + step + " " + (tile.i - start + i) + "," + (tile.j - start + j));
-					if( checkAndFillState(tile.i - start + i, tile.j - start + j, tile, state) )
-						return;
-				}
-				j ++;
-			}
-			i ++;
-		}*/
-		
 		if( step < 15 )
 			return lookingAround(tile, step + 1, state);
 		return false;
 	}
-
 	
 	function checkAndFillState(i:Int, j:Int, tile:Tile, state:Int) 
 	{

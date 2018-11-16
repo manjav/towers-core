@@ -235,9 +235,13 @@ class BattleField
 		var i = card.quantity - 1;
 		while( i >= 0 )
 		{
-			var unit = new com.gt.towers.battle.units.Unit(unitId, this, card, side, com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y), 0);
+			var tile = tileMap.findTile(com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y));
+			if( tile == null )
+				trace("tile not found!");
+				
+			var unit = new com.gt.towers.battle.units.Unit(unitId, this, card, side, tile.x, tile.y, 0);
 			units.set(unitId, unit);
-			//trace("deploy id:" + unitId, " type:" + type, " side:" + side, " x:" + unit.x, " y:" + unit.y);
+			//trace("deploy id:" + unitId + " type:" + type + " side:" + side + " x:" + x + " ux:" + unit.x + " y:" + y + " uy:" + unit.y );
 			unitId ++;
 			i --;
 		}

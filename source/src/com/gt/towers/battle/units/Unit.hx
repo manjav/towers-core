@@ -36,8 +36,8 @@ class Unit extends GameObject
 		this.path = battleField.tileMap.findPath(targetTile.i, targetTile.j, tile.i, tile.j);
 		estimateAngle();
 		
-		/*trace(tile.i + " " + tile.j + "    " + targetTile.i + " " + targetTile.j);
-		var i = 0;
+		//trace(tile + " " + targetTile);
+		/*var i = 0;
 		while ( i < path.length )
 		{
 			trace(path[i].toString());
@@ -110,7 +110,7 @@ class Unit extends GameObject
 		if( !movable )
 			return;
 		
-		if( (side == 0 && y < path[0].y) || (side == 1 && y > path[0].y) )
+		if( (side == 0 && y <= path[0].y) || (side == 1 && y >= path[0].y) )
 		{
 			path.shift();
 			estimateAngle();
