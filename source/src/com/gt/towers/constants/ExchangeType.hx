@@ -126,16 +126,16 @@ class ExchangeType
 		{
 			ret = switch ( type )
 			{
-				case 51 : Math.round(ret * 0.09);
+/*				case 51 : Math.round(ret * 0.09);
 				case 52 : Math.round(ret * 0.15);
 				case 53 : Math.round(ret * 0.49);
 				case 54 : Math.round(Math.pow(ret * 0.065, 1.4));
-				case 55 : Math.round(2.5 + Math.pow(ret * 0.065, 1.35));
+*/				case 55 : Math.round(2.5 + Math.pow(ret * 0.065, 1.35));
 				case 56 : Math.round(3.0 + Math.pow(ret * 0.065, 1.35));
 				case 57 : Math.round(3.2 + Math.pow(ret * 0.065, 1.35));
 				case 58 : Math.round(3.4 + Math.pow(ret * 0.065, 1.35));
 				case 59 : Math.round(3.6 + Math.pow(ret * 0.065, 1.35));
-				default : 1;
+				default : Math.round(Math.pow(ret * 0.065, 1.4));
 			}
 		}
 		if( rarity >= 2 )

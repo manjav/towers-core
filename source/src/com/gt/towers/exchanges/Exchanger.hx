@@ -310,6 +310,7 @@ class Exchanger
 		var numRars = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef, 1);
 		var numEpics = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef, 2);
 		var totalCards = ExchangeType.getNumTotalCards(type, arena, game.player.splitTestCoef, 0) + 1 - numRars - numEpics;
+		//trace("type:" + type + " numSlots:" + numSlots + " numRars:" + numRars + " numEpics:" + numEpics + " totalCards:" + totalCards);
 		var slotSize = Math.ceil(totalCards / numSlots);
 		var numCards:Int = 0;
 		var accCards:Int = 0;
@@ -331,9 +332,7 @@ class Exchanger
 				numRars = 0;
 			}
 			accCards += numCards;
-			//trace("numChest", numChest, "numSlots", numSlots);
-			
-			trace("addNewCard",  numSlots, isDaily);
+			//trace("addNewCard",  numSlots, isDaily);
             if( numSlots == 0 && !isDaily ) // last slot
 				addNewCard(ret);
 			
@@ -353,9 +352,7 @@ class Exchanger
 	}
 	function addNewCard(map:IntIntMap) : Void
 	{
-		var openedBook:Int = game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE);
-		trace("openedBook", openedBook);
-		if( openedBook == 0 )
+		if( game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) == 0 )
 		{
 			map.set( CardTypes.C001, 2 );
 			return;
@@ -380,7 +377,7 @@ class Exchanger
 	{
 		if( game.player.cards.keys().length <= map.keys().length )
 			return;
-		
+		//trace("count:" + count + " rarity:" + rarity);
 		var random = game.player.getRandomCard(rarity);
 		if( random == -1 )
 		{

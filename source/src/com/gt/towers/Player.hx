@@ -213,25 +213,23 @@ class Player
 	
 	public function getRandomCard(rarity:Int):Int
 	{
-		var keys = resources.keys();
+		var keys = cards.keys();
 		var i = keys.length - 1;
+		var targets = new IntIntMap();
 		while ( i >= 0 )
 		{
-			if( ResourceType.isCard(keys[i]) && game.calculator.getInt(CardFeatureType.F00_RARITY, keys[i]) != rarity )
-				break;
+			if( game.calculator.getInt(CardFeatureType.F00_RARITY, keys[i]) == rarity )
+				targets.set(keys[i], 0);
 			i --;
 		}
 		
-		if( i == -1 )
+		if( targets.keys().length == 0 )
 		{
-			trace("player " + id + " has not any buildng.");
+			trace("player " + id + " has not any card with " + rarity + " rarity.");
 			return -1;
 		}
 		
-		var t = resources.getRandomKey();
-		if( !ResourceType.isCard(t) )
-			return getRandomCard(rarity);
-		return t;
+		return targets.getRandomKey();
 	}
 	
 	public function getTutorStep() : Int { return tutorialMode == -1 ? PrefsTypes.T_162_QUEST_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
