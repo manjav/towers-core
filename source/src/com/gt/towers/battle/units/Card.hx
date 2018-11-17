@@ -1,6 +1,5 @@
 package com.gt.towers.battle.units;
 import com.gt.towers.Game;
-import com.gt.towers.calculators.RarityCalculator;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
@@ -29,6 +28,7 @@ class Card
 	public var speed:Float = 1;
 	public var sizeH:Float = 50;
 	public var sizeV:Float = 50;
+	public var focusRange:Float = 150;
 	
 	public var bulletSpeed:Float = 1.0;
 	public var bulletDamage:Float = 1.05;
@@ -62,6 +62,7 @@ class Card
 		health = game.calculator.get(CardFeatureType.F12_HEALTH, type, _level);
 		sizeH = game.calculator.get(CardFeatureType.F13_SIZE_H, type, _level);
 		sizeV = game.calculator.get(CardFeatureType.F14_SIZE_V, type, _level);
+		focusRange = game.calculator.get(CardFeatureType.F15_FOCUS_RANGE, type, _level);
 		
 		// defensive data
 		bulletSpeed = game.calculator.get(CardFeatureType.F21_BULLET_SPEED, type, _level);

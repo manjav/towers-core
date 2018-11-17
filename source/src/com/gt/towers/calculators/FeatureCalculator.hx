@@ -1,4 +1,5 @@
 package com.gt.towers.calculators;
+import com.gt.towers.calculators.FocusRangeCalculator;
 import com.gt.towers.calculators.SizeHCalculator;
 import com.gt.towers.calculators.SizeVCalculator;
 import com.gt.towers.calculators.QuantityCalculator;
@@ -20,13 +21,14 @@ class FeatureCalculator
 	var health:HealthCalculator;
 	var sizeH:SizeHCalculator;
 	var sizeV:SizeVCalculator;
+	var focusRange:FocusRangeCalculator;
 	
 	var bulletSpeed:BulletSpeedCalculator;
 	var bulletDamage:BulletDamageCalculator;
 	var bulletShootGap:BulletShootGapCalculator;
 	var bulletShootDelay:BulletShootDelayCalculator;
 	var bulletRangeMin:BulletRangeMinCalculator;
-	var bulletRangeMax:BulletRangeMaxCalculator;
+	var bulletRangeMax:BulletRangeCalculator;
 	var bulletDamageArea:BulletDamageAreaCalculator;
 	var bulletExplodeDelay:BulletExplodeDelayCalculator;
 
@@ -43,13 +45,14 @@ class FeatureCalculator
 		health = new HealthCalculator(null);
 		sizeH = new SizeHCalculator(null);
 		sizeV = new SizeVCalculator(null);
+		focusRange = new FocusRangeCalculator(null);
 		
 		bulletSpeed = new BulletSpeedCalculator(null);
 		bulletDamage = new BulletDamageCalculator(null);
 		bulletShootGap = new BulletShootGapCalculator(null);
 		bulletShootDelay = new BulletShootDelayCalculator(null);
 		bulletRangeMin = new BulletRangeMinCalculator(null);
-		bulletRangeMax = new BulletRangeMaxCalculator(null);
+		bulletRangeMax = new BulletRangeCalculator(null);
 		bulletDamageArea = new BulletDamageAreaCalculator(null);
 		bulletExplodeDelay = new BulletExplodeDelayCalculator(null);
 	}
@@ -68,6 +71,7 @@ class FeatureCalculator
 			case 12: health.get(buildingType, level);
 			case 13: sizeH.get(buildingType, level);
 			case 14: sizeV.get(buildingType, level);
+			case 15: focusRange.get(buildingType, level);
 			
 			case 21: bulletSpeed.get(buildingType, level) / TIME_SCALE;
 			case 22: bulletDamage.get(buildingType, level);

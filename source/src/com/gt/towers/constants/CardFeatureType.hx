@@ -18,6 +18,7 @@ class CardFeatureType
 	public static var F12_HEALTH:Int = 12;
 	public static var F13_SIZE_H:Int = 13;
 	static public var F14_SIZE_V:Int = 14;
+	public static var F15_FOCUS_RANGE:Int = 15;
 	//public static var F13_POWER:Int = 13;
 	//public static var F14_RUSH_GAP:Int = 14;
 	

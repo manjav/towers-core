@@ -3,7 +3,7 @@ package com.gt.towers.calculators;
  * ...
  * @author Mansour Djawadi
  */
-class BulletRangeMaxCalculator extends BaseCalculator
+class FocusRangeCalculator extends BaseCalculator
 {
 	public function new (game:Game) { super(game); BASE_VALUE = 1; }
 	override public function get( type:Int, level:Int = 1, improveLevel:Int = 1 ) : Float 
@@ -13,12 +13,12 @@ class BulletRangeMaxCalculator extends BaseCalculator
 			case	101	:	1.8 ;
 			case	102	:	1.2	;
 			case	103	:	0.8	;
-			case	104	:	0.3	;
+			case	104	:	1.0	;
 			case	105	:	1.2	;
 			case	106	:	1.1	;
 			case	107	:	1.3	;
 			case	108	:	1.4	;
-			case	109	:	0.5	;
+			case	109	:	1.0	;
 			case	110	:	0.8	;
 			case	111	:	1.2	;
 			

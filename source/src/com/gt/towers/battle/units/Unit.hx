@@ -17,7 +17,8 @@ class Unit extends GameObject
 	public var bulletId:Int = 0;
 	var attackTime:Float = 0;
 	var cachedEnemy:Int = -1;
-	var targetTile:Tile;
+	var target:Tile;
+	var defaultTarget:Tile;
 	var path:Array<Tile>;
 
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
@@ -31,10 +32,7 @@ class Unit extends GameObject
 		this.movable = card.type < CardTypes.C201;
 		if( !this.movable )
 			return;
-		this.targetTile = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
-		var tile = battleField.tileMap.getTile(this.x, this.y);
-		this.path = battleField.tileMap.findPath(targetTile.i, targetTile.j, tile.i, tile.j);
-		estimateAngle();
+		this.defaultTarget = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
 		
 		//trace(tile + " " + targetTile);
 		/*var i = 0;
@@ -71,34 +69,70 @@ class Unit extends GameObject
 	function decide() 
 	{
 		//var log = id + ":    ";
-		var target:Unit;
-		cachedEnemy = getNearestEnemy();
-		if( cachedEnemy > -1 )
+		
+		var enemyId = getNearestEnemy();
+		if( enemyId > -1 )
 		{
-			//log += "enemyId " + cachedEnemy;
-			if( attackTime < battleField.now )
+			var enemy = battleField.units.get(enemyId);
+			var newEnemyFound = enemyId != cachedEnemy;
+			if( newEnemyFound )
+				cachedEnemy = enemyId;
+			
+			//log += "enemyId " + enemyId;
+			if( com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, enemy.x, enemy.y) <= card.bulletRangeMax )
 			{
-				target = battleField.units.get(cachedEnemy);
-				attack(target);
-				//log += "   " + health + " <=> " + target.health ;
+				if( attackTime < battleField.now )
+				{
+					attack(enemy);
+					//log += "   " + health + " <=> " + enemy.health ;
+				}
+				else
+				{
+					//log += "   wait" ;
+					setState(GameObject.STATE_3_WAITING);
+				}
 				//trace(log);
+				return;
 			}
-			else
-			{
-				setState(GameObject.STATE_3_WAITING);
-			}
-		}
-		else
-		{
-			//log += "   moved.";
+			
+			if( newEnemyFound )
+				changeMovingTarget(battleField.tileMap.getTile(enemy.x, enemy.y));
 			move();
+			//log += "   move to enemy." ;
+			//trace(log);
+			return;
 		}
+		
+		changeMovingTarget(defaultTarget);
+		//log += "   move to target." ;
+		move();
 		//trace(log);
+	}
+	
+	function changeMovingTarget(target:Tile) : Void
+	{
+		if( !movable )
+			return;
+		if( this.target == target )
+			return;
+		this.target = target;
+		findPath(target);
 	}
 
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= movement -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	function findPath(target:Tile) : Void
+	{
+		if( !movable )
+			return;
+		var tile = battleField.tileMap.getTile(this.x, this.y);
+		this.path = battleField.tileMap.findPath(target.i, target.j, tile.i, tile.j);
+		estimateAngle();
+	}
+
 	function estimateAngle() : Void 
 	{
+		if( !movable )
+			return;
 		var angle:Float = Math.atan2(path[0].y - y, path[0].x - x);
         deltaX = card.speed * Math.cos(angle);
         deltaY = card.speed * Math.sin(angle);
@@ -110,7 +144,7 @@ class Unit extends GameObject
 		if( !movable )
 			return;
 		
-		if( (side == 0 && y <= path[0].y) || (side == 1 && y >= path[0].y) )
+		if( (deltaX >= 0 && x >= path[0].x || deltaX < 0 && x <= path[0].x) && (deltaY >= 0 && y >= path[0].y || deltaY < 0 && y <= path[0].y) )
 		{
 			path.shift();
 			estimateAngle();
@@ -125,11 +159,11 @@ class Unit extends GameObject
 	{
 		if ( cachedEnemy != -1 && battleField.units.exists(cachedEnemy) && !battleField.units.get(cachedEnemy).disposed() )
 		{
-			if( com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, battleField.units.get(cachedEnemy).x, battleField.units.get(cachedEnemy).y) <= card.bulletRangeMax )
+			if( com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, battleField.units.get(cachedEnemy).x, battleField.units.get(cachedEnemy).y) <= card.focusRange )
 				return cachedEnemy;
 		}
 		
-		var distance:Float = card.bulletRangeMax;
+		var distance:Float = card.focusRange;
 		var ret:Int = -1;
 		var i = 0;
 		var values = battleField.units.values();
