@@ -32,7 +32,7 @@ class Unit extends GameObject
 		this.movable = card.type < CardTypes.C201;
 		if( !this.movable )
 			return;
-		this.defaultTarget = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
+		this.defaultTarget = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == battleField.side ? BattleField.HEIGHT : 0);
 		
 		//trace(tile + " " + targetTile);
 		/*var i = 0;
