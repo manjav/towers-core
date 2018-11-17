@@ -23,7 +23,7 @@ class HealthCalculator  extends BaseCalculator
 			case	110	:	0.1 ;
 			case	111	:	1.02;
 			
-			case	201	:	9.00;
+			case	201	:	5.00;
 			
 			default: BASE_VALUE;
 		}
