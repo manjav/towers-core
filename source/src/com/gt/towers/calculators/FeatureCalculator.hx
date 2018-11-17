@@ -1,8 +1,8 @@
 package com.gt.towers.calculators;
 import com.gt.towers.calculators.FocusRangeCalculator;
+import com.gt.towers.calculators.QuantityCalculator;
 import com.gt.towers.calculators.SizeHCalculator;
 import com.gt.towers.calculators.SizeVCalculator;
-import com.gt.towers.calculators.QuantityCalculator;
 /**
  * ...
  * @author Mansour Djawadi
@@ -28,10 +28,9 @@ class FeatureCalculator
 	var bulletShootGap:BulletShootGapCalculator;
 	var bulletShootDelay:BulletShootDelayCalculator;
 	var bulletRangeMin:BulletRangeMinCalculator;
-	var bulletRangeMax:BulletRangeCalculator;
+	var bulletRangeMax:BulletRangeMaxCalculator;
 	var bulletDamageArea:BulletDamageAreaCalculator;
 	var bulletExplodeDelay:BulletExplodeDelayCalculator;
-
 
 	public function new()
 	{
@@ -52,7 +51,7 @@ class FeatureCalculator
 		bulletShootGap = new BulletShootGapCalculator(null);
 		bulletShootDelay = new BulletShootDelayCalculator(null);
 		bulletRangeMin = new BulletRangeMinCalculator(null);
-		bulletRangeMax = new BulletRangeCalculator(null);
+		bulletRangeMax = new BulletRangeMaxCalculator(null);
 		bulletDamageArea = new BulletDamageAreaCalculator(null);
 		bulletExplodeDelay = new BulletExplodeDelayCalculator(null);
 	}
