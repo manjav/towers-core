@@ -9,6 +9,7 @@ class TileMap
 {
 	static public var STATE_EMPTY:Int = 0;
 	static public var STATE_OCCUPIED:Int = 0xFF0000;
+	static public var STATE_UNIT:Int = 0xFF00FF;
 	static public var STATE_TARGET:Int = 0x00FF00;
 	static public var STATE_START:Int = 0xFFFF00;
 
@@ -47,8 +48,52 @@ class TileMap
 	{
 		return map[i][j];
 	}
+	public function getTile(x:Float, y:Float) : Tile
+	{
+		if( x < 0 )
+			x = 0;
+		if( y < 0 )
+			y = 0;
+		if( x > BattleField.WIDTH - 1 )
+			x = BattleField.WIDTH - 1;
+		if( y > BattleField.HEIGHT - 1)
+			y = BattleField.HEIGHT - 1;
+		var t = new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
+		setTilePosition(t);
+		return t;
+	}
+	
+	function setTilePosition(tile:Tile) : Void
+	{
+		tile.x = tile.i * tileWidth + tileWidth * 0.5;
+		tile.y = tile.j * tileHeight + tileHeight * 0.5;
+	}
+	
+	public function inMap(i:Int, j:Int) : Bool
+	{
+		return i > -1 && j > -1 && i < width - 1 && j < height - 1;
+	}
+	
+	public function occupy(x:Float, y:Float, width:Float, height:Float) : Void
+	{
+		var from = getTile(x, y);
+		var to = getTile(x + width, y + height);
+		var i:Int = from.i;
+		var j:Int;
+		while ( i <= to.i )
+		{
+			j = from.j;
+			while ( j <= to.j )
+			{
+				set(i, j, STATE_OCCUPIED);
+				j ++;
+			}
+			i ++;
+		}
+	}
+	
 
-	public function findPath(destI:Int, destJ:Int, sourceI:Int, sourceJ:Int, removeWrongs:Bool = true) : Array<Tile>
+	public function findPath(destI:Int, destJ:Int, sourceI:Int, sourceJ:Int, side:Int , removeWrongs:Bool = true):Array<Tile>
 	{
 		set(destI, destJ, STATE_START);
 		set(sourceI, sourceJ, STATE_TARGET);
@@ -56,7 +101,7 @@ class TileMap
 		var queue:Array<Tile> = new Array<Tile>();
 		queue.push(new Tile(destI, destJ, 0, 0));
 		//run recursive function to find the shortest path
-		checkQueue(0, 1, queue);
+		checkQueue(0, 1, queue, side);
 		
 		if( !removeWrongs )
 			return queue;
@@ -79,7 +124,7 @@ class TileMap
 		return ret;
 	}
 
-	private function checkQueue( startIndex:Int, cost:Int, queue:Array<Tile> ) : Void
+	private function checkQueue(startIndex:Int, cost:Int, queue:Array<Tile>, side:Int) : Void
 	{
 		var lastQueueLength:Int = queue.length;
 		var i:Int = startIndex;
@@ -87,19 +132,19 @@ class TileMap
 		//check neigbours of the queue element
 		while ( i < lastQueueLength )
 		{
-			checkTile(queue[i].i,		queue[i].j - 1, cost + 0.00, i, queue); // top
-			checkTile(queue[i].i + 1,	queue[i].j - 1, cost + 0.42, i, queue); // top-right
-			checkTile(queue[i].i + 1,	queue[i].j,		cost + 0.00, i, queue); // right
-			checkTile(queue[i].i + 1,	queue[i].j + 1, cost + 0.42, i, queue); // right-bottom
-			checkTile(queue[i].i,		queue[i].j + 1, cost + 0.00, i, queue); // bottom
-			checkTile(queue[i].i - 1,	queue[i].j + 1, cost + 0.42, i, queue); // left-bottom
-			checkTile(queue[i].i - 1,	queue[i].j, 	cost + 0.00, i, queue); // left
-			checkTile(queue[i].i - 1,	queue[i].j - 1,	cost + 0.42, i, queue); // left-top
+			checkTile(queue[i].i,			queue[i].j - side,	cost + 0.00, i, queue); // top
+			checkTile(queue[i].i + side,	queue[i].j - side,	cost + 0.42, i, queue); // top-right
+			checkTile(queue[i].i + side,	queue[i].j,			cost + 0.00, i, queue); // right
+			checkTile(queue[i].i + side,	queue[i].j + side,	cost + 0.42, i, queue); // right-bottom
+			checkTile(queue[i].i,			queue[i].j + side,	cost + 0.00, i, queue); // bottom
+			checkTile(queue[i].i - side,	queue[i].j + side,	cost + 0.42, i, queue); // left-bottom
+			checkTile(queue[i].i - side,	queue[i].j, 		cost + 0.00, i, queue); // left
+			checkTile(queue[i].i - side,	queue[i].j - side,	cost + 0.42, i, queue); // left-top
 			
 			i ++;
 		}
 		if( target == null )
-			checkQueue(lastQueueLength, cost + 1, queue);
+			checkQueue(lastQueueLength, cost + 1, queue, side);
 	}
 	
 	public function checkTile(i:Int, j:Int, cost:Float, last:Int, queue:Array<Tile>) : Void
@@ -147,80 +192,36 @@ class TileMap
 		return true;
 	}
 	
-	public function getTile(x:Float, y:Float) : Tile
-	{
-		if( x < 0 )
-			x = 0;
-		if( y < 0 )
-			y = 0;
-		if( x > BattleField.WIDTH - 1 )
-			x = BattleField.WIDTH - 1;
-		if( y > BattleField.HEIGHT - 1)
-			y = BattleField.HEIGHT - 1;
-		var t = new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
-		setTilePosition(t);
-		return t;
-	}
-	
-	function setTilePosition(tile:Tile) : Void
-	{
-		tile.x = tile.i * tileWidth + tileWidth * 0.5;
-		tile.y = tile.j * tileHeight + tileHeight * 0.5;
-	}
-	
-	public function inMap(i:Int, j:Int) : Bool
-	{
-		return i > -1 && j > -1 && i < width - 1 && j < height - 1;
-	}
-	
-	public function occupy(x:Float, y:Float, width:Float, height:Float) : Void
-	{
-		var from = getTile(x, y);
-		var to = getTile(x + width, y + height);
-		var i:Int = from.i;
-		var j:Int;
-		while ( i <= to.i )
-		{
-			j = from.j;
-			while ( j <= to.j )
-			{
-				set(i, j, STATE_OCCUPIED);
-				j ++;
-			}
-			i ++;
-		}
-	}
-	
-	public function findTile(x:Float, y:Float, state:Int = 0) : Tile
+	public function findTile(x:Float, y:Float, side:Int, state:Int = 0) : Tile
 	{
 		var tile = getTile(x, y);
 		if( get(tile.i, tile.j) == STATE_EMPTY )
 			return tile;
 		//trace(tile.i +"," + tile.j + " start finding...");
-		if( !lookingAround(tile) )
+		if( !lookingAround(tile, side) )
 			return null;
 		setTilePosition(tile);
 		return tile;
 	}
 	
-	function lookingAround (tile:Tile, step:Int = 1, state:Int = 0) : Bool
+	function lookingAround (tile:Tile, side:Int, step:Int = 1, state:Int = 0) : Bool
 	{
 		// vertical check
 		var i:Int = 0;
 		while ( i <= step )
 		{
-			if( checkAndFillState(tile.i + step, tile.j + i, tile, state) )
+			if( checkAndFillState(tile.i + step * side, tile.j + i * side, tile, state) )
 				return true;
-			if( checkAndFillState(tile.i - step, tile.j + i, tile, state) )
+			if( checkAndFillState(tile.i - step * side, tile.j + i * side, tile, state) )
 				return true;
 			if( i == 0 )
 			{
 				i ++;
 				continue;
 			}
-			if( checkAndFillState(tile.i + step, tile.j - i, tile, state) )
+			if( checkAndFillState(tile.i + step * side, tile.j - i * side, tile, state) )
 				return true;
-			if( checkAndFillState(tile.i - step, tile.j - i, tile, state) )
+			if( checkAndFillState(tile.i - step * side, tile.j - i * side, tile, state) )
 				return true;
 			i ++;
 		}
@@ -228,18 +229,18 @@ class TileMap
 		i = 0;
 		while ( i < step )
 		{
-			if( checkAndFillState(tile.i + i, tile.j + step, tile, state) )
+			if( checkAndFillState(tile.i + i * side, tile.j + step * side, tile, state) )
 				return true;
-			if( checkAndFillState(tile.i + i, tile.j - step, tile, state) )
+			if( checkAndFillState(tile.i + i * side, tile.j - step * side, tile, state) )
 				return true;
 			if( i == 0 )
 			{
 				i ++;
 				continue;
 			}
-			if( checkAndFillState(tile.i - i, tile.j + step, tile, state) )
+			if( checkAndFillState(tile.i - i * side, tile.j + step * side, tile, state) )
 				return true;
-			if( checkAndFillState(tile.i - i, tile.j - step, tile, state) )
+			if( checkAndFillState(tile.i - i * side, tile.j - step * side, tile, state) )
 				return true;
 			i ++;
 		}

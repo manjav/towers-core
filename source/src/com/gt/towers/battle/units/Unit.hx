@@ -32,7 +32,7 @@ class Unit extends GameObject
 		this.movable = card.type < CardTypes.C201;
 		if( !this.movable )
 			return;
-		this.defaultTarget = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == battleField.side ? BattleField.HEIGHT : 0);
+		this.defaultTarget = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == battleField.side ? 0 : BattleField.HEIGHT);
 		
 		//trace(tile + " " + targetTile);
 		/*var i = 0;
@@ -125,7 +125,7 @@ class Unit extends GameObject
 		if( !movable )
 			return;
 		var tile = battleField.tileMap.getTile(this.x, this.y);
-		this.path = battleField.tileMap.findPath(target.i, target.j, tile.i, tile.j);
+		this.path = battleField.tileMap.findPath(target.i, target.j, tile.i, tile.j, side == 0 ? 1 : -1);
 		estimateAngle();
 	}
 
@@ -146,7 +146,8 @@ class Unit extends GameObject
 		
 		if( (deltaX >= 0 && x >= path[0].x || deltaX < 0 && x <= path[0].x) && (deltaY >= 0 && y >= path[0].y || deltaY < 0 && y <= path[0].y) )
 		{
-			path.shift();
+			if( path.length > 1 )
+				path.shift();
 			estimateAngle();
 			return;
 		}

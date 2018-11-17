@@ -235,7 +235,7 @@ class BattleField
 		var i = card.quantity - 1;
 		while( i >= 0 )
 		{
-			var tile = tileMap.findTile(com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y));
+			var tile = tileMap.findTile(com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y), side == 0 ? 1 : -1);
 			if( tile == null )
 				trace("tile not found!");
 				

@@ -26,6 +26,6 @@ class BulletRangeMaxCalculator extends BaseCalculator
 			
 			default : BASE_VALUE;
 		}
-		return ret * 400;
+		return ret * 300;
 	}
 }
