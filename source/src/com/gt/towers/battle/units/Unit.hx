@@ -16,10 +16,10 @@ class Unit extends GameObject
 {
     public var health:Float;
 	public var bulletId:Int = 0;
-	var attackTime:Float = 0;
 	var target:Point3;
-	var cachedEnemy:Int = -1;
 	var defaultTarget:Point3;
+	var attackTime:Float = 0;
+	var cachedEnemy:Int = -1;
 	var path:Array<Tile>;
 
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
@@ -102,13 +102,13 @@ class Unit extends GameObject
 			{
 				//log += " move to enemy." ;
 				//trace(log);
-				
 				changeMovingTarget(enemy.x, enemy.y);
 			}
 			move();
 			return;
 		}
-		
+		if( !movable )
+			return;
 		changeMovingTarget(defaultTarget.x, defaultTarget.y);
 		move();
 	}
