@@ -30,6 +30,8 @@ class BattleField
 	static public var STATE_5_DISPOSED:Int = 5;
 	
 	static public var CAMERA_ANGLE:Float = 0.766;// sin of 50 angle
+	static public var DEBUG_MODE:Bool = false;
+	static public var DELTA_TIME:Int = 25;
 	
 	private var questProvider:FieldProvider;
 
@@ -91,7 +93,7 @@ class BattleField
 			while ( unitId < 2 )
 			{
 				var card = new com.gt.towers.battle.units.Card(games.get(unitId), 201, games.get(unitId).player.get_level(0));
-				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, unitId, 480, 1210, 0));
+				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, unitId, 480, unitId == 0 ? 1210 : 70, 0));
 				unitId ++;
 			}
 		}
@@ -209,7 +211,7 @@ class BattleField
 		// -=-=-=-=-=-=-=-=-=-=-  INCREASE ELIXIRS  -=-=-=-=-=-=-=-=-=-=-=-
 		var increaseCoef = (getDuration() > getTime(2) ? 0.00066 : 0.00033) * deltaTime;
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef ));
-		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef ));
+		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef * 0.5));
 		
 		//trace("units: " + units.keys().length + "  bullets: " + bullets.keys().length);
 	}
@@ -251,11 +253,7 @@ class BattleField
 	function addSpell(card:com.gt.towers.battle.units.Card, side:Int, x:Float, y:Float) : Int
 	{
 		var offset = com.gt.towers.calculators.BulletFirePositionCalculator.getPoint(card.type, 0);
-		offset.y *= (side == this.side) ? 1 : -1;
-		offset.x *= (side == this.side) ? 1 : -1;
-		var _x = side == this.side ? x : BattleField.WIDTH - x;
-		var _y = side == this.side ? y : BattleField.HEIGHT - y;
-		var spell = new com.gt.towers.battle.bullets.Bullet(this, spellId, card, side, _x + offset.x, _y + offset.y, offset.z, _x, _y, 0);
+		var spell = new com.gt.towers.battle.bullets.Bullet(this, spellId, card, side, x + offset.x, y + offset.y, offset.z, x, y, 0);
 		bullets.set(spellId, spell);
 		spellId ++;
 		return spellId - 1;

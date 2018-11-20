@@ -90,4 +90,17 @@ class GameObject
 	{
 		return state == GameObject.STATE_4_DIPOSED;
 	}
+	
+	public function getSideX() : Float
+	{
+		if( battleField.side == 0 )
+			return x;
+		return BattleField.WIDTH - x;
+	}
+	public function getSideY() : Float
+	{
+		if( battleField.side == 0 )
+			return y;
+		return BattleField.HEIGHT - y;
+	}
 }
