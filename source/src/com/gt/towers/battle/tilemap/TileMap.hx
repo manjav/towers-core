@@ -1,5 +1,6 @@
 package com.gt.towers.battle.tilemap;
 import com.gt.towers.battle.tilemap.Tile;
+import com.gt.towers.utils.CoreUtils;
 
 /**
 * ...
@@ -50,17 +51,25 @@ class TileMap
 	}
 	public function getTile(x:Float, y:Float) : Tile
 	{
-		if( x < 0 )
-			x = 0;
-		if( y < 0 )
-			y = 0;
-		if( x > BattleField.WIDTH - 1 )
-			x = BattleField.WIDTH - 1;
-		if( y > BattleField.HEIGHT - 1)
-			y = BattleField.HEIGHT - 1;
-		var t = new Tile(Math.floor(x / tileWidth), Math.floor(y / tileHeight), 0, 0);
+		var t = new Tile(getI(x), getJ(y), 0, 0);
 		setTilePosition(t);
 		return t;
+	}
+	public function getI(x:Float) : Int
+	{
+		if( x < 0 )
+			x = 0;
+		if( x > BattleField.WIDTH - 1 )
+			x = BattleField.WIDTH - 1;
+		return Math.floor(x / tileWidth);
+	}
+	public function getJ(y:Float) : Int
+	{
+		if( y < 0 )
+			y = 0;
+		if( y > BattleField.HEIGHT - 1 )
+			y = BattleField.HEIGHT - 1;
+		return Math.floor(y / tileHeight);
 	}
 	
 	function setTilePosition(tile:Tile) : Void
@@ -93,13 +102,16 @@ class TileMap
 	}
 	
 
-	public function findPath(destI:Int, destJ:Int, sourceI:Int, sourceJ:Int, side:Int , removeWrongs:Bool = true):Array<Tile>
+	public function findPath(sourceX:Float, sourceY:Float, destX:Float, destY:Float, side:Int , removeWrongs:Bool = true):Array<Tile>
 	{
-		set(destI, destJ, STATE_START);
-		set(sourceI, sourceJ, STATE_TARGET);
+		var srcTile = getTile(sourceX, sourceY);
+		var desTile = getTile(destX, destY);
+		set(desTile.i,	desTile.j,	STATE_START);
+		set(srcTile.i,	srcTile.j,	STATE_TARGET);
 		
 		var queue:Array<Tile> = new Array<Tile>();
-		queue.push(new Tile(destI, destJ, 0, 0));
+		desTile.cost = desTile.last = 0;
+		queue.push(desTile);
 		//run recursive function to find the shortest path
 		checkQueue(0, 1, queue, side);
 		
@@ -118,9 +130,20 @@ class TileMap
 			if( last == 0 )
 				break;
 		}
-		set(destI, destJ, STATE_EMPTY);
-		set(sourceI, sourceJ, STATE_EMPTY);
+		
+		// tiles return to first states
+		set(desTile.i, desTile.j, STATE_EMPTY);
+		set(srcTile.i, srcTile.j, STATE_EMPTY);
 		target = null;
+		
+		// remove backward ways
+		while ( ret.length > 1 )
+		{
+			//trace(CoreUtils.getNormalDistance(ret[0].x, ret[0].y, ret[1].x, ret[1].y) + " " + CoreUtils.getNormalDistance(sourceX, sourceY, ret[1].x, ret[1].y));
+			if( CoreUtils.getNormalDistance(ret[0].x, ret[0].y, ret[1].x, ret[1].y) < CoreUtils.getNormalDistance(sourceX, sourceY, ret[1].x, ret[1].y) )
+				break;
+			ret.shift();
+		}		
 		return ret;
 	}
 

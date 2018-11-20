@@ -43,6 +43,10 @@ class CoreUtils
 	{
 		return Math.sqrt(Math.pow(sx - dx, 2) + Math.pow((sy - dy) * 1.4285, 2) );
 	}
+	static public function getNormalDistance(sx:Float, sy:Float, dx:Float, dy:Float) : Float
+	{
+		return Math.sqrt(Math.pow(sx - dx, 2) + Math.pow((sy - dy), 2) );
+	}
 	
 	static var GAP:Float = 40;
 	static public function getXPosition(max:Int, i:Int, x:Float) : Float

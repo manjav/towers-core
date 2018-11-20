@@ -6,6 +6,7 @@ import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.events.BattleEvent;
+import com.gt.towers.utils.Point3;
 
 /**
  * ...
@@ -16,15 +17,13 @@ class Unit extends GameObject
     public var health:Float;
 	public var bulletId:Int = 0;
 	var attackTime:Float = 0;
+	var target:Point3;
 	var cachedEnemy:Int = -1;
-	var target:Tile;
-	var defaultTarget:Tile;
+	var defaultTarget:Point3;
 	var path:Array<Tile>;
 
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
 	{
-		x = ( side == battleField.side ) ? x : (BattleField.WIDTH - x);
-		y = ( side == battleField.side ) ? y : (BattleField.HEIGHT - y);
 		super(id, battleField, card, side, x, y, z);
 		this.summonTime = battleField.now + card.summonTime;
 		this.health = card.health;
@@ -32,7 +31,8 @@ class Unit extends GameObject
 		this.movable = card.type < CardTypes.C201;
 		if( !this.movable )
 			return;
-		this.defaultTarget = battleField.tileMap.getTile(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == battleField.side ? 0 : BattleField.HEIGHT);
+		this.target = new Point3(0, 0);
+		this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == battleField.side ? 0 : BattleField.HEIGHT);
 		
 		//trace(tile + " " + targetTile);
 		/*var i = 0;
@@ -68,8 +68,7 @@ class Unit extends GameObject
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= decide -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function decide() 
 	{
-		//var log = id + ":    ";
-		
+		//var log = "decide => id:" + id + " type: " + card.type;
 		var enemyId = getNearestEnemy();
 		if( enemyId > -1 )
 		{
@@ -78,81 +77,113 @@ class Unit extends GameObject
 			if( newEnemyFound )
 				cachedEnemy = enemyId;
 			
-			//log += "enemyId " + enemyId;
+			//log += " enemyId:" + enemyId;
 			if( com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, enemy.x, enemy.y) <= card.bulletRangeMax )
 			{
 				if( attackTime < battleField.now )
 				{
 					attack(enemy);
-					//log += "   " + health + " <=> " + enemy.health ;
+					//log += "   " + health + " <=> " + enemy.health;
+					//trace(log);
 				}
 				else
 				{
 					//log += "   wait" ;
+					//trace(log);
 					setState(GameObject.STATE_3_WAITING);
 				}
-				//trace(log);
 				return;
 			}
 			
+			if( !movable )
+				return;
+			
 			if( newEnemyFound )
-				changeMovingTarget(battleField.tileMap.getTile(enemy.x, enemy.y));
+			{
+				//log += " move to enemy." ;
+				//trace(log);
+				
+				changeMovingTarget(enemy.x, enemy.y);
+			}
 			move();
-			//log += "   move to enemy." ;
-			//trace(log);
 			return;
 		}
 		
-		changeMovingTarget(defaultTarget);
-		//log += "   move to target." ;
+		changeMovingTarget(defaultTarget.x, defaultTarget.y);
 		move();
-		//trace(log);
 	}
 	
-	function changeMovingTarget(target:Tile) : Void
+	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= movement -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	function changeMovingTarget(x:Float, y:Float) : Void
 	{
-		if( !movable )
+		trace("changeMovingTarget  id: " + id + " type: " + card.type + "   " + target );
+		if( this.target.equals(x, y, 0) )
+		{
+			estimateAngle();
 			return;
-		if( this.target == target )
-			return;
-		this.target = target;
-		findPath(target);
+		}
+		this.target.x = target.x;
+		this.target.y = target.y;
+		findPath(target.x, target.y);
 	}
 
-	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= movement -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	function findPath(target:Tile) : Void
+	function findPath(targetX:Float, targetY:Float) : Void
 	{
-		if( !movable )
-			return;
-		var tile = battleField.tileMap.getTile(this.x, this.y);
-		this.path = battleField.tileMap.findPath(target.i, target.j, tile.i, tile.j, side == 0 ? 1 : -1);
+		this.path = battleField.tileMap.findPath(this.x, this.y, targetX, targetY, side == 0 ? 1 : -1);
+		if( BattleField.DEBUG_MODE )
+		{
+			var i = 0;
+			var len = path.length;
+			var pthStr = "findPath  id: " + id + " type: " + card.type + "  ";
+			while ( i < len )
+			{
+				pthStr += (path[i].x + "," + path[i].y + " ");
+				i ++;
+			}
+			fireEvent(id, "findPath", null);
+			trace(pthStr);
+		}
 		estimateAngle();
 	}
 
 	function estimateAngle() : Void 
 	{
-		if( !movable )
-			return;
 		var angle:Float = Math.atan2(path[0].y - y, path[0].x - x);
-        deltaX = card.speed * Math.cos(angle);
-        deltaY = card.speed * Math.sin(angle);
+        deltaX = Math.round(card.speed * Math.cos(angle) * 1000) / 1000;
+        deltaY = Math.round(card.speed * Math.sin(angle) * 1000) / 1000;
 		//trace("side:" + side + "  x:" + x + " " + path[0].x + " ,  y:" + y + " " + path[0].y + " ,  delta:" + deltaX + " " + deltaY);
 	}
 	
+//	var tracetime:Float;
 	function move() : Void
 	{
 		if( !movable )
 			return;
 		
-		if( (deltaX >= 0 && x >= path[0].x || deltaX < 0 && x <= path[0].x) && (deltaY >= 0 && y >= path[0].y || deltaY < 0 && y <= path[0].y) )
+		var cx:Float = deltaX * battleField.deltaTime;
+		var cy:Float = deltaY * battleField.deltaTime;
+		/*var log = "";
+		if( battleField.now > tracetime )
+			log = "move   id: " + id + " type: " + card.type + " path:" + this.path.length + "   px:" + path[0].x + " x:" + x + " cx:" + cx + "   py:" + path[0].y + " y:" + y + " cy:" + cy;*/
+		cx = (Math.abs(path[0].x - x) < Math.abs(cx) || cx == 0) ? GameObject.NaN : (x + cx);
+		cy = (Math.abs(path[0].y - y) < Math.abs(cy) || cy == 0) ? GameObject.NaN : (y + cy);
+		/*if( battleField.now > tracetime )
+		{
+			log += "   ccx:" + cx + " ccy:" + cy;
+			trace( log );
+			tracetime = battleField.now + 1000;
+		}*/
+		
+		if( cx == GameObject.NaN && cy == GameObject.NaN )
 		{
 			if( path.length > 1 )
+			{
 				path.shift();
-			estimateAngle();
+				estimateAngle();
+			}
 			return;
 		}
-		setPosition(x + deltaX * battleField.deltaTime, y + deltaY * battleField.deltaTime, GameObject.NaN);
-//		setPosition(GameObject.NaN, y + ((side == battleField.side ? -1 : 1) * (card.speed * battleField.deltaTime)), GameObject.NaN);
+		setPosition(cx, cy, GameObject.NaN);
 	}
 	
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= attack -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
