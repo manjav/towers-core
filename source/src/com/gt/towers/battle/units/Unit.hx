@@ -109,22 +109,19 @@ class Unit extends GameObject
 		}
 		if( !movable )
 			return;
-		changeMovingTarget(defaultTarget.x, defaultTarget.y);
+		
+		if( !target.equalsPoint(defaultTarget) )
+			changeMovingTarget(defaultTarget.x, defaultTarget.y);
 		move();
 	}
 	
 	// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= movement -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	function changeMovingTarget(x:Float, y:Float) : Void
 	{
-		trace("changeMovingTarget  id: " + id + " type: " + card.type + "   " + target );
-		if( this.target.equals(x, y, 0) )
-		{
-			estimateAngle();
-			return;
-		}
-		this.target.x = target.x;
-		this.target.y = target.y;
-		findPath(target.x, target.y);
+//		trace("changeMovingTarget  id: " + id + " type: " + card.type + "   " + target );
+		this.target.x = x;
+		this.target.y = y;
+		findPath(x, y);
 	}
 
 	function findPath(targetX:Float, targetY:Float) : Void
