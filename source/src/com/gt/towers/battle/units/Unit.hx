@@ -32,7 +32,7 @@ class Unit extends GameObject
 		if( !this.movable )
 			return;
 		this.target = new Point3(0, 0);
-		this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == battleField.side ? 0 : BattleField.HEIGHT);
+		this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
 		
 		//trace(tile + " " + targetTile);
 		/*var i = 0;

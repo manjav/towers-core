@@ -91,8 +91,10 @@ class GameObject
 		return state == GameObject.STATE_4_DIPOSED;
 	}
 	
+#if flash
 	public function getSideX() : Float
 	{
+		//trace("getSideX " + card.type + " " + battleField.side);
 		if( battleField.side == 0 )
 			return x;
 		return BattleField.WIDTH - x;
@@ -103,4 +105,5 @@ class GameObject
 			return y;
 		return BattleField.HEIGHT - y;
 	}
+#end
 }
