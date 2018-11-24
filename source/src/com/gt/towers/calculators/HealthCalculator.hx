@@ -12,15 +12,15 @@ class HealthCalculator  extends BaseCalculator
 		var ret = switch ( type )
 		{
 			case	101	:	0.50;
-			case	102	:	2.90;
-			case	103	:	0.1 ;
+			case	102	:	3.00;
+			case	103	:	0.10;
 			case	104	:	1.02;
-			case	105	:	1.70;
+			case	105	:	2.00;
 			case	106	:	1.00;
 			case	107	:	2.04;
 			case	108	:	1.00;
-			case	109	:	0.40;
-			case	110	:	0.1 ;
+			case	109	:	0.30;
+			case	110	:	0.10;
 			case	111	:	1.02;
 			
 			case	201	:	8.00;
