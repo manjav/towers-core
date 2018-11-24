@@ -13,12 +13,12 @@ class FocusRangeCalculator extends BaseCalculator
 			case	101	:	1.8 ;
 			case	102	:	1.2	;
 			case	103	:	0.8	;
-			case	104	:	0.3	;
-			case	105	:	1.2	;
+			case	104	:	1.0	;
+			case	105	:	0.8	;
 			case	106	:	1.1	;
 			case	107	:	1.3	;
 			case	108	:	1.4	;
-			case	109	:	1.0	;
+			case	109	:	1.3	;
 			case	110	:	0.8	;
 			case	111	:	1.2	;
 			
@@ -26,6 +26,6 @@ class FocusRangeCalculator extends BaseCalculator
 			
 			default : BASE_VALUE;
 		}
-		return ret * 400;
+		return ret * 350;
 	}
 }
