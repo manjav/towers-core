@@ -154,7 +154,7 @@ class Unit extends GameObject
 //	var tracetime:Float;
 	function move() : Void
 	{
-		if( !movable )
+		if( !movable || path == null || path.length == 0 )
 			return;
 		
 		var cx:Float = deltaX * battleField.deltaTime;
