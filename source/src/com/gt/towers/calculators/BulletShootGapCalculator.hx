@@ -26,6 +26,6 @@ class BulletShootGapCalculator  extends BaseCalculator
 			case 	201 :	0.7 ;
 			default : BASE_VALUE;
 		}
-		return (ret + Math.log(level) * 0.585) * 1500 ;
+		return (ret + Math.log(level) * 0.585) * 1500 * 0.5 ;
 	}
 }
