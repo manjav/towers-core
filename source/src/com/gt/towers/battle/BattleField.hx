@@ -209,11 +209,16 @@ class BattleField
 		
 		
 		// -=-=-=-=-=-=-=-=-=-=-  INCREASE ELIXIRS  -=-=-=-=-=-=-=-=-=-=-=-
-		var increaseCoef = (getDuration() > getTime(2) ? 0.00066 : 0.00033) * deltaTime;
-		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseCoef * 1.2));
-		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseCoef * 1.2));
+		var increaseSpeed = getElixirIncreaseSpeed() * deltaTime;
+		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseSpeed));
+		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseSpeed));
 		
 		//trace("units: " + units.keys().length + "  bullets: " + bullets.keys().length);
+	}
+	
+	public function getElixirIncreaseSpeed() : Float
+	{
+		return (getDuration() > getTime(2) ? 0.00066 : 0.00033);
 	}
 	
 	public function getDuration() : Float
