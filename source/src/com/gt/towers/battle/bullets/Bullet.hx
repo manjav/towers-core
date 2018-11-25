@@ -88,7 +88,7 @@ class Bullet extends GameObject
 		y = fy;
 		z = fz;
 		//trace("Bullet " + id + " exploded.");
-		explodeTime = battleField.now + card.bulletExplodDelay;
+		explodeTime = battleField.now + card.bulletExplodeDelay;
 		fireEvent(id, BattleEvent.HIT, null);
 	}
 	
