@@ -85,9 +85,14 @@ class FeatureCalculator
 		}
 	}
 	
-	public function getInt(featureType:Int, CardType:Int, level:Int = 1) : Int
+	public function getInt(featureType:Int, cardType:Int, level:Int = 1) : Int
 	{
-		return Math.round( get( featureType, CardType, level) );
+		return Math.round( get(featureType, cardType, level) );
+	}
+	
+	public function getBool(featureType:Int, cardType:Int, level:Int) 
+	{
+		return get(featureType, cardType, level) > 0;
 	}
 	
 	public function getBaseline(featureType:Int) : Float
