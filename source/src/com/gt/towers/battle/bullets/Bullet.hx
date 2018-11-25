@@ -76,8 +76,6 @@ class Bullet extends GameObject
 			return;
 		
 		setPosition(dx != 0 ? x + deltaX : GameObject.NaN, dy != 0 ? y + deltaY : GameObject.NaN, dz != 0 ? z + deltaZ : GameObject.NaN);
-		//if( card.type == 152 )
-			//trace("sx:" + sx, " x:" + x, " fx:" + fx, " dx:" + dx, " deltaX:" + deltaX + "    sy:" + sy, " y:" + y, " fy:" + fy, " dy:" + dy, " deltaY:" + deltaY + "    sz:" + sz, " z:" + z, " fz:" + fz, " dz:" + dz, " deltaZ:" + deltaZ);
 		if( (deltaX >= 0 && x >= fx || deltaX < 0 && x <= fx) && (deltaY >= 0 && y >= fy || deltaY < 0 && y <= fy) && (deltaZ >= 0 && z >= fz || deltaZ < 0 && z <= fz) )
 			hit();
 	}	
@@ -87,7 +85,6 @@ class Bullet extends GameObject
 		x = fx;
 		y = fy;
 		z = fz;
-		//trace("Bullet " + id + " exploded.");
 		explodeTime = battleField.now + card.bulletExplodeDelay;
 		fireEvent(id, BattleEvent.HIT, null);
 	}
