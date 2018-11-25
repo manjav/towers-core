@@ -19,6 +19,7 @@ class CardFeatureType
 	static public var F13_SIZE_H:Int = 13;
 	static public var F14_SIZE_V:Int = 14;
 	static public var F15_FOCUS_RANGE:Int = 15;
+	static public var F16_EXPLOSIVE:Int = 16;
 	
 	static public var F21_BULLET_SPEED:Int = 21;
 	static public var F22_BULLET_DAMAGE:Int = 22;

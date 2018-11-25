@@ -218,6 +218,11 @@ class Unit extends GameObject
 	
 	function attack(enemy:Unit) : Void
 	{
+		if( enemy != this && card.explosive )
+		{
+			hit(health);
+			return;
+		}
 #if java
 		battleField.addBullet(this, side, x, y, enemy.x, enemy.y);
 #end
@@ -233,6 +238,14 @@ class Unit extends GameObject
 		fireEvent(id, BattleEvent.HIT, damage);
 	}
 
+	public override function dispose() : Void
+	{
+		if( card.explosive )
+			attack(this);
+		super.dispose();
+	}
+
+	
 	#if java
 	public function toString():String
 	#elseif flash

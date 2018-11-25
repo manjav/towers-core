@@ -62,7 +62,7 @@ class Bullet extends GameObject
 			return;
 		summonTime = 0;
 		var unitId:Int = Std.int((id - id % 10000) / 10000);
-		if( !CardTypes.isSpell(card.type) && (!battleField.units.exists(unitId) || battleField.units.get(unitId).disposed()) )
+		if( !CardTypes.isSpell(card.type) && !card.explosive && (!battleField.units.exists(unitId) || battleField.units.get(unitId).disposed()) )
 		{
 			dispose();
 			return;

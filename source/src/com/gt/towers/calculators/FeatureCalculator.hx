@@ -1,6 +1,7 @@
 package com.gt.towers.calculators;
 import com.gt.towers.calculators.FocusRangeCalculator;
 import com.gt.towers.calculators.QuantityCalculator;
+import com.gt.towers.calculators.ExplosiveCalculator;
 import com.gt.towers.calculators.SizeHCalculator;
 import com.gt.towers.calculators.SizeVCalculator;
 /**
@@ -22,6 +23,7 @@ class FeatureCalculator
 	var sizeH:SizeHCalculator;
 	var sizeV:SizeVCalculator;
 	var focusRange:FocusRangeCalculator;
+	var explosive:ExplosiveCalculator;
 	
 	var bulletSpeed:BulletSpeedCalculator;
 	var bulletDamage:BulletDamageCalculator;
@@ -45,6 +47,7 @@ class FeatureCalculator
 		sizeH = new SizeHCalculator(null);
 		sizeV = new SizeVCalculator(null);
 		focusRange = new FocusRangeCalculator(null);
+		explosive = new ExplosiveCalculator(null);
 		
 		bulletSpeed = new BulletSpeedCalculator(null);
 		bulletDamage = new BulletDamageCalculator(null);
@@ -71,6 +74,7 @@ class FeatureCalculator
 			case 13: sizeH.get(buildingType, level);
 			case 14: sizeV.get(buildingType, level);
 			case 15: focusRange.get(buildingType, level);
+			case 16: explosive.get(buildingType, level);
 			
 			case 21: bulletSpeed.get(buildingType, level) / TIME_SCALE;
 			case 22: bulletDamage.get(buildingType, level);
