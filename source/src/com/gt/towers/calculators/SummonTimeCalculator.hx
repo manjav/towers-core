@@ -22,6 +22,8 @@ class SummonTimeCalculator  extends BaseCalculator
 			case	109	:	1	;
 			case	110	:	1	;
 			case	111	:	1	;
+			case	112	:	1	;
+			case	113	:	1	;
 			
 			case	151	:	2	;
 			case	152	:	0.7	;
@@ -30,6 +32,6 @@ class SummonTimeCalculator  extends BaseCalculator
 			
 			default : BASE_VALUE;
 		}
-		return ret * 2000;
+		return ret * 1000;
 	}
 }

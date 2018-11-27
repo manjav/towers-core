@@ -22,6 +22,8 @@ class AimLockCalculator extends BaseCalculator
 			case	109	:	1	;
 			case	110	:	1	;
 			case	111	:	1	;
+			case	112	:	1	;
+			case	113	:	1	;
 
 			case	151	:	1	;
 			case	152	:	1	;

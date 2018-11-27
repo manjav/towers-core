@@ -21,6 +21,8 @@ class BulletSpeedCalculator extends BaseCalculator
 			case	109	:	2.0	;
 			case	110	:	1.7	;
 			case	111	:	1.6	;
+			case	112	:	1.5	;
+			case	113	:	1.5	;
 			
 			case	151	:	1.2 ;
 			case	152	:	0.8	;

@@ -24,6 +24,8 @@ class BulletFirePositionCalculator
 			case	109	:	50;
 			case	110	:	50;
 			case	111	:	50;
+			case	112	:	50;
+			case	113	:	50;
 			
 			case	201 :	50;
 			default : 		0;

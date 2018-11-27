@@ -22,6 +22,8 @@ class ElixirSizeCalculator  extends BaseCalculator
 			case 109 : 2;
 			case 110 : 2;
 			case 111 : 6;
+			case 112 : 3;
+			case 113 : 3;
 			
 			case 151 : 4;
 			case 152 : 3;
