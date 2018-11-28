@@ -22,7 +22,7 @@ class QuantityCalculator  extends BaseCalculator
 			case	109	:	1	;
 			case	110	:	3	;
 			case	111	:	2	;
-			case	112	:	1	;
+			case	112	:	4	;
 			case	113	:	1	;
 			
 			case	151	:	1	;

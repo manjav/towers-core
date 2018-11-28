@@ -12,23 +12,23 @@ class SummonTimeCalculator  extends BaseCalculator
 		var ret = switch( type )
 		{
 			case	101	:	0.8	;
-			case	102	:	1	;
-			case	103	:	1	;
-			case	104	:	1	;
+			case	102	:	1.0	;
+			case	103	:	1.0	;
+			case	104	:	1.0	;
 			case	105	:	1.2	;
-			case	106	:	1	;
-			case	107	:	1	;
-			case	108	:	1	;
-			case	109	:	1	;
-			case	110	:	1	;
-			case	111	:	1	;
-			case	112	:	1	;
-			case	113	:	1	;
+			case	106	:	1.0	;
+			case	107	:	1.0	;
+			case	108	:	1.0	;
+			case	109	:	1.0	;
+			case	110	:	1.0	;
+			case	111	:	1.0	;
+			case	112	:	0.8	;
+			case	113	:	0.8	;
 			
-			case	151	:	2	;
+			case	151	:	2.0	;
 			case	152	:	0.7	;
 			
-			case	201	:	0	;
+			case	201	:	0.0	;
 			
 			default : BASE_VALUE;
 		}
