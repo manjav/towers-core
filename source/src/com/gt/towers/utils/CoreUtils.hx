@@ -70,6 +70,17 @@ class CoreUtils
 				default : x;
 			}
 		}
+		if( max == 4 )
+		{
+			return switch ( i )
+			{
+				case 0: x - GAP;
+				case 1: x + GAP;
+				case 2: x - GAP;
+				case 3: x + GAP;
+				default : x;
+			}
+		}
 		if( max == 6 )
 		{
 			return switch ( i )
@@ -102,8 +113,19 @@ class CoreUtils
 			return switch ( i )
 			{
 				case 0: y - GAP;
-				case 1: y + GAP;
+				case 1: y + GAP;	
 				case 2: y + GAP;
+				default : y;
+			}
+		}
+		if( max == 4 )
+		{
+			return switch ( i )
+			{
+				case 0: y + GAP;
+				case 1: y + GAP;	
+				case 2: y - GAP;
+				case 3: y - GAP;
 				default : y;
 			}
 		}
