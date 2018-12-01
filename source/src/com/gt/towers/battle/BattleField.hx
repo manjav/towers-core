@@ -264,9 +264,11 @@ class BattleField
 		return spellId - 1;
 	}
 	
-	public function addBullet(unit:com.gt.towers.battle.units.Unit, side:Int, x:Float, y:Float, dx:Float, dy:Float) : Void 
+	public function addBullet(unit:com.gt.towers.battle.units.Unit, side:Int, x:Float, y:Float, target:com.gt.towers.battle.units.Unit) : Void 
 	{
-		bullets.set(unit.bulletId, new com.gt.towers.battle.bullets.Bullet(this, unit.bulletId, unit.card, side, x, y, 0, dx, dy, 0));
+		var b = new com.gt.towers.battle.bullets.Bullet(this, unit.bulletId, unit.card, side, x, y, 0, target.x, target.y, 0);
+		b.targetId = target.id;
+		bullets.set(unit.bulletId, b);
 		unit.bulletId ++;
 	}
 	

@@ -21,6 +21,7 @@ class Unit extends GameObject
 	var attackTime:Float = 0;
 	var cachedEnemy:Int = -1;
 	var path:Array<Tile>;
+	var immortalTime:Float;
 
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
 	{
@@ -61,6 +62,7 @@ class Unit extends GameObject
 		if( summonTime == 0 )
 			return;
 		summonTime = 0;
+		immortalTime = battleField.now + 2000;
 		setState(GameObject.STATE_1_DIPLOYED);
 	}
 	
@@ -224,7 +226,7 @@ class Unit extends GameObject
 			return;
 		}
 #if java
-		battleField.addBullet(this, side, x, y, enemy.x, enemy.y);
+		battleField.addBullet(this, side, x, y, enemy);
 #end
 		fireEvent(id, BattleEvent.ATTACK, enemy);
 		attackTime = battleField.now + card.bulletShootGap;
@@ -232,6 +234,9 @@ class Unit extends GameObject
 	
 	public function hit(damage:Float) : Void
 	{
+		if( battleField.now < immortalTime )
+			return;
+		
 		health = Math.min(health - damage, card.health);
 		if( health <= 0 )
 			dispose();
