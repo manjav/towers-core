@@ -10,7 +10,7 @@ import com.gt.towers.events.BattleEvent;
  */
 class Bullet extends GameObject
 {
-	public var targetId:Int;
+	public var targetId:Int = -1;
 	var sx:Float;
 	var sy:Float;
 	var sz:Float;
