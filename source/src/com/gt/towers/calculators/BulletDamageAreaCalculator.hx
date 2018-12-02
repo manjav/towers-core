@@ -12,14 +12,14 @@ class BulletDamageAreaCalculator extends BaseCalculator
 		{
 			case	101	:	1.50	;
 			case	102	:	1.50	;
-			case	103	:	1.50	;
+			case	103	:	1.00	;
 			case	104	:	15.0	;
 			case	105	:	2.00	;
 			case	106	:	18.0	;
 			case	107	:	15.0	;
 			case	108	:	1.50	;
-			case	109	:	9.00	;
-			case	110	:	1.50	;
+			case	109	:	12.0	;
+			case	110	:	1.00	;
 			case	111	:	15.0	;
 			case	112	:	1.50	;
 			case	113	:	1.50	;
@@ -27,7 +27,7 @@ class BulletDamageAreaCalculator extends BaseCalculator
 			case	151	:	10.0	;
 			case	152	:	15.0	;
 			
-			case 201 : 1.80 ;
+			case 	201 : 	1.50 	;
 			
 			default : BASE_VALUE;
 		}

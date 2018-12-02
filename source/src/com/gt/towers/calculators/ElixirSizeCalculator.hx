@@ -16,12 +16,12 @@ class ElixirSizeCalculator  extends BaseCalculator
 			case 103 : 4;
 			case 104 : 4;
 			case 105 : 4;
-			case 106 : 3;
+			case 106 : 4;
 			case 107 : 4;
-			case 108 : 2;
-			case 109 : 2;
+			case 108 : 3;
+			case 109 : 3;
 			case 110 : 2;
-			case 111 : 6;
+			case 111 : 7;
 			case 112 : 3;
 			case 113 : 3;
 			
