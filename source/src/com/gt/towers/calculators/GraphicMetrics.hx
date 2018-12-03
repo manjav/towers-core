@@ -92,6 +92,4 @@ class GraphicMetrics
 			return false;
 		return true;
 	}
-	
-	
 }

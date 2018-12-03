@@ -88,16 +88,6 @@ class BattleField
 		games.add(game_0);
 		games.add(game_1);
 		
-		if( field.type == FieldData.TYPE_HEADQUARTER )
-		{
-			while ( unitId < 2 )
-			{
-				var card = new com.gt.towers.battle.units.Card(games.get(unitId), 201, games.get(unitId).player.get_level(0));
-				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, unitId, 480, unitId == 0 ? 1210 : 70, 0));
-				unitId ++;
-			}
-		}
-		
 		game_0.player.hardMode = false;
 		if( singleMode )
 		{
@@ -129,7 +119,7 @@ class BattleField
 				if( difficulty != 0 )
 				{
 					var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty));
-					game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep );
+					game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);
 				}
 			}
 			
@@ -138,10 +128,22 @@ class BattleField
 			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
-				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
+				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT,	Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
+			game_1.player.resources.set(com.gt.towers.constants.ResourceType.R1_XP, game_1.player.get_point() * 6 + 1);
+			
+			if( field.type == FieldData.TYPE_HEADQUARTER )
+			{
+				while ( unitId < 2 )
+				{
+					var card = new com.gt.towers.battle.units.Card(games.get(unitId), 201, games.get(unitId).player.get_level(0));
+					units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, unitId, 480, unitId == 0 ? 1210 : 70, 0));
+					unitId ++;
+				}
+			}
+	
 		}
-		
+		trace("sssssssssssssssss " + game_1.player.resources);
 		// create decks	
 		decks = new IntIntIntMap();
 		decks.set(0, game_0.player.getSelectedDeck().randomize());
