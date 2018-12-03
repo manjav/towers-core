@@ -1,11 +1,12 @@
 package com.gt.towers.calculators;
 import com.gt.towers.battle.BattleField;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.utils.Point3;
 /**
  * ...
  * @author Mansour Djawadi
  */
-class BulletFirePositionCalculator
+class GraphicMetrics
 {
 	public function new () { }
 	static public function getPoint( type:Int, rotation:Float ) : Point3 
@@ -63,4 +64,34 @@ class BulletFirePositionCalculator
 		}
 		return new Point3(x + Math.sin(rotation) * weaponLen, y - (Math.cos(rotation) * weaponLen * BattleField.CAMERA_ANGLE), z);
 	}
+	
+	static public function hasHitEffect( type:Int ) : Bool
+	{
+		if( type == 112 || type == 113 )
+			return false;
+		return true;
+	}
+	
+	static public function hasFireEffect( type:Int ) : Bool
+	{
+		if( CardTypes.isSpell(type) || type == 106 || type == 108 || type == 112 || type == 113 || type == 201 )
+			return false;
+		return true;
+	}
+	
+	static public function hasBulletEffect( type:Int ) : Bool
+	{
+		if( type == 112 || type == 113 )
+			return false;
+		return true;
+	}
+	
+	static public function hasDieEffect( type:Int ) : Bool
+	{
+		if( type == 107 )
+			return false;
+		return true;
+	}
+	
+	
 }
