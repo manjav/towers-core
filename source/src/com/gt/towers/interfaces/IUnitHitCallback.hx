@@ -5,6 +5,6 @@ package com.gt.towers.interfaces;
 interface IUnitHitCallback 
 {
 	#if java
-  	function hit(bulletId:Int, damage:Float, hitUnits:java.util.List<java.lang.Integer>):Void ;
+  	function hit(bulletId:Int, hitUnits:java.util.List<java.lang.Integer>):Void ;
 	#end
 }

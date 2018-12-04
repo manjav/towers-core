@@ -79,8 +79,8 @@ class Card
 	
 	static var RARITY_START_LEVEL = [0, 2, 6, 9];
 	static public var RARITY_COUNT = [1, 10, 200, 4000];
-	static public var  UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000,	50000,	100000];
-	static public var  UPGRADE_CARD:Array<Int> = [0,	2,	4,	 10,	 20,	50,		100,	200,	400,	800,	1000,	2000,	5000];
+	static public var UPGRADE_COST:Array<Int> = [0,	10,	20,	 50,	120,	300,	800,	2000,	5000,	10000,	20000,	50000,	100000];
+	static public var UPGRADE_CARD:Array<Int> = [0,	2,	4,	 10,	 20,	50,		100,	200,	400,	800,	1000,	2000,	5000];
 	static public function get_upgradeCost(level:Int, rarity:Int = 0):Int
 	{
 		var lvl = Math.round(Math.max(1, level - RARITY_START_LEVEL[rarity]));

@@ -222,7 +222,7 @@ class Unit extends GameObject
 	{
 		if( enemy != this && card.explosive )
 		{
-			hit(health);
+			hit(card.health + 1);
 			return;
 		}
 #if java
@@ -234,7 +234,7 @@ class Unit extends GameObject
 	
 	public function hit(damage:Float) : Void
 	{
-		if( battleField.now < immortalTime )
+		if( disposed() || ( battleField.now < immortalTime && !card.explosive ) )
 			return;
 		
 		health = Math.min(health - damage, card.health);
@@ -246,10 +246,11 @@ class Unit extends GameObject
 	public override function dispose() : Void
 	{
 		if( card.explosive )
+		if( disposed() )
+			return;
 			attack(this);
 		super.dispose();
 	}
-
 	
 	#if java
 	public function toString():String

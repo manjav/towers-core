@@ -299,7 +299,7 @@ class BattleField
 		//if( bullet.card.type == 109 )
 		//trace(res);
 		if( unitsHitCallback != null )
-			unitsHitCallback.hit(bullet.id, bullet.card.bulletDamage, hitUnits);
+			unitsHitCallback.hit(bullet.id, hitUnits);
 	}
 	
 	public function getSide(id:Int) : Int
