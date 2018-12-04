@@ -10,24 +10,24 @@ class BulletDamageAreaCalculator extends BaseCalculator
 	{
 		var ret =  switch( type )
 		{
-			case	101	:	1.50	;
-			case	102	:	1.50	;
+			case	101	:	1.00	;
+			case	102	:	1.00	;
 			case	103	:	1.00	;
 			case	104	:	15.0	;
-			case	105	:	2.00	;
+			case	105	:	1.00	;
 			case	106	:	18.0	;
-			case	107	:	15.0	;
-			case	108	:	1.50	;
+			case	107	:	20.0	;
+			case	108	:	1.00	;
 			case	109	:	12.0	;
 			case	110	:	1.00	;
 			case	111	:	15.0	;
-			case	112	:	1.50	;
-			case	113	:	1.50	;
+			case	112	:	1.00	;
+			case	113	:	1.00	;
 			
-			case	151	:	10.0	;
+			case	151	:	15.0	;
 			case	152	:	15.0	;
 			
-			case 	201 : 	1.50 	;
+			case 	201 : 	1.00 	;
 			
 			default : BASE_VALUE;
 		}

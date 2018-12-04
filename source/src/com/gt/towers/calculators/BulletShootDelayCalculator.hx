@@ -12,7 +12,7 @@ class BulletShootDelayCalculator  extends BaseCalculator
 		var ret = switch( type )
 		{
 			case	101	:	1.2	;
-			case	102	:	2.0	;
+			case	102	:	1.0	;
 			case	103	:	0.7	;
 			case	104	:	1.0	;
 			case	105	:	0.3	;
