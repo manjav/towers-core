@@ -136,10 +136,23 @@ class BattleField
 		// create castles
 		if( field.type == FieldData.TYPE_HEADQUARTER )
 		{
-			while ( unitId < 2 )
+			while ( unitId < 6 )
 			{
-				var card = new com.gt.towers.battle.units.Card(games.get(unitId), 201, games.get(unitId).player.get_level(0));
-				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, unitId, 480, unitId == 0 ? 1210 : 70, 0));
+				var side = unitId % 2;
+				var card = new com.gt.towers.battle.units.Card(games.get(side), 201, games.get(side).player.get_level(0));
+				var x = 480;
+				var y = 70;
+				if ( unitId > 3 )
+				{
+					x = 60;
+					y = 220;
+				}
+				else if( unitId > 1 )
+				{
+					x = 900;
+					y = 370;
+				}
+				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, side, side == 0 ? BattleField.WIDTH - x : x, side == 0 ? BattleField.HEIGHT - y : y, 0));
 				unitId ++;
 			}
 		}
@@ -244,7 +257,7 @@ class BattleField
 		var i = card.quantity - 1;
 		while( i >= 0 )
 		{
-			var tile = tileMap.findTile(com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y), side == 0 ? 1 : -1);
+			var tile = tileMap.findTile(com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y), side == 0 ? 1 : -1, TileMap.STATE_EMPTY);
 			if( tile == null )
 				trace("tile not found!");
 				
