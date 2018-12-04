@@ -10,7 +10,7 @@ class BulletDamageCalculator extends BaseCalculator
 	{
 		var ret = switch( type )
 		{
-			case	101	:	0.50	;
+			case	101	:	0.40	;
 			case	102	:	0.30	;
 			case	103	:	0.10	;
 			case	104	:	0.30	;
