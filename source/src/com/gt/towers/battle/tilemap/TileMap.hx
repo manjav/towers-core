@@ -215,19 +215,19 @@ class TileMap
 		return true;
 	}
 	
-	public function findTile(x:Float, y:Float, side:Int, state:Int = 0) : Tile
+	public function findTile(x:Float, y:Float, side:Int, state:Int) : Tile
 	{
 		var tile = getTile(x, y);
-		if( get(tile.i, tile.j) == STATE_EMPTY )
+		if( get(tile.i, tile.j) == state )
 			return tile;
 		//trace(tile.i +"," + tile.j + " start finding...");
-		if( !lookingAround(tile, side) )
+		if( !lookingAround(tile, side, 1, state) )
 			return null;
 		setTilePosition(tile);
 		return tile;
 	}
 	
-	function lookingAround (tile:Tile, side:Int, step:Int = 1, state:Int = 0) : Bool
+	function lookingAround (tile:Tile, side:Int, step:Int, state:Int) : Bool
 	{
 		// vertical check
 		var i:Int = 0;
@@ -249,6 +249,7 @@ class TileMap
 			i ++;
 		}
 		
+		// horizontal check
 		i = 0;
 		while ( i < step )
 		{
@@ -268,14 +269,15 @@ class TileMap
 			i ++;
 		}
 		
+		step ++;
 		if( step < 15 )
-			return lookingAround(tile, step + 1, state);
+			return lookingAround(tile, side, step, state);
 		return false;
 	}
 	
-	function checkAndFillState(i:Int, j:Int, tile:Tile, state:Int) 
+	function checkAndFillState(i:Int, j:Int, tile:Tile, state:Int) : Bool
 	{
-		//trace("i:" + i + ", j:" + j + ", ti:" + tile.i + ", tj:" + tile.j);
+		//trace("checkAndFillState i:" + i + ", j:" + j + ", ti:" + tile.i + ", tj:" + tile.j);
 		if( inMap(i, j ) && get(i, j) == state )
 		{
 			tile.i = i;
