@@ -46,7 +46,7 @@ class Unit extends GameObject
 	
 	override public function update() : Void
 	{
-		if( disposed() )
+		if( isDump || disposed() )
 			return;
 		
 		if( summonTime > battleField.now )
@@ -240,14 +240,15 @@ class Unit extends GameObject
 		health = Math.min(health - damage, card.health);
 		if( health <= 0 )
 			dispose();
+		trace("type:" + card.type + " damage:" + damage + " health:" + health);
 		fireEvent(id, BattleEvent.HIT, damage);
 	}
 
 	public override function dispose() : Void
 	{
-		if( card.explosive )
 		if( disposed() )
 			return;
+		if( card.explosive && !isDump )
 			attack(this);
 		super.dispose();
 	}
