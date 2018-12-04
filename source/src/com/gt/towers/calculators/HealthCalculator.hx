@@ -17,7 +17,7 @@ class HealthCalculator  extends BaseCalculator
 			case	104	:	1.00;
 			case	105	:	1.40;
 			case	106	:	0.60;
-			case	107	:	0.70;
+			case	107	:	0.60;
 			case	108	:	1.00;
 			case	109	:	0.30;
 			case	110	:	0.10;
