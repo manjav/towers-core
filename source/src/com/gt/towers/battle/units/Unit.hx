@@ -220,11 +220,6 @@ class Unit extends GameObject
 	
 	function attack(enemy:Unit) : Void
 	{
-		if( enemy != this && card.explosive )
-		{
-			hit(card.health + 1);
-			return;
-		}
 #if java
 		battleField.addBullet(this, side, x, y, enemy);
 #end
@@ -240,7 +235,7 @@ class Unit extends GameObject
 		health = Math.min(health - damage, card.health);
 		if( health <= 0 )
 			dispose();
-		trace("type:" + card.type + " damage:" + damage + " health:" + health);
+		trace("type:" + card.type + " id:" + id + " damage:" + damage + " health:" + health);
 		fireEvent(id, BattleEvent.HIT, damage);
 	}
 

@@ -250,7 +250,7 @@ class BattleField
 				
 			var unit = new com.gt.towers.battle.units.Unit(unitId, this, card, side, tile.x, tile.y, 0);
 			units.set(unitId, unit);
-			//trace("deploy id:" + unitId + " type:" + type + " side:" + side + " x:" + x + " ux:" + unit.x + " y:" + y + " uy:" + unit.y );
+			trace("summon id:" + unitId + " type:" + type + " side:" + side + " x:" + x + " ux:" + unit.x + " y:" + y + " uy:" + unit.y );
 			unitId ++;
 			i --;
 		}
@@ -288,7 +288,7 @@ class BattleField
 				continue;
 			distance = Math.abs(com.gt.towers.utils.CoreUtils.getDistance(u.x, u.y, bullet.x, bullet.y)) - bullet.card.bulletDamageArea - u.card.sizeH;
 			//res += " ,  distance: " + distance + ", bulletDamageArea:" + bullet.card.bulletDamageArea + ", sizeH:" + u.card.sizeH;
-            if( ((bullet.card.bulletDamage < 0 && u.side == bullet.side) || (bullet.card.bulletDamage >= 0 && u.side != bullet.side)) && distance <= 0 )
+			if( ((bullet.card.bulletDamage < 0 && u.side == bullet.side) || (bullet.card.bulletDamage >= 0 && (u.side != bullet.side || bullet.card.explosive))) && distance <= 0 )
 			{
 				//res += "|" + u.id + " (" + u.health + ") => ";
 				u.hit(bullet.card.bulletDamage);
