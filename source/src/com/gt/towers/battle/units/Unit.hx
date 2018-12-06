@@ -235,7 +235,7 @@ class Unit extends GameObject
 		health = Math.min(health - damage, card.health);
 		if( health <= 0 )
 			dispose();
-		trace("type:" + card.type + " id:" + id + " damage:" + damage + " health:" + health);
+		//trace("type:" + card.type + " id:" + id + " damage:" + damage + " health:" + health);
 		fireEvent(id, BattleEvent.HIT, damage);
 	}
 
