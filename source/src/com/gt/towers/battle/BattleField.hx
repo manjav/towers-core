@@ -136,7 +136,7 @@ class BattleField
 		// create castles
 		if( field.type == FieldData.TYPE_HEADQUARTER )
 		{
-			while ( unitId < 6 )
+			while ( unitId < 2 )
 			{
 				var side = unitId % 2;
 				var card = new com.gt.towers.battle.units.Card(games.get(side), 201, games.get(side).player.get_level(0));

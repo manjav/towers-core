@@ -95,12 +95,19 @@ class GameObject
 #if flash
 	public function getSideX() : Float
 	{
-		//trace("getSideX " + card.type + " " + battleField.side);
+		return getSide_X(x);
+	}
+	public function getSideY() : Float
+	{
+		return getSide_Y(y);
+	}
+	public function getSide_X(x:Float) : Float
+	{
 		if( battleField.side == 0 )
 			return x;
 		return BattleField.WIDTH - x;
 	}
-	public function getSideY() : Float
+	public function getSide_Y(y:Float) : Float
 	{
 		if( battleField.side == 0 )
 			return y;

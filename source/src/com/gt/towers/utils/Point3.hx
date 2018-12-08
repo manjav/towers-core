@@ -17,6 +17,14 @@ class Point3
 		this.z = z;
 	}
 	
+	public function scale(value:Float) : Point3
+	{
+		this.x *= value;
+		this.y *= value;
+		this.z *= value;
+		return this;
+	}
+
 	public function equals(x:Float, y:Float, z:Float) : Bool
 	{
 		return this.x == x && this.y == y && this.z == z;
