@@ -270,7 +270,7 @@ class Exchanger
 	static function estimateBookOutcome(type:Int, arena:Int, coef:Float) : IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( CardTypes.C001, ExchangeType.getNumTotalCards(type, arena, coef, 0) );
+		ret.set( CardTypes.C101, ExchangeType.getNumTotalCards(type, arena, coef, 0) );
 		ret.set( ResourceType.R3_CURRENCY_SOFT, ExchangeType.getNumSofts(type, arena, coef) );
 		return ret;
 	}
@@ -303,7 +303,7 @@ class Exchanger
 	}
 	
 	#if java
-	function getBookOutcomes(type:Int, arena:Int, isDaily:Bool = false ) : IntIntMap
+	function getBookOutcomes(type:Int, arena:Int, isDaily:Bool = false) : IntIntMap
 	{
 		var ret = new IntIntMap();
 		var numSlots = ExchangeType.getNumSlots(type) - 1;
@@ -352,9 +352,20 @@ class Exchanger
 	}
 	function addNewCard(map:IntIntMap) : Void
 	{
-		if( game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) == 0 )
+		var opened = game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE);
+		if( opened == 0 )
 		{
-			map.set( CardTypes.C001, 2 );
+			map.set(CardTypes.INITIAL, 1);
+			return;
+		}
+		if( opened == 1 )
+		{
+			map.set(CardTypes.C107, 1);
+			return;
+		}
+		if( opened == 2 )
+		{
+			map.set(CardTypes.C108, 1);
 			return;
 		}
 		
@@ -366,7 +377,7 @@ class Exchanger
 			var newCard = allCards.get(a);
 			if( !game.player.cards.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) )
 			{
-				map.set( newCard, 2 );
+				map.set(newCard, 1);
 				return;
 			}
 			a ++;
@@ -425,7 +436,7 @@ class Exchanger
 	
 	private function getBattleBook(earnedBooks:Int) : Int
 	{
-		if( earnedBooks == 0 )
+		if( earnedBooks < 3 )
 			return ExchangeType.BOOK_51_METAL;
 		if( earnedBooks % 4 == 0 )
 			return ExchangeType.BOOK_53_STARS;
