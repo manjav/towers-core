@@ -225,8 +225,20 @@ class BattleField
 		
 		// -=-=-=-=-=-=-=-=-=-=-  INCREASE ELIXIRS  -=-=-=-=-=-=-=-=-=-=-=-
 		var increaseSpeed = getElixirIncreaseSpeed() * deltaTime;
-		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseSpeed));
-		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseSpeed));
+		
+		// bot elixir is easier and player elixir is faster in tutorial
+		var playerSpeed = 1.0;
+		var robotSpeed = 1.0;
+		#if java
+		if( singleMode )
+		{
+			playerSpeed = games.get(0).player.get_battleswins() < 3 ? 2 : 1;
+			robotSpeed = Math.min(1, games.get(0).player.get_battleswins() / 4);
+		}
+		#end
+		
+		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseSpeed * playerSpeed));
+		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseSpeed * robotSpeed));
 		
 		//trace("units: " + units.keys().length + "  bullets: " + bullets.keys().length);
 	}

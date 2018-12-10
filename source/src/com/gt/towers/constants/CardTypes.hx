@@ -11,15 +11,10 @@ class CardTypes
     static public var AVAILABLITY_WAIT:Int = -1;
     static public var AVAILABLITY_NOT:Int = -2;
 
-    public static var INITIAL:Int = 401;
+    public static var INITIAL:Int = 101;
 	
     public static var IMPROVE:Int = -2;
     public static var NONE:Int = -1;
-	
-	public static var C000:Int = 0;
-	public static var C001:Int = 1;
-	
-	public static var C100:Int = 100;
 	
 	// troops
 	public static var C101:Int = 101;
@@ -123,5 +118,10 @@ class CardTypes
 	static public function isSpell(type:Int) : Bool
 	{
 		return type > 150 && type < 200;
+	}
+
+	static public function isBuilding(type:Int) : Bool
+	{
+		return type > 200;
 	}
 }

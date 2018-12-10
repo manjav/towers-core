@@ -205,7 +205,11 @@ class Player
 		while ( i < bundleKeys.length )
 		{
 			if( ResourceType.isCard(bundleKeys[i]) && !game.player.cards.exists(bundleKeys[i]) )
+			{
+				if( getSelectedDeck().keys().length < 8 && !cards.exists(bundleKeys[i]) && !getSelectedDeck().existsValue(bundleKeys[i]) )
+					getSelectedDeck().set(getSelectedDeck().keys().length, bundleKeys[i]);
 				cards.set(bundleKeys[i], new Card(game, bundleKeys[i], bundle.get(bundleKeys[i]) ) );
+			}
 			i ++;
 		}
 		resources.increaseMap ( bundle );
@@ -236,7 +240,7 @@ class Player
 	public function inSlotTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_031_SLOT_FOCUS && getTutorStep() < PrefsTypes.T_035_DECK_FOCUS; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_035_DECK_FOCUS && getTutorStep() < PrefsTypes.T_038_CARD_UPGRADED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
-	public function emptyDeck() : Bool { return !cards.exists(CardTypes.C001) || cards.get(CardTypes.C001).level <= 1 ; }
+	public function emptyDeck() : Bool { return !cards.exists(CardTypes.C101) || cards.get(CardTypes.C101).level <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
 	public static function isAdmin(id:Int) : Bool {return (id < 10010); }
 	public function inTutorial() : Bool
@@ -258,7 +262,7 @@ class Player
 	}
 	
 	#if flash
-	public function dashboadTabEnabled(index:Int):Bool
+	public function dashboadTabEnabled(index:Int) : Bool
 	{
 		if( getTutorStep() >= PrefsTypes.T_047_WIN )
 			return true;
