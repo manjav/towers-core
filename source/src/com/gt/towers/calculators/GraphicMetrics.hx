@@ -31,7 +31,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -52,7 +52,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -73,7 +73,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -94,7 +94,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -115,7 +115,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -136,7 +136,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -157,7 +157,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -178,7 +178,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 		
-			case	201 :	new Point3(18, -141, 0);
+			case	201 :	new Point3(18, -50, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 		return null;
@@ -252,14 +252,14 @@ class GraphicMetrics
 	
 	static public function hasFireEffect( type:Int ) : Bool
 	{
-		if( CardTypes.isSpell(type) || type == 106 || type == 108 || type == 112 || type == 113 || type == 201 )
+		if( CardTypes.isSpell(type) || type == 105 || type == 106 || type == 108 || type == 112 || type == 113 || type == 201 )
 			return false;
 		return true;
 	}
 	
 	static public function hasBulletEffect( type:Int ) : Bool
 	{
-		if( type == 112 || type == 113 )
+		if( type == 112 || type == 113 || type == 105 )
 			return false;
 		return true;
 	}
