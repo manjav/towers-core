@@ -264,7 +264,7 @@ class Player
 	#if flash
 	public function dashboadTabEnabled(index:Int) : Bool
 	{
-		if( getTutorStep() >= PrefsTypes.T_047_WIN )
+		if( getTutorStep() >= PrefsTypes.T_027_WIN )
 			return true;
 		if( index == 1 )
 			return inDeckTutorial();
