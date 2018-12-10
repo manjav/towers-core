@@ -62,7 +62,7 @@ class Unit extends GameObject
 		if( summonTime == 0 )
 			return;
 		summonTime = 0;
-		immortalTime = battleField.now + 2000;
+		immortalTime = battleField.now + 1300;
 		setState(GameObject.STATE_1_DIPLOYED);
 	}
 	
