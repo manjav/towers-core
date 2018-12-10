@@ -15,7 +15,7 @@ class BulletShootGapCalculator  extends BaseCalculator
 			case	102	:	1.8	;
 			case	103	:	0.7	;
 			case	104	:	1.6	;
-			case	105	:	1.7	;
+			case	105	:	1.5	;
 			case	106	:	1.5 ;
 			case	107	:	0.0	;
 			case	108	:	0.6	;
