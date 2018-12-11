@@ -18,6 +18,7 @@ class GameObject
 	static public var STATE_2_MOVING:Int = 2;
 	static public var STATE_3_WAITING:Int = 3;
 	static public var STATE_4_DIPOSED:Int = 4;
+	static public var STATE_6_MORTAL:Int = 6;
 	
 	public var id:Int;
     public var x:Float;

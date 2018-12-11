@@ -27,6 +27,7 @@ class Unit extends GameObject
 	{
 		super(id, battleField, card, side, x, y, z);
 		this.summonTime = battleField.now + card.summonTime;
+		this.immortalTime = this.summonTime + 500;
 		this.health = card.health;
 		this.bulletId = id * 10000;
 		this.movable = card.type < CardTypes.C201;
@@ -53,6 +54,7 @@ class Unit extends GameObject
 			return;
 		
 		finalizeDeployment();
+		finalizeImmortal();
 		decide();
 	}
 
@@ -62,8 +64,17 @@ class Unit extends GameObject
 		if( summonTime == 0 )
 			return;
 		summonTime = 0;
-		immortalTime = battleField.now + 1300;
 		setState(GameObject.STATE_1_DIPLOYED);
+	}
+	function finalizeImmortal() : Void
+	{
+		if( immortalTime == 0 )
+			return;
+		if( immortalTime < battleField.now )
+		{
+			setState(GameObject.STATE_6_MORTAL);
+			immortalTime = 0;
+		}
 	}
 	
 
