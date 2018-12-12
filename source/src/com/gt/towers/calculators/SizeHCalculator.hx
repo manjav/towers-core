@@ -13,7 +13,7 @@ class SizeHCalculator extends BaseCalculator
 		{
 			case	101	:	35	;
 			case	102	:	45  ;
-			case	103	:	15	;
+			case	103	:	20	;
 			case	104	:	35	;
 			case	105	:	35	;
 			case	106	:	30	;
