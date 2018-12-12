@@ -1,5 +1,6 @@
 package com.gt.towers.utils;
 import com.gt.towers.battle.units.Unit;
+import haxe.Int64;
 
 /**
  * ...
@@ -167,4 +168,15 @@ class CoreUtils
 		
 		return dir;
 	}
+	
+		
+	static function getTimer() : Int64
+	{
+	#if java
+		return java.lang.System.currentTimeMillis();
+	#elseif flash
+		return flash.Lib.getTimer();
+	#end
+	}
+
 }
