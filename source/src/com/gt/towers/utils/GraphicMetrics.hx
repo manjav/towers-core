@@ -1,7 +1,6 @@
-package com.gt.towers.calculators;
+package com.gt.towers.utils;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.constants.CardTypes;
-import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.utils.Point3;
 /**
  * ...
@@ -270,4 +269,29 @@ class GraphicMetrics
 			return false;
 		return true;
 	}
+	
+	public static function getChance( type:Int ) : Int
+	{
+		return switch ( type )
+		{
+			case	101	:	0	;
+			case	102	:	0	;
+			case	103	:	0	;
+			case	104	:	0	;
+			case	105	:	0	;
+			case	106	:	0	;
+			case	107	:	0	;
+			case	108	:	0	;
+			case	109	:	1	;
+			case	110	:	1	;
+			case	111	:	2	;
+			
+			case	151	:	3	;
+			case	152	:	3	;
+			
+			default: 1000;
+		}
+	}
+
+	
 }

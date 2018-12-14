@@ -1,10 +1,10 @@
 package com.gt.towers;
 import com.gt.towers.InitData;
 import com.gt.towers.Player;
+import com.gt.towers.battle.units.ScriptEngine;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.others.Arena;
 import com.gt.towers.battle.FieldProvider;
-import com.gt.towers.calculators.FeatureCalculator;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.Exchanger;
@@ -22,7 +22,6 @@ class Game
 	public var market:String;
 	public var sessionsCount:Int;
 	public var exchanger:Exchanger;
-	public var calculator:FeatureCalculator;
 	public var levels:Array<Int>;
 	public var arenas:IntArenaMap;
 	public var player:Player;
@@ -31,7 +30,6 @@ class Game
 	public function new()
 	{
 		levels = [0, 20, 50, 100, 200, 400, 1000, 2000, 5000, 10000, 20000, 40000, 80000];
-		calculator = new FeatureCalculator();
 	}
 	function init(data:InitData) 
 	{
@@ -85,6 +83,6 @@ class Game
 			return CardTypes.AVAILABLITY_EXISTS;
 		if( player.cards.exists(type) )
 			return CardTypes.AVAILABLITY_EXISTS;
-		return calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1) <= player.get_arena(0) ? CardTypes.AVAILABLITY_WAIT : CardTypes.AVAILABLITY_NOT;
+		return ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1) <= player.get_arena(0) ? CardTypes.AVAILABLITY_WAIT : CardTypes.AVAILABLITY_NOT;
 	}
 }

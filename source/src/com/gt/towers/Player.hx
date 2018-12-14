@@ -2,6 +2,7 @@ package com.gt.towers;
 import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.units.Card;
+import com.gt.towers.battle.units.ScriptEngine;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.PrefsTypes;
@@ -154,10 +155,10 @@ class Player
 		{
 			if( onlySelectedArena )
 			{
-				if( game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) == arena )
+				if( ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) == arena )
 					ret.push(cards.get(i));
 			}
-			else if( game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) <= arena )
+			else if( ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) <= arena )
 			{
 				ret.push(cards.get(i));
 			}
@@ -222,7 +223,7 @@ class Player
 		var targets = new IntIntMap();
 		while ( i >= 0 )
 		{
-			if( game.calculator.getInt(CardFeatureType.F00_RARITY, keys[i]) == rarity )
+			if( ScriptEngine.getInt(CardFeatureType.F00_RARITY, keys[i]) == rarity )
 				targets.set(keys[i], 0);
 			i --;
 		}
@@ -303,7 +304,7 @@ class Player
 		if( myArenaIndex > 3 )
 			myArenaIndex = 3;
 		
-		var cardTypes = game.player.availabledCards(myArenaIndex);
+		var cardTypes = availabledCards(myArenaIndex);
 		var numCards:Int = cardTypes.size();
 		var baseLevel = get_point() * 0.005 + 1;
 		var roundBase = Math.floor(baseLevel); 
@@ -314,8 +315,8 @@ class Player
         while ( i < numCards )
         {
 			var type:Int = cardTypes.get(i);
-			var rarity = game.calculator.getInt(CardFeatureType.F00_RARITY, type, 1);
-			var availabled = game.calculator.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1);
+			var rarity = ScriptEngine.getInt(CardFeatureType.F00_RARITY, type, 1);
+			var availabled = ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1);
 			var level:Int = Math.round(Math.max(1, roundBase - rarity - availabled + (Math.random() < ratio ? 1 : 0)));
 			//log += (" ," + type + ":" + level);
 			cards.set(type, new Card(game, type, level));
@@ -325,11 +326,13 @@ class Player
 		i = 0;
 		var allCards = cards.keys();
 		var deck = new IntIntMap();
-		while( i < 8 )
+		numCards = cast(Math.min(8, allCards.length), Int);
+		while( i < numCards )
 		{
 			var randType = allCards[Math.floor ( Math.random() * allCards.length )];
-			if( deck.existsValue(randType) ) 
+			if ( deck.existsValue(randType) ) 
 				continue;
+			
 			log += " " + randType + ":" + cards.get(randType).level;
 			deck.set(i, randType);
 			i ++;

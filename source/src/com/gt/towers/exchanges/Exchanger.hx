@@ -2,13 +2,13 @@ package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
 import com.gt.towers.battle.units.Card;
-import com.gt.towers.calculators.AvailableAtCalculator;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
+import com.gt.towers.utils.GraphicMetrics;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntShopMap;
@@ -375,7 +375,7 @@ class Exchanger
 		while( a < allCards.size() )
 		{
 			var newCard = allCards.get(a);
-			if( !game.player.cards.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) )
+			if( !game.player.cards.exists(newCard) && GraphicMetrics.getChance(newCard) <= game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) )
 			{
 				map.set(newCard, 1);
 				return;

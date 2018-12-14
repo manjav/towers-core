@@ -15,12 +15,12 @@ class ScriptEngine
 		script = _script;
 		program = new hscript.Parser().parseString(script);
 		interp = new hscript.Interp();
-		//interp.variables.set("Math",Math); // share the Math class
+		interp.variables.set("Math",Math); // share the Math class
 	}
 	
 	public static function get(featureType:Int, cardType:Int, cardLevel:Int = 1) : Float
 	{
-		interp.variables.set("haxe.Log", haxe.Log);
+	//	interp.variables.set("haxe.Log", haxe.Log);
 		interp.variables.set("featureType", featureType);
 		interp.variables.set("cardType", cardType);
 		interp.variables.set("cardLevel", cardLevel);
