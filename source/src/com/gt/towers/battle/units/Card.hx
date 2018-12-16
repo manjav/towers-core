@@ -5,6 +5,7 @@ import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.exchanges.Exchanger;
+import com.gt.towers.utils.CoreUtils;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -181,8 +182,28 @@ class Card
 		return Exchanger.softToHard( toSoft(count) );
 	}
 	
-	public function toString():String
+	public function toString(showCardPrperties:Bool = true, showUnitPrperties:Bool = true, showBulletPrperties:Bool = true) : String
 	{
-		return "type:" + type + " level:" + level + " elixirSize:" + elixirSize + " summonTime:" + summonTime + " health:" + health + " speed:" + speed + " bulletDamage:" + bulletDamage + " bulletFireGap:" + bulletShootGap + " bulletRangeMax:" + bulletRangeMax;
+		var ret = type + " > ";
+		if( showCardPrperties )
+			ret += toCardString();
+		if( showUnitPrperties )
+			ret += ", " + toUnitString();
+		if( showBulletPrperties )
+			ret += ", " + toBulletString();
+		return ret;
+	}
+	
+	public function toCardString() : String
+	{
+		return "L:" + level/* + ", maxLevel:" + maxLevel*/ + ", elixize:" + elixirSize + ", rarity:" + rarity + ", availAt:" + availableAt + ", quantity:" + quantity + ", summonTime:" + summonTime;
+	}
+	public function toUnitString() : String
+	{
+		return "speed:" + CoreUtils.fix(speed) + ", health:" + CoreUtils.fix(health) + ", sizeH:" + CoreUtils.fix(sizeH) + ", sizeV:" + CoreUtils.fix(sizeV) + ", focusRange:" + CoreUtils.fix(focusRange) + ", explosive:" + explosive;
+	}
+	public function toBulletString() : String
+	{
+		return "BSpeed:" + CoreUtils.fix(bulletSpeed) + ", BDamage:" + CoreUtils.fix(bulletDamage) + ", BShootGap:" + CoreUtils.fix(bulletShootGap) + ", BShootDelay:" + CoreUtils.fix(bulletShootDelay) + ", BRangeMax:" + CoreUtils.fix(bulletRangeMax) + ", BDamageArea:" + CoreUtils.fix(bulletDamageArea) + ", BExplodeDelay:" + CoreUtils.fix(bulletExplodeDelay);
 	}
 }
