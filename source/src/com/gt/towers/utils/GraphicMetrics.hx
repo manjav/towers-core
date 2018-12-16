@@ -238,7 +238,7 @@ class GraphicMetrics
 			default : 		 0;
 		}
 		var ret =  new Point3(x + Math.sin(rotation) * weaponLen, y - (Math.cos(rotation) * weaponLen * BattleField.CAMERA_ANGLE), z);
-		trace("type:" + type + " rotation:" + rotation + " ret:" + ret);
+		//trace("type:" + type + " rotation:" + rotation + " ret:" + ret);
 		return ret;
 	}
 	
