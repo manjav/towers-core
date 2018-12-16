@@ -148,25 +148,21 @@ class CoreUtils
 	
 	static public function getRadString(rad:Float) : String
 	{
-		var dir:String;
 		if( rad >= Math.PI * -0.125 && rad < Math.PI * 0.125 )
-			dir = "000";
-		else if( rad <= Math.PI * -0.125 && rad > Math.PI * -0.375 )
-			dir = "-45";
-		else if( rad <= Math.PI * -0.375 && rad > Math.PI * -0.625 )
-			dir = "-90";
-		else if( rad <= Math.PI * -0.625 && rad > Math.PI * -0.875 )
-			dir = "-35";
-		else if( rad >= Math.PI * 0.125 && rad < Math.PI * 0.375 )
-			dir = "045";
-		else if( rad >= Math.PI * 0.375 && rad < Math.PI * 0.625 )
-			dir = "090";
-		else if( rad >= Math.PI * 0.625 && rad < Math.PI * 0.875 )
-			dir = "135";
-		else
-			dir = "180";
-		
-		return dir;
+			return "000";
+		if( rad <= Math.PI * -0.125 && rad > Math.PI * -0.375 )
+			return "-45";
+		if( rad <= Math.PI * -0.375 && rad > Math.PI * -0.625 )
+			return "-90";
+		if( rad <= Math.PI * -0.625 && rad > Math.PI * -0.875 )
+			return "-35";
+		if( rad >= Math.PI * 0.125 && rad < Math.PI * 0.375 )
+			return "045";
+		if( rad >= Math.PI * 0.375 && rad < Math.PI * 0.625 )
+			return "090";
+		if( rad >= Math.PI * 0.625 && rad < Math.PI * 0.875 )
+			return "135";
+		return "180";
 	}
 	
 		
