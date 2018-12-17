@@ -231,6 +231,7 @@ class Unit extends GameObject
 	
 	function attack(enemy:Unit) : Void
 	{
+		setState(GameObject.STATE_7_SHOOTING);
 #if java
 		battleField.addBullet(this, side, x, y, enemy);
 #end
