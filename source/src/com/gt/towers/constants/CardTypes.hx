@@ -75,11 +75,15 @@ class CardTypes
 			case 42 : 502;
 			case 43 : 503;
 			case 44 : 504;
-
+			
 			default: oldType;
 		}
 	}*/
 	
+	public static function getRarityColor(rarity:Int) : Int
+	{
+		return [0xFFFFFF, 0xffcc00, 0x00eeff][rarity];
+	}
 
 	public static function get_category(type:Int):Int
 	{
