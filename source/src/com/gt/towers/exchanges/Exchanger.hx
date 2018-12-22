@@ -2,6 +2,7 @@ package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
 import com.gt.towers.battle.units.Card;
+import com.gt.towers.battle.units.ScriptEngine;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.MessageTypes;
@@ -375,7 +376,7 @@ class Exchanger
 		while( a < allCards.size() )
 		{
 			var newCard = allCards.get(a);
-			if( !game.player.cards.exists(newCard) && GraphicMetrics.getChance(newCard) <= game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) )
+			if( !game.player.cards.exists(newCard) && ScriptEngine.getInt(-1, newCard) <= game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) )
 			{
 				map.set(newCard, 1);
 				return;

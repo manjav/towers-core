@@ -251,7 +251,7 @@ class GraphicMetrics
 	
 	static public function hasFireEffect( type:Int ) : Bool
 	{
-		if( CardTypes.isSpell(type) || type == 105 || type == 106 || type == 108 || type == 112 || type == 113 || type == 201 )
+		if( CardTypes.isSpell(type) || type == 105 || type == 106 || type == 108 || type == 112 || type == 113 )
 			return false;
 		return true;
 	}
@@ -269,29 +269,4 @@ class GraphicMetrics
 			return false;
 		return true;
 	}
-	
-	public static function getChance( type:Int ) : Int
-	{
-		return switch ( type )
-		{
-			case	101	:	0	;
-			case	102	:	0	;
-			case	103	:	0	;
-			case	104	:	0	;
-			case	105	:	0	;
-			case	106	:	0	;
-			case	107	:	0	;
-			case	108	:	0	;
-			case	109	:	1	;
-			case	110	:	1	;
-			case	111	:	2	;
-			
-			case	151	:	3	;
-			case	152	:	3	;
-			
-			default: 1000;
-		}
-	}
-
-	
 }
