@@ -239,7 +239,7 @@ class BattleField
 		elixirBar.set(0, Math.min(BattleField.POPULATION_MAX, elixirBar.get(0) + increaseSpeed * playerSpeed));
 		elixirBar.set(1, Math.min(BattleField.POPULATION_MAX, elixirBar.get(1) + increaseSpeed * robotSpeed));
 		
-		//trace("units: " + units.keys().length + "  bullets: " + bullets.keys().length);
+		//trace("elixirBar: " + elixirBar.toString() + "  playerSpeed: " + playerSpeed + "  robotSpeed: " + robotSpeed + "  increaseSpeed: " + increaseSpeed);
 	}
 	
 	public function getElixirIncreaseSpeed() : Float

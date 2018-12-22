@@ -30,7 +30,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -50, 0);
+			case	201 :	new Point3(18, -30, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
