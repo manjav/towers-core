@@ -21,7 +21,6 @@ import com.gt.towers.utils.maps.IntStrMap;
 class Player
 {
 	public var id:Int;
-	public var hardMode:Bool;
 	public var admin:Bool = false;
 	public var tutorialMode:Int = 0;
 	public var hasOperations:Bool = true;

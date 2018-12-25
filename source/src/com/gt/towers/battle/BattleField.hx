@@ -81,56 +81,40 @@ class BattleField
 		bullets = new IntBulletMap();
 		
 		#if java
-		//waitingUnits = new java.util.concurrent.ConcurrentHashMap();
-		//game_0.calculator.setField(this);
-		//game_1.calculator.setField(this);
 		games = new java.util.ArrayList();
 		games.add(game_0);
 		games.add(game_1);
 		
-		game_0.player.hardMode = false;
 		if( singleMode )
 		{
-			if( field.type == FieldData.TYPE_OPERATION )
-			{
-				if( field.index == 2 )
-				{
-					game_0.player.hardMode = game_0.player.emptyDeck();
-					difficulty = game_0.player.hardMode ? 14 : 0;
-					//map.places.get(3).enabled = !game_0.player.hardMode;
-					//map.places.get(0).enabled = game_0.player.hardMode;
-				}
-				else
-					difficulty = Math.round(field.index / 5) - 1;
-			}
+			var winRate = game_0.player.getResource(com.gt.towers.constants.ResourceType.R16_WIN_RATE);
+			if( winRate < -100000 )
+				winRate = 21474836;
+			arena = game_0.player.get_arena(0);
+			if( winRate > 2 )
+				difficulty = arena + winRate - 2;
+			else if( winRate < -2 )
+				difficulty = arena + winRate + 2;
 			else
-			{
-				var winStreak = game_0.player.getResource(com.gt.towers.constants.ResourceType.R16_WIN_RATE);
-				if( winStreak < -100000 )
-					winStreak = 214748364;
-				arena = game_0.player.get_arena(0);
-				if( winStreak > 2 )
-					difficulty = arena + winStreak - 2;
-				else if( winStreak < -2 )
-					difficulty = arena + winStreak + 2;
-				else
-					difficulty = arena;
-				
-				if( difficulty != 0 )
-				{
-					var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty));
-					game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);
-				}
-			}
-			game_1.player.fillCards();
+				difficulty = arena;
 			
 			if( difficulty != 0 )
 			{
+				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
+				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);
+			}
+			//game_1.player.resources.set(com.gt.towers.constants.ResourceType.R1_XP, game_1.player.get_point() * 6 + 1);
+			game_1.player.resources.set(com.gt.towers.constants.ResourceType.R1_XP, game_0.player.get_xp() + (game_1.player.get_point() - game_0.player.get_point())* 6 + 1);
+			
+			game_1.player.fillCards();
+			
+			/*if( difficulty != 0 )
+			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT,	Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
-			}
-			game_1.player.resources.set(com.gt.towers.constants.ResourceType.R1_XP, game_1.player.get_point() * 6 + 1);
+			}*/
 		}
+		
 		
 		// create castles
 		if( field.type == FieldData.TYPE_HEADQUARTER )
@@ -199,7 +183,6 @@ class BattleField
 			units.remove(deadUnits.get(i));
 			i --;
 		}
-		
 		
 		// -=-=-=-=-=-=-=-=-  UPDATE AND REMOVE BULLETS  -=-=-=-=-=-=-=-=-
 		var explodedBullets = new IntList();
@@ -274,7 +257,7 @@ class BattleField
 				
 			var unit = new com.gt.towers.battle.units.Unit(unitId, this, card, side, tile.x, tile.y, 0);
 			units.set(unitId, unit);
-			trace("summon id:" + unitId + " type:" + type + " side:" + side + " x:" + x + " ux:" + unit.x + " y:" + y + " uy:" + unit.y );
+			//trace("summon id:" + unitId + " type:" + type + " side:" + side + " x:" + x + " ux:" + unit.x + " y:" + y + " uy:" + unit.y );
 			unitId ++;
 			i --;
 		}
