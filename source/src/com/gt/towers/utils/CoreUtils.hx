@@ -40,6 +40,11 @@ class CoreUtils
 		return Math.floor(value / 100000) * 100000;
 	}
 	
+	static public function clamp(value:Float, min:Float, max:Float) : Float
+	{
+		return Math.min(max, Math.max(min, value));
+	}
+	
 	static public function getDistance(sx:Float, sy:Float, dx:Float, dy:Float) : Float
 	{
 		return Math.sqrt(Math.pow(sx - dx, 2) + Math.pow((sy - dy) * 1.4285, 2) );
