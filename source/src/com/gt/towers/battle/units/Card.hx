@@ -45,37 +45,35 @@ class Card
 	{
 		this.game = game;
 		this.type = type;
-		this.level = level;
+		this.level = Math.floor(Math.max(1, level));
 		setFeatures();
 	}
 	
 	private function setFeatures():Void
 	{
-		var _level = type == 201 ? (game.player.get_level(game.player.get_xp()) + 1) : level;
-		
-		rarity = ScriptEngine.getInt(CardFeatureType.F00_RARITY, type, _level);
-		availableAt = ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, type, _level);
-		elixirSize = ScriptEngine.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, _level);
-		quantity = ScriptEngine.getInt(CardFeatureType.F03_QUANTITY, type, _level);
-		summonTime = ScriptEngine.getInt(CardFeatureType.F04_SUMMON_TIME, type, _level);
+		rarity = ScriptEngine.getInt(CardFeatureType.F00_RARITY, type, level);
+		availableAt = ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, type, level);
+		elixirSize = ScriptEngine.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, level);
+		quantity = ScriptEngine.getInt(CardFeatureType.F03_QUANTITY, type, level);
+		summonTime = ScriptEngine.getInt(CardFeatureType.F04_SUMMON_TIME, type, level);
 
 		// troops data
-		speed = ScriptEngine.get(CardFeatureType.F11_SPEED, type, _level);
-		health = ScriptEngine.get(CardFeatureType.F12_HEALTH, type, _level);
-		sizeH = ScriptEngine.get(CardFeatureType.F13_SIZE_H, type, _level);
-		sizeV = ScriptEngine.get(CardFeatureType.F14_SIZE_V, type, _level);
-		focusRange = ScriptEngine.get(CardFeatureType.F15_FOCUS_RANGE, type, _level);
-		explosive = ScriptEngine.getBool(CardFeatureType.F16_EXPLOSIVE, type, _level);
+		speed = ScriptEngine.get(CardFeatureType.F11_SPEED, type, level);
+		health = ScriptEngine.get(CardFeatureType.F12_HEALTH, type, level);
+		sizeH = ScriptEngine.get(CardFeatureType.F13_SIZE_H, type, level);
+		sizeV = ScriptEngine.get(CardFeatureType.F14_SIZE_V, type, level);
+		focusRange = ScriptEngine.get(CardFeatureType.F15_FOCUS_RANGE, type, level);
+		explosive = ScriptEngine.getBool(CardFeatureType.F16_EXPLOSIVE, type, level);
 		
 		// defensive data
-		bulletSpeed = ScriptEngine.get(CardFeatureType.F21_BULLET_SPEED, type, _level);
-		bulletDamage = ScriptEngine.get(CardFeatureType.F22_BULLET_DAMAGE, type, _level);
-		bulletShootGap = ScriptEngine.getInt(CardFeatureType.F23_BULLET_SHOOT_GAP, type, _level);
-		bulletShootDelay = ScriptEngine.getInt(CardFeatureType.F24_BULLET_SHOOT_DELAY, type, _level);
-		//bulletRangeMin = ScriptEngine.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, _level);
-		bulletRangeMax = ScriptEngine.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, _level);
-		bulletDamageArea = ScriptEngine.get(CardFeatureType.F27_BULLET_DAMAGE_AREA, type, _level);
-		bulletExplodeDelay = ScriptEngine.getInt(CardFeatureType.F28_BULLET_EXPLODE_DElAY, type, _level);
+		bulletSpeed = ScriptEngine.get(CardFeatureType.F21_BULLET_SPEED, type, level);
+		bulletDamage = ScriptEngine.get(CardFeatureType.F22_BULLET_DAMAGE, type, level);
+		bulletShootGap = ScriptEngine.getInt(CardFeatureType.F23_BULLET_SHOOT_GAP, type, level);
+		bulletShootDelay = ScriptEngine.getInt(CardFeatureType.F24_BULLET_SHOOT_DELAY, type, level);
+		//bulletRangeMin = ScriptEngine.get(CardFeatureType.F25_BULLET_RANGE_MIN, type, level);
+		bulletRangeMax = ScriptEngine.get(CardFeatureType.F26_BULLET_RANGE_MAX, type, level);
+		bulletDamageArea = ScriptEngine.get(CardFeatureType.F27_BULLET_DAMAGE_AREA, type, level);
+		bulletExplodeDelay = ScriptEngine.getInt(CardFeatureType.F28_BULLET_EXPLODE_DElAY, type, level);
 	}
 	
 	static var RARITY_START_LEVEL = [0, 2, 6, 9];
