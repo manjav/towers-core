@@ -1,24 +1,20 @@
 package com.gt.towers.utils.maps;
-import com.gt.towers.battle.units.Card;
-/**
- * ...
- * @author Mansour Djawadi
- */
-class IntCardMap
+class IntIntCardMap
 {
 	#if java
-	private var _map:java.util.Map<Int, Card>;
+	public var changeCallback:com.gt.towers.interfaces.IValueChangeCallback;
+	private var _map:java.util.Map<Int, IntCardMap>;
 	#elseif flash
-	private var _map:Map<Int, Card>;
+	private var _map:Map<Int, IntCardMap>;
 	#end
 
 	public function new()
 	{
-		#if java
-		_map = new java.util.concurrent.ConcurrentHashMap<Int, Card>();
-		#elseif flash
-		_map = new Map<Int, Card>();
-		#end
+	#if java
+		_map = new java.util.concurrent.ConcurrentHashMap<Int, IntCardMap>();
+	#elseif flash
+		_map = new Map<Int, IntCardMap>();
+	#end
 	}
 
 	/**
@@ -26,13 +22,16 @@ class IntCardMap
 		If `key` already has a mapping, the previous value disappears.
 		If `key` is null, the result is unspecified.
 	**/
-	public function set(key:Int, value:Card) : Void
+	public function set(key:Int, value:IntCardMap) : Void
 	{
+		//var exists = exists(key);
+		//var from = exists ? get(key) : 0;
 		#if java
 		_map.put(key, value);
 		#elseif flash
 		_map.set(key, value);
 		#end
+		//dispatchChangeEvent(key, from, get(key), exists);
 	}
 
 	/**
@@ -47,7 +46,7 @@ class IntCardMap
 		used.
 		If `key` is null, the result is unspecified.
 	**/
-	public function get(key:Int) : Card
+	public function get(key:Int) :IntCardMap
 	{
 		return _map.get(key);
 	}
@@ -64,19 +63,6 @@ class IntCardMap
 		return _map.exists(key);
 		#end
 		return false;
-	}
-
-	public function indexOf(type:Int) : Int
-	{
-		var __v = values();
-		var i = __v.length - 1;
-		while ( i >= 0 )
-		{
-			if ( __v[i].type == type )
-				return i;
-			i --;
-		}
-		return -1;
 	}
 
 	/**
@@ -110,14 +96,14 @@ class IntCardMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():java.NativeArray<Card>
+	public function values():java.NativeArray<IntCardMap>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:java.NativeArray<Card> = new java.NativeArray<Card>(keis.length);
+		var ret:java.NativeArray<IntCardMap> = new java.NativeArray<IntCardMap>(keis.length);
 		var i:Int = 0;
 		while (i < keis.length)
 		{
-			ret[i] = cast(get(keis[i]), Card);
+			ret[i] = cast(get(keis[i]), IntCardMap);
 			i++;
 		}
 		return ret ;
@@ -132,7 +118,7 @@ class IntCardMap
 	public function keys():flash.Vector<Int>
 	{
 		var ret:flash.Vector<Int> = new flash.Vector<Int>();
-		for( key in _map.keys() )
+		for (key in _map.keys())
 			ret.push(key);
 		return ret ;
 	}
@@ -140,77 +126,12 @@ class IntCardMap
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
 	**/
-	public function values():flash.Vector<Card>
+	public function values():flash.Vector<IntCardMap>
 	{
-		var ret:flash.Vector<Card> = new flash.Vector<Card>();
-		for( value in _map )
+		var ret:flash.Vector<IntCardMap> = new flash.Vector<IntCardMap>();
+		for (value in _map)
 			ret.push(value);
 		return ret ;
 	}
 	#end
-	
-	public function getRandomKey() : Int
-	{
-		var keys = keys();
-		var t = keys[ Math.floor( Math.random() * keys.length ) ];
-		if( t >= 1000 )
-			return getRandomKey();
-		return t;
-	}
-	
-	public function getLowestLevel() : Int
-	{
-		var ret = 11;
-		var lvl = 100;
-		var keys = keys();
-		var i = 0;
-		while ( i < keys.length )
-		{
-			if( get(keys[i]).level < lvl )
-			{
-				lvl = get(keys[i]).level;
-				ret = keys[i];
-			}
-			i ++;
-		}
-		return ret;
-	}
-	
-	public function getHighestLevel() : Int
-	{
-		var ret = 11;
-		var lvl = 0;
-		var keys = keys();
-		var i = 0;
-		while ( i < keys.length )
-		{
-			if( get(keys[i]).level > lvl )
-			{
-				lvl = get(keys[i]).level;
-				ret = keys[i];
-			}
-			i ++;
-		}
-		return ret;
-	}
-	
-	public function getLowestCard() : Int
-	{
-		var ret = 101;
-		var numCards = 9999999;
-		var i = 0;
-		var keys = keys();
-		var collected = 0;
-		while ( i < keys.length )
-		{
-			collected = Card.getTotalCollected(get(keys[i]).level, get(keys[i]).count());
-			if( collected < numCards )
-			{
-				numCards = collected + 0;
-				ret = keys[i];
-			}
-			i ++;
-		}
-		return ret;		
-	}
 }

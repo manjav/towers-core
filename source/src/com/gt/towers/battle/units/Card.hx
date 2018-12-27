@@ -49,14 +49,14 @@ class Card
 		setFeatures();
 	}
 	
-	private function setFeatures():Void
+	private function setFeatures() : Void
 	{
 		rarity = ScriptEngine.getInt(CardFeatureType.F00_RARITY, type, level);
 		availableAt = ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, type, level);
 		elixirSize = ScriptEngine.getInt(CardFeatureType.F02_ELIXIR_SIZE, type, level);
 		quantity = ScriptEngine.getInt(CardFeatureType.F03_QUANTITY, type, level);
 		summonTime = ScriptEngine.getInt(CardFeatureType.F04_SUMMON_TIME, type, level);
-
+		
 		// troops data
 		speed = ScriptEngine.get(CardFeatureType.F11_SPEED, type, level);
 		health = ScriptEngine.get(CardFeatureType.F12_HEALTH, type, level);
@@ -65,7 +65,7 @@ class Card
 		focusRange = ScriptEngine.get(CardFeatureType.F15_FOCUS_RANGE, type, level);
 		explosive = ScriptEngine.getBool(CardFeatureType.F16_EXPLOSIVE, type, level);
 		
-		// defensive data
+		// bullet data
 		bulletSpeed = ScriptEngine.get(CardFeatureType.F21_BULLET_SPEED, type, level);
 		bulletDamage = ScriptEngine.get(CardFeatureType.F22_BULLET_DAMAGE, type, level);
 		bulletShootGap = ScriptEngine.getInt(CardFeatureType.F23_BULLET_SHOOT_GAP, type, level);
@@ -155,6 +155,7 @@ class Card
 			return false;
 		
 		level ++;
+		setFeatures();
 		return true;
 	}	
 	public function availabled():Bool 

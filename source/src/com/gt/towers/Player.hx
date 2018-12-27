@@ -30,7 +30,6 @@ class Player
 	public var resources:IntIntMap;
 	public var operations:IntIntMap;
 	public var cards:IntCardMap;
-	public var inFriendlyBattle:Bool;
 	public var nickName:String = "no_nickName";
 	public var decks:IntIntIntMap;
 	public var selectedDeckIndex:Int = 0;

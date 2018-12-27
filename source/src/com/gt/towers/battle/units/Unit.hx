@@ -26,6 +26,7 @@ class Unit extends GameObject
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
 	{
 		super(id, battleField, card, side, x, y, z);
+		trace(card.toString() );
 		this.summonTime = battleField.now + card.summonTime;
 		this.immortalTime = this.summonTime + 500;
 		this.health = card.health;

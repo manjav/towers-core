@@ -3,10 +3,13 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.tilemap.TileMap;
+import com.gt.towers.battle.units.Card;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntBulletMap;
-import com.gt.towers.utils.maps.IntIntIntMap;
+import com.gt.towers.utils.maps.IntCardMap;
+import com.gt.towers.utils.maps.IntIntCardMap;
+import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntUnitMap;
 import haxe.Json;
 
@@ -38,11 +41,12 @@ class BattleField
 	public var state:Int = 0;
 	public var elixirBar:FloatList;
 	public var singleMode:Bool;
+	public var friendlyMode:Bool;
 	public var field:FieldData;
 	public var difficulty:Int;
 	public var arena:Int;
 	public var extraTime:Int = 0;
-	public var decks:IntIntIntMap;
+	public var decks:IntIntCardMap;
 	public var units:IntUnitMap;
 	public var bullets:IntBulletMap;
 	public var now:Float = 0;
@@ -61,7 +65,7 @@ class BattleField
 #end
 
 	public function new(){}
-	public function initialize(game_0:Game, game_1:Game, field:FieldData, side:Int, now:Float, hasExtraTime:Bool) : Void
+	public function initialize(game_0:Game, game_1:Game, field:FieldData, side:Int, now:Float, hasExtraTime:Bool, friendlyMode:Bool) : Void
 	{
 		this.side = side;
 		this.now = now;
@@ -69,6 +73,7 @@ class BattleField
 		this.resetTime = now + 2000000;
 		this.field = field;
 		this.singleMode = game_1.player.cards.keys().length == 0;
+		this.friendlyMode = friendlyMode;
 		this.extraTime = hasExtraTime ? field.times.get(3) : 0;
 		
 		// parse json layout and occupy tile map
@@ -128,7 +133,7 @@ class BattleField
 			while ( unitId < 2 )
 			{
 				var side = unitId % 2;
-				var card = new com.gt.towers.battle.units.Card(games.get(side), 201, games.get(side).player.get_level(0));
+				var card = new com.gt.towers.battle.units.Card(games.get(side), 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
 				var x = 480;
 				var y = 70;
 				if ( unitId > 3 )
@@ -147,13 +152,26 @@ class BattleField
 		}
 		
 		// create decks	
-		decks = new IntIntIntMap();
-		decks.set(0, game_0.player.getSelectedDeck().randomize());
-		decks.set(1, game_1.player.getSelectedDeck().randomize());
+		decks = new IntIntCardMap();
+		decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck(), friendlyMode));
+		decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck(), friendlyMode));
 #end
 		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
 		elixirBar.push(POPULATION_INIT);
+	}
+	
+	static function getDeckCards(game:Game, deck:IntIntMap, friendlyMode:Bool) : IntCardMap
+	{
+		var ret = new IntCardMap();
+		var cardsType = deck.randomize().values();
+		var i:Int = 0;
+		while( i < cardsType.length )
+		{
+			ret.set(cardsType[i], friendlyMode ? new Card(game,cardsType[i],9) : game.player.cards.get(cardsType[i]));
+			i ++;
+		}
+		return ret;
 	}
 	
 	public function update(deltaTime:Int) : Void
@@ -236,7 +254,7 @@ class BattleField
 		if( response != com.gt.towers.constants.MessageTypes.RESPONSE_SUCCEED )
 			return response;
 		
-        var card = games.get(side).player.cards.get(type);
+        var card = decks.get(side).get(type);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
 		
 		if( com.gt.towers.constants.CardTypes.isSpell(type) )
@@ -319,10 +337,10 @@ class BattleField
 	{
 		if( !games.get(side).player.cards.exists(type) )
 			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_FOUND;
-		if( !decks.get(side).existsValue(type) )
+		if( !decks.get(side).exists(type) )
 			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ALLOWED;
 		
-		return elixirBar.get(side) >= games.get(side).player.cards.get(type).elixirSize ? com.gt.towers.constants.MessageTypes.RESPONSE_SUCCEED : com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+		return elixirBar.get(side) >= decks.get(side).get(type).elixirSize ? com.gt.towers.constants.MessageTypes.RESPONSE_SUCCEED : com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 	}
 	#end
 	
