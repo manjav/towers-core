@@ -79,9 +79,12 @@ class BattleField
 		// parse json layout and occupy tile map
 		tileMap = new TileMap();
 		json = Json.parse(field.mapLayout);
-		var obstacles:Array<Dynamic> = json.layout.children[1].children;
-		for ( obs in obstacles )
-			tileMap.occupy(obs.params.x, obs.params.y, 50 * obs.params.scaleX, 50 * obs.params.scaleY);
+		if( json.children != null )
+		{
+			var obstacles:Array<Dynamic> = json.layout.children[1].children;
+			for ( obs in obstacles )
+				tileMap.occupy(obs.params.x, obs.params.y, 50 * obs.params.scaleX, 50 * obs.params.scaleY);
+		}
 		
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
