@@ -278,7 +278,7 @@ class BattleField
 	
 	function addSpell(card:com.gt.towers.battle.units.Card, side:Int, x:Float, y:Float) : Int
 	{
-		var offset = com.gt.towers.utils.GraphicMetrics.getPoint(card.type, 0);
+		var offset = com.gt.towers.utils.GraphicMetrics.getSpellStartPoint(card.type);
 		var spell = new com.gt.towers.battle.bullets.Bullet(this, spellId, card, side, x + offset.x, y + offset.y, offset.z, x, y, 0);
 		bullets.set(spellId, spell);
 		spellId ++;
