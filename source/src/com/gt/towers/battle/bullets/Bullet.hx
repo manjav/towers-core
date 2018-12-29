@@ -7,7 +7,7 @@ import com.gt.towers.events.BattleEvent;
 /**
  * ...
  * @author Mansour Djawadi
- */
+ */ 
 class Bullet extends GameObject
 {
 	public var targetId:Int = -1;
@@ -81,7 +81,7 @@ class Bullet extends GameObject
 		if( explodeTime > -1 )
 			return;
 			
-		if( battleField.units.exists(targetId) )
+		if( card.bulletSpeed > 35 && battleField.units.exists(targetId) )
 		{
 			this.fx = battleField.units.get(targetId).x;
 			this.fy = battleField.units.get(targetId).y;
