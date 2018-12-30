@@ -236,8 +236,8 @@ class Player
 	}
 	
 	public function getTutorStep() : Int { return tutorialMode == -1 ? PrefsTypes.T_162_QUEST_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
-	public function inSlotTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_031_SLOT_FOCUS && getTutorStep() < PrefsTypes.T_035_DECK_FOCUS; }
-	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_035_DECK_FOCUS && getTutorStep() < PrefsTypes.T_038_CARD_UPGRADED; }
+	public function inSlotTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_011_SLOT_FOCUS && getTutorStep() < PrefsTypes.T_015_DECK_FOCUS; }
+	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_015_DECK_FOCUS && getTutorStep() < PrefsTypes.T_018_CARD_UPGRADED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
 	public function emptyDeck() : Bool { return !cards.exists(CardTypes.C101) || cards.get(CardTypes.C101).level <= 1 ; }
 	public function isBot() : Bool { return id < 10000; }
