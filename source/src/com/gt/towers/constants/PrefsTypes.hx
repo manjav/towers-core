@@ -32,19 +32,19 @@ class PrefsTypes
 	public static var T_005_CAPTURE:Int = 5;
 	public static var T_007_WIN:Int = 7;	
 	
+	public static var T_011_SLOT_FOCUS:Int = 11;
+	public static var T_012_SLOT_OPENED:Int = 12;
+	public static var T_013_BOOK_OPENED:Int = 13;
+	public static var T_015_DECK_FOCUS:Int = 15;
+	public static var T_016_DECK_SHOWN:Int = 16;
+	public static var T_017_CARD_OPENED:Int = 17;
+	public static var T_018_CARD_UPGRADED:Int = 18;
+	public static var T_019_RETURN_TO_BATTLE:Int = 19;
+	
 	public static var T_021_START:Int = 21;
 	public static var T_024_SWIPE:Int = 24;
 	public static var T_025_CAPTURE:Int = 25;
 	public static var T_027_WIN:Int = 27;
-	
-	public static var T_031_SLOT_FOCUS:Int = 31;
-	public static var T_032_SLOT_OPENED:Int = 32;
-	public static var T_033_BOOK_OPENED:Int = 33;
-	public static var T_035_DECK_FOCUS:Int = 35;
-	public static var T_036_DECK_SHOWN:Int = 36;
-	public static var T_037_CARD_OPENED:Int = 37;
-	public static var T_038_CARD_UPGRADED:Int = 38;
-	public static var T_039_RETURN_TO_BATTLE:Int = 39;
 	
 	public static var T_041_START:Int = 41;
 	public static var T_042_IMPROVE:Int = 42;
