@@ -1,4 +1,4 @@
-package com.gt.towers.battle.units;
+package com.gt.towers.scripts;
 
 /**
  * ...
@@ -18,7 +18,7 @@ class ScriptEngine
 		interp.variables.set("Math",Math); // share the Math class
 	}
 	
-	public static function get(featureType:Int, cardType:Int, cardLevel:Int = 1) : Float
+	public static function get(featureType:Int, cardType:Int, cardLevel:Int = 1) : Dynamic
 	{
 	//	interp.variables.set("haxe.Log", haxe.Log);
 		interp.variables.set("featureType", featureType);
