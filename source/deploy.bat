@@ -1,5 +1,7 @@
 @echo off
 
+echo f | xcopy /f /y src\com\gt\towers\scripts\features.js C:\SmartFoxServer_2X\SFS2X-5000\www\maps\features.js
+
 if exist "bin" rmdir /s /q bin
 
 :: Get date with this template =>mouth day hours minutes seconds

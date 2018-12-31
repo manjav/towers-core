@@ -20,7 +20,6 @@ class ScriptEngine
 	
 	public static function get(featureType:Int, cardType:Int, cardLevel:Int = 1) : Dynamic
 	{
-	//	interp.variables.set("haxe.Log", haxe.Log);
 		interp.variables.set("featureType", featureType);
 		interp.variables.set("cardType", cardType);
 		interp.variables.set("cardLevel", cardLevel);
@@ -34,6 +33,6 @@ class ScriptEngine
 	
 	public static function getBool(featureType:Int, cardType:Int, cardLevel:Int) : Bool
 	{
-		return get(featureType, cardType, cardLevel) > 0;
+		return get(featureType, cardType, cardLevel);
 	}
 }
