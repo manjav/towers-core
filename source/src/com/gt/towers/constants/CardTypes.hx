@@ -47,6 +47,8 @@ class CardTypes
 	// buildings
 	public static var C201:Int = 201;
 
+	// heros
+	public static var C221:Int = 221;
 	
 	
 	public function new() {}
@@ -119,6 +121,11 @@ class CardTypes
 		return ret;
 	}
 	
+	static public function isTroop(type:Int) : Bool
+	{
+		return type < 150;
+	}
+	
 	static public function isSpell(type:Int) : Bool
 	{
 		return type > 150 && type < 200;
@@ -126,6 +133,11 @@ class CardTypes
 
 	static public function isBuilding(type:Int) : Bool
 	{
-		return type > 200;
+		return type > 200 && type < 220;
+	}
+
+	static public function isHero(type:Int) : Bool
+	{
+		return type > 220;
 	}
 }

@@ -25,7 +25,7 @@ if( featureType == -3 )
 // version
 if( featureType == -2 )
 {
-	return 1300.0;
+	return 1400.0;
 }
 
 // chance
@@ -50,7 +50,7 @@ if( featureType == -1 )
 		case	151	:	8	;
 		case	152	:	10	;
 		
-		default: 1000;
+		default		:	1000;
 	}
 }
 
@@ -179,7 +179,7 @@ if( featureType == 3 )
 		
 		case	201	:	 1	;
 		
-		default: 		 0	;
+		default: 		 1	;
 	}
 	return ret;
 }
@@ -205,8 +205,6 @@ if( featureType == 4 )
 		
 		case	151	:	 2.0	;
 		case	152	:	 0.7	;
-		
-		case	201	:	 0.0	;
 		
 		default 	: 	 0.0	;
 	}
@@ -235,7 +233,7 @@ if( featureType == 11 )
 		
 		case	201	:	0.00;
 		
-		default: 1;
+		default		:	1.00;
 	}
 	return ret * 0.085 * 1.1;
 }
@@ -259,9 +257,10 @@ if( featureType == 12 )
 		case	112	:	1.00;
 		case	113	:	1.00;
 		
-		case	201	:	6.00;
+		case	201	:	9.00;
+		case	221	:	5.00;
 		
-		default: 1;
+		default		:	1.00;
 	}
 	return (ret + Math.log(cardLevel) * 0.585) * 1.5;
 }
@@ -286,8 +285,9 @@ if( featureType == 13 )
 		case	113	:	25	;
 		
 		case	201	:	70	;
+		case	221	:	50	;
 		
-		default: 10;
+		default		:	10	;
 	}
 	
 	return ret * 20.00;
@@ -315,9 +315,10 @@ if( featureType == 14 )
 		
 		case	151	:	1.00;
 		
-		case	201	:	1.00;
+		case	201	:	2.00;
+		case	221	:	2.00;
 		
-		default: 1;
+		default		:	1.00;
 	}
 	return ret * 80;
 }
@@ -341,9 +342,10 @@ if( featureType == 15 )
 		case	112	:	0.7 ;
 		case	113	:	0.7 ;
 		
-		case 	201 : 	1.4 ;
+		case 	201 : 	1.5 ;
+		case 	221 : 	1.2 ;
 		
-		default : 1;
+		default		:	1.0	;
 	}
 	return ret * 350;
 }
@@ -353,8 +355,8 @@ if( featureType == 16 )
 {
 	return switch ( cardType )
 	{
-		case	107	:	1;
-		default		:	0;
+		case	107	:	true;
+		default		:	false;
 	}
 }
 
@@ -365,15 +367,15 @@ if( featureType == 21 )
 	var ret = switch( cardType )
 	{
 		case	101	:	3.0	;
-		case	102	:	0.7	;
-		case	103	:	1.7	;
+		case	102	:	0.9	;
+		case	103	:	1.3	;
 		case	104	:	1.6	;
 		case	105	:	1.0	;
 		case	106	:	0.7	;
-		case	107	:	0.7	;
+		case	107	:	1.0	;
 		case	108	:	2.0	;
 		case	109	:	2.0	;
-		case	110	:	1.7	;
+		case	110	:	1.4	;
 		case	111	:	1.6	;
 		case	112	:	1.5	;
 		case	113	:	1.5	;
@@ -381,11 +383,12 @@ if( featureType == 21 )
 		case	151	:	1.2 ;
 		case	152	:	0.8	;
 		
-		case	201	:	1.0	;
+		case	201	:	1.5	;
+		case	221	:	1.5	;
 		
-		default : 1;
+		default		:	1.0	;
 	}
-	return ret * 20.0;
+	return ret * 22.0;
 }
 
 // bulletDamage
@@ -395,7 +398,7 @@ if( featureType == 22 )
 	{
 		case	101	:	0.20	;
 		case	102	:	0.30	;
-		case	103	:	0.07	;
+		case	103	:	0.06	;
 		case	104	:	0.30	;
 		case	105	:	0.30	;
 		case	106	:	0.25	;
@@ -411,8 +414,9 @@ if( featureType == 22 )
 		case	152	:	0.60 	;
 		
 		case	201	:	0.05	;
+		case	221	:	0.10	;
 		
-		default : 1;
+		default		:	1.00	;
 	}
 	var p = ret > 0 ? 1 : -1;
 	return ret + (Math.log(cardLevel) * 0.585) * p;
@@ -438,8 +442,9 @@ if( featureType == 23 )
 		case	113	:	0.8	;
 		
 		case 	201 :	0.6 ;
+		case 	221 :	1.0 ;
 		
-		default : 1;
+		default		:	1.0 ;
 	}
 	return (ret + Math.log(cardLevel) * 0.585) * 750 ;
 }
@@ -464,8 +469,9 @@ if( featureType == 24 )
 		case	113	:	0.4 ;
 		
 		case	201	:	0.5;
+		case	221	:	0.5;
 		
-		default	: 1;
+		default		:	1.0;
 	}
 	return ret * 700 ;
 }
@@ -496,8 +502,9 @@ if( featureType == 26 )
 		case	113	:	0.4 ;
 		
 		case 	201 : 	1.7 ;
+		case 	221 : 	1.5 ;
 		
-		default : 1;
+		default		:	1.0;
 	}
 	return ret * 300;
 }
@@ -524,7 +531,8 @@ if( featureType == 27 )
 		case	151	:	15.0	;
 		case	152	:	15.0	;
 		
-		case 	201 : 	1.00 	;
+		case 	201 : 	0.80 	;
+		case 	221 : 	1.00 	;
 		
 		default 	:	1.00	;
 	}

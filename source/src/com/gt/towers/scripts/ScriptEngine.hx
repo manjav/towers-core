@@ -33,6 +33,6 @@ class ScriptEngine
 	
 	public static function getBool(featureType:Int, cardType:Int, cardLevel:Int) : Bool
 	{
-		return get(featureType, cardType, cardLevel);
+		return cast(get(featureType, cardType, cardLevel), Bool);
 	}
 }

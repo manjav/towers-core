@@ -133,20 +133,20 @@ class BattleField
 		// create castles
 		if( field.type == FieldData.TYPE_HEADQUARTER )
 		{
-			while ( unitId < 2 )
+			while ( unitId < 6 )
 			{
 				var side = unitId % 2;
-				var card = new com.gt.towers.battle.units.Card(games.get(side), 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
+				var card = new com.gt.towers.battle.units.Card(games.get(side), i > 1 ? 221 : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
 				var x = 480;
 				var y = 70;
-				if ( unitId > 3 )
+				if( unitId > 3 )
 				{
-					x = 60;
+					x = 100;
 					y = 220;
 				}
 				else if( unitId > 1 )
 				{
-					x = 900;
+					x = 860;
 					y = 370;
 				}
 				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, side, side == 0 ? BattleField.WIDTH - x : x, side == 0 ? BattleField.HEIGHT - y : y, 0));
