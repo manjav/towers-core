@@ -156,8 +156,8 @@ class BattleField
 		
 		// create decks	
 		decks = new IntIntCardMap();
-		decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck(), friendlyMode));
-		decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck(), friendlyMode));
+		decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck().randomize(), friendlyMode));
+		decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck().randomize(), friendlyMode));
 #end
 		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
@@ -167,11 +167,11 @@ class BattleField
 	static function getDeckCards(game:Game, deck:IntIntMap, friendlyMode:Bool) : IntCardMap
 	{
 		var ret = new IntCardMap();
-		var cardsType = deck.randomize().values();
+		var cardsTypes = deck.values();
 		var i:Int = 0;
-		while( i < cardsType.length )
+		while( i < cardsTypes.length )
 		{
-			ret.set(cardsType[i], friendlyMode ? new Card(game,cardsType[i],9) : game.player.cards.get(cardsType[i]));
+			ret.set(cardsTypes[i], friendlyMode ? new Card(game,cardsTypes[i],9) : game.player.cards.get(cardsTypes[i]));
 			i ++;
 		}
 		return ret;
@@ -253,11 +253,19 @@ class BattleField
 	#if java
 	public function summonUnit(type:Int, side:Int, x:Float, y:Float) : Int
 	{
-		var response = cardAvailabled(side, type);
-		if( response != com.gt.towers.constants.MessageTypes.RESPONSE_SUCCEED )
-			return response;
+		var index = cardAvailabled(side, type);
+		if( index < 0 )
+		{
+			//trace("summon  => side:" + side + " type:" + type + " error: " + index);
+			return index;
+		}
 		
-        var card = decks.get(side).get(type);
+		var card = decks.get(side).get(type);
+		//var log = "queue: " + decks.get(side).queue_String() + " => side:" + side + " type:" + type + " index:" + index; 
+		decks.get(side).queue_removeAt(index);
+		decks.get(side).enqueue(type);
+		//log += " => " + decks.get(side).queue_String();
+		//trace(log);
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
 		
 		if( com.gt.towers.constants.CardTypes.isSpell(type) )
@@ -340,10 +348,18 @@ class BattleField
 	{
 		if( !games.get(side).player.cards.exists(type) )
 			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_FOUND;
+		
 		if( !decks.get(side).exists(type) )
 			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ALLOWED;
 		
-		return elixirBar.get(side) >= decks.get(side).get(type).elixirSize ? com.gt.towers.constants.MessageTypes.RESPONSE_SUCCEED : com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+		if( elixirBar.get(side) < decks.get(side).get(type).elixirSize )
+			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
+		
+		var index = decks.get(side).queue_indexOf(type);
+		if( index < 0 || index > 3 )
+			return com.gt.towers.constants.MessageTypes.RESPONSE_MUST_WAIT;
+		
+		return index;
 	}
 	#end
 	

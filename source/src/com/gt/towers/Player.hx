@@ -316,11 +316,12 @@ class Player
 			var rarity = ScriptEngine.getInt(CardFeatureType.F00_RARITY, type, 1);
 			var availabled = ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1);
 			var level:Int = Math.round(Math.max(1, roundBase - rarity - availabled + (Math.random() < ratio ? 1 : 0)));
-			//log += (" ," + type + ":" + level);
+			log += (" ," + type + ":" + level);
 			cards.set(type, new Card(game, type, level));
             i ++;
         }
 		
+		log += " deck=> ";
 		i = 0;
 		var allCards = cards.keys();
 		var deck = new IntIntMap();
@@ -331,7 +332,7 @@ class Player
 			if ( deck.existsValue(randType) ) 
 				continue;
 			
-			log += " " + randType + ":" + cards.get(randType).level;
+			log += "," + randType;
 			deck.set(i, randType);
 			i ++;
 		}

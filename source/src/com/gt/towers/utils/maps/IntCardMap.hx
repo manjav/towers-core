@@ -8,16 +8,20 @@ class IntCardMap
 {
 	#if java
 	private var _map:java.util.Map<Int, Card>;
+	private var _queue:java.util.List<Int>;
 	#elseif flash
 	private var _map:Map<Int, Card>;
+	private var _queue:flash.Vector<Int>;
 	#end
 
 	public function new()
 	{
 		#if java
 		_map = new java.util.concurrent.ConcurrentHashMap<Int, Card>();
+		_queue = new java.util.ArrayList<Int>();
 		#elseif flash
 		_map = new Map<Int, Card>();
+		_queue = new flash.Vector<Int>();
 		#end
 	}
 
@@ -30,8 +34,10 @@ class IntCardMap
 	{
 		#if java
 		_map.put(key, value);
+		_queue.add(key);
 		#elseif flash
 		_map.set(key, value);
+		_queue.push(key);
 		#end
 	}
 
@@ -148,6 +154,84 @@ class IntCardMap
 		return ret ;
 	}
 	#end
+	
+	public function queue_get(index:Int) : Int
+	{
+		#if java
+		return _queue.get(index);
+		#elseif flash
+		return _queue[index];
+		#end
+	}
+	public function queue_size() : Int
+	{
+		#if java
+		return _queue.size();
+		#elseif flash
+		return _queue.length;
+		#end
+	}
+	public function queue_removeAt(index:Int) : Int
+	{
+		#if java
+		return _queue.remove(index);
+		#elseif flash
+		return _queue.splice(index, 1)[0];
+		#end
+	}
+	public function queue_indexOf(item:Int) : Int
+	{
+		#if java
+		var iter:java.util.Iterator<Int> = _queue.iterator();
+		var i = 0;
+		while ( iter.hasNext() )
+		{
+			if( item == iter.next() )
+				return i;
+			i ++;
+		}
+		return -1;
+		#elseif flash
+		return _queue.indexOf(item);
+		#end
+	}
+	public function enqueue(item:Int) : Void
+	{
+		#if java
+		_queue.add(item);
+		#elseif flash
+		_queue.push(item);
+		#end
+	}
+	public function dequeue() : Int
+	{
+		#if java
+		return _queue.remove(0);
+		#elseif flash
+		return _queue.shift();
+		#end
+	}
+	
+	public function queue_String() : String
+	{
+		#if java
+		var iter:java.util.Iterator<Int> = _queue.iterator();
+		var i = 0;
+		var ret = "";
+		while ( iter.hasNext() )
+		{
+			var item = iter.next();
+			if( i == 0 )
+				ret += "" + item;
+			else
+				ret += "," + item;
+			i ++;
+		}
+		return ret;
+		#elseif flash
+		return _queue.toString();
+		#end		
+	}
 	
 	public function getRandomKey() : Int
 	{
