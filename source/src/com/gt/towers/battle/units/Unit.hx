@@ -31,19 +31,14 @@ class Unit extends GameObject
 		this.immortalTime = this.summonTime + 500;
 		this.health = card.health;
 		this.bulletId = id * 10000;
-		this.movable = card.type < CardTypes.C201;
+		this.movable = card.type != CardTypes.C201;
 		if( !this.movable )
 			return;
 		this.target = new Point3(0, 0);
-		this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
-		
-		//trace(tile + " " + targetTile);
-		/*var i = 0;
-		while ( i < path.length )
-		{
-			trace(path[i].toString());
-			i ++;
-		}*/
+		if( card.type == CardTypes.C221 )
+			this.defaultTarget = new Point3(this.x, this.y);
+		else
+			this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
 	}
 	
 	override public function update() : Void
@@ -73,7 +68,7 @@ class Unit extends GameObject
 			return;
 		if( immortalTime < battleField.now )
 		{
-			setState(GameObject.STATE_6_MORTAL);
+			setState(GameObject.STATE_2_MORTAL);
 			immortalTime = 0;
 		}
 	}
@@ -232,7 +227,7 @@ class Unit extends GameObject
 	
 	function attack(enemy:Unit) : Void
 	{
-		setState(GameObject.STATE_7_SHOOTING);
+		setState(GameObject.STATE_5_SHOOTING);
 #if java
 		battleField.addBullet(this, side, x, y, enemy);
 #end

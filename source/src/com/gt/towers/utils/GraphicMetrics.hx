@@ -223,7 +223,7 @@ class GraphicMetrics
 	
 	static public function hasBulletEffect( type:Int ) : Bool
 	{
-		if( type == 112 || type == 113 || type == 105 )
+		if( type == 112 || type == 113 || type == 103 || type == 105 || type == 221 )
 			return false;
 		return true;
 	}

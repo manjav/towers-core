@@ -1,7 +1,5 @@
 @echo off
 
-echo f | xcopy /f /y src\com\gt\towers\scripts\features.js C:\SmartFoxServer_2X\SFS2X-5000\www\maps\features.js
-
 if exist "bin" rmdir /s /q bin
 
 :: Get date with this template =>mouth day hours minutes seconds
@@ -57,4 +55,7 @@ echo f | xcopy /f /y bin\flash\Core.swc C:\_projects\towers-projects\towers-clie
 
 echo f | xcopy /f /y bin\java\Core.jar C:\SmartFoxServer_2X\SFS2X-5000\extensions\__lib__\core.jar
 ::C:\_softwares\server\pscp.exe -pw *** bin\java\Core.jar root@130.185.74.249:/home/babak/SmartFoxServer_2X/SFS2X/extensions/__lib__/core.jar
+
+echo f | xcopy /f /y src\com\gt\towers\scripts\features.js C:\SmartFoxServer_2X\SFS2X-5000\www\maps\features.js
+
 exit

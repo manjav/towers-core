@@ -136,18 +136,18 @@ class BattleField
 			while ( unitId < 6 )
 			{
 				var side = unitId % 2;
-				var card = new com.gt.towers.battle.units.Card(games.get(side), i > 1 ? 221 : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
+				var card = new com.gt.towers.battle.units.Card(games.get(side), unitId > 1 ? 221 : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
 				var x = 480;
 				var y = 70;
-				if( unitId > 3 )
+				if( unitId > 1 )
 				{
-					x = 100;
-					y = 220;
+					x = 160;
+					y = 140;
 				}
 				else if( unitId > 1 )
 				{
-					x = 860;
-					y = 370;
+					x = 800;
+					y = 140;// 250;
 				}
 				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, side, side == 0 ? BattleField.WIDTH - x : x, side == 0 ? BattleField.HEIGHT - y : y, 0));
 				unitId ++;
