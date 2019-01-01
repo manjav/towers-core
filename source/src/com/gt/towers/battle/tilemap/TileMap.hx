@@ -101,11 +101,12 @@ class TileMap
 		}
 	}
 	
-
 	public function findPath(sourceX:Float, sourceY:Float, destX:Float, destY:Float, side:Int , removeWrongs:Bool = true):Array<Tile>
 	{
 		var srcTile = getTile(sourceX, sourceY);
 		var desTile = getTile(destX, destY);
+		if( srcTile.i == desTile.i && srcTile.j == desTile.j )
+			return null;
 		set(desTile.i,	desTile.j,	STATE_START);
 		set(srcTile.i,	srcTile.j,	STATE_TARGET);
 		

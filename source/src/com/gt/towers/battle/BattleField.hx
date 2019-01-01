@@ -261,11 +261,19 @@ class BattleField
 		}
 		
 		var card = decks.get(side).get(type);
-		//var log = "queue: " + decks.get(side).queue_String() + " => side:" + side + " type:" + type + " index:" + index; 
+		var log:String = null;
+		if( BattleField.DEBUG_MODE )
+			log = "queue: " + decks.get(side).queue_String() + " => side:" + side + " type:" + type + " index:" + index; 
+		
 		decks.get(side).queue_removeAt(index);
 		decks.get(side).enqueue(type);
-		//log += " => " + decks.get(side).queue_String();
-		//trace(log);
+		
+		if( BattleField.DEBUG_MODE )
+		{
+			log += " => " + decks.get(side).queue_String();
+			trace(log);
+		}
+		
 		elixirBar.set(side, elixirBar.get(side) - card.elixirSize );
 		
 		if( com.gt.towers.constants.CardTypes.isSpell(type) )

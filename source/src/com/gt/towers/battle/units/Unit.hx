@@ -135,7 +135,17 @@ class Unit extends GameObject
 
 	function findPath(targetX:Float, targetY:Float) : Void
 	{
-		this.path = battleField.tileMap.findPath(this.x, this.y, targetX, targetY, side == 0 ? 1 : -1);
+		if ( !movable )
+			return;
+		
+		if( this.x == targetX && this.y == targetY )
+		{
+			path = null;
+			return;
+		}
+		path = battleField.tileMap.findPath(this.x, this.y, targetX, targetY, side == 0 ? 1 : -1);
+		if( path == null || path.length == 0 )
+			return;
 		if( BattleField.DEBUG_MODE )
 		{
 			var i = 0;

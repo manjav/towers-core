@@ -257,8 +257,8 @@ if( featureType == 12 )
 		case	112	:	1.00;
 		case	113	:	1.00;
 		
-		case	201	:	9.00;
-		case	221	:	5.00;
+		case	201	:	16.0;
+		case	221	:	12.0;
 		
 		default		:	1.00;
 	}
@@ -284,8 +284,8 @@ if( featureType == 13 )
 		case	112	:	25	;
 		case	113	:	25	;
 		
-		case	201	:	70	;
-		case	221	:	50	;
+		case	201	:	40	;
+		case	221	:	30	;
 		
 		default		:	10	;
 	}
@@ -343,7 +343,7 @@ if( featureType == 15 )
 		case	113	:	0.7 ;
 		
 		case 	201 : 	1.5 ;
-		case 	221 : 	1.2 ;
+		case 	221 : 	1.7 ;
 		
 		default		:	1.0	;
 	}
@@ -414,7 +414,7 @@ if( featureType == 22 )
 		case	152	:	0.60 	;
 		
 		case	201	:	0.05	;
-		case	221	:	0.10	;
+		case	221	:	0.20	;
 		
 		default		:	1.00	;
 	}
@@ -502,7 +502,7 @@ if( featureType == 26 )
 		case	113	:	0.4 ;
 		
 		case 	201 : 	1.7 ;
-		case 	221 : 	1.5 ;
+		case 	221 : 	0.5 ;
 		
 		default		:	1.0;
 	}
