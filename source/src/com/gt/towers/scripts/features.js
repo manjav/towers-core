@@ -257,12 +257,12 @@ if( featureType == 12 )
 		case	112	:	1.00;
 		case	113	:	1.00;
 		
-		case	201	:	9.00;
-		case	221	:	5.00;
+		case	201	:	7.00;
+		case	221	:	4.00;
 		
 		default		:	1.00;
 	}
-	return (ret + Math.log(cardLevel) * 0.585) * 1.5;
+	return (ret * Math.pow(1.095, cardLevel - 1)) * 1.5;
 }
 
 // sizeH
@@ -419,7 +419,7 @@ if( featureType == 22 )
 		default		:	1.00	;
 	}
 	var p = ret > 0 ? 1 : -1;
-	return ret + (Math.log(cardLevel) * 0.585) * p;
+	return (ret * Math.pow(1.095, cardLevel - 1)) * p;
 }
 
 // bulletShootGap
@@ -446,7 +446,7 @@ if( featureType == 23 )
 		
 		default		:	1.0 ;
 	}
-	return (ret + Math.log(cardLevel) * 0.585) * 750 ;
+	return ret * 750 ;
 }
 
 // bulletShootDelay
