@@ -257,12 +257,12 @@ if( featureType == 12 )
 		case	112	:	1.00;
 		case	113	:	1.00;
 		
-		case	201	:	16.0;
-		case	221	:	12.0;
+		case	201	:	7.00;
+		case	221	:	4.00;
 		
 		default		:	1.00;
 	}
-	return (ret + Math.log(cardLevel) * 0.585) * 1.5;
+	return (ret * Math.pow(1.095, cardLevel - 1)) * 1.5;
 }
 
 // sizeH
@@ -284,8 +284,8 @@ if( featureType == 13 )
 		case	112	:	25	;
 		case	113	:	25	;
 		
-		case	201	:	40	;
-		case	221	:	30	;
+		case	201	:	70	;
+		case	221	:	50	;
 		
 		default		:	10	;
 	}
@@ -343,7 +343,7 @@ if( featureType == 15 )
 		case	113	:	0.7 ;
 		
 		case 	201 : 	1.5 ;
-		case 	221 : 	1.7 ;
+		case 	221 : 	1.2 ;
 		
 		default		:	1.0	;
 	}
@@ -414,12 +414,12 @@ if( featureType == 22 )
 		case	152	:	0.60 	;
 		
 		case	201	:	0.05	;
-		case	221	:	0.20	;
+		case	221	:	0.10	;
 		
 		default		:	1.00	;
 	}
 	var p = ret > 0 ? 1 : -1;
-	return ret + (Math.log(cardLevel) * 0.585) * p;
+	return (ret * Math.pow(1.095, cardLevel - 1)) * p;
 }
 
 // bulletShootGap
@@ -446,7 +446,7 @@ if( featureType == 23 )
 		
 		default		:	1.0 ;
 	}
-	return (ret + Math.log(cardLevel) * 0.585) * 750 ;
+	return ret * 750 ;
 }
 
 // bulletShootDelay
@@ -502,7 +502,7 @@ if( featureType == 26 )
 		case	113	:	0.4 ;
 		
 		case 	201 : 	1.7 ;
-		case 	221 : 	0.5 ;
+		case 	221 : 	1.5 ;
 		
 		default		:	1.0;
 	}
