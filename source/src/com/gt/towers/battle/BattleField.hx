@@ -139,7 +139,7 @@ class BattleField
 				var card = new com.gt.towers.battle.units.Card(games.get(side), unitId > 1 ? 221 : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
 				var x = 480;
 				var y = 70;
-				if( unitId > 1 )
+				if( unitId > 3 )
 				{
 					x = 160;
 					y = 140;
