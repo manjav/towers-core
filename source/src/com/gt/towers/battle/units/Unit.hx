@@ -198,6 +198,12 @@ class Unit extends GameObject
 				path.shift();
 				estimateAngle();
 			}
+			#if flash
+			else
+			{
+				setState(GameObject.STATE_3_WAITING);
+			}
+			#end
 			return;
 		}
 		setPosition(cx, cy, GameObject.NaN);
