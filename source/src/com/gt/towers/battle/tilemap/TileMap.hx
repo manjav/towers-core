@@ -83,7 +83,7 @@ class TileMap
 		return i > -1 && j > -1 && i < width - 1 && j < height - 1;
 	}
 	
-	public function occupy(x:Float, y:Float, width:Float, height:Float) : Void
+	public function setTileState(x:Float, y:Float, width:Float, height:Float, state:Int) : Void
 	{
 		var from = getTile(x, y);
 		var to = getTile(x + width, y + height);
@@ -94,7 +94,7 @@ class TileMap
 			j = from.j;
 			while ( j <= to.j )
 			{
-				set(i, j, STATE_OCCUPIED);
+				set(i, j, state);
 				j ++;
 			}
 			i ++;
