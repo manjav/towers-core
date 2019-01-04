@@ -110,7 +110,7 @@ class Building extends Card
 		if( type == BuildingType.IMPROVE )
 			type = this.type + 1;
 		if( type != BuildingType.B01_CAMP )
-			_population -= Math.round( capacity * (game.player.inTutorial() && game==place.battleField.games.get(0) ? 0.1 : 0.5) );
+			_population -= Math.round( capacity * (game.player.get_battleswins() < 3 && game==place.battleField.games.get(0) ? 0.1 : 0.5) );
 		
 		if( equalsCategory(type) )
 			improveLevel ++;
@@ -171,12 +171,9 @@ class Building extends Card
 		troopType = troop.type;
 		place.enabled = true;
 		
-		var p = place.battleField.games.get(0).player;
-		if( place.battleField.singleMode && p.inTutorial() )
-			_population = !p.hardMode && troop.type == TroopType.T_0 ? capacity * 0.3 : 0.0;
-		else 
-			_population = 0;
-			
+		var p:Player = place.battleField.games.get(0).player;
+		_population = p.get_battleswins() < 3 && troop.type == TroopType.T_0 ? capacity * p.get_battleswins() * 0.4 : 0.0;
+		
 		//if ( type == BuildingType.B01_CAMP )
 		//{
 			place.game = game = troop.building.game;
