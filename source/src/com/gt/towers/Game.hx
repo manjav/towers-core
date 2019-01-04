@@ -47,8 +47,8 @@ class Game
 	{
 		arenas = new IntArenaMap();
 	  //				Arena(num,	min,	max, minWinStreak,	unlockCards));
-		arenas.set(0, new Arena(0,	0,		100,	-8,			"11,21"    	));
-		arenas.set(1, new Arena(1,	101,	300,	-7,			"12,31,41"	));//400
+		arenas.set(0, new Arena(0,	0,		100,	-8,			"11,21,12"  ));
+		arenas.set(1, new Arena(1,	101,	300,	-7,			"31,41"		));//400
 		arenas.set(2, new Arena(2,	301,	600,	-6,			"13,22,32"	));//700
 		arenas.set(3, new Arena(3,	601,	1000,	-5,			"23,33"		));//1100
 		arenas.set(4, new Arena(4,	1001,	1500,	-4,			"14" 		));//1400

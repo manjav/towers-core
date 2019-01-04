@@ -311,11 +311,11 @@ class Exchanger
 		var accCards:Int = 0;
 		while( numSlots >= 0 )
 		{
-			numCards = numSlots > 0 ? Math.floor(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
+			numCards = numSlots > 0 ? Math.ceil(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
 			
-			trace("addNewCard",  numSlots, isDaily);
+			trace("addNewCard",  "numSlots:" + numSlots, "isDaily:" + isDaily);
             if( numSlots == 0 && !isDaily ) // last slot
 				addNewCard(ret);
 			

@@ -62,7 +62,7 @@ class AvailableAtCalculator extends BaseCalculator
 		return switch ( type )
 		{
 			case	11	:	0	;
-			case	21	:	3	;
+			case	21	:	1	;
 			case	12	:	4	;
 			case	31	:	7	;
 			case	41	:	10	;
