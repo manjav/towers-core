@@ -83,7 +83,7 @@ class BattleField
 		{
 			var obstacles:Array<Dynamic> = json.layout.children[1].children;
 			for( obs in obstacles )
-				tileMap.occupy(obs.params.x, obs.params.y, 50 * obs.params.scaleX, 50 * obs.params.scaleY);
+				tileMap.setTileState(obs.params.x, obs.params.y, 50 * obs.params.scaleX, 50 * obs.params.scaleY, TileMap.STATE_OCCUPIED);
 		}
 		
 		units = new IntUnitMap();
@@ -142,12 +142,12 @@ class BattleField
 				if( unitId > 3 )
 				{
 					x = 160;
-					y = 140;
+					y = 120;
 				}
 				else if( unitId > 1 )
 				{
 					x = 800;
-					y = 140;// 250;
+					y = 120;// 250;
 				}
 				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, side, side == 0 ? BattleField.WIDTH - x : x, side == 0 ? BattleField.HEIGHT - y : y, 0));
 				unitId ++;

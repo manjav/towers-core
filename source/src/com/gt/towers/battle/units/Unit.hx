@@ -39,7 +39,7 @@ class Unit extends GameObject
 		if( card.type == CardTypes.C221 )
 			this.defaultTarget = new Point3(returnigPosition.x, returnigPosition.y);
 		else
-			this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : this.x, side == 0 ? 0 : BattleField.HEIGHT);
+			this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 0 : BattleField.HEIGHT);
 	}
 	
 	override public function update() : Void
@@ -198,6 +198,12 @@ class Unit extends GameObject
 				path.shift();
 				estimateAngle();
 			}
+			#if flash
+			else
+			{
+				setState(GameObject.STATE_3_WAITING);
+			}
+			#end
 			return;
 		}
 		setPosition(cx, cy, GameObject.NaN);

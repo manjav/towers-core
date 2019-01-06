@@ -53,12 +53,7 @@ class GameObject
 	public function setPosition(x:Float, y:Float, z:Float, forced:Bool = false) : Bool
 	{
 		if( !forced && ( x <= NaN || x == this.x ) && ( y <= NaN || y == this.y ) && ( z <= NaN || z == this.z ) )
-		{
-			#if flash
-			setState(GameObject.STATE_3_WAITING);
-			#end
 			return false;
-		}
 		if( x > NaN )
 			this.x = x;
 		if( y > NaN )
