@@ -136,7 +136,8 @@ class BattleField
 			while ( unitId < 6 )
 			{
 				var side = unitId % 2;
-				var card = new com.gt.towers.battle.units.Card(games.get(side), unitId > 1 ? 221 : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
+				var heroType = game_0.appVersion > 1400 ? 222 : 221
+				var card = new com.gt.towers.battle.units.Card(games.get(side), unitId > 1 ? heroType : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
 				var x = 480;
 				var y = 70;
 				if( unitId > 3 )
@@ -242,7 +243,7 @@ class BattleField
 	
 	public function getElixirIncreaseSpeed() : Float
 	{
-		return (getDuration() > getTime(2) ? 0.00066 : 0.00033);
+		return (getDuration() > getTime(1) ? 0.00066 : 0.00033);
 	}
 	
 	public function getDuration() : Float

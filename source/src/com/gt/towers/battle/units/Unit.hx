@@ -36,7 +36,7 @@ class Unit extends GameObject
 			return;
 		this.target = new Point3(0, 0);
 		var returnigPosition = battleField.tileMap.getTile(this.x, this.y);
-		if( card.type == CardTypes.C221 )
+		if( CardTypes.isHero(card.type) )
 			this.defaultTarget = new Point3(returnigPosition.x, returnigPosition.y);
 		else
 			this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 0 : BattleField.HEIGHT);
