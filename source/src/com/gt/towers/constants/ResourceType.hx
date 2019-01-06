@@ -19,6 +19,7 @@ class ResourceType
 	public static var R14_BATTLES_WEEKLY:Int = 14;
 	public static var R15_BATTLES_FRIENDLY:Int = 15;
 	public static var R16_WIN_RATE:Int = 16;
+	public static var R17_STARS:Int = 17;
 	
 	public static var R21_BOOK_OPENED_BATTLE:Int = 21;
 	public static var R22_BOOK_OPENED_FREE:Int = 22;
@@ -35,6 +36,7 @@ class ResourceType
 		else if( type == R3_CURRENCY_SOFT ) return "Coins";
 		else if( type == R4_CURRENCY_HARD ) return "Gems";
 		else if( type == R5_CURRENCY_REAL ) return "Real";
+		else if( type == R17_STARS )		return "Stars";
 		else return "TYPE_" + type;
 	}
 	
