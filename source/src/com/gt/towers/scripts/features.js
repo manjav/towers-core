@@ -1,5 +1,6 @@
 //trace("featureType:" + featureType + " cardType:" + cardType + " cardLevel:" + cardLevel);
 
+// To change each unit stat refer to this table :
 // range - splash - quantity - health - damage - speed
 //
 //      r - s - q - h - d - s
@@ -550,7 +551,7 @@ if( featureType == 26 )
 		
 		case 	201 : 	1.5 ;
 		case 	221 : 	0.4 ;
-		case 	222 : 	1.2 ;
+		case 	222 : 	1.4 ;
 		
 		default		:	1.0;
 	}
