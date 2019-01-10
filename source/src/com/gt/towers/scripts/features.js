@@ -1,5 +1,31 @@
 //trace("featureType:" + featureType + " cardType:" + cardType + " cardLevel:" + cardLevel);
 
+// To change each unit stat refer to this table :
+// range - splash - quantity - health - damage - speed
+//
+//      r - s - q - h - d - s
+// 101	H - 0 - 0 - L - L - L
+// 102	L - 0 - 0 - H - L - L
+// 103	0 - 0 - H - L - L - M
+// 104	L - H - 0 - M - L - L
+// 105	0 - 0 - 0 - M - H - L
+// 106	H - M - 0 - L - L - L
+// 107	L - H - 0 - L - L - M
+// 108	M - 0 - L - M - L - M
+// 109	M - M - 0 - L - L - M
+// 110	L - 0 - M - L - L - M
+// 111	L - H - L - M - L - L
+// 112	L - 0 - H - M - L - L
+// 113	L - 0 - 0 - M - M - L
+//
+// 151	
+// 152	
+//
+// 201	
+// 221	
+// 222 
+
+
 if( featureType == -3 )
 {
 	return switch ( cardType )
@@ -20,7 +46,6 @@ if( featureType == -3 )
 		default     :[ -1 ];
 	}
 }
-
 
 // version
 if( featureType == -2 )
@@ -156,6 +181,9 @@ if( featureType == 2 )
 
 
 // quantity
+// H = 4 and higher
+// M = 3
+// L = 2
 if( featureType == 3 )
 {
 	return switch ( cardType )
@@ -220,8 +248,8 @@ if( featureType == 11 )
 		case	101	:	0.70;
 		case	102	:	0.60;
 		case	103	:	1.10;
-		case	104	:	1.00;
-		case	105	:	0.90;
+		case	104	:	0.90;
+		case	105	:	0.80;
 		case	106	:	0.70;
 		case	107	:	1.10;
 		case	108	:	1.00;
@@ -232,6 +260,8 @@ if( featureType == 11 )
 		case	113	:	0.60;
 		
 		case	201	:	0.00;
+		case	221	:	1.10;
+		case	222	:	1.10;
 		
 		default		:	1.00;
 	}
@@ -239,13 +269,16 @@ if( featureType == 11 )
 }
 
 // health
+// H = min 2.0 , max ~    
+// M = min 1.0 , max 1.8  
+// L = min 0.1 , max 0.8
 if( featureType == 12 )
 {
 	var ret = switch ( cardType )
 	{
 		case	101	:	0.50;
 		case	102	:	4.00;
-		case	103	:	0.20;
+		case	103	:	0.30;
 		case	104	:	1.00;
 		case	105	:	1.60;
 		case	106	:	0.60;
@@ -287,13 +320,12 @@ if( featureType == 13 )
 		
 		case	201	:	40	;
 		case	221	:	30	;
-		case	222	:	30	;
+		case	222	:	50	;
 		
 		default		:	10	;
 	}
 	
 	return ret * 20.00;
-
 }
 
 // sizeV
@@ -323,7 +355,7 @@ if( featureType == 14 )
 		
 		default		:	1.00;
 	}
-	return ret * 80;
+	return ret * 100;
 }
 
 // focusRange
@@ -347,7 +379,7 @@ if( featureType == 15 )
 		
 		case 	201 : 	1.5 ;
 		case 	221 : 	1.5 ;
-		case	222	:	1.6	;
+		case	222	:	1.9	;
 		
 		default		:	1.0	;
 	}
@@ -397,6 +429,10 @@ if( featureType == 21 )
 }
 
 // bulletDamage
+// (Damage/s). Inform amin if you heading to change this one. Becuase "Damage" related to "Gap".
+// H = min 0.30 , max 0.50  
+// M = min 0.20 , max 0.29  
+// L = min 0.05 , max 0.19  
 if( featureType == 22 )
 {
 	var ret = switch( cardType )
@@ -405,7 +441,7 @@ if( featureType == 22 )
 		case	102	:	0.30	;
 		case	103	:	0.06	;
 		case	104	:	0.30	;
-		case	105	:	0.30	;
+		case	105	:	0.68	;
 		case	106	:	0.25	;
 		case	107	:	0.80	;
 		case	108	:	0.07	;
@@ -436,7 +472,7 @@ if( featureType == 23 )
 		case	102	:	1.8	;
 		case	103	:	0.7	;
 		case	104	:	1.6	;
-		case	105	:	0.75;
+		case	105	:	1.7 ;
 		case	106	:	1.5 ;
 		case	107	:	9.0	;
 		case	108	:	0.6	;
@@ -446,7 +482,7 @@ if( featureType == 23 )
 		case	112	:	0.7	;
 		case	113	:	0.8	;
 		
-		case 	201 :	0.6 ;
+		case 	201 :	0.3 ;
 		case 	221 :	1.0 ;
 		case 	222 :	1.0 ;
 		
@@ -490,12 +526,16 @@ if( featureType == 25 )
 }
 
 // bulletRangeMax
+// H = min 1.5 , max 1.8
+// M = min 1.0 , max 1.4
+// L = min 0.6 , max 0.9
+// melee = min 0.1 , max 0.5 
 if( featureType == 26 )
 {
 	var ret =  switch( cardType )
 	{
 		case	101	:	1.8 ;
-		case	102	:	1.0	;
+		case	102	:	0.9	;
 		case	103	:	0.4	;
 		case	104	:	0.8	;
 		case	105	:	0.5	;
@@ -508,9 +548,9 @@ if( featureType == 26 )
 		case	112	:	0.4 ;
 		case	113	:	0.4 ;
 		
-		case 	201 : 	1.7 ;
+		case 	201 : 	1.5 ;
 		case 	221 : 	0.4 ;
-		case 	222 : 	1.5 ;
+		case 	222 : 	1.4 ;
 		
 		default		:	1.0;
 	}
@@ -518,28 +558,31 @@ if( featureType == 26 )
 }
 
 // bulletDamageArea
+//H = min 12 , max ~
+//M = min 5.0 , max 10 
+//L = min 0.7 , max 1.0
 if( featureType == 27 )
 {
 	var ret =  switch( cardType )
 	{
-		case	101	:	1.00	;
-		case	102	:	1.00	;
-		case	103	:	1.00	;
+		case	101	:	0.70	;
+		case	102	:	0.70	;
+		case	103	:	0.70	;
 		case	104	:	15.0	;
-		case	105	:	1.00	;
+		case	105	:	0.70	;
 		case	106	:	18.0	;
 		case	107	:	20.0	;
-		case	108	:	1.00	;
+		case	108	:	0.70	;
 		case	109	:	12.0	;
-		case	110	:	1.00	;
+		case	110	:	0.70	;
 		case	111	:	15.0	;
-		case	112	:	1.00	;
-		case	113	:	1.00	;
+		case	112	:	0.70	;
+		case	113	:	0.70	;
 		
 		case	151	:	15.0	;
-		case	152	:	15.0	;
+		case	152	:	18.0	;
 		
-		case 	201 : 	0.80 	;
+		case 	201 : 	0.70 	;
 		case 	221 : 	1.00 	;
 		case 	222 : 	0.70 	;
 		
