@@ -20,6 +20,7 @@ class ResourceType
 	public static var R15_BATTLES_FRIENDLY:Int = 15;
 	public static var R16_WIN_RATE:Int = 16;
 	public static var R17_STARS:Int = 17;
+	public static var R18_STARS_WEEKLY:Int = 18;
 	
 	public static var R21_BOOK_OPENED_BATTLE:Int = 21;
 	public static var R22_BOOK_OPENED_FREE:Int = 22;
