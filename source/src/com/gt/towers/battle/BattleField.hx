@@ -111,7 +111,7 @@ class BattleField
 			
 			if( difficulty != 0 )
 			{
-				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
+				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.45, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);
 			}
 			//game_1.player.resources.set(com.gt.towers.constants.ResourceType.R1_XP, game_1.player.get_point() * 6 + 1);
@@ -119,11 +119,11 @@ class BattleField
 			
 			game_1.player.fillCards();
 			
-			/*if( difficulty != 0 )
+			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT,	Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
-			}*/
+			}
 		}
 		
 		// bot elixir is easier and player elixir is faster in tutorial
