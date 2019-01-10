@@ -27,7 +27,9 @@ class ResourceType
 	public static var QUESTS:Int = 1230;
 	
 	public static var WIN_STREAK:Int = 1211;
-	
+	public static var STARS:Int = 1217;
+	public static var STARS_WEEKLY:Int = 1218;
+
 	public function new() {}
 	static public function isBuilding(type:Int) 
 	{

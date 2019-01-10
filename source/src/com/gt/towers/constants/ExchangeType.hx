@@ -38,6 +38,7 @@ class ExchangeType
 	static public var C101_FREE:Int = 101;
 	static public var C102_FREE:Int = 102;
 	static public var C103_FREE:Int = 103;
+	static public var C104_STARS:Int = 104;
 
 	static public var C107_FREE:Int = 107;
 	static public var C108_FREE:Int = 108;
@@ -75,15 +76,16 @@ class ExchangeType
 	{
 		return switch ( type )
 		{
-			case 41	: 24	* 3600;
-			case 43	: 2		* 3600;
-			case 51 : 10;
-			case 52 : 3		* 3600;
-			case 53 : 8		* 3600;
-			case 54 : 12	* 3600;
-			case 57 : 24	* 3600;
-			case 59 : 24	* 3600;
-			case 101 : 3	* 3600;
+			case 41		: 24	* 3600;
+			case 43		: 2		* 3600;
+			case 51		: 10		  ;
+			case 52		: 3		* 3600;
+			case 53		: 8		* 3600;
+			case 54		: 12	* 3600;
+			case 57		: 24	* 3600;
+			case 59		: 24	* 3600;
+			case 101	: 3		* 3600;
+			case 104	: 24	* 3600;
 			default : 0;
 		}
 	}
