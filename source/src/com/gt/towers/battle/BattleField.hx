@@ -50,7 +50,7 @@ class BattleField
 	public var units:IntUnitMap;
 	public var bullets:IntBulletMap;
 	public var now:Float = 0;
-	public var startAt:Float = 0;
+	public var startAt:Int = 0;
 	public var deltaTime:Int = 25;
 	public var side:Int = 0;
 	public var spellId:Int = 1000000;
@@ -65,16 +65,17 @@ class BattleField
 #end
 
 	public function new(){}
-	public function initialize(game_0:Game, game_1:Game, field:FieldData, side:Int, now:Float, hasExtraTime:Bool, friendlyMode:Bool) : Void
+	public function initialize(game_0:Game, game_1:Game, field:FieldData, side:Int, startAt:Float, now:Float, hasExtraTime:Bool, friendlyMode:Bool) : Void
 	{
 		this.side = side;
 		this.now = now;
-		this.startAt = now / 1000;
-		this.resetTime = now + 2000000;
+		this.startAt = Math.round(startAt);
+		this.resetTime = (startAt + 2000) * 1000;
 		this.field = field;
 		this.singleMode = game_1.player.cards.keys().length == 0;
 		this.friendlyMode = friendlyMode;
 		this.extraTime = hasExtraTime ? field.times.get(3) : 0;
+		//trace("this.startAt:" + this.startAt + " now:" + this.now + " this.resetTime:" + this.resetTime);
 		
 		// parse json layout and occupy tile map
 		tileMap = new TileMap();
@@ -111,19 +112,18 @@ class BattleField
 			
 			if( difficulty != 0 )
 			{
-				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
+				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.45, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);
 			}
 			//game_1.player.resources.set(com.gt.towers.constants.ResourceType.R1_XP, game_1.player.get_point() * 6 + 1);
 			game_1.player.resources.set(com.gt.towers.constants.ResourceType.R1_XP, game_0.player.get_xp() + (game_1.player.get_point() - game_0.player.get_point())* 6 + 1);
-			
 			game_1.player.fillCards();
 			
-			/*if( difficulty != 0 )
+			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT,	Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
-			}*/
+			}
 		}
 		
 		// bot elixir is easier and player elixir is faster in tutorial
@@ -136,7 +136,7 @@ class BattleField
 			while ( unitId < 6 )
 			{
 				var side = unitId % 2;
-				var heroType = game_0.appVersion > 1400 ? 222 : 221
+				var heroType = game_0.appVersion > 1400 ? 222 : 221;
 				var card = new com.gt.towers.battle.units.Card(games.get(side), unitId > 1 ? heroType : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
 				var x = 480;
 				var y = 70;
@@ -148,7 +148,7 @@ class BattleField
 				else if( unitId > 1 )
 				{
 					x = 800;
-					y = 120;// 250;
+					y = 120;
 				}
 				units.set(unitId, new com.gt.towers.battle.units.Unit(unitId, this, card, side, side == 0 ? BattleField.WIDTH - x : x, side == 0 ? BattleField.HEIGHT - y : y, 0));
 				unitId ++;

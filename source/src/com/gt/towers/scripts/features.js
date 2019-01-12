@@ -261,7 +261,7 @@ if( featureType == 11 )
 		
 		case	201	:	0.00;
 		case	221	:	1.10;
-		case	221	:	1.10;
+		case	222	:	1.10;
 		
 		default		:	1.00;
 	}
@@ -326,7 +326,6 @@ if( featureType == 13 )
 	}
 	
 	return ret * 20.00;
-
 }
 
 // sizeV

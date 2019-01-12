@@ -41,6 +41,13 @@ class ExchangeItem
 	public static var CHEST_STATE_READY:Int = 2;
 	public function getState(now:Int):Int
 	{
+		if( type == ExchangeType.C104_STARS )
+		{
+			if( expiredAt > now )
+				return CHEST_STATE_BUSY;
+			return numExchanges >= 10 ? CHEST_STATE_READY : CHEST_STATE_WAIT;
+		}
+		
 		if( outcome == 0 && category == ExchangeType.C110_BATTLES )
 			return CHEST_STATE_EMPTY;
 		else if( expiredAt == 0 )

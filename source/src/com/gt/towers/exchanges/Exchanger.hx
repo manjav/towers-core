@@ -1,16 +1,12 @@
 package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
-import com.gt.towers.battle.units.Card;
-import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
+import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.constants.ResourceType;
-import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.scripts.ScriptEngine;
-import com.gt.towers.utils.GraphicMetrics;
-import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntShopMap;
 
@@ -41,6 +37,11 @@ class Exchanger
 	 */
 	public function exchange (item:ExchangeItem, now:Int, confirmedHards:Int=0):Int
 	{
+		if( item.category == ExchangeType.C20_SPECIALS && item.numExchanges > 0 )
+			return MessageTypes.RESPONSE_NOT_ALLOWED;
+		if( item.type == ExchangeType.C104_STARS && item.numExchanges < 10 )
+			return MessageTypes.RESPONSE_NOT_ALLOWED;
+		
 		if( item.category == ExchangeType.C100_FREES )
 			findRandomOutcome(item, now);
 		else if( item.category == ResourceType.R30_CHALLENGES )
@@ -91,8 +92,6 @@ class Exchanger
 		}
 		trace("outcomes", outs.toString());
 #end
-		if( item.category == ExchangeType.C20_SPECIALS && item.numExchanges > 0 )
-			return MessageTypes.RESPONSE_NOT_ALLOWED;
 		
 		// add outcomes
 #if flash
@@ -107,8 +106,16 @@ class Exchanger
 		if( item.category == ExchangeType.C100_FREES )
 		{
 			game.player.resources.increase(ResourceType.R22_BOOK_OPENED_FREE, 1);
-			item.numExchanges = item.expiredAt < now ? 1 : item.numExchanges + 1;
-			item.expiredAt = now + ExchangeType.getCooldown(item.type);
+			if( item.type == ExchangeType.C104_STARS )
+				item.numExchanges = 0;
+			else
+				item.numExchanges = item.expiredAt < now ? 1 : item.numExchanges + 1;
+			
+			if( item.type == ExchangeType.C104_STARS )
+				item.expiredAt = Math.round(Math.max(now, item.expiredAt + ExchangeType.getCooldown(item.type)));
+			else
+				item.expiredAt = now + ExchangeType.getCooldown(item.type);
+			
 			item.outcome = 0;
 			item.outcomes = new IntIntMap();
 			item.requirements = new IntIntMap();
@@ -133,7 +140,7 @@ class Exchanger
 
 	public function findRandomOutcome(item:ExchangeItem, now:Int) : Void
 	{
-		var bookIndex = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.R22_BOOK_OPENED_FREE) : getearnedBattleBooks(now);
+		var bookIndex = (item.category == ExchangeType.C100_FREES || item.type == ExchangeType.C104_STARS) ? game.player.getResource(ResourceType.R22_BOOK_OPENED_FREE) : geteArnedBattleBooks(now);
 		item.outcome = item.category == ExchangeType.C110_BATTLES ? getBattleBook(bookIndex) : getFreeBook(bookIndex);
 		item.outcomes = new IntIntMap();
 		item.outcomes.set(item.outcome, game.player.get_arena(0));
@@ -254,7 +261,18 @@ class Exchanger
 			return 1000 * Math.round(count * 0.001);
 	}
 	
-	public function getearnedBattleBooks(now:Int) : Int
+	public function collectStars(stars:Int, now:Int) : Int
+	{
+		var item = items.get(ExchangeType.C104_STARS);
+		if( item.expiredAt > now )
+			return MessageTypes.RESPONSE_MUST_WAIT;
+		if( item.numExchanges >= 10 )
+			return MessageTypes.RESPONSE_ALREADY_SENT;
+		item.numExchanges = Math.floor(Math.min(10, item.numExchanges + stars));
+		return MessageTypes.RESPONSE_SUCCEED;
+	}
+	
+	public function geteArnedBattleBooks(now:Int) : Int
 	{
 		var i = 0;
 		var numClosed = 0;

@@ -9,6 +9,7 @@ import com.gt.towers.interfaces.IUnitHitCallback;
 import com.gt.towers.constants.SegmentType;
 import com.gt.towers.constants.StickerType;
 import com.gt.towers.constants.TroopType;
+import com.gt.towers.utils.GraphicMetrics;
 
 #if java
 import com.gt.towers.LoginData;
