@@ -1,6 +1,4 @@
 package com.gt.towers.utils;
-import com.gt.towers.battle.BattleField;
-import com.gt.towers.constants.CardTypes;
 import com.gt.towers.utils.Point3;
 /**
  * ...
@@ -31,6 +29,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 			
 			case	201 :	new Point3(18, -30, 0);
+			case	222 :	new Point3(-24, -170, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -52,6 +51,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 			
 			case	201 :	new Point3(18, -50, 0);
+			case	222 :	new Point3(-96, -142, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -73,6 +73,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 			
 			case	201 :	new Point3(18, -50, 0);
+			case	222 :	new Point3(-130, -62, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -94,6 +95,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 			
 			case	201 :	new Point3(18, -50, 0);
+			case	222 :	new Point3(-80, 4, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -115,6 +117,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 			
 			case	201 :	new Point3(18, -50, 0);
+			case	222 :	new Point3(25, 11, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -136,6 +139,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 			
 			case	201 :	new Point3(18, -50, 0);
+			case	222 :	new Point3(-96, -142, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -157,6 +161,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 			
 			case	201 :	new Point3(18, -50, 0);
+			case	222 :	new Point3(-130, -62, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -178,6 +183,7 @@ class GraphicMetrics
 			case	113	:	new Point3(18, -141, 0);
 		
 			case	201 :	new Point3(18, -50, 0);
+			case	222 :	new Point3(-80, 4, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 		return null;
@@ -205,33 +211,5 @@ class GraphicMetrics
 		var ret =  new Point3(x, y, z);
 		//trace("type:" + type + " rotation:" + rotation + " ret:" + ret);
 		return ret;
-	}
-	
-	static public function hasHitEffect( type:Int ) : Bool
-	{
-		if( type == 112 || type == 113 )
-			return false;
-		return true;
-	}
-	
-	static public function hasFireEffect( type:Int ) : Bool
-	{
-		if( CardTypes.isSpell(type) || type == 105 || type == 106 || type == 108 || type == 112 || type == 113 )
-			return false;
-		return true;
-	}
-	
-	static public function hasBulletEffect( type:Int ) : Bool
-	{
-		if( type == 112 || type == 113 || type == 103 || type == 105 || type == 221 )
-			return false;
-		return true;
-	}
-	
-	static public function hasDieEffect( type:Int ) : Bool
-	{
-		if( type == 107 )
-			return false;
-		return true;
 	}
 }
