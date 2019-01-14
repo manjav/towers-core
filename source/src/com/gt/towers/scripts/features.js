@@ -454,7 +454,7 @@ if( featureType == 22 )
 		case	151	:	1.00	;
 		case	152	:	0.60 	;
 		
-		case	201	:	0.05	;
+		case	201	:	0.0005	;
 		case	221	:	0.15	;
 		case	222	:	0.12	;
 		
@@ -482,7 +482,7 @@ if( featureType == 23 )
 		case	112	:	0.7	;
 		case	113	:	0.8	;
 		
-		case 	201 :	0.3 ;
+		case 	201 :	0.8 ;
 		case 	221 :	1.0 ;
 		case 	222 :	1.0 ;
 		
