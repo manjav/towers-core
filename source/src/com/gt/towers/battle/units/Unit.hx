@@ -39,7 +39,7 @@ class Unit extends GameObject
 		if( CardTypes.isHero(card.type) )
 			this.defaultTarget = new Point3(returnigPosition.x, returnigPosition.y);
 		else
-			this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 0 : BattleField.HEIGHT);
+			this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 150 : BattleField.HEIGHT - 150);
 	}
 	
 	override public function update() : Void
