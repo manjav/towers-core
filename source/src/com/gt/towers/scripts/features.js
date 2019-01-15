@@ -280,7 +280,7 @@ if( featureType == 12 )
 		case	102	:	4.00;
 		case	103	:	0.30;
 		case	104	:	1.00;
-		case	105	:	1.60;
+		case	105	:	1.40;
 		case	106	:	0.60;
 		case	107	:	0.40;
 		case	108	:	0.80;
