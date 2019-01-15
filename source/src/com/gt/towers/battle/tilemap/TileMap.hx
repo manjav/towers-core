@@ -85,6 +85,7 @@ class TileMap
 	
 	public function setTileState(x:Float, y:Float, width:Float, height:Float, state:Int) : Void
 	{
+		//trace("x:" + x + " y:" + y + " w:" + width + " h:" + height + " s:" + state);
 		var from = getTile(x, y);
 		var to = getTile(x + width, y + height);
 		var i:Int = from.i;
@@ -94,6 +95,7 @@ class TileMap
 			j = from.j;
 			while ( j <= to.j )
 			{
+				//trace("i:" + i + " j:" + j + " state:" + state);
 				set(i, j, state);
 				j ++;
 			}
@@ -150,11 +152,12 @@ class TileMap
 
 	private function checkQueue(startIndex:Int, cost:Int, queue:Array<Tile>, side:Int) : Void
 	{
+		//trace("checkQueue startIndex:" +  startIndex +  " cost:" + cost + " queue:" + queue + " side:" + side );
 		var lastQueueLength:Int = queue.length;
 		var i:Int = startIndex;
 		
 		//check neigbours of the queue element
-		while ( i < lastQueueLength )
+		while( i < lastQueueLength )
 		{
 			checkTile(queue[i].i,			queue[i].j - side,	cost + 0.00, i, queue); // top
 			checkTile(queue[i].i + side,	queue[i].j - side,	cost + 0.42, i, queue); // top-right
@@ -167,7 +170,7 @@ class TileMap
 			
 			i ++;
 		}
-		if( target == null )
+		if( target == null && cost < (tileWidth + tileHeight) )
 			checkQueue(lastQueueLength, cost + 1, queue, side);
 	}
 	
