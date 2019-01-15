@@ -57,9 +57,9 @@ class BattleField
 	public var tileMap:TileMap;
 	public var json:Dynamic;
 	public var elixirSpeeds:FloatList = new  FloatList();
+	public var games:Array<Game>;
 	var resetTime:Float = -1;
 #if java 
-	public var games:java.util.List<Game>;
 	public var unitsHitCallback:com.gt.towers.interfaces.IUnitHitCallback;
 	private var unitId:Int = 0;
 #end
@@ -84,7 +84,7 @@ class BattleField
 		{
 			var obstacles:Array<Dynamic> = json.layout.children[1].children;
 			for( obs in obstacles )
-				tileMap.setTileState(obs.params.x, obs.params.y, 50 * obs.params.scaleX, 50 * obs.params.scaleY, TileMap.STATE_OCCUPIED);
+				tileMap.setTileState(obs.params.x - 25 * obs.params.scaleX, obs.params.y - 25 * obs.params.scaleY, 50 * obs.params.scaleX, 50 * obs.params.scaleY, TileMap.STATE_OCCUPIED);
 		}
 		
 		units = new IntUnitMap();
@@ -92,10 +92,10 @@ class BattleField
 		elixirSpeeds.push(1);
 		elixirSpeeds.push(1);
 		
+		games = new Array<Game>();
+		games[0] = game_0;
+		games[1] = game_1;
 		#if java
-		games = new java.util.ArrayList();
-		games.add(game_0);
-		games.add(game_1);
 		
 		if( singleMode )
 		{
@@ -127,8 +127,8 @@ class BattleField
 		}
 		
 		// bot elixir is easier and player elixir is faster in tutorial
-		elixirSpeeds.set(0, games.get(0).player.get_battleswins() < 3 ? 2 : 1);
-		elixirSpeeds.set(1, Math.min(1, games.get(0).player.get_battleswins() / 4));
+		elixirSpeeds.set(0, games[0].player.get_battleswins() < 3 ? 2 : 1);
+		elixirSpeeds.set(1, Math.min(1, games[0].player.get_battleswins() / 5));
 		
 		// create castles
 		if( field.type == FieldData.TYPE_HEADQUARTER )
@@ -137,7 +137,7 @@ class BattleField
 			{
 				var side = unitId % 2;
 				var heroType = game_0.appVersion > 1400 ? 222 : 221;
-				var card = new com.gt.towers.battle.units.Card(games.get(side), unitId > 1 ? heroType : 201, friendlyMode ? 9 : games.get(side).player.get_level(0));
+				var card = new com.gt.towers.battle.units.Card(games[side], unitId > 1 ? heroType : 201, friendlyMode ? 9 : games[side].player.get_level(0));
 				var x = 480;
 				var y = 70;
 				if( unitId > 3 )
@@ -343,10 +343,10 @@ class BattleField
 	
 	public function getSide(id:Int) : Int
 	{
-		var gLen = games.size() - 1;
+		var gLen = games.length - 1;
 		while( gLen >= 0 )
 		{
-			if( id == games.get(gLen).player.id )
+			if( id == games[gLen].player.id )
 				return gLen;
 			gLen --;
 		}
@@ -355,7 +355,7 @@ class BattleField
 	
 	public function cardAvailabled(side:Int, type:Int) : Int
 	{
-		if( !games.get(side).player.cards.exists(type) )
+		if( !games[side].player.cards.exists(type) )
 			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_FOUND;
 		
 		if( !decks.get(side).exists(type) )

@@ -29,7 +29,13 @@ class Unit extends GameObject
 		//trace(card.toString() );
 		this.summonTime = battleField.now + card.summonTime;
 		this.immortalTime = this.summonTime + 500;
-		this.health = card.health;
+		
+		// fake health for tutorial
+		if( side == 1 )
+			this.health = Math.min(1, (battleField.games[0].player.get_battleswins() + 1) / 5) * card.health;
+		else
+			this.health = card.health;
+		
 		this.bulletId = id * 10000;
 		this.movable = card.type != CardTypes.C201;
 		if( !this.movable )
