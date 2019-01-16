@@ -146,6 +146,19 @@ class Exchanger
 		item.outcomes = new IntIntMap();
 		item.outcomes.set(item.outcome, game.player.get_arena(0));
 	}
+
+	public function findItem(category:Int, state:Int, now:Int, exception:Int = -1) : ExchangeItem
+	{
+		var keys = items.keys();
+		var i = keys.length - 1;
+		while ( i >= 0 )
+		{
+			if( items.get(keys[i]).category == category && items.get(keys[i]).getState(now) == state && items.get(keys[i]).type != exception )
+				return items.get(keys[i]);
+			i --;
+		}
+		return null;
+	}
 	
 	public function isBattleBookReady(type:Int, now:Int) : Int
 	{
@@ -156,14 +169,10 @@ class Exchanger
 		if( item.category == ExchangeType.C110_BATTLES )
 		{
 			// check another slot is in process
-			var exchangeKeys = items.keys();
-			var i = exchangeKeys.length - 1;
-			while ( i >= 0 )
-			{
-				if( items.get(exchangeKeys[i]).category == ExchangeType.C110_BATTLES && item.type != exchangeKeys[i] && items.get(exchangeKeys[i]).getState(now) == ExchangeItem.CHEST_STATE_BUSY )
-					return MessageTypes.RESPONSE_ALREADY_SENT;
-				i --;
-			}
+			var busyBook = findItem(ExchangeType.C110_BATTLES, ExchangeItem.CHEST_STATE_BUSY, now, item.type);
+			if( busyBook != null )
+				return MessageTypes.RESPONSE_ALREADY_SENT;
+			
 			// not enough requierements
 			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY && game.player.get_hards() < timeToHard(item.expiredAt - now) )
 				return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
