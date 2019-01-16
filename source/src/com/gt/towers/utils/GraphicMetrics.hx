@@ -28,7 +28,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -30, 0);
+			case	201 :	new Point3(-27, -166, 0);
 			case	222 :	new Point3(-24, -170, 0);
 			default : 		new Point3(0, 0, 0);
 		}
@@ -50,7 +50,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -50, 0);
+			case	201 :	new Point3(-116, -130, 0);
 			case	222 :	new Point3(-96, -142, 0);
 			default : 		new Point3(0, 0, 0);
 		}
@@ -72,7 +72,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -50, 0);
+			case	201 :	new Point3(-148, -55, 0);
 			case	222 :	new Point3(-130, -62, 0);
 			default : 		new Point3(0, 0, 0);
 		}
@@ -94,7 +94,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -50, 0);
+			case	201 :	new Point3(-83, 33, 0);
 			case	222 :	new Point3(-80, 4, 0);
 			default : 		new Point3(0, 0, 0);
 		}
@@ -116,7 +116,7 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -50, 0);
+			case	201 :	new Point3(32, 44, 0);
 			case	222 :	new Point3(25, 11, 0);
 			default : 		new Point3(0, 0, 0);
 		}
@@ -138,8 +138,8 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -50, 0);
-			case	222 :	new Point3(-96, -142, 0);
+			case	201 :	new Point3(116, -130, 0);
+			case	222 :	new Point3(96, -142, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -160,8 +160,8 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 			
-			case	201 :	new Point3(18, -50, 0);
-			case	222 :	new Point3(-130, -62, 0);
+			case	201 :	new Point3(148, -55, 0);
+			case	222 :	new Point3(130, -62, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 
@@ -182,8 +182,8 @@ class GraphicMetrics
 			case	112	:	new Point3(18, -141, 0);
 			case	113	:	new Point3(18, -141, 0);
 		
-			case	201 :	new Point3(18, -50, 0);
-			case	222 :	new Point3(-80, 4, 0);
+			case	201 :	new Point3(83, 33, 0);
+			case	222 :	new Point3(80, 4, 0);
 			default : 		new Point3(0, 0, 0);
 		}
 		return null;
