@@ -72,10 +72,12 @@ class FieldProvider
 		
 		
 		touchdowns = new StringFieldMap();
-		touchdowns.set( "touchdown_1", new FieldData( 1, "touchdown_1", "60,120,180,240", "", "0",	"", "touchdown_0") );
+		touchdowns.set( "touchdown_0", new FieldData( 1, "touchdown_0", "60,120,180,240", "", "0",	"", "touchdown_0") );
+		touchdowns.set( "touchdown_1", new FieldData( 1, "touchdown_1", "60,120,180,240", "", "0",	"", "touchdown_1") );
 		
 		headquarters = new StringFieldMap();
-		headquarters.set( "headquarter_1", new FieldData( 1, "headquarter_1", "60,120,180,240", "", "0",	"",  "headquarter_0") );
+		headquarters.set( "headquarter_0", new FieldData( 1, "headquarter_0", "60,120,180,240", "", "0",	"",  "headquarter_0") );
+		headquarters.set( "headquarter_1", new FieldData( 1, "headquarter_1", "60,120,180,240", "", "0",	"",  "headquarter_1") );
 	}
 	
 	static public function getField(type:String, index:Int) : FieldData
