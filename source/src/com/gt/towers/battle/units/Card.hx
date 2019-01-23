@@ -46,7 +46,8 @@ class Card
 	{
 		this.game = game;
 		this.type = type;
-		this.level = Math.floor(Math.max(1, level));
+		this.level = level;// Math.floor(Math.max(1, level));
+		//trace("t:" + type + " l:" + level);
 		setFeatures();
 	}
 	
@@ -151,11 +152,14 @@ class Card
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_upgradeRequirements();
 		ei.outcomes = get_upgradeRewards();
+		level ++;
 		var res = game.exchanger.exchange(ei, 0, confirmedHards);
 		if( res != MessageTypes.RESPONSE_SUCCEED )
+		{
+			level --;
 			return false;
+		}
 		
-		level ++;
 		setFeatures();
 		return true;
 	}	
