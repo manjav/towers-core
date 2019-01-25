@@ -50,7 +50,6 @@ class CardTypes
 	// heros
 	public static var C221:Int = 221;
 	
-	
 	public function new() {}
 	
 	/*public static function migrate( oldType:Int ) : Int
@@ -84,7 +83,7 @@ class CardTypes
 	
 	public static function getRarityColor(rarity:Int) : Int
 	{
-		return [0xFFFFFF, 0xffcc00, 0x00eeff][rarity];
+		return [0xFFFFFF, 0xFFCC00, 0xAA00AA][rarity];
 	}
 
 	public static function get_category(type:Int):Int
