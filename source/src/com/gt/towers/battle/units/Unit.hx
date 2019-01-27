@@ -32,7 +32,7 @@ class Unit extends GameObject
 		
 		// fake health for tutorial
 		if( side == 1 )
-			this.health = Math.min(1, (battleField.games[0].player.get_battleswins() + 1) / 5) * card.health;
+			this.health = card.health * 0.5 + Math.min(0.5, (battleField.games[0].player.get_battleswins() + 1) / 10) * card.health;
 		else
 			this.health = card.health;
 		
