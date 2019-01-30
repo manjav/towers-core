@@ -150,7 +150,7 @@ class Unit extends GameObject
 			path = null;
 			return;
 		}
-		path = battleField.tileMap.findPath(this.x, this.y, targetX, targetY, side == 0 ? 1 : -1);
+		path = battleField.tileMap.findPath(path, this.x, this.y, targetX, targetY, side == 0 ? 1 : -1);
 		if( path == null || path.length == 0 )
 			return;
 		if( BattleField.DEBUG_MODE )
