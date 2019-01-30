@@ -1,5 +1,6 @@
 package com.gt.towers.battle.tilemap;
 import com.gt.towers.utils.CoreUtils;
+import com.gt.towers.utils.Point2;
 
 /**
 * ...
@@ -124,10 +125,8 @@ class TileMap
 		Tile.dispose(tile);
 		stack[tile.i + tile.j * width] = null;
 	}
-	public function findPath(oldPath:Array<Tile>, sourceX:Float, sourceY:Float, destX:Float, destY:Float, side:Int , removeWrongs:Bool = true):Array<Tile>
+	public function findPath(sourceX:Float, sourceY:Float, destX:Float, destY:Float, side:Int , removeWrongs:Bool = true):Array<Point2>
 	{
-		Tile.disposeAll(oldPath);
-		
 		var srcTile = getTile(sourceX, sourceY);
 		var desTile = getTile(destX, destY);
 		if( srcTile.i == desTile.i && srcTile.j == desTile.j )
@@ -141,23 +140,12 @@ class TileMap
 		//run recursive function to find the shortest path
 		checkNeighbors(0, 1, side);
 		
-		if( !removeWrongs )
-			return stack;
+		/*if( !removeWrongs )
+			return stack;*/
 		
 		// remove wrong ways
-		var t:Tile;
-		var ret:Array<Tile> = new Array<Tile>();
-		setTilePosition(target);
-		ret.push(target);
-		while ( true )
-		{
-			var last:Int = ret[ret.length - 1].last;
-			t = Tile.instantiate(stack[last].i, stack[last].j, stack[last].cost, stack[last].last);
-			setTilePosition(t);
-			ret.push(t);
-			if( last == 0 )
-				break;
-		}
+		var ret:Array<Point2> = new Array<Point2>();
+		removeWrongTiles(ret, target);
 		
 		// tiles return to first states
 		set(desTile.i, desTile.j, STATE_EMPTY);
@@ -170,16 +158,23 @@ class TileMap
 			Tile.dispose(m);
 		
 		// remove backward ways
-		while ( ret.length > 1 )
+		while( ret.length > 1 )
 		{
 			//trace(CoreUtils.getNormalDistance(ret[0].x, ret[0].y, ret[1].x, ret[1].y) + " " + CoreUtils.getNormalDistance(sourceX, sourceY, ret[1].x, ret[1].y));
 			if( CoreUtils.getNormalDistance(ret[0].x, ret[0].y, ret[1].x, ret[1].y) < CoreUtils.getNormalDistance(sourceX, sourceY, ret[1].x, ret[1].y) )
 				break;
-			Tile.dispose(ret.shift());
+			Point2.dispose(ret.shift());
 		}		
 		return ret;
 	}
 
+	function removeWrongTiles(ret:Array<Point2>, tile:Tile) : Void
+	{
+		ret.push(new Point2(tile.i * tileWidth + tileWidth * 0.5, tile.j * tileHeight + tileHeight * 0.5));
+		if( tile.last > 0 )
+			removeWrongTiles(ret, stack[tile.last]);
+	}
+	
 	function checkNeighbors(startIndex:Int, cost:Int, side:Int) : Void
 	{
 		//trace("checkQueue startIndex:" +  startIndex +  " cost:" + cost + " queue:" + queue + " side:" + side );
@@ -189,7 +184,6 @@ class TileMap
 		//check neigbours of the queue element
 		while( i < lastCoordinatesSize )
 		{
-			
 			c = coordinates[i];
 			checkTile(stack[c].i,			stack[c].j - side,	cost + 0.00, c); // top
 			checkTile(stack[c].i + side,	stack[c].j - side,	cost + 0.42, c); // top-right
@@ -199,7 +193,6 @@ class TileMap
 			checkTile(stack[c].i - side,	stack[c].j + side,	cost + 0.42, c); // left-bottom
 			checkTile(stack[c].i - side,	stack[c].j, 		cost + 0.00, c); // left
 			checkTile(stack[c].i - side,	stack[c].j - side,	cost + 0.42, c); // left-top
-			
 			i ++;
 		}
 		

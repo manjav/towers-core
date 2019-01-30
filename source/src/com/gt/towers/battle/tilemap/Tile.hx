@@ -1,9 +1,11 @@
 package com.gt.towers.battle.tilemap;
+import com.gt.towers.utils.Int2;
+
 /**
  * ...
  * @author Mansour Djawadi
  */
-class Tile
+class Tile extends Int2
 {
 	static private var pool:Array<Tile> = new Array<Tile>();
 	static public var counter:Int = 0;
@@ -43,18 +45,14 @@ class Tile
 	public var last:Int;
 	public var x:Float;
 	public var y:Float;
-	public var i:Int;
-	public var j:Int;
-
 	public function new(i:Int, j:Int, cost:Float, last:Int) 
 	{
-		this.i = i;
-		this.j = j;
+		super(i, j);
 		this.cost = cost;
 		this.last = last;
 	}
 	
-	public function toString() : String
+	override public function toString() : String
 	{
 		return "(i:" + i + ", j:" + j + ", cost:" + cost + ", last:" + last + ", x:" + x + ", y:" + y + ")";
 	}
