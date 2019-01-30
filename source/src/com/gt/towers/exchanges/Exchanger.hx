@@ -286,10 +286,10 @@ class Exchanger
 	{
 		var i = 0;
 		var numClosed = 0;
-		var _items = items.values();
-		while ( i < _items.length )
+		var keys = items.keys();
+		while ( i < keys.length )
 		{
-			if( _items[i].category == ExchangeType.C110_BATTLES && _items[i].getState(now) != ExchangeItem.CHEST_STATE_EMPTY )
+			if( items.get(keys[i]).category == ExchangeType.C110_BATTLES && items.get(keys[i]).getState(now) != ExchangeItem.CHEST_STATE_EMPTY )
 				numClosed ++;
 			i ++;
 		}

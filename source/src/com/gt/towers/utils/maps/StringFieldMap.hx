@@ -102,26 +102,8 @@ class StringFieldMap
 		}
 		return ret ;
 	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():java.NativeArray<FieldData>
-	{
-		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:java.NativeArray<FieldData> = new java.NativeArray<FieldData>(keis.length);
-		var i:Int = 0;
-		while (i < keis.length)
-		{
-			ret[i] = cast(get(keis[i]), FieldData);
-			i++;
-		}
-		return ret ;
-	}
 	#end
-	
-	
-	
+		
 	#if flash
 	/**
 		Returns an Iterator over the keys of `this` Map.
@@ -132,17 +114,6 @@ class StringFieldMap
 		var ret:flash.Vector<String> = new flash.Vector<String>();
 		for (key in _map.keys())
 			ret.push(key);
-		return ret ;
-	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():flash.Vector<FieldData>
-	{
-		var ret:flash.Vector<FieldData> = new flash.Vector<FieldData>();
-		for (value in _map)
-			ret.push(value);
 		return ret ;
 	}
 	#end

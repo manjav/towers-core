@@ -114,22 +114,6 @@ class IntStrMap
 		}
 		return ret ;
 	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():java.NativeArray<String>
-	{
-		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:java.NativeArray<String> = new java.NativeArray<String>(keis.length);
-		var i:Int = 0;
-		while (i < keis.length)
-		{
-			ret[i] = cast(get(keis[i]), String);
-			i++;
-		}
-		return ret ;
-	}
 	#end
 	
 	#if flash
@@ -142,17 +126,6 @@ class IntStrMap
 		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (key in _map.keys())
 			ret.push(key);
-		return ret ;
-	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():flash.Vector<String>
-	{
-		var ret:flash.Vector<String> = new flash.Vector<String>();
-		for (value in _map)
-			ret.push(value);
 		return ret ;
 	}
 	#end

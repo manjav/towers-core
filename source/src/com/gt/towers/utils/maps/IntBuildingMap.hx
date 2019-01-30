@@ -94,22 +94,6 @@ class IntBuildingMap
 		}
 		return ret ;
 	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():java.NativeArray<Building>
-	{
-		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:java.NativeArray<Building> = new java.NativeArray<Building>(keis.length);
-		var i:Int = 0;
-		while (i < keis.length)
-		{
-			ret[i] = cast(get(keis[i]), Building);
-			i++;
-		}
-		return ret ;
-	}
 	#end
 	
 	#if flash
@@ -122,17 +106,6 @@ class IntBuildingMap
 		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for( key in _map.keys() )
 			ret.push(key);
-		return ret ;
-	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():flash.Vector<Building>
-	{
-		var ret:flash.Vector<Building> = new flash.Vector<Building>();
-		for( value in _map )
-			ret.push(value);
 		return ret ;
 	}
 	#end

@@ -89,22 +89,6 @@ class IntArenaMap
 		}
 		return ret ;
 	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():java.NativeArray<Arena>
-	{
-		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:java.NativeArray<Arena> = new java.NativeArray<Arena>(keis.length);
-		var i:Int = 0;
-		while (i < keis.length)
-		{
-			ret[i] = cast(get(keis[i]), Arena);
-			i++;
-		}
-		return ret ;
-	}
 	#end
 	
 	#if flash
@@ -117,17 +101,6 @@ class IntArenaMap
 		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (key in _map.keys())
 			ret.push(key);
-		return ret ;
-	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():flash.Vector<Arena>
-	{
-		var ret:flash.Vector<Arena> = new flash.Vector<Arena>();
-		for (value in _map)
-			ret.push(value);
 		return ret ;
 	}
 	#end

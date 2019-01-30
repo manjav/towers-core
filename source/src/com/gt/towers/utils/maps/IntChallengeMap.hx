@@ -67,17 +67,6 @@ class IntChallengeMap
 			ret.push(key);
 		return ret ;
 	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():Vector<Challenge>
-	{
-		var ret:Vector<Challenge> = new Vector<Challenge>();
-		for (value in _map)
-			ret.push(value);
-		return ret ;
-	}
 	
 	public function getStartedChallenge(now : Int) : Int
 	{

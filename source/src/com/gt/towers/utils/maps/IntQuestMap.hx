@@ -89,22 +89,6 @@ class IntQuestMap
 		}
 		return ret ;
 	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():java.NativeArray<Quest>
-	{
-		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
-		var ret:java.NativeArray<Quest> = new java.NativeArray<Quest>(keis.length);
-		var i:Int = 0;
-		while (i < keis.length)
-		{
-			ret[i] = cast(get(keis[i]), Quest);
-			i++;
-		}
-		return ret ;
-	}
 	#end
 	
 	#if flash
@@ -117,17 +101,6 @@ class IntQuestMap
 		var ret:flash.Vector<Int> = new flash.Vector<Int>();
 		for (key in _map.keys())
 			ret.push(key);
-		return ret ;
-	}
-	/**
-		Returns an Iterator over the values of `this` Map.
-		The order of values is undefined.
-	**/
-	public function values():flash.Vector<Quest>
-	{
-		var ret:flash.Vector<Quest> = new flash.Vector<Quest>();
-		for (value in _map)
-			ret.push(value);
 		return ret ;
 	}
 	#end
