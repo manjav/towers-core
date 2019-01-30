@@ -92,7 +92,6 @@ class IntArenaMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():java.NativeArray<Arena>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -105,6 +104,7 @@ class IntArenaMap
 		}
 		return ret ;
 	}
+	**/
 	#end
 	
 	#if flash
@@ -122,7 +122,6 @@ class IntArenaMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<Arena>
 	{
 		var ret:flash.Vector<Arena> = new flash.Vector<Arena>();
@@ -130,5 +129,6 @@ class IntArenaMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 }

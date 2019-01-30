@@ -96,7 +96,7 @@ class IntUnitMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
+	
 	public function values():java.NativeArray<Unit>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -108,7 +108,7 @@ class IntUnitMap
 			i++;
 		}
 		return ret ;
-	}
+	}**/
 	#end
 	
 	#if flash
@@ -126,7 +126,6 @@ class IntUnitMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<Unit>
 	{
 		var ret:flash.Vector<Unit> = new flash.Vector<Unit>();
@@ -134,6 +133,7 @@ class IntUnitMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 	
 	/**

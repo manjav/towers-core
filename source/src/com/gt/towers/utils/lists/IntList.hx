@@ -50,12 +50,15 @@ class IntList
 		#end
 	}
 
-	public function pop():Void
+	public function pop():Int
 	{
 		#if java
-		_list.remove(_list.size()-1);
+		var i = _list.size() - 1;
+		var ret = _list.get(i);
+		_list.remove(i);
+		return ret;
 		#elseif flash
-		_list.pop();
+		return _list.pop();
 		#end
 	}
 

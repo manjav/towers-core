@@ -92,7 +92,6 @@ class IntShopMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():java.NativeArray<ExchangeItem>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -105,6 +104,7 @@ class IntShopMap
 		}
 		return ret ;
 	}
+	**/
 	#end
 	
 	#if flash
@@ -122,7 +122,6 @@ class IntShopMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<ExchangeItem>
 	{
 		var ret:flash.Vector<ExchangeItem> = new flash.Vector<ExchangeItem>();
@@ -130,6 +129,7 @@ class IntShopMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 	
 }

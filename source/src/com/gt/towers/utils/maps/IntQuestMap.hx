@@ -92,7 +92,6 @@ class IntQuestMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():java.NativeArray<Quest>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -105,6 +104,7 @@ class IntQuestMap
 		}
 		return ret ;
 	}
+	**/
 	#end
 	
 	#if flash
@@ -122,7 +122,6 @@ class IntQuestMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<Quest>
 	{
 		var ret:flash.Vector<Quest> = new flash.Vector<Quest>();
@@ -130,5 +129,6 @@ class IntQuestMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 }

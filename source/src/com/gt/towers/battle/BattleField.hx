@@ -36,8 +36,6 @@ class BattleField
 	static public var DEBUG_MODE:Bool = false;
 	static public var DELTA_TIME:Int = 25;
 	
-	private var questProvider:FieldProvider;
-
 	public var state:Int = 0;
 	public var elixirBar:FloatList;
 	public var singleMode:Bool;
@@ -58,10 +56,11 @@ class BattleField
 	public var json:Dynamic;
 	public var elixirSpeeds:FloatList = new  FloatList();
 	public var games:Array<Game>;
+	var garbage:IntList;
 	var resetTime:Float = -1;
 #if java 
 	public var unitsHitCallback:com.gt.towers.interfaces.IUnitHitCallback;
-	private var unitId:Int = 0;
+	var unitId:Int = 0;
 #end
 
 	public function new(){}
@@ -87,6 +86,7 @@ class BattleField
 				tileMap.setTileState(obs.params.x - 25 * obs.params.scaleX, obs.params.y - 25 * obs.params.scaleY, 50 * obs.params.scaleX, 50 * obs.params.scaleY, TileMap.STATE_OCCUPIED);
 		}
 		
+		garbage = new IntList();
 		units = new IntUnitMap();
 		bullets = new IntBulletMap();
 		elixirSpeeds.push(1);
@@ -193,45 +193,35 @@ class BattleField
 			return;
 		
 		// -=-=-=-=-=-=-=-  UPDATE AND REMOVE UNITS  -=-=-=-=-=-=-=-=-=-
-		var deadUnits = new IntList();
+		garbage = new IntList();
 		var keys = units.keys();
 		var i = keys.length - 1;
 		while ( i >= 0 )
 		{
 			if( units.get(keys[i]).disposed() )
-				deadUnits.push(keys[i]);
+				garbage.push(keys[i]);
 			else
 				units.get(keys[i]).update();
 			i --;
 		}
 		// remove dead units
-		i = deadUnits.size() - 1;
-		while ( i >= 0 )
-		{
-			units.remove(deadUnits.get(i));
-			i --;
-		}
+		while( garbage.size() > 0 )
+			units.remove(garbage.pop());
 		
 		// -=-=-=-=-=-=-=-=-  UPDATE AND REMOVE BULLETS  -=-=-=-=-=-=-=-=-
-		var explodedBullets = new IntList();
 		keys = bullets.keys();
 		i = keys.length - 1;
 		while ( i >= 0 )
 		{
 			if( bullets.get(keys[i]).disposed() )
-				explodedBullets.push(keys[i]);
+				garbage.push(keys[i]);
 			else
 				bullets.get(keys[i]).update();
 			i --;
 		}
 		// remove exploded bullets
-		i = explodedBullets.size() - 1;
-		while ( i >= 0 )
-		{
-			bullets.remove(explodedBullets.get(i));
-			i --;
-		}
-		
+		while( garbage.size() > 0 )
+			bullets.remove(garbage.pop());
 		
 		// -=-=-=-=-=-=-=-=-=-=-  INCREASE ELIXIRS  -=-=-=-=-=-=-=-=-=-=-=-
 		var increaseSpeed = getElixirIncreaseSpeed() * deltaTime;
