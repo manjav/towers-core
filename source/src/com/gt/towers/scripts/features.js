@@ -358,7 +358,7 @@ if( featureType == 14 )
 	return ret * 100;
 }
 
-// 	Range
+// focusRange
 if( featureType == 15 )
 {
 	var ret = switch( cardType )
@@ -379,7 +379,7 @@ if( featureType == 15 )
 		
 		case 	201 : 	1.5 ;
 		case 	221 : 	1.5 ;
-		case	222	:	0.8;//1.9	;
+		case	222	:	1.9	;
 		
 		default		:	1.0	;
 	}
