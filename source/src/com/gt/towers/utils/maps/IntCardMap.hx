@@ -74,11 +74,11 @@ class IntCardMap
 
 	public function indexOf(type:Int) : Int
 	{
-		var __v = values();
-		var i = __v.length - 1;
+		var __k = keys();
+		var i = __k.length - 1;
 		while ( i >= 0 )
 		{
-			if ( __v[i].type == type )
+			if ( get(__k[i]).type == type )
 				return i;
 			i --;
 		}
@@ -115,7 +115,6 @@ class IntCardMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():java.NativeArray<Card>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -128,6 +127,7 @@ class IntCardMap
 		}
 		return ret ;
 	}
+	**/
 	#end
 	
 	#if flash
@@ -145,7 +145,6 @@ class IntCardMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<Card>
 	{
 		var ret:flash.Vector<Card> = new flash.Vector<Card>();
@@ -153,6 +152,7 @@ class IntCardMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 	
 	public function queue_get(index:Int) : Int

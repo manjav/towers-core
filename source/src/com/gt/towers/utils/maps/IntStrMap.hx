@@ -117,7 +117,6 @@ class IntStrMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():java.NativeArray<String>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -130,6 +129,7 @@ class IntStrMap
 		}
 		return ret ;
 	}
+	**/
 	#end
 	
 	#if flash
@@ -147,7 +147,6 @@ class IntStrMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<String>
 	{
 		var ret:flash.Vector<String> = new flash.Vector<String>();
@@ -155,6 +154,7 @@ class IntStrMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 	
 	

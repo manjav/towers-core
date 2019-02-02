@@ -96,7 +96,6 @@ class IntBulletMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():java.NativeArray<Bullet>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -109,6 +108,7 @@ class IntBulletMap
 		}
 		return ret ;
 	}
+	**/
 	#end
 	
 	#if flash
@@ -126,7 +126,6 @@ class IntBulletMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<Bullet>
 	{
 		var ret:flash.Vector<Bullet> = new flash.Vector<Bullet>();
@@ -134,6 +133,7 @@ class IntBulletMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 	
 	/**

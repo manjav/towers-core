@@ -1,6 +1,6 @@
 package com.gt.towers.battle.tilemap;
-import com.gt.towers.battle.tilemap.Tile;
 import com.gt.towers.utils.CoreUtils;
+import com.gt.towers.utils.Point2;
 
 /**
 * ...
@@ -20,6 +20,8 @@ class TileMap
 	public var tileHeight:Int;
 	var map:Array<Array<Int>>;
 	var target:Tile;
+	var stack:Array<Tile>;
+	var coordinates:Array<Int>;
 	public function new() 
 	{
 		tileWidth = Math.floor( BattleField.WIDTH / width );
@@ -103,7 +105,27 @@ class TileMap
 		}
 	}
 	
-	public function findPath(sourceX:Float, sourceY:Float, destX:Float, destY:Float, side:Int , removeWrongs:Bool = true):Array<Tile>
+	
+	function stackNew() : Void
+	{
+		stack = new Array<Tile>();
+		coordinates = new Array<Int>();
+	}
+	function stackAdd(tile:Tile) : Void
+	{
+		stack[tile.i + tile.j * width] = tile;
+		coordinates.push(tile.i + tile.j * width);
+	}
+	function stackGet(i:Int, j:Int) : Tile
+	{
+		return stack[i + j * width];
+	}
+	function stackRemove(tile) : Void
+	{
+		Tile.dispose(tile);
+		stack[tile.i + tile.j * width] = null;
+	}
+	public function findPath(sourceX:Float, sourceY:Float, destX:Float, destY:Float, side:Int , removeWrongs:Bool = true):Array<Point2>
 	{
 		var srcTile = getTile(sourceX, sourceY);
 		var desTile = getTile(destX, destY);
@@ -112,69 +134,73 @@ class TileMap
 		set(desTile.i,	desTile.j,	STATE_START);
 		set(srcTile.i,	srcTile.j,	STATE_TARGET);
 		
-		var queue:Array<Tile> = new Array<Tile>();
 		desTile.cost = desTile.last = 0;
-		queue.push(desTile);
+		stackNew();
+		stackAdd(desTile);
 		//run recursive function to find the shortest path
-		checkQueue(0, 1, queue, side);
+		checkNeighbors(0, 1, side);
 		
-		if( !removeWrongs )
-			return queue;
+		/*if( !removeWrongs )
+			return stack;*/
 		
 		// remove wrong ways
-		var ret:Array<Tile> = new Array<Tile>();
-		setTilePosition(target);
-		ret.push(target);
-		while ( true )
-		{
-			var last:Int = ret[ret.length - 1].last;
-			setTilePosition(queue[last]);
-			ret.push(queue[last]);
-			if( last == 0 )
-				break;
-		}
+		var ret:Array<Point2> = new Array<Point2>();
+		removeWrongTiles(ret, target);
 		
 		// tiles return to first states
 		set(desTile.i, desTile.j, STATE_EMPTY);
 		set(srcTile.i, srcTile.j, STATE_EMPTY);
+		Tile.dispose(desTile);
+		Tile.dispose(srcTile);
 		target = null;
 		
+		for( m in stack )
+			Tile.dispose(m);
+		
 		// remove backward ways
-		while ( ret.length > 1 )
+		while( ret.length > 1 )
 		{
 			//trace(CoreUtils.getNormalDistance(ret[0].x, ret[0].y, ret[1].x, ret[1].y) + " " + CoreUtils.getNormalDistance(sourceX, sourceY, ret[1].x, ret[1].y));
 			if( CoreUtils.getNormalDistance(ret[0].x, ret[0].y, ret[1].x, ret[1].y) < CoreUtils.getNormalDistance(sourceX, sourceY, ret[1].x, ret[1].y) )
 				break;
-			ret.shift();
+			Point2.dispose(ret.shift());
 		}		
 		return ret;
 	}
 
-	private function checkQueue(startIndex:Int, cost:Int, queue:Array<Tile>, side:Int) : Void
+	function removeWrongTiles(ret:Array<Point2>, tile:Tile) : Void
 	{
-		//trace("checkQueue startIndex:" +  startIndex +  " cost:" + cost + " queue:" + queue + " side:" + side );
-		var lastQueueLength:Int = queue.length;
-		var i:Int = startIndex;
-		
-		//check neigbours of the queue element
-		while( i < lastQueueLength )
-		{
-			checkTile(queue[i].i,			queue[i].j - side,	cost + 0.00, i, queue); // top
-			checkTile(queue[i].i + side,	queue[i].j - side,	cost + 0.42, i, queue); // top-right
-			checkTile(queue[i].i + side,	queue[i].j,			cost + 0.00, i, queue); // right
-			checkTile(queue[i].i + side,	queue[i].j + side,	cost + 0.42, i, queue); // right-bottom
-			checkTile(queue[i].i,			queue[i].j + side,	cost + 0.00, i, queue); // bottom
-			checkTile(queue[i].i - side,	queue[i].j + side,	cost + 0.42, i, queue); // left-bottom
-			checkTile(queue[i].i - side,	queue[i].j, 		cost + 0.00, i, queue); // left
-			checkTile(queue[i].i - side,	queue[i].j - side,	cost + 0.42, i, queue); // left-top
-			
-			i ++;
-		}
-		if( target == null && cost < (tileWidth + tileHeight) )
-			checkQueue(lastQueueLength, cost + 1, queue, side);
+		ret.push(new Point2(tile.i * tileWidth + tileWidth * 0.5, tile.j * tileHeight + tileHeight * 0.5));
+		if( tile.last > 0 )
+			removeWrongTiles(ret, stack[tile.last]);
 	}
 	
-	public function checkTile(i:Int, j:Int, cost:Float, last:Int, queue:Array<Tile>) : Void
+	function checkNeighbors(startIndex:Int, cost:Int, side:Int) : Void
+	{
+		//trace("checkQueue startIndex:" +  startIndex +  " cost:" + cost + " queue:" + queue + " side:" + side );
+		var i:Int = startIndex;
+		var c:Int;
+		var lastCoordinatesSize = coordinates.length;
+		//check neigbours of the queue element
+		while( i < lastCoordinatesSize )
+		{
+			c = coordinates[i];
+			checkTile(stack[c].i,			stack[c].j - side,	cost + 0.00, c); // top
+			checkTile(stack[c].i + side,	stack[c].j - side,	cost + 0.42, c); // top-right
+			checkTile(stack[c].i + side,	stack[c].j,			cost + 0.00, c); // right
+			checkTile(stack[c].i + side,	stack[c].j + side,	cost + 0.42, c); // right-bottom
+			checkTile(stack[c].i,			stack[c].j + side,	cost + 0.00, c); // bottom
+			checkTile(stack[c].i - side,	stack[c].j + side,	cost + 0.42, c); // left-bottom
+			checkTile(stack[c].i - side,	stack[c].j, 		cost + 0.00, c); // left
+			checkTile(stack[c].i - side,	stack[c].j - side,	cost + 0.42, c); // left-top
+			i ++;
+		}
+		
+		if( cost < (tileWidth + tileHeight) )
+			checkNeighbors(lastCoordinatesSize, cost + 1, side);
+	}
+		
+	function checkTile(i:Int, j:Int, cost:Float, last:Int) : Void
 	{
 		if( i < 0 || j < 0 || i >= width || j >= height || map[i][j] == STATE_OCCUPIED )
 			return;
@@ -184,40 +210,40 @@ class TileMap
 		{
 			if( target == null || target.cost > cost )
 			{
-				target = new Tile(i, j, cost, last);
-				queue.push(target);
+				target = Tile.instantiate(i, j, cost, last);
+				stackAdd(target);
 			}
 			return;
 		}
 		
-		var coordinate = new Tile(i, j, cost, last);
-		if( canBeAddedToQueue(coordinate, queue) )
-			queue.push(coordinate);
+		addCoordinate(Tile.instantiate(i, j, cost, last));
 	}
-
+	
 	/**
 	 * if a coordinate already exists in the queue  and has higher coordinate it won't be added. but if it has lower coordinate it will replace the one in the queue
 	 * @param	coordinate
 	 * @param	queue
 	 * @return
 	 */
-	private function canBeAddedToQueue(coordinate:Tile, queue:Array<Tile>) : Bool
+	function addCoordinate(tile:Tile) : Void
 	{
-		var i:Int = queue.length - 1;
-		while ( i >= 0 )
+		var t = stackGet(tile.i, tile.j);
+		if( t != null )
 		{
-			if( coordinate.i == queue[i].i && coordinate.j == queue[i].j )
+			if( tile.cost < t.cost )
 			{
-				if( coordinate.cost >= queue[i].cost )
-					return false;
-				
-				queue.splice(i, 1);
-				return true;
+				stackRemove(t);
+				stackAdd(tile);
+				return;
 			}
-			i --;
+			
+			Tile.dispose(tile);
+			return;
 		}
-		return true;
+		stackAdd(tile);
 	}
+	
+	
 	
 	public function findTile(x:Float, y:Float, side:Int, state:Int) : Tile
 	{

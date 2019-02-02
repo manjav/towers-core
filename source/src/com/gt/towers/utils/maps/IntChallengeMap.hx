@@ -70,7 +70,6 @@ class IntChallengeMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():Vector<Challenge>
 	{
 		var ret:Vector<Challenge> = new Vector<Challenge>();
@@ -78,6 +77,7 @@ class IntChallengeMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	
 	public function getStartedChallenge(now : Int) : Int
 	{

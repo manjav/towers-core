@@ -6,7 +6,7 @@ import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.events.BattleEvent;
-import com.gt.towers.utils.Point3;
+import com.gt.towers.utils.Point2;
 
 /**
  * ...
@@ -16,11 +16,11 @@ class Unit extends GameObject
 {
     public var health:Float;
 	public var bulletId:Int = 0;
-	var target:Point3;
-	var defaultTarget:Point3;
+	var target:Point2;
+	var defaultTarget:Point2;
 	var attackTime:Float = 0;
 	var cachedEnemy:Int = -1;
-	var path:Array<Tile>;
+	var path:Array<Point2>;
 	var immortalTime:Float;
 
 	public function new(id:Int, battleField:BattleField, card:Card, side:Int, x:Float, y:Float, z:Float) 
@@ -40,12 +40,12 @@ class Unit extends GameObject
 		this.movable = card.type != CardTypes.C201;
 		if( !this.movable )
 			return;
-		this.target = new Point3(0, 0);
+		this.target = new Point2(0, 0);
 		var returnigPosition = battleField.tileMap.getTile(this.x, this.y);
 		if( CardTypes.isHero(card.type) )
-			this.defaultTarget = new Point3(returnigPosition.x, returnigPosition.y);
+			this.defaultTarget = new Point2(returnigPosition.x, returnigPosition.y);
 		else
-			this.defaultTarget = new Point3(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 0 : BattleField.HEIGHT);
+			this.defaultTarget = new Point2(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 0 : BattleField.HEIGHT);
 	}
 	
 	override public function update() : Void
@@ -142,7 +142,8 @@ class Unit extends GameObject
 
 	function findPath(targetX:Float, targetY:Float) : Void
 	{
-		if ( !movable )
+		Point2.disposeAll(path);
+		if( !movable )
 			return;
 		
 		if( this.x == targetX && this.y == targetY )
@@ -157,7 +158,7 @@ class Unit extends GameObject
 		{
 			var i = 0;
 			var len = path.length;
-			var pthStr = "findPath  id: " + id + " type: " + card.type + "  ";
+			var pthStr = "findPath  id: " + id + " side: " + side + " type: " + card.type + "  ";
 			while ( i < len )
 			{
 				pthStr += (path[i].x + "," + path[i].y + " ");
@@ -226,24 +227,25 @@ class Unit extends GameObject
 		
 		var distance:Float = card.focusRange;
 		var ret:Int = -1;
+		var u:Unit;
 		var i = 0;
-		var values = battleField.units.values();
-		var len = values.length;
+		var keys = battleField.units.keys();
+		var len = keys.length;
 		while ( i < len )
 		{
-			if( !values[i].disposed() && values[i].summonTime == 0 )
+			u = battleField.units.get(keys[i++]);
+			if( u == null || u.disposed() || u.summonTime != 0 )
+				continue;
+			
+			if( (card.bulletDamage >= 0 && this.side != u.side) || (card.bulletDamage < 0 && this.side == u.side && u.card.type != CardTypes.C109 && u.card.type < CardTypes.C201 && u.health < u.card.health) )
 			{
-				if( (card.bulletDamage >= 0 && this.side != values[i].side) || (card.bulletDamage < 0 && this.side == values[i].side && values[i].card.type != CardTypes.C109 && values[i].card.type < CardTypes.C201 && values[i].health < values[i].card.health) )
+				var dis = com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, u.x, u.y);
+				if( dis <= distance )
 				{
-					var dis = com.gt.towers.utils.CoreUtils.getDistance(this.x, this.y, values[i].x, values[i].y);
-					if( dis <= distance )
-					{
-						distance = dis;
-						ret = values[i].id;
-					}
+					distance = dis;
+					ret = u.id;
 				}
 			}
-			i ++;
 		}
 		return ret;
 	}
@@ -274,6 +276,7 @@ class Unit extends GameObject
 	{
 		if( disposed() )
 			return;
+		Point2.disposeAll(path);
 		if( card.explosive && !isDump )
 			attack(this);
 		super.dispose();

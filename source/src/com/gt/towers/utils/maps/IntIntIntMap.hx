@@ -95,7 +95,6 @@ class IntIntIntMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():java.NativeArray<IntIntMap>
 	{
 		var keis:java.NativeArray<Dynamic> = _map.keySet().toArray();
@@ -108,6 +107,7 @@ class IntIntIntMap
 		}
 		return ret ;
 	}
+	**/
 	#end
 	
 	#if flash
@@ -125,7 +125,6 @@ class IntIntIntMap
 	/**
 		Returns an Iterator over the values of `this` Map.
 		The order of values is undefined.
-	**/
 	public function values():flash.Vector<IntIntMap>
 	{
 		var ret:flash.Vector<IntIntMap> = new flash.Vector<IntIntMap>();
@@ -133,5 +132,6 @@ class IntIntIntMap
 			ret.push(value);
 		return ret ;
 	}
+	**/
 	#end
 }
