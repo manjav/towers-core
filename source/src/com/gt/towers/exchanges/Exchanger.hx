@@ -202,11 +202,11 @@ class Exchanger
 				reals += map.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.R4_CURRENCY_HARD )
 				hards += map.get(reqKeys[i]);
-			else if ( reqKeys[i] == ResourceType.R3_CURRENCY_SOFT )
+			else if( reqKeys[i] == ResourceType.R3_CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isCard(reqKeys[i])) 
 				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
-			else if ( ResourceType.isBook(reqKeys[i]))
+			else if( ResourceType.isBook(reqKeys[i]))
 				hards += toHard(estimateBookOutcome(reqKeys[i], map.get(reqKeys[i]), 1));
 			i ++;
 		}
@@ -254,7 +254,7 @@ class Exchanger
 	}
 	static public function timeToHard(count:Int):Int
 	{
-		return Math.round( count / 600 );
+		return Math.ceil( count / 600 );
 	}
 	static public function cardToSoft(count:Int, rarity:Int) : Int
 	{
@@ -262,9 +262,9 @@ class Exchanger
 	}
 	static public function fixedRound(count:Int) : Int
 	{
-		if ( count < 1000 )
+		if( count < 1000 )
 			return 10 * Math.round(count * 0.1);
-		else if ( count < 10000 )
+		else if( count < 10000 )
 			return 100 * Math.round(count * 0.01);
 		else
 			return 1000 * Math.round(count * 0.001);
