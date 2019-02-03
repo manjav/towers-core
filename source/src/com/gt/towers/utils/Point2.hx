@@ -1,5 +1,4 @@
 package com.gt.towers.utils;
-import com.gt.towers.utils.Point2;
 
 /**
  * ...
@@ -32,8 +31,7 @@ class Point2
 		return this;
 	}*/
 	
-		
-	static public function dispose(shift:Null<Point2>) : Void
+	static public function dispose(point2:Point2) : Void
 	{
 	}
 	

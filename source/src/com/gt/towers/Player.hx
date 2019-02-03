@@ -329,7 +329,7 @@ class Player
 		while( i < numCards )
 		{
 			var randType = allCards[Math.floor ( Math.random() * allCards.length )];
-			if ( deck.existsValue(randType) ) 
+			if( deck.existsValue(randType) ) 
 				continue;
 			
 			log += "," + randType;

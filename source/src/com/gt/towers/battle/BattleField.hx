@@ -1,6 +1,5 @@
 package com.gt.towers.battle;
 import com.gt.towers.Game;
-import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.tilemap.TileMap;
 import com.gt.towers.battle.units.Card;
