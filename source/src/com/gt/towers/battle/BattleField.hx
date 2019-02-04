@@ -55,6 +55,8 @@ class BattleField
 	public var json:Dynamic;
 	public var elixirSpeeds:FloatList = new  FloatList();
 	public var games:Array<Game>;
+	public var numSummonedUnits:Int;
+	public var pauseTime:Float;
 	var garbage:IntList;
 	var resetTime:Float = -1;
 #if java 
@@ -68,6 +70,7 @@ class BattleField
 		this.side = side;
 		this.now = now;
 		this.startAt = Math.round(startAt);
+		this.pauseTime = (startAt + 2000) * 1000;
 		this.resetTime = (startAt + 2000) * 1000;
 		this.field = field;
 		this.singleMode = game_1.player.cards.keys().length == 0;
@@ -156,8 +159,11 @@ class BattleField
 		
 		// create decks	
 		decks = new IntIntCardMap();
-		decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck().randomize(), friendlyMode));
-		decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck().randomize(), friendlyMode));
+		if( game_0.player.get_battleswins() < 3 )
+			decks.set(0, getDeckCards(game_0, game_0.loginData.initialDecks.get(game_0.player.get_battleswins()), friendlyMode));
+		else
+			decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck().randomize(), friendlyMode));
+			decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck().randomize(), friendlyMode));
 #end
 		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
@@ -166,7 +172,7 @@ class BattleField
 	
 	static function getDeckCards(game:Game, deck:IntIntMap, friendlyMode:Bool) : IntCardMap
 	{
-		var ret = new IntCardMap();
+		var ret = new IntCardMap(); trace(deck.toString());
 		var cardsTypes = deck.values();
 		var i:Int = 0;
 		while( i < cardsTypes.length )
@@ -187,7 +193,8 @@ class BattleField
 		
 		if( resetTime <= this.now )
 			reset();
-		
+		if( pauseTime < now )
+			return;
 		if( state > STATE_2_STARTED )
 			return;
 		
@@ -248,6 +255,15 @@ class BattleField
 		{
 			//trace("summon  => side:" + side + " type:" + type + " error: " + index);
 			return index;
+		}
+		
+		if( side == 0 && games[0].player.get_battleswins() < 2 )
+		{
+			numSummonedUnits ++;
+			if( numSummonedUnits == 1 )
+				pauseTime = now + 1200;
+			else if( numSummonedUnits == 2 )
+				pauseTime = now + 2000000;
 		}
 		
 		var card = decks.get(side).get(type);

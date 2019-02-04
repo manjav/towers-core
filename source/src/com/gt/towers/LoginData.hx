@@ -3,6 +3,7 @@ import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.utils.lists.IntList;
+import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 /**
  * ...
@@ -19,6 +20,7 @@ class LoginData
 	public var exchanges:IntList;
 	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
+	public var initialDecks:IntIntIntMap;
 	public var deckSize:Int = 3;
 	public var deck:IntList;
 	
@@ -55,6 +57,11 @@ class LoginData
 		deck.push(CardTypes.C104);
 		deck.push(CardTypes.C105);
 		deck.push(CardTypes.C106);
+		
+		initialDecks = new IntIntIntMap();
+		initialDecks.set(0, new IntIntMap("0:101, 1:105, 2:104, 3:102, 4:106, 5:103"));
+		initialDecks.set(1, new IntIntMap("0:101, 1:105, 2:104, 3:102, 4:106, 5:103"));
+		initialDecks.set(2, new IntIntMap("0:102, 1:101, 2:106, 3:104, 5:105, 6:103, 7:107"));
 		
 		/*for test
 		resources.set(CardTypes.C106, 1);
