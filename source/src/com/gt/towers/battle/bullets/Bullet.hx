@@ -42,10 +42,17 @@ class Bullet extends GameObject
 		dy = fy - sy;
 		dz = fz - sz;
 		var angle:Float = Math.atan2(dy, dx);
-        deltaX = card.bulletSpeed * Math.cos(angle);
-        deltaY = card.bulletSpeed * Math.sin(angle);
-		angle = Math.atan2(dz, dx);
-        deltaZ = card.bulletSpeed * Math.sin(angle);
+		deltaX = card.bulletSpeed * Math.cos(angle);
+		deltaY = card.bulletSpeed * Math.sin(angle);
+		if( dy != 0 )
+			deltaZ = deltaY / dy * dz;
+		else if( dx != 0 )
+			deltaZ = deltaX / dx * dz;
+		else
+			deltaZ = card.bulletSpeed;
+		
+		//if( card.type == 151)
+			//trace("==>id" + id + " x" + x + " y:" + y + " z:" + z + " fx:" + fx + " fy:" + fy + " fz:" + fz + " dx:" + dx + " dy:" + dy + " dz:" + dz + " deltaX:" + deltaX + " deltaY:" + deltaY + " deltaZ:" + deltaZ);
 	}
 
 	override public function update() : Void
@@ -68,7 +75,7 @@ class Bullet extends GameObject
 			return;
 		summonTime = 0;
 		var unitId:Int = Std.int((id - id % 10000) / 10000);
-		if( !CardTypes.isSpell(card.type) && !card.explosive && (!battleField.units.exists(unitId) || battleField.units.get(unitId).disposed()) )
+		if( !CardTypes.isSpell(card.type) && !card.explosive && !battleField.units.exists(unitId) )
 		{
 			dispose();
 			return;
@@ -80,15 +87,15 @@ class Bullet extends GameObject
 	{
 		if( explodeTime > -1 )
 			return;
-			
-		if( card.bulletSpeed > 35 && battleField.units.exists(targetId) )
+#if java
+		if( card.bulletForceKill && battleField.units.exists(targetId) )
 		{
 			this.fx = battleField.units.get(targetId).x;
 			this.fy = battleField.units.get(targetId).y;
 			this.fz = battleField.units.get(targetId).z;
 			createPath();
 		}
-		
+#end		
 		setPosition(dx != 0 ? x + deltaX : GameObject.NaN, dy != 0 ? y + deltaY : GameObject.NaN, dz != 0 ? z + deltaZ : GameObject.NaN);
 		if( (deltaX >= 0 && x >= fx || deltaX < 0 && x <= fx) && (deltaY >= 0 && y >= fy || deltaY < 0 && y <= fy) && (deltaZ >= 0 && z >= fz || deltaZ < 0 && z <= fz) )
 			hit();

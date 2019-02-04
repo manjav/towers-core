@@ -407,7 +407,7 @@ if( featureType == 21 )
 		case	103	:	1.3	;
 		case	104	:	1.6	;
 		case	105	:	1.0	;
-		case	106	:	0.7	;
+		case	106	:	0.5	;
 		case	107	:	1.0	;
 		case	108	:	2.0	;
 		case	109	:	2.0	;
@@ -600,5 +600,18 @@ if( featureType == 28 )
 		default		:	0	;
 	}
 }
+
+// force kill
+if( featureType == 29 )
+{
+	return switch ( cardType )
+	{
+		case	101	:	true;
+		case	201	:	true;
+		case	222	:	true;
+		default		:	false;
+	}
+}
+
 
 return 0;
