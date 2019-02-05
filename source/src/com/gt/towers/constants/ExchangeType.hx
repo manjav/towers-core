@@ -24,6 +24,7 @@ class ExchangeType
 	static public var C21_SPECIAL:Int = 21;
 	static public var C22_SPECIAL:Int = 22;
 	static public var C23_SPECIAL:Int = 23;
+	static public var C29_DAILY_BATTLES:Int = 29;
 
 	static public var C30_BUNDLES:Int = 30;
 	static public var C31_BUNDLE:Int = 31;
