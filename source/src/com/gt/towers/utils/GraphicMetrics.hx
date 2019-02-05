@@ -188,6 +188,32 @@ class GraphicMetrics
 		}
 		return null;
 	}
+	
+	public function shadowSize(type:Int): Float
+	{
+		return switch( type )
+		{
+			case	101	:	1.0;
+			case	102	:	1.0;
+			case	103	:	1.0;
+			case	104	:	1.0;
+			case	105	:	1.0;
+			case	106	:	1.0;
+			case	107	:	1.0;
+			case	108	:	1.0;
+			case	109	:	1.0;
+			case	110	:	1.0;
+			case	111	:	1.0;
+			case	112	:	1.0;
+			case	113	:	1.0;
+			
+			case	201 :	1.0;
+			case	222 :	1.0;
+			default : 		1.0;
+		}
+	}
+	
+	
 #end
 	
 	static public function getSpellStartPoint(type:Int) : Point3 
