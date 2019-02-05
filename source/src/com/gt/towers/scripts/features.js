@@ -277,12 +277,12 @@ if( featureType == 12 )
 	var ret = switch ( cardType )
 	{
 		case	101	:	0.50;
-		case	102	:	4.00;
+		case	102	:	3.00;
 		case	103	:	0.30;
 		case	104	:	1.00;
 		case	105	:	1.40;
 		case	106	:	0.60;
-		case	107	:	0.40;
+		case	107	:	0.30;
 		case	108	:	0.80;
 		case	109	:	0.30;
 		case	110	:	0.10;
@@ -442,10 +442,10 @@ if( featureType == 22 )
 		case	103	:	0.06	;
 		case	104	:	0.30	;
 		case	105	:	0.68	;
-		case	106	:	0.25	;
-		case	107	:	0.80	;
+		case	106	:	0.16	;
+		case	107	:	0.60	;
 		case	108	:	0.07	;
-		case	109	:  -0.10	; 
+		case	109	:  -0.08	;
 		case	110	:  	0.10	;
 		case	111	:  	0.30	;
 		case	112	:	0.10	;
