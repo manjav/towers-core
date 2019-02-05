@@ -25,17 +25,24 @@ class ExchangeUpdater
         this.changes = new java.util.ArrayList();
     }
 
-    public function update( item:ExchangeItem ):Void
+    public function update( item:ExchangeItem ) : Void
     {
-		if( item.category != ExchangeType.C20_SPECIALS )
-			return;
-			
 		if( item.category == ExchangeType.C20_SPECIALS )
 			updateSpecials(item);
 	}
 	
 	function updateSpecials(item:ExchangeItem) : Void
 	{
+		if( item.type == ExchangeType.C29_DAILY_BATTLES )
+		{
+			if( item.expiredAt < now )
+			{
+				item.expiredAt = now + 86400;
+				item.numExchanges = 0;
+			}
+			return;
+		}
+		
 		if( item.expiredAt < now )
 		{
 			if( item.type == ExchangeType.C23_SPECIAL )
@@ -69,7 +76,7 @@ class ExchangeUpdater
 		item.requirements = new IntIntMap();
 		item.requirements.set(getRequirementType(item), getPrice(item));
 	}
-		
+	
 	function createOutcomeString(item:ExchangeItem) : Void
 	{
 		item.createMapsStr();
