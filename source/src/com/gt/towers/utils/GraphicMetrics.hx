@@ -189,26 +189,26 @@ class GraphicMetrics
 		return null;
 	}
 	
-	public function shadowSize(type:Int): Float
+	static public function getShadowSize(type:Int): Float
 	{
 		return switch( type )
 		{
-			case	101	:	1.0;
-			case	102	:	1.0;
-			case	103	:	1.0;
-			case	104	:	1.0;
-			case	105	:	1.0;
-			case	106	:	1.0;
-			case	107	:	1.0;
-			case	108	:	1.0;
-			case	109	:	1.0;
-			case	110	:	1.0;
-			case	111	:	1.0;
-			case	112	:	1.0;
-			case	113	:	1.0;
+			case	101	:	80;
+			case	102	:	100;
+			case	103	:	50;
+			case	104	:	85;
+			case	105	:	90;
+			case	106	:	90;
+			case	107	:	70;
+			case	108	:	80;
+			case	109	:	80;
+			case	110	:	50;
+			case	111	:	80;
+			case	112	:	85;
+			case	113	:	85;
 			
-			case	201 :	1.0;
-			case	222 :	1.0;
+			case	201 :	80;
+			case	222 :	95;
 			default : 		1.0;
 		}
 	}
