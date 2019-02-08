@@ -177,7 +177,8 @@ class BattleField
 		var i:Int = 0;
 		while( i < cardsTypes.length )
 		{
-			ret.set(cardsTypes[i], friendlyMode ? new Card(game,cardsTypes[i],9) : game.player.cards.get(cardsTypes[i]));
+			if( game.player.cards.exists(cardsTypes[i]) )
+				ret.set(cardsTypes[i], friendlyMode ? new Card(game,cardsTypes[i],9) : game.player.cards.get(cardsTypes[i]));
 			i ++;
 		}
 		return ret;
