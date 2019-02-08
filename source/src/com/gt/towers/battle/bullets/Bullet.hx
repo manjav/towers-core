@@ -74,6 +74,7 @@ class Bullet extends GameObject
 		if( summonTime == 0 )
 			return;
 		summonTime = 0;
+		// prevent shooting while projectile is dead.
 		var unitId:Int = Std.int((id - id % 10000) / 10000);
 		if( !CardTypes.isSpell(card.type) && !card.explosive && !battleField.units.exists(unitId) )
 		{
@@ -112,6 +113,7 @@ class Bullet extends GameObject
 	
 	function explode() 
 	{
+		fireEvent(id, BattleEvent.STATE_CHANGE, GameObject.STATE_5_SHOOTING);
 #if java
 		battleField.explodeBullet(this);
 #end
