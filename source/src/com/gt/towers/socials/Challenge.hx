@@ -1,4 +1,5 @@
 package com.gt.towers.socials;
+import com.gt.towers.constants.MessageTypes;
 import com.gt.towers.exchanges.ExchangeItem;
 import com.gt.towers.others.Arena;
 import com.gt.towers.constants.ResourceType;
@@ -121,6 +122,13 @@ class Challenge
 		return -1;
 	}
 	
+	public function run(game:Game, now:Int) : Int
+	{
+		if( now < startAt || now > startAt + duration )
+			return MessageTypes.RESPONSE_NOT_ALLOWED;
+		return game.exchanger.exchange(getRunExchangeItem(type), now);
+	}
+	
 	#if java
 	static public function getlowestJoint(player:Player) : Int
 	{
@@ -147,8 +155,8 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		50;
-			default:	10;
+			case 1:		100;
+			default:	100;
 		}
 	}
 	
@@ -156,8 +164,8 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		3600 * 6;
-			default:	3600 * 6;
+			case 1:		3600 * 12;
+			default:	3600 * 12;
 		}
 	}
 	
@@ -166,7 +174,7 @@ class Challenge
 		return switch( type )
 		{
 			case 1:		3600 * 144;
-			default:	3600 * 5;
+			default:	3600 * 12;
 		}
 	}
 	
@@ -202,22 +210,42 @@ class Challenge
 	}
 	#end
 	
-	static public function getRequiements(type:Int):IntIntMap
+	static public function getJoinRequiements(type:Int):IntIntMap
 	{
 		var ret = new IntIntMap();
 		switch( type )
 		{
-			case 1:		ret.set(ResourceType.R4_CURRENCY_HARD, 0);
-			default:	ret.set(ResourceType.R4_CURRENCY_HARD, 10);
+			//case 1:		ret.set(ResourceType.R4_CURRENCY_HARD, 0);
+			default:	ret.set(ResourceType.R4_CURRENCY_HARD, 0);
+		}
+		return ret;
+	}
+
+	static public function getRunRequiements(type:Int):IntIntMap
+	{
+		var ret = new IntIntMap();
+		switch( type )
+		{
+			case 1:		ret.set(ResourceType.R6_TICKET, 0);
+			default:	ret.set(ResourceType.R6_TICKET, 1);
 		}
 		return ret;
 	}
 	
-	static public function getExchangeItem(type:Int, arena:Int) : ExchangeItem
+	static public function getJoinExchangeItem(type:Int, arena:Int) : ExchangeItem
 	{
 		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + type + 1);
 		ret.outcomes = new IntIntMap(ResourceType.R1_XP + ":" + 10 * arena);
-		ret.requirements = getRequiements(type);
+		ret.requirements = getJoinRequiements(type);
 		return ret;
 	}
+	
+	static public function getRunExchangeItem(type:Int) : ExchangeItem
+	{
+		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + type + 1);
+		ret.outcomes = new IntIntMap();
+		ret.requirements = getRunRequiements(type);
+		return ret;
+	}
+
 }

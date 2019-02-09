@@ -12,6 +12,7 @@ class ResourceType
 	public static var R3_CURRENCY_SOFT:Int = 3;
 	public static var R4_CURRENCY_HARD:Int = 4;
 	public static var R5_CURRENCY_REAL:Int = 5;
+	public static var R6_TICKET:Int = 6;
 
 	public static var R11_OPERATIONS:Int = 11;
 	public static var R12_BATTLES:Int = 12;
@@ -29,7 +30,6 @@ class ResourceType
 	public static var R40_QUESTS:Int = 40;
 	
 	public function new() {}
-
 	static public function getName(type:Int) : String
 	{
 			 if( type == R1_XP )			return "XP";
