@@ -113,7 +113,7 @@ class Bullet extends GameObject
 	
 	function explode() 
 	{
-		fireEvent(id, BattleEvent.STATE_CHANGE, GameObject.STATE_5_SHOOTING);
+		setState(GameObject.STATE_5_SHOOTING);
 #if java
 		battleField.explodeBullet(this);
 #end

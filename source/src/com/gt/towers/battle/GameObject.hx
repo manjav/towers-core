@@ -79,7 +79,7 @@ class GameObject
 	function fireEvent (dispatcherId:Int, type:String, data:Any) : Void
 	{
 		#if java
-		if ( eventCallback != null )
+		if( eventCallback != null )
 			eventCallback.dispatch(dispatcherId, type, data);
 		#elseif flash
 		dispatchEvent(new com.gt.towers.events.BattleEvent(type, data));
