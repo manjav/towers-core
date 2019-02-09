@@ -20,6 +20,11 @@ class ExchangeType
 	static public var C12_SOFT:Int = 12;
 	static public var C13_SOFT:Int = 13;
 
+	static public var C70_TICKETS:Int = 70;
+	static public var C71_TICKET:Int = 71;
+	static public var C72_TICKET:Int = 72;
+	static public var C73_TICKET:Int = 73;
+
 	static public var C20_SPECIALS:Int = 20;
 	static public var C21_SPECIAL:Int = 21;
 	static public var C22_SPECIAL:Int = 22;
