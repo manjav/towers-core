@@ -186,7 +186,7 @@ class GraphicMetrics
 			case	222 :	new Point3(80, 4, 0);
 			default : 		new Point3(0, 0, 0);
 		}
-		return null;
+		return new Point3(0, 0, 0);
 	}
 	
 	static public function getShadowSize(type:Int): Float
