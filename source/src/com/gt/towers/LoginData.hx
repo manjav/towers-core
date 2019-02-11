@@ -12,7 +12,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1600.0209021510";//do not change len.
+	public var coreVersion:String = "1600.0211201047";//do not change len.
 	public var noticeVersion:Int = 1600;
 	public var forceVersion:Int = 1600;
 	public var resources:IntIntMap;
@@ -20,9 +20,11 @@ class LoginData
 	public var exchanges:IntList;
 	public var nameMinLen:Int = 3;
 	public var nameMaxLen:Int = 12;
+#if java
 	public var initialDecks:IntIntIntMap;
+#end
 	public var deckSize:Int = 3;
-	public var deck:IntList;
+	public var deck:Array<Int>;
 	
 	public function new()
 	{
@@ -50,18 +52,13 @@ class LoginData
 		exchanges.push(ExchangeType.C113_BATTLE);
 		exchanges.push(ExchangeType.C114_BATTLE);
 		
-		deck = new IntList();
-		deck.push(CardTypes.C101);
-		deck.push(CardTypes.C102);
-		deck.push(CardTypes.C103);
-		deck.push(CardTypes.C104);
-		deck.push(CardTypes.C105);
-		deck.push(CardTypes.C106);
-		
+		deck = [CardTypes.C101, CardTypes.C102, CardTypes.C103, CardTypes.C104, CardTypes.C105, CardTypes.C106];
+#if java
 		initialDecks = new IntIntIntMap();
 		initialDecks.set(0, new IntIntMap("0:101, 1:105, 2:104, 3:102, 4:106, 5:103"));
 		initialDecks.set(1, new IntIntMap("0:104, 1:105, 2:106, 3:102, 4:101, 5:103"));
 		initialDecks.set(2, new IntIntMap("0:105, 1:102, 2:106, 3:104, 4:101, 5:103, 6:107"));
+#end
 		
 		/*for test
 		resources.set(CardTypes.C106, 1);

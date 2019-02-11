@@ -57,10 +57,10 @@ class Player
 		// add player buildings data
 		cards = new IntCardMap();
 		var i:Int = 0;
-		var kies = initData.buildingsLevel.keys();
+		var kies = initData.cardsLevel.keys();
 		while ( i < kies.length )
 		{
-			cards.set(kies[i], new Card( game, kies[i], initData.buildingsLevel.get( kies[i] ) ) );
+			cards.set(kies[i], new Card( game, kies[i], initData.cardsLevel.get( kies[i] ) ) );
 			i++;
 		}
 		

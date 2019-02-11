@@ -160,20 +160,19 @@ class BattleField
 		// create decks	
 		decks = new IntIntCardMap();
 		if( game_0.player.get_battleswins() < 3 )
-			decks.set(0, getDeckCards(game_0, game_0.loginData.initialDecks.get(game_0.player.get_battleswins()), friendlyMode));
+			decks.set(0, getDeckCards(game_0, game_0.loginData.initialDecks.get(game_0.player.get_battleswins()).toArray(false), friendlyMode));
 		else
-			decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck().randomize(), friendlyMode));
-			decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck().randomize(), friendlyMode));
+			decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck().toArray(true), friendlyMode));
+			decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck().toArray(true), friendlyMode));
 #end
 		elixirBar = new FloatList();
 		elixirBar.push(POPULATION_INIT);
 		elixirBar.push(POPULATION_INIT);
 	}
 	
-	static function getDeckCards(game:Game, deck:IntIntMap, friendlyMode:Bool) : IntCardMap
+	static function getDeckCards(game:Game, cardsTypes:Array<Int>, friendlyMode:Bool):IntCardMap
 	{
-		var ret = new IntCardMap(); trace(deck.toString());
-		var cardsTypes = deck.values();
+		var ret = new IntCardMap(); 
 		var i:Int = 0;
 		while( i < cardsTypes.length )
 		{
@@ -181,6 +180,7 @@ class BattleField
 				ret.set(cardsTypes[i], friendlyMode ? new Card(game,cardsTypes[i],9) : game.player.cards.get(cardsTypes[i]));
 			i ++;
 		}
+		trace(ret.queue_String());
 		return ret;
 	}
 	
@@ -371,8 +371,11 @@ class BattleField
 			return com.gt.towers.constants.MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 		
 		var index = decks.get(side).queue_indexOf(type);
-		if( index < 0 || index > 3 )
+		if ( index < 0 || index > 3 )
+		{
+			trace(decks.get(side).queue_String());
 			return com.gt.towers.constants.MessageTypes.RESPONSE_MUST_WAIT;
+		}
 		
 		return index;
 	}

@@ -15,7 +15,7 @@ class InitData
 	public var appVersion:Int;
 	public var sessionsCount:Int;
 	public var resources:IntIntMap;
-	public var buildingsLevel:IntIntMap;
+	public var cardsLevel:IntIntMap;
 	public var operations:IntIntMap;
 	public var prefs:IntStrMap;
 	public var decks:IntIntIntMap;
@@ -23,7 +23,7 @@ class InitData
 	public function new() 
 	{
 		resources = new IntIntMap();
-		buildingsLevel = new IntIntMap();
+		cardsLevel = new IntIntMap();
 		operations = new IntIntMap();
 		prefs = new IntStrMap();
 		decks = new IntIntIntMap();
