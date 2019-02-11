@@ -28,7 +28,7 @@ class Unit extends GameObject
 		super(id, battleField, card, side, x, y, z);
 		//trace(card.toString() );
 		this.summonTime = battleField.now + card.summonTime;
-		this.immortalTime = this.summonTime + 500;
+		this.immortalTime = this.summonTime;
 		
 		// fake health for tutorial
 		if( side == 1 )
