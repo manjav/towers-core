@@ -195,6 +195,7 @@ class Exchanger
 		var reqKeys = map.keys();
 		var softs = 0;
 		var hards = 0;
+		var tickets = 0;
 		var reals = 0;
 		var i = 0;
 		while ( i < reqKeys.length )
@@ -203,7 +204,9 @@ class Exchanger
 				reals += map.get(reqKeys[i]);
 			else if( reqKeys[i] == ResourceType.CURRENCY_HARD )
 				hards += map.get(reqKeys[i]);
-			else if ( reqKeys[i] == ResourceType.CURRENCY_SOFT )
+			else if( reqKeys[i] == ResourceType.TICKET )
+				tickets += map.get(reqKeys[i]);
+			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isBuilding(reqKeys[i])) 
 				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
@@ -211,7 +214,7 @@ class Exchanger
 				hards += toHard(estimateBookOutcome(reqKeys[i], map.get(reqKeys[i]), 1));
 			i ++;
 		}
-		return softToHard(softs) + realToHard(reals) + hards ;
+		return softToHard(softs) + realToHard(reals) + ticketToHard(tickets) + hards ;
 	}
 	
 	static public function toSoft(map:IntIntMap) : Int
@@ -237,6 +240,11 @@ class Exchanger
 		return hardToSoft( realToHard(reals) + hards ) + softs ;
 	}
 	
+	
+	static function ticketToHard(count:Int):Int
+	{
+		return count * 10 ;
+	}
 	static public function realToHard(count:Int):Int
 	{
 		return Math.round( count * 0.04 ) ;
