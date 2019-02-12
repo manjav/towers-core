@@ -23,7 +23,8 @@ class Challenge
 	public var duration:Int = 28800;
 	public var capacity:Int = 20;
 	public var rewards:IntArenaMap;
-	public var requirements:IntIntMap;
+	public var joinRequirements:IntIntMap;
+	public var runRequirements:IntIntMap;
 	public var attendees:Array<Attendee>;
 	public var rewardCollected:Bool;
 
@@ -122,11 +123,11 @@ class Challenge
 		return -1;
 	}
 	
-	public function run(game:Game, now:Int) : Int
+	public function run(game:Game, now:Int, arena:Int) : Int
 	{
 		if( now < startAt || now > startAt + duration )
 			return MessageTypes.RESPONSE_NOT_ALLOWED;
-		return game.exchanger.exchange(getRunExchangeItem(type), now);
+		return game.exchanger.exchange(getExchangeItem(type, runRequirements, arena), now);
 	}
 	
 	#if java
@@ -202,14 +203,6 @@ class Challenge
 		return ret;
 	}
 	
-
-	#elseif flash
-	static public function getTargetLabel(type:Int) : String
-	{
-		return "challenge_wins";
-	}
-	#end
-	
 	static public function getJoinRequiements(type:Int):IntIntMap
 	{
 		var ret = new IntIntMap();
@@ -226,26 +219,24 @@ class Challenge
 		var ret = new IntIntMap();
 		switch( type )
 		{
-			case 1:		ret.set(ResourceType.R6_TICKET, 0);
-			default:	ret.set(ResourceType.R6_TICKET, 1);
+			case 1:		ret.set(ResourceType.R6_TICKET, 1);
+			default:	ret.set(ResourceType.R6_TICKET, 0);
 		}
 		return ret;
 	}
 	
-	static public function getJoinExchangeItem(type:Int, arena:Int) : ExchangeItem
+	#elseif flash
+	static public function getTargetLabel(type:Int) : String
 	{
-		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + type + 1);
-		ret.outcomes = new IntIntMap(ResourceType.R1_XP + ":" + 10 * arena);
-		ret.requirements = getJoinRequiements(type);
-		return ret;
+		return "challenge_wins";
 	}
+	#end
 	
-	static public function getRunExchangeItem(type:Int) : ExchangeItem
+	static public function getExchangeItem(type:Int, requirements:IntIntMap, arena:Int) : ExchangeItem
 	{
 		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + type + 1);
-		ret.outcomes = new IntIntMap();
-		ret.requirements = getRunRequiements(type);
+        ret.outcomes = new IntIntMap(ResourceType.R1_XP + ":" + 10 * arena);
+		ret.requirements = requirements;
 		return ret;
-	}
-
+	}	
 }
