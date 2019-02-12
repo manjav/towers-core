@@ -203,6 +203,8 @@ class IntIntMap extends flash.events.EventDispatcher
 	}
 	public function reduce(key:Int, value:Int):Void
 	{
+		if( value == 0 )
+			return;
 		if( !exists(key) )
 			throw new GameError(1, key + " not found.", key);
 
