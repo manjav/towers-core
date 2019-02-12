@@ -65,8 +65,8 @@ class Exchanger
 		}
 		
 		var deductions = game.player.deductions(item.requirements);
-		var needsHard = toHard( deductions );  trace("confirmedHards:", confirmedHards, "needsHard", needsHard, "deductions:", deductions.toString(), "req:", item.requirements.toString());
-		if( !game.player.has(item.requirements) && needsHard > confirmedHards  )
+		var needsHard = toHard( deductions );  trace("confirmedHards:" + confirmedHards + " needsHard:" + needsHard + " deductions:" + deductions.toString() + " req:" + item.requirements.toString());
+		if( !game.player.has(item.requirements) && needsHard > confirmedHards )
 			return MessageTypes.RESPONSE_NOT_ENOUGH_REQS;
 		
 		// provide reqs by hard
