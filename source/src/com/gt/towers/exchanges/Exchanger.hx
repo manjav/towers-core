@@ -245,6 +245,10 @@ class Exchanger
 	{
 		return count * 10 ;
 	}
+	static function realToTicket(count:Int):Int
+	{
+		return Math.round( count * 0.004 ) ;
+	}
 	static public function realToHard(count:Int):Int
 	{
 		return Math.round( count * 0.04 ) ;
