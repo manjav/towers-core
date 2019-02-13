@@ -26,6 +26,7 @@ class Game
 	public var arenas:IntArenaMap;
 	public var player:Player;
 	public var lobby:Lobby;
+	public var inBattleChallengMode:Int = -1;
 
 	public function new()
 	{
