@@ -323,7 +323,7 @@ class Exchanger
 		var ret = new IntIntMap();
 		if( item.type == ExchangeType.C42_RENAME )
 		{
-			ret.set( ResourceType.R4_CURRENCY_HARD, 20 * item.numExchanges);
+			ret.set(ResourceType.R4_CURRENCY_HARD, 20 * item.numExchanges);
 		}
 		else if( item.category == ExchangeType.C110_BATTLES )
 		{
@@ -334,7 +334,7 @@ class Exchanger
 		}
 		else if( ( item.type == ExchangeType.C43_ADS || item.category == ExchangeType.C100_FREES ) && item.expiredAt > now )
 		{
-			ret.set( ResourceType.R4_CURRENCY_HARD, timeToHard(item.expiredAt - now) * item.numExchanges);
+			ret.set(ResourceType.R4_CURRENCY_HARD, timeToHard(item.expiredAt - now) * item.numExchanges);
 		}
 		if( ret.keys().length == 0 )
 			return item.requirements;
