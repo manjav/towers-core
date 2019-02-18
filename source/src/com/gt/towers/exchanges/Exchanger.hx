@@ -376,7 +376,7 @@ class Exchanger
 		
 		// tickets
 		if( game.player.get_arena(0) > 1 )
-			ret.set( ResourceType.R6_TICKET, type - 50 );
+			ret.set( ResourceType.TICKET, type - 50 );
 		
 		return ret;
 	}
