@@ -5,7 +5,6 @@ import com.gt.towers.constants.BuildingType;
 import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.others.Quest;
-import com.gt.towers.utils.maps.IntQuestMap;
 import com.gt.towers.utils.maps.IntStrMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntBuildingMap;
@@ -101,6 +100,8 @@ class Player
 		return lastOperation ;
 	}
 	
+	public function unlocked_social():Bool { return get_arena(get_point()) > 0; }
+	public function unlocked_challenge():Bool { return get_arena(get_point()) > 1; }
 	public function getResource(type:Int):Int { return resources.exists(type) ? resources.get(type) : 0; }
 	public function get_xp():Int { return resources.get(ResourceType.XP); }
 	public function get_point():Int { return resources.get(ResourceType.POINT); }
