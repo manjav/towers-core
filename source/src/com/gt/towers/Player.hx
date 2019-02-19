@@ -105,6 +105,8 @@ class Player
 		return lastOperation ;
 	}
 	
+	public function unlocked_social():Bool { return get_arena(get_point()) > 0; }
+	public function unlocked_challenge():Bool { return get_arena(get_point()) > 1; }
 	public function getResource(type:Int):Int { return resources.exists(type) ? resources.get(type) : 0; }
 	public function get_xp():Int { return resources.get(ResourceType.R1_XP); }
 	public function get_point():Int { return resources.get(ResourceType.R2_POINT); }
