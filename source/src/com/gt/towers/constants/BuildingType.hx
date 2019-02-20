@@ -64,10 +64,10 @@ class BuildingType
 	private static var _all:IntIntMap;
 	public static function getAll():IntIntMap
 	{
-		if ( _all == null )
+		if( _all == null )
 		{
 			_all = new IntIntMap();
-		
+			
 			_all.set( B11_BARRACKS, 0 );
 			_all.set( B12_BARRACKS, 0 );
 			_all.set( B13_BARRACKS, 0 );
@@ -91,25 +91,6 @@ class BuildingType
 		return _all;
 	}
 	
-	public static function getImproveList(type:Int):IntList
-    {
-        var ret = new com.gt.towers.utils.lists.IntList();
-		if( get_category(type) == BuildingType.B00_CAMP )
-		{
-			ret.push(BuildingType.B11_BARRACKS);
-			ret.push(BuildingType.B21_RAPID);
-			ret.push(BuildingType.B31_HEAVY);
-			ret.push(BuildingType.B41_CRYSTAL);
-		}
-		else
-		{
-			ret.push( BuildingType.B01_CAMP );
-			if( BuildingType.getAll().exists( type + 1 ) )
-				ret.push( BuildingType.IMPROVE );
-		}	
-        return ret;
-    }
-
 	public static function getTroopName (type:Int) : String
 	{
 		return switch ( get_category(type) )
