@@ -84,12 +84,11 @@ class Building extends Card
 		if( !unlocked(type) )
 			return false;
 		
-		//trace("type "+ type ,this.type, " equalsCategory " + equalsCategory(this.type+1) , " _population " + _population , " get_capacity " + get_capacity());
-		return ((type == BuildingType.IMPROVE && equalsCategory(this.type+1)) || (this.type == BuildingType.B01_CAMP && type % 10 == 1)) &&  _population >= capacity;
+		//trace("type " + type + "this.type " + this.type + " equalsCategory " + equalsCategory(this.type+1) + " _population " + _population + " capacity " + capacity);
+		return ((type == BuildingType.IMPROVE && equalsCategory(this.type + 1)) || (this.type == BuildingType.B01_CAMP && type % 10 == 1)) &&  _population >= capacity;		
 	}
 	
 	// -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-  methods  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-	
 	public function createEngine(troopType:Int, initialPopulation:Int = -1):Void
 	{
 		this.troopType = troopType;
