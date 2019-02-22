@@ -53,7 +53,7 @@ class TileMap
 	}
 	public function getTile(x:Float, y:Float) : Tile
 	{
-		var t = new Tile(getI(x), getJ(y), 0, 0);
+		var t = instantiateTile(getI(x), getJ(y), 0, 0);
 		setTilePosition(t);
 		return t;
 	}
@@ -122,7 +122,7 @@ class TileMap
 	}
 	function stackRemove(tile) : Void
 	{
-		Tile.dispose(tile);
+		disposeTile(tile);
 		stack[tile.i + tile.j * width] = null;
 	}
 	public function findPath(sourceX:Float, sourceY:Float, destX:Float, destY:Float, side:Int , removeWrongs:Bool = true):Array<Point2>
@@ -150,12 +150,12 @@ class TileMap
 		// tiles return to first states
 		set(desTile.i, desTile.j, STATE_EMPTY);
 		set(srcTile.i, srcTile.j, STATE_EMPTY);
-		Tile.dispose(desTile);
-		Tile.dispose(srcTile);
+		disposeTile(desTile);
+		disposeTile(srcTile);
 		target = null;
 		
 		for( m in stack )
-			Tile.dispose(m);
+			disposeTile(m);
 		
 		// remove backward ways
 		while( ret.length > 1 )
@@ -210,13 +210,13 @@ class TileMap
 		{
 			if( target == null || target.cost > cost )
 			{
-				target = Tile.instantiate(i, j, cost, last);
+				target = instantiateTile(i, j, cost, last);
 				stackAdd(target);
 			}
 			return;
 		}
 		
-		addCoordinate(Tile.instantiate(i, j, cost, last));
+		addCoordinate(instantiateTile(i, j, cost, last));
 	}
 	
 	/**
@@ -237,7 +237,7 @@ class TileMap
 				return;
 			}
 			
-			Tile.dispose(tile);
+			disposeTile(tile);
 			return;
 		}
 		stackAdd(tile);
@@ -316,4 +316,34 @@ class TileMap
 		}
 		return false;
 	}
+	
+	
+	
+	
+	
+	private var pool:Array<Tile> = new Array<Tile>();
+	public function instantiateTile(i:Int, j:Int, cost:Float, last:Int) : Tile 
+	{
+		var t = pool.pop();
+		if( t != null )
+			return t.update(i, j, cost, last);
+		return new Tile(i, j, cost, last); 
+	} 
+	public function disposeTile(tile:Tile) : Void
+	{
+		if( tile == null || tile.last == -127 )
+			return;
+		tile.last = -127;
+		pool.push(tile); 
+	} 
+	public function disposeAllTiles(oldPath:Array<Tile>) : Void
+	{
+		if( oldPath != null )
+		{
+			var len = oldPath.length;
+			while ( len > 0 )
+				disposeTile(oldPath[--len]);
+		}
+	}
+
 }
