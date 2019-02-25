@@ -596,7 +596,7 @@ if( featureType == 28 )
 {
 	return switch( cardType )
 	{
-		case	106	:	200	;
+		case	106	:	0	;
 		default		:	0	;
 	}
 }
@@ -607,7 +607,11 @@ if( featureType == 29 )
 	return switch ( cardType )
 	{
 		case	101	:	true;
+		case	105	:	true;
+		case	112	:	true;
+		case	113	:	true;
 		case	201	:	true;
+		case	221	:	true;
 		case	222	:	true;
 		default		:	false;
 	}
