@@ -87,7 +87,7 @@ class Card
 		if ( playerWinStreak - 9 <= minWinStreak )
 			ret.set(ResourceType.WIN_STREAK, minWinStreak - playerWinStreak);
 		else
-			ret.set(ResourceType.WIN_STREAK, -4);
+			ret.set(ResourceType.WIN_STREAK, -2);
 		
 		return ret;
 	}
