@@ -17,11 +17,9 @@ class ResourceType
 	public static var R11_OPERATIONS:Int = 11;
 	public static var R12_BATTLES:Int = 12;
 	public static var R13_BATTLES_WINS:Int = 13;
-	public static var R14_BATTLES_WEEKLY:Int = 14;
 	public static var R15_BATTLES_FRIENDLY:Int = 15;
 	public static var R16_WIN_RATE:Int = 16;
 	public static var R17_STARS:Int = 17;
-	public static var R18_STARS_WEEKLY:Int = 18;
 	
 	public static var R21_BOOK_OPENED_BATTLE:Int = 21;
 	public static var R22_BOOK_OPENED_FREE:Int = 22;
