@@ -46,7 +46,7 @@ class Player
 		
 		// add player resources, operations data
 		resources = initData.resources;
-		resources.set(ResourceType.CURRENCY_REAL, 2147483647);
+		resources.set(ResourceType.R5_CURRENCY_REAL, 2147483647);
 		operations = initData.operations;
 		
 		// add player buildings data
@@ -103,13 +103,13 @@ class Player
 	public function unlocked_social():Bool { return get_arena(get_point()) > 0; }
 	public function unlocked_challenge():Bool { return get_arena(get_point()) > 1; }
 	public function getResource(type:Int):Int { return resources.exists(type) ? resources.get(type) : 0; }
-	public function get_xp():Int { return resources.get(ResourceType.XP); }
-	public function get_point():Int { return resources.get(ResourceType.POINT); }
-	public function get_softs():Int { return resources.get(ResourceType.CURRENCY_SOFT); }
-	public function get_hards():Int { return resources.get(ResourceType.CURRENCY_HARD); }
-	public function get_battlesCount():Int { return resources.get(ResourceType.BATTLES); }
-	public function get_battleswins():Int { return resources.get(ResourceType.BATTLES_WINS); }
-	public function get_winStreak():Int { return resources.get(ResourceType.WIN_STREAK); }
+	public function get_xp():Int { return resources.get(ResourceType.R1_XP); }
+	public function get_point():Int { return resources.get(ResourceType.R2_POINT); }
+	public function get_softs():Int { return resources.get(ResourceType.R3_CURRENCY_SOFT); }
+	public function get_hards():Int { return resources.get(ResourceType.R4_CURRENCY_HARD); }
+	public function get_battlesCount():Int { return resources.get(ResourceType.R12_BATTLES); }
+	public function get_battleswins():Int { return resources.get(ResourceType.R13_BATTLES_WINS); }
+	public function get_winStreak():Int { return resources.get(ResourceType.R16_WIN_RATE); }
 	public function get_level(xp:Int):Int
 	{
 		if( xp == 0 )

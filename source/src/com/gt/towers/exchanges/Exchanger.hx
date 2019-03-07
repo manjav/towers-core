@@ -46,7 +46,7 @@ class Exchanger
 		
 		if( item.category == ExchangeType.C100_FREES )
 			findRandomOutcome(item, now);
-		else if( item.category == ResourceType.CHALLENGES )
+		else if( item.category == ResourceType.R30_CHALLENGES )
 			item.outcomes.set(item.type, 1);
 		// provide requirements
 		item.requirements = getRequierement(item, now);
@@ -73,7 +73,7 @@ class Exchanger
 		// provide reqs by hard
 		if( confirmedHards > 0 )
 		{
-			game.player.resources.reduce (ResourceType.CURRENCY_HARD, needsHard);
+			game.player.resources.reduce (ResourceType.R4_CURRENCY_HARD, needsHard);
 			game.player.addResources(deductions);
 		}
 		
@@ -107,7 +107,7 @@ class Exchanger
 		// reset item
 		if( item.category == ExchangeType.C100_FREES )
 		{
-			game.player.resources.increase(ResourceType.BOOK_OPENED_FREE, 1);
+			game.player.resources.increase(ResourceType.R22_BOOK_OPENED_FREE, 1);
 			if( item.type == ExchangeType.C104_STARS )
 				item.numExchanges = 0;
 			else
@@ -124,7 +124,7 @@ class Exchanger
 		}
 		else if( item.category == ExchangeType.C110_BATTLES )
 		{
-			game.player.resources.increase(ResourceType.BOOK_OPENED_BATTLE, 1);
+			game.player.resources.increase(ResourceType.R21_BOOK_OPENED_BATTLE, 1);
 			item.outcome = item.expiredAt = 0;
 			item.outcomes = new IntIntMap();
 			item.requirements = new IntIntMap();
@@ -142,7 +142,7 @@ class Exchanger
 
 	public function findRandomOutcome(item:ExchangeItem, now:Int) : Void
 	{
-		var bookIndex = (item.category == ExchangeType.C100_FREES || item.type == ExchangeType.C104_STARS) ? game.player.getResource(ResourceType.BOOK_OPENED_FREE) : geteArnedBattleBooks(now);
+		var bookIndex = (item.category == ExchangeType.C100_FREES || item.type == ExchangeType.C104_STARS) ? game.player.getResource(ResourceType.R22_BOOK_OPENED_FREE) : geteArnedBattleBooks(now);
 		item.outcome = item.category == ExchangeType.C110_BATTLES ? getBattleBook(bookIndex) : getFreeBook(bookIndex);
 		item.outcomes = new IntIntMap();
 		item.outcomes.set(item.outcome, game.player.get_arena(0));
@@ -201,13 +201,13 @@ class Exchanger
 		var i = 0;
 		while ( i < reqKeys.length )
 		{
-			if( reqKeys[i] == ResourceType.CURRENCY_REAL )
+			if( reqKeys[i] == ResourceType.R5_CURRENCY_REAL )
 				reals += map.get(reqKeys[i]);
-			else if( reqKeys[i] == ResourceType.CURRENCY_HARD )
+			else if( reqKeys[i] == ResourceType.R4_CURRENCY_HARD )
 				hards += map.get(reqKeys[i]);
-			else if( reqKeys[i] == ResourceType.TICKET )
+			else if( reqKeys[i] == ResourceType.R6_TICKET )
 				tickets += map.get(reqKeys[i]);
-			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
+			else if( reqKeys[i] == ResourceType.R3_CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isBuilding(reqKeys[i])) 
 				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
@@ -227,11 +227,11 @@ class Exchanger
 		var i = 0;
 		while ( i < reqKeys.length )
 		{
-			if( reqKeys[i] == ResourceType.CURRENCY_REAL )
+			if( reqKeys[i] == ResourceType.R5_CURRENCY_REAL )
 				reals += map.get(reqKeys[i]);
-			else if( reqKeys[i] == ResourceType.CURRENCY_HARD )
+			else if( reqKeys[i] == ResourceType.R4_CURRENCY_HARD )
 				hards += map.get(reqKeys[i]);
-			else if( reqKeys[i] == ResourceType.CURRENCY_SOFT )
+			else if( reqKeys[i] == ResourceType.R3_CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isBuilding(reqKeys[i]) ) 
 				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
@@ -306,14 +306,14 @@ class Exchanger
 				numClosed ++;
 			i ++;
 		}
-		return game.player.getResource(ResourceType.BOOK_OPENED_BATTLE) + numClosed;
+		return game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) + numClosed;
 	}
 	
 	static function estimateBookOutcome(type:Int, arena:Int, coef:Float) : IntIntMap
 	{
 		var ret = new IntIntMap();
 		ret.set( BuildingType.B10_BARRACKS, ExchangeType.getNumTotalCards(type, arena, coef) );
-		ret.set( ResourceType.CURRENCY_SOFT, ExchangeType.getNumSofts(type, arena, coef) );
+		ret.set( ResourceType.R3_CURRENCY_SOFT, ExchangeType.getNumSofts(type, arena, coef) );
 		return ret;
 	}
 	
@@ -325,18 +325,18 @@ class Exchanger
 		var ret = new IntIntMap();
 		if( item.type == ExchangeType.C42_RENAME )
 		{
-			ret.set( ResourceType.CURRENCY_HARD, 20 * item.numExchanges);
+			ret.set( ResourceType.R4_CURRENCY_HARD, 20 * item.numExchanges);
 		}
 		else if( item.category == ExchangeType.C110_BATTLES )
 		{
 			if( item.getState(now) == ExchangeItem.CHEST_STATE_BUSY )
-				ret.set(ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) );
+				ret.set(ResourceType.R4_CURRENCY_HARD, timeToHard(item.expiredAt - now) );
 			//else if( item.getState(now) == ExchangeItem.CHEST_STATE_WAIT )
 			//	ret.set(ResourceType.KEY, ExchangeType.getKeyRequierement(item.outcome));
 		}
 		else if( ( item.type == ExchangeType.C43_ADS || item.category == ExchangeType.C100_FREES ) && item.expiredAt > now )
 		{
-			ret.set( ResourceType.CURRENCY_HARD, timeToHard(item.expiredAt - now) * item.numExchanges);
+			ret.set( ResourceType.R4_CURRENCY_HARD, timeToHard(item.expiredAt - now) * item.numExchanges);
 		}
 		if( ret.keys().length == 0 )
 			return item.requirements;
@@ -369,21 +369,21 @@ class Exchanger
 		
 		// hards
         if( isDaily )
-            ret.set( ResourceType.CURRENCY_HARD, type - 50 );
+            ret.set( ResourceType.R4_CURRENCY_HARD, type - 50 );
         
         // softs
         var softDec = ExchangeType.getNumSofts(type, arena, game.player.splitTestCoef) * 0.1;
-		ret.set( ResourceType.CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
+		ret.set( ResourceType.R3_CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
 		
 		// tickets
 		if( game.player.get_arena(0) > 1 )
-			ret.set( ResourceType.TICKET, type - 50 );
+			ret.set( ResourceType.R6_TICKET, type - 50 );
 		
 		return ret;
 	}
 	function addNewCard(map:IntIntMap) : Void
 	{
-		var openedBook:Int = game.player.getResource(ResourceType.BOOK_OPENED_BATTLE);
+		var openedBook:Int = game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE);
 		trace("openedBook", openedBook);
 		if( openedBook == 0 )
 		{
@@ -411,7 +411,7 @@ class Exchanger
 		while( a < allCards.size() )
 		{
 			var newCard = allCards.get(a);
-			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.BOOK_OPENED_BATTLE) )
+			if( !game.player.buildings.exists(newCard) && AvailableAtCalculator.getChance(newCard) <= game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) )
 			{
 				map.set( newCard, 2 );
 				return;

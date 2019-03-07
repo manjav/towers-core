@@ -50,15 +50,15 @@ class ExchangeUpdater
 				if( game.player.buildings.keys().length > 0 )
 					item.outcome = game.player.buildings.getRandomKey();
 				else
-					item.outcome = ResourceType.CURRENCY_SOFT;
+					item.outcome = ResourceType.R3_CURRENCY_SOFT;
 			}
 			else if( item.type == ExchangeType.C22_SPECIAL )
 			{
-				item.outcome = ResourceType.CURRENCY_HARD;
+				item.outcome = ResourceType.R4_CURRENCY_HARD;
 			}
 			else if( item.type == ExchangeType.C21_SPECIAL )
 			{
-				item.outcome = ResourceType.CURRENCY_SOFT;
+				item.outcome = ResourceType.R3_CURRENCY_SOFT;
 			}
 			
 			item.expiredAt = now + 86400;
@@ -120,7 +120,7 @@ class ExchangeUpdater
 		var count = item.outcomes.values()[0];
 		if( ResourceType.isBuilding(item.outcome) )
 			return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
-		else if( (item.outcome == ResourceType.CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.CURRENCY_HARD && count <= 5) )
+		else if( (item.outcome == ResourceType.R3_CURRENCY_SOFT && count <= 100) || (item.outcome == ResourceType.R4_CURRENCY_HARD && count <= 5) )
 			return 0;
 		return Math.round(Exchanger.toSoft(item.outcomes) * 0.2);
 	}

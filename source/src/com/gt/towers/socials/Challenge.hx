@@ -133,7 +133,7 @@ class Challenge
 	#if java
 	static public function getlowestJoint(player:Player) : Int
 	{
-		var ret = ResourceType.CHALLENGES + 1;
+		var ret = ResourceType.R30_CHALLENGES + 1;
 		return ret;
 		/*
 		var i = 0;
@@ -209,7 +209,7 @@ class Challenge
 		switch( type )
 		{
 			//case 1:	ret.set(ResourceType.CURRENCY_HARD, 0);
-			default:	ret.set(ResourceType.CURRENCY_HARD, 0);
+			default:	ret.set(ResourceType.R4_CURRENCY_HARD, 0);
 		}
 		return ret;
 	}
@@ -219,8 +219,8 @@ class Challenge
 		var ret = new IntIntMap();
 		switch( type )
 		{
-			case 1:		ret.set(ResourceType.TICKET, 1);
-			default:	ret.set(ResourceType.TICKET, 0);
+			case 1:		ret.set(ResourceType.R6_TICKET, 1);
+			default:	ret.set(ResourceType.R6_TICKET, 0);
 		}
 		return ret;
 	}
@@ -234,8 +234,8 @@ class Challenge
 	
 	static public function getExchangeItem(type:Int, requirements:IntIntMap, arena:Int) : ExchangeItem
 	{
-		var ret:ExchangeItem = new ExchangeItem(ResourceType.CHALLENGES + type + 1);
-        ret.outcomes = new IntIntMap(ResourceType.XP + ":" + 10 * arena);
+		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + type + 1);
+        ret.outcomes = new IntIntMap(ResourceType.R1_XP + ":" + 10 * arena);
 		ret.requirements = requirements;
 		return ret;
 	}	

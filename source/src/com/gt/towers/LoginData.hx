@@ -10,7 +10,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "4010.0224114258";//do not change len.
+	public var coreVersion:String = "4010.0307170109";//do not change len.
 	public var noticeVersion:Int = 4010;
 	public var forceVersion:Int = 4010;
 	public var resources:IntIntMap;
@@ -22,10 +22,10 @@ class LoginData
 	public function new()
 	{
 		resources = new IntIntMap();
-		resources.set(ResourceType.XP, 0);
-		resources.set(ResourceType.POINT, 0);
-		resources.set(ResourceType.CURRENCY_SOFT, 100);
-		resources.set(ResourceType.CURRENCY_HARD, 60);
+		resources.set(ResourceType.R1_XP, 0);
+		resources.set(ResourceType.R2_POINT, 0);
+		resources.set(ResourceType.R3_CURRENCY_SOFT, 100);
+		resources.set(ResourceType.R4_CURRENCY_HARD, 60);
 		
 		buildingsLevel = new IntIntMap();
 		

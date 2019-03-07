@@ -80,7 +80,7 @@ class BattleField
 			}
 			else
 			{
-				var winStreak = game_0.player.getResource(ResourceType.WIN_STREAK);
+				var winStreak = game_0.player.getResource(ResourceType.R16_WIN_RATE);
 				if( winStreak < -100000 )
 					winStreak = 214748364;
 				arena = game_0.player.get_arena(0);
@@ -94,7 +94,7 @@ class BattleField
 				if( difficulty != 0 )
 				{
 					var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.6, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty));
-					game_1.player.resources.set(ResourceType.POINT, ep );
+					game_1.player.resources.set(ResourceType.R2_POINT, ep );
 				}
 			}
 			
@@ -102,7 +102,7 @@ class BattleField
 			if( difficulty != 0 )
 			{
 				var arenaScope = game_0.arenas.get(arena).max - game_0.arenas.get(arena).min;
-				game_1.player.resources.set(ResourceType.POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
+				game_1.player.resources.set(ResourceType.R2_POINT, Math.round( Math.max(0, game_0.player.get_point() + Math.random() * arenaScope - arenaScope * 0.5) ) );
 			}
 		}
 		

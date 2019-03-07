@@ -24,13 +24,13 @@ class Lobby
 	public function get_createRequirements():IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( ResourceType.CURRENCY_HARD, requiredGems );
+		ret.set( ResourceType.R4_CURRENCY_HARD, requiredGems );
 		return ret;
 	}
 	public function get_createOutcome():IntIntMap
 	{
 		var ret = new IntIntMap();
-		ret.set( ResourceType.XP, xpReward );
+		ret.set( ResourceType.R1_XP, xpReward );
 		return ret;
 	}
 	public function creatable():Bool
@@ -49,9 +49,9 @@ class Lobby
 		var ei = new ExchangeItem(0);
 		ei.requirements = get_createRequirements();
 		ei.outcomes = get_createOutcome();
-		trace("resourses then: " + game.player.resources.get(ResourceType.CURRENCY_HARD));
+		trace("resourses then: " + game.player.resources.get(ResourceType.R4_CURRENCY_HARD));
 		game.exchanger.exchange(ei, 0, 0);
-		trace("resourses now: " +  game.player.resources.get(ResourceType.CURRENCY_HARD));
+		trace("resourses now: " +  game.player.resources.get(ResourceType.R4_CURRENCY_HARD));
 		trace("Lobby Created!");
 		return true;
 	}

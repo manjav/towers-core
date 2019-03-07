@@ -198,7 +198,7 @@ class IntIntMap extends flash.events.EventDispatcher
 		if( !exists(key) )
 			throw new GameError(1, key + " not found.", key);
 
-		if( key != ResourceType.CURRENCY_REAL && key != ResourceType.POINT && get(key) < value )
+		if( key != ResourceType.R5_CURRENCY_REAL && key != ResourceType.R2_POINT && get(key) < value )
 			throw new GameError(0, key + " not enough. you need " + (value-get(key)) +" more.", key);
 
 		set(key, get(key) - value);

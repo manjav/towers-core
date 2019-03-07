@@ -109,16 +109,16 @@ class Quest
 	{
 		return switch ( type )
 		{
-			case 0 :	ResourceType.XP;
-			case 1 :	ResourceType.POINT;
-			case 2 :	ResourceType.OPERATIONS;
-			case 3 :	ResourceType.BATTLES;
-			case 4 :	ResourceType.BATTLES_WINS;
-			case 5 :	ResourceType.BATTLES_FRIENDLY;
+			case 0 :	ResourceType.R1_XP;
+			case 1 :	ResourceType.R2_POINT;
+			case 2 :	ResourceType.R11_OPERATIONS;
+			case 3 :	ResourceType.R12_BATTLES;
+			case 4 :	ResourceType.R13_BATTLES_WINS;
+			case 5 :	ResourceType.R15_BATTLES_FRIENDLY;
 			case 6 :	Challenge.getlowestJoint(player);
 			case 7 :	player.buildings.getLowestLevel();
 			case 8 :	player.buildings.getLowestCard();
-			case 9 :	ResourceType.BOOK_OPENED_FREE;
+			case 9 :	ResourceType.R22_BOOK_OPENED_FREE;
 			default: 	0;
 		}
 	}
@@ -160,14 +160,14 @@ class Quest
 	static public function getReward(type:Int, step:Int):IntIntMap
 	{
 		var ret:IntIntMap = new IntIntMap();
-		ret.set(ResourceType.XP,			CoreUtils.round( Math.pow(1.4, step) * 1));
-		ret.set(ResourceType.CURRENCY_SOFT,	CoreUtils.round( Math.pow(1.4, step) * 7));
+		ret.set(ResourceType.R1_XP,			CoreUtils.round( Math.pow(1.4, step) * 1));
+		ret.set(ResourceType.R3_CURRENCY_SOFT,	CoreUtils.round( Math.pow(1.4, step) * 7));
 		return ret;
 	}
 	
 	static public function getExchangeItem(type:Int, step:Int) : ExchangeItem
 	{
-		var ret:ExchangeItem = new ExchangeItem(ResourceType.QUESTS + type + 1);
+		var ret:ExchangeItem = new ExchangeItem(ResourceType.R40_QUESTS + type + 1);
 		ret.outcomes = getReward(type, step);
 		return ret;
 	}
@@ -182,7 +182,7 @@ class Quest
 			case 2 :	player.getLastOperation();
 			case 3 :	player.get_battlesCount();
 			case 4 :	player.get_battleswins();
-			case 5 :	player.getResource(ResourceType.BATTLES_FRIENDLY);
+			case 5 :	player.getResource(ResourceType.R15_BATTLES_FRIENDLY);
 			case 6 :	player.getResource(key);
 			case 7 :	Card.getTotalCollected(player.buildings.get(key).get_level(), player.getResource(key));
 			case 8 :	player.buildings.get(key).get_level();
