@@ -86,7 +86,7 @@ class Exchanger
 		{
 			if( ResourceType.isBook( outKeys[o] ) )
 			{
-				trace("book", outKeys[o]);
+				// trace("book", outKeys[o]);
 				outs.increaseMap( getBookOutcomes( outKeys[o], outs.get(outKeys[o]), item.category == ExchangeType.C100_FREES ) );
 				outs.remove( outKeys[o] );
 			}
@@ -358,8 +358,7 @@ class Exchanger
 			numCards = numSlots > 0 ? Math.ceil(slotSize * 0.9 + Math.random() * slotSize * 0.1) : totalCards - accCards;
 			accCards += numCards;
 			//trace("numChest", numChest, "numSlots", numSlots);
-			
-			trace("addNewCard",  "numSlots:" + numSlots, "isDaily:" + isDaily);
+			//trace("addNewCard",  "numSlots:" + numSlots, "isDaily:" + isDaily);
             if( numSlots == 0 && !isDaily ) // last slot
 				addNewCard(ret);
 			
@@ -384,7 +383,6 @@ class Exchanger
 	function addNewCard(map:IntIntMap) : Void
 	{
 		var openedBook:Int = game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE);
-		trace("openedBook", openedBook);
 		if( openedBook == 0 )
 		{
 			map.set( BuildingType.B11_BARRACKS, 2 );
