@@ -185,20 +185,21 @@ class Challenge
 		if( type == 1 )
 		{
 			ret.set(1, new Arena(1,	1,	1,	59));
-			ret.set(2, new Arena(2, 2,	5,	58));
-			ret.set(3, new Arena(3, 6,	10,	57));
-			ret.set(4, new Arena(4, 11,	15,	56));
-			ret.set(5, new Arena(5, 16, 20, 55));
-			ret.set(6, new Arena(6, 21, 40,  3));
-			ret.set(7, new Arena(7, 41, 50, -1));
+			ret.set(2, new Arena(2, 2,	2,	58));
+			ret.set(3, new Arena(3, 3,	3,	57));
+			ret.set(4, new Arena(4, 4,	10,	56));
+			ret.set(5, new Arena(5, 11, 20, 55));
+			ret.set(6, new Arena(6, 21, 50, 1002));
+			ret.set(7, new Arena(7, 41, 999,-1));
 		}
 		else
 		{
 			ret.set(1, new Arena(1,	1,	1,	55));
-			ret.set(2, new Arena(2, 2,	3,	54));
-			ret.set(3, new Arena(3, 4,	10,	53));
-			ret.set(4, new Arena(4, 11,	20,	52));
-			ret.set(5, new Arena(5, 21, 50, 51));
+			ret.set(2, new Arena(2, 2,	2,	54));
+			ret.set(3, new Arena(3, 3,	3,	53));
+			ret.set(4, new Arena(4, 4,	10,	52));
+			ret.set(5, new Arena(5, 11, 20, 51));
+			ret.set(6, new Arena(6, 21, 999,-1));
 		}
 		return ret;
 	}
