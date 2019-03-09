@@ -85,7 +85,7 @@ class Exchanger
 		{
 			if( ResourceType.isBook( outKeys[o] ) )
 			{
-				trace("book", outKeys[o]);
+				// trace("book", outKeys[o]);
 				outs.increaseMap( getBookOutcomes( outKeys[o], outs.get(outKeys[o]), item.category == ExchangeType.C100_FREES ) );
 				outs.remove( outKeys[o] );
 			}
