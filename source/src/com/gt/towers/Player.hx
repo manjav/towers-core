@@ -32,7 +32,9 @@ class Player
 	public var splitTestCoef:Float = 1;
 
 	private var game:Game;
-#if flash
+#if java
+	public var resourceIds:java.util.Map<java.lang.Integer, java.lang.Long>;
+#elseif flash
 	public var challenges:com.gt.towers.utils.maps.IntChallengeMap;
 #end
 
