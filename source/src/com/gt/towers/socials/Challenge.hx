@@ -165,7 +165,7 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		3600 * 12;
+			case 1:		3600 * 24;
 			default:	3600 * 12;
 		}
 	}
@@ -186,11 +186,13 @@ class Challenge
 		{
 			ret.set(1, new Arena(1,	1,	1,	59,		null));
 			ret.set(2, new Arena(2, 2,	2,	58,		null));
-			ret.set(3, new Arena(3, 3,	3,	57,		null));
-			ret.set(4, new Arena(4, 4,	10,	56,		null));
-			ret.set(5, new Arena(5, 11, 20, 55,		null));
-			ret.set(6, new Arena(6, 21, 50, 1002,	null));
-			ret.set(7, new Arena(7, 41, 999,-1,		null));
+			ret.set(3, new Arena(3, 3,	5,	57,		null));
+			ret.set(4, new Arena(4, 6,	10,	56,		null));
+			ret.set(5, new Arena(5, 11, 15, 55,		null));
+			ret.set(6, new Arena(6, 16, 25, 54,		null));
+			ret.set(7, new Arena(7, 26, 45, 53,		null));
+			ret.set(8, new Arena(8, 46, 70, 1002,	null));
+			ret.set(9, new Arena(9, 71, 999,-1,		null));
 		}
 		else
 		{
