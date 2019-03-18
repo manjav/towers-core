@@ -33,7 +33,7 @@ class Player
 
 	private var game:Game;
 #if java
-	public var resourceIds:java.util.Map<java.lang.Integer, java.lang.Long>;
+	public var resourceIds:java.util.Map<java.lang.Integer, java.lang.Integer>;
 #elseif flash
 	public var challenges:com.gt.towers.utils.maps.IntChallengeMap;
 #end
