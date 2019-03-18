@@ -142,8 +142,8 @@ class Exchanger
 
 	public function findRandomOutcome(item:ExchangeItem, now:Int) : Void
 	{
-		var bookIndex = (item.category == ExchangeType.C100_FREES || item.type == ExchangeType.C104_STARS) ? game.player.getResource(ResourceType.R22_BOOK_OPENED_FREE) : geteArnedBattleBooks(now);
-		item.outcome = item.category == ExchangeType.C110_BATTLES ? getBattleBook(bookIndex) : getFreeBook(bookIndex);
+		var bookIndex = item.category == ExchangeType.C100_FREES ? game.player.getResource(ResourceType.R22_BOOK_OPENED_FREE) : getEarnedBattleBooks(now);
+		item.outcome = item.category == ExchangeType.C100_FREES ? getFreeBook(bookIndex) : getBattleBook(bookIndex);
 		item.outcomes = new IntIntMap();
 		item.outcomes.set(item.outcome, game.player.get_arena(0));
 	}
@@ -295,7 +295,7 @@ class Exchanger
 		return MessageTypes.RESPONSE_SUCCEED;
 	}
 	
-	public function geteArnedBattleBooks(now:Int) : Int
+	public function getEarnedBattleBooks(now:Int) : Int
 	{
 		var i = 0;
 		var numClosed = 0;
@@ -443,19 +443,19 @@ class Exchanger
 	private function getFreeBook(openedBooks:Int) : Int
 	{
 		if( openedBooks == 0 )
-			return ExchangeType.BOOK_54_SEA;
+			return ExchangeType.BOOK_53_STARS;
 		if( openedBooks % 11 == 0 || openedBooks == 5 )
-			return ExchangeType.BOOK_55_PIRATE;
+			return ExchangeType.BOOK_54_SEA;
 		if( openedBooks % 19 == 0 )
-			return ExchangeType.BOOK_56_JUNGLE;
+			return ExchangeType.BOOK_55_PIRATE;
 		if( openedBooks % 29 == 0 )
-			return ExchangeType.BOOK_57_TREASURE;
+			return ExchangeType.BOOK_56_JUNGLE;
 		if( openedBooks % 41 == 0 )
-			return ExchangeType.BOOK_58_AMBER;
+			return ExchangeType.BOOK_57_TREASURE;
 		if( openedBooks % 61 == 0 )
-			return ExchangeType.BOOK_59_DRAGON;
+			return ExchangeType.BOOK_58_AMBER;
 		
-		return ExchangeType.BOOK_53_STARS;
+		return ExchangeType.BOOK_52_KNIGHT;
 	}
 	
 	private function getBattleBook(earnedBooks:Int) : Int
