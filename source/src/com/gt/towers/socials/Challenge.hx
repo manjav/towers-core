@@ -12,13 +12,25 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Challenge 
 {
-	public static var STATE_WAIT:Int = 0;
-	public static var STATE_STARTED:Int = 1;
-	public static var STATE_END:Int = 2;
+	static public var STATE_WAIT:Int = 0;
+	static public var STATE_STARTED:Int = 1;
+	static public var STATE_END:Int = 2;
+
+	static public var MODE_0_HQ:Int = 0;
+	static public var MODE_1_TOUCHDOWN:Int = 1;
+	static public var MODE_2_SAFEBOX:Int = 2;
+	static public var MODE_3_CLUBS:Int = 3;
+
+	static public var TYPE_OPEN:Int = 0;
+	static public var TYPE_REWARD:Int = 1;
+	static public var TYPE_RANKING:Int = 2;
+	static public var TYPE_PROGRESS:Int = 3;
 	
 	public var id:Int;
+	public var mode:Int;
 	public var type:Int;
 	public var startAt:Int;
+	public var unlockAt:Int;
 	public var waitTime:Int = 7200;
 	public var duration:Int = 28800;
 	public var capacity:Int = 20;
@@ -28,7 +40,12 @@ class Challenge
 	public var attendees:Array<Attendee>;
 	public var rewardCollected:Bool;
 
-	public function new(){}
+	public function new(type:Int = 0, mode:Int = 0)
+	{
+		this.type = type;
+		this.mode = mode;
+	}
+	
 	public function getState(now:Int):Int
 	{
 		if( now >= startAt + duration )
@@ -156,8 +173,20 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		100;
-			default:	100;
+			case 2:		100;
+			case 3:		100;
+			default:	0;
+		}
+	}
+	
+	static public function getUnlockAt(type:Int) 
+	{
+		return switch( type )
+		{
+			case 1:		3;
+			case 2:		5;
+			case 3:		8;
+			default:	0;
 		}
 	}
 	
@@ -165,8 +194,9 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		3600 * 12;
-			default:	3600 * 12;
+			case 2:		0;
+			case 3:		3600 * 12;
+			default:	0;
 		}
 	}
 	
@@ -174,32 +204,26 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 1:		3600 * 144;
-			default:	3600 * 12;
+			case 2:		3600 * 12;
+			case 3:		3600 * 144;
+			default:	0;
 		}
 	}
 	
 	static public function getRewards(type:Int):IntArenaMap
 	{
 		var ret = new IntArenaMap();
-		if( type == 1 )
+		if( type == 3 )
 		{
 			ret.set(1, new Arena(1,	1,	1,	59));
 			ret.set(2, new Arena(2, 2,	2,	58));
 			ret.set(3, new Arena(3, 3,	3,	57));
 			ret.set(4, new Arena(4, 4,	10,	56));
-			ret.set(5, new Arena(5, 11, 20, 55));
-			ret.set(6, new Arena(6, 21, 50, 1002));
-			ret.set(7, new Arena(7, 41, 999,-1));
-		}
-		else
-		{
-			ret.set(1, new Arena(1,	1,	1,	55));
-			ret.set(2, new Arena(2, 2,	2,	54));
-			ret.set(3, new Arena(3, 3,	3,	53));
-			ret.set(4, new Arena(4, 4,	10,	52));
-			ret.set(5, new Arena(5, 11, 20, 51));
-			ret.set(6, new Arena(6, 21, 999,-1));
+			ret.set(5, new Arena(5, 11, 15, 55));
+			ret.set(6, new Arena(1, 16, 20, 54));
+			ret.set(7, new Arena(5, 21, 30, 53));
+			ret.set(8, new Arena(6, 31, 50, 1002));
+			ret.set(9, new Arena(7, 41, 999,-1));
 		}
 		return ret;
 	}
@@ -220,7 +244,8 @@ class Challenge
 		var ret = new IntIntMap();
 		switch( type )
 		{
-			case 1:		ret.set(ResourceType.R6_TICKET, 1);
+			case 2:		ret.set(ResourceType.R6_TICKET, 1);
+			case 3:		ret.set(ResourceType.R6_TICKET, 3);
 			default:	ret.set(ResourceType.R6_TICKET, 0);
 		}
 		return ret;
