@@ -14,7 +14,7 @@ class SegmentType
 	public static var S1_DECK:Int = 1;
 	public static var S2_HOME:Int = 2;
 	public static var S3_SOCIALS:Int = 3;
-	public static var S4_EVENTS:Int = 4;
+	public static var S4_INBOX:Int = 4;
 	
 	public static var S10_LOBBY_MAIN:Int = 10;
 	public static var S11_LOBBY_SEARCH:Int = 11;
@@ -29,7 +29,7 @@ class SegmentType
 		ret.push( S1_DECK );
 		ret.push( S2_HOME );
 		ret.push( S3_SOCIALS );
-		ret.push( S4_EVENTS );
+		ret.push( S4_INBOX );
 		return ret;
 	}
 	
