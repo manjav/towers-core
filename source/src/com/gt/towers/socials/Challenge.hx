@@ -12,19 +12,19 @@ import com.gt.towers.utils.maps.IntIntMap;
  */
 class Challenge 
 {
-	static public var STATE_WAIT:Int = 0;
-	static public var STATE_STARTED:Int = 1;
-	static public var STATE_END:Int = 2;
+	static public var STATE_0_WAIT:Int = 0;
+	static public var STATE_1_STARTED:Int = 1;
+	static public var STATE_2_END:Int = 2;
 
 	static public var MODE_0_HQ:Int = 0;
 	static public var MODE_1_TOUCHDOWN:Int = 1;
 	static public var MODE_2_SAFEBOX:Int = 2;
 	static public var MODE_3_CLUBS:Int = 3;
 
-	static public var TYPE_OPEN:Int = 0;
-	static public var TYPE_REWARD:Int = 1;
-	static public var TYPE_RANKING:Int = 2;
-	static public var TYPE_PROGRESS:Int = 3;
+	static public var TYPE_0_OPEN:Int = 0;
+	static public var TYPE_1_REWARD:Int = 1;
+	static public var TYPE_2_RANKING:Int = 2;
+	static public var TYPE_3_PROGRESS:Int = 3;
 	
 	public var id:Int;
 	public var mode:Int;
@@ -49,10 +49,10 @@ class Challenge
 	public function getState(now:Int):Int
 	{
 		if( now >= startAt + duration )
-			return STATE_END;
+			return STATE_2_END;
 		else if( now >= startAt )
-			return STATE_STARTED;
-		return STATE_WAIT;
+			return STATE_1_STARTED;
+		return STATE_0_WAIT;
 	}
 	
 	public function sort() 
@@ -147,6 +147,16 @@ class Challenge
 		return game.exchanger.exchange(getExchangeItem(type, runRequirements, arena), now);
 	}
 	
+	static public function getUnlockAt(type:Int) 
+	{
+		return switch( type )
+		{
+			case 1:		3;
+			case 2:		5;
+			default:	0;
+		}
+	}
+
 	#if java
 	static public function getlowestJoint(player:Player) : Int
 	{
@@ -174,18 +184,16 @@ class Challenge
 		return switch( type )
 		{
 			case 2:		100;
-			case 3:		100;
 			default:	0;
 		}
 	}
 	
-	static public function getUnlockAt(type:Int) 
+	static public function provideMode(type:Int):Int
 	{
 		return switch( type )
 		{
-			case 1:		3;
-			case 2:		5;
-			case 3:		8;
+			case 1:		2;
+			case 2:		3;
 			default:	0;
 		}
 	}
@@ -194,8 +202,7 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 2:		0;
-			case 3:		3600 * 12;
+			case 2:		3600 * 24;
 			default:	0;
 		}
 	}
@@ -204,8 +211,8 @@ class Challenge
 	{
 		return switch( type )
 		{
-			case 2:		3600 * 12;
-			case 3:		3600 * 144;
+			case 1:		3600 * 24;
+			case 2:		3600 * 72;
 			default:	0;
 		}
 	}
@@ -213,7 +220,7 @@ class Challenge
 	static public function getRewards(type:Int):IntArenaMap
 	{
 		var ret = new IntArenaMap();
-		if( type == 3 )
+		if( type == 2 )
 		{
 			ret.set(1, new Arena(1,	1,	1,	59));
 			ret.set(2, new Arena(2, 2,	2,	58));
@@ -244,8 +251,8 @@ class Challenge
 		var ret = new IntIntMap();
 		switch( type )
 		{
-			case 2:		ret.set(ResourceType.R6_TICKET, 1);
-			case 3:		ret.set(ResourceType.R6_TICKET, 3);
+			case 1:		ret.set(ResourceType.R6_TICKET, 1);
+			case 2:		ret.set(ResourceType.R6_TICKET, 2);
 			default:	ret.set(ResourceType.R6_TICKET, 0);
 		}
 		return ret;

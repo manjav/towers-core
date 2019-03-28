@@ -85,7 +85,7 @@ class IntChallengeMap
 		var keys = keys();
 		while ( i < keys.length )
 		{
-			if( get(keys[i]).getState(now) == Challenge.STATE_STARTED )
+			if( get(keys[i]).getState(now) == Challenge.STATE_1_STARTED )
 				return keys[i];
 			i ++;
 		}

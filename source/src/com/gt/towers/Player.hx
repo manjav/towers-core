@@ -8,6 +8,7 @@ import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.others.Quest;
 import com.gt.towers.scripts.ScriptEngine;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntCardMap;
 import com.gt.towers.utils.maps.IntIntIntMap;
@@ -33,6 +34,7 @@ class Player
 	public var nickName:String = "no_nickName";
 	public var decks:IntIntIntMap;
 	public var selectedDeckIndex:Int = 0;
+	public var selectedChallengeIndex:Int = 0;
 	public var splitTestCoef:Float = 1;
 
 	private var game:Game;
@@ -265,6 +267,10 @@ class Player
 	}
 	
 	#if flash
+	public function getSelectedChallenge() : Challenge
+	{
+		return challenges.get(selectedChallengeIndex);
+	}
 	public function dashboadTabEnabled(index:Int) : Bool
 	{
 		if( getTutorStep() >= PrefsTypes.T_027_WIN )
