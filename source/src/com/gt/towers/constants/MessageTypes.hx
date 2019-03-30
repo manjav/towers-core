@@ -26,6 +26,7 @@ class MessageTypes
 	public static var M42_CONFIRM_INVITATION:Int = 42;
 
 	public static var M50_URL:Int = 50;
+	public static var M51_EMOTE:Int = 51;
 
 	
 	//public static var JOIN_LOBBY_REQUEST_SENT:Int = 1;
