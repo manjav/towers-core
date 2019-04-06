@@ -57,5 +57,10 @@ class MessageTypes
 	public static function isConfirm(type:Int) : Bool
 	{
 		return type >= 40 && type < 50;
+	}	
+	
+	public static function isEmote(type:Int) : Bool
+	{
+		return type == 51;
 	}
 }
