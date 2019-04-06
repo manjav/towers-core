@@ -119,35 +119,42 @@ if( featureType == 1 )
 {
 	return switch( cardType )
 	{
-		case	101	:	 0	;
-		case	102	:	 0	;
-		case	103	:	 0	;
-		case	104	:	 0	;
-		case	105	:	 0	;
-		case	106	:	 0	;
-		case	107	:	 0	;
-		case	108	:	 0	;
-		case	109	:	 1	;
-		case	110	:	 2	;
-		case	111	:	 3	;
-		case	112	:	 3	;
-		case	113	:	 4	;
-		case	114	:	 6	;
-		case	115	:	 9	;
-		
-		case	151	:	 1	;
-		case	152	:	 2	;
-		case	153	:	 5	;
-		case	154	:	 6	;
-		case	155	:	 7	;
-		case	156	:	 7	;
-		case	157	:	 8	;
-		case	158	:	 8	;
-		case	159	:	 9	;
-		
-		case	201	:	 0	;
-		
-		default		:	 9	;
+		case	101	:	0	;
+		case	102	:	0	;
+		case	103	:	0	;
+		case	104	:	0	;
+		case	105	:	0	;
+		case	106	:	1	;
+		case	107	:	2	;
+		case	108	:	3	;
+		case	109	:	4	;
+		case	110	:	5	;
+		case	151	:	6	;
+		case	111	:	7	;
+		case	152	:	8	;
+		case	112	:	9	;
+		case	153	:	10	;
+		case	113	:	11	;
+		case	154	:	12	;
+		case	114	:	13	;
+		case	115	:	14	;
+		case	116	:	15	;
+		case	117	:	16	;
+		case	118	:	17	;
+		case	119	:	18	;
+		case	120	:	19	;
+		case	121	:	20	;
+		case	122	:	21	;
+		case	123	:	22	;
+		case	124	:	23	;
+		case	125	:	24	;
+		case	126	:	25	;
+		case	127	:	26	;
+		case	128	:	27	;
+		case	129	:	28	;
+		case	130	:	29	;
+						
+		default		:	29	;
 	}
 }
 
