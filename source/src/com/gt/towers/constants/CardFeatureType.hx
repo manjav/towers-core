@@ -57,12 +57,17 @@ class CardFeatureType
 		return _all;
 	}
 	
-	static public function getRelatedTo(buildingType:Int):com.gt.towers.utils.lists.IntList
+	static public function getRelatedTo(cardType:Int):com.gt.towers.utils.lists.IntList
 	{
 		var ret = new com.gt.towers.utils.lists.IntList();
 		ret.push( F22_BULLET_DAMAGE );
+		if( CardTypes.isSpell(cardType ) )
+			return ret;
 		ret.push( F23_BULLET_SHOOT_GAP );
+		ret.push( F04_SUMMON_TIME );
+		ret.push( F11_SPEED );
 		ret.push( F12_HEALTH );
+		ret.push( F26_BULLET_RANGE_MAX );
 		return ret;
 	}
 	
@@ -71,14 +76,16 @@ class CardFeatureType
 		return switch( featureType )
 		{
 			/*case 5 : 1000;
-			case 11: 4;
 			case 12: 50;
 			case 21: 50;
 			case 23: 0.2;
 			case 24: 0.2;*/
+			case 4:	 0.001;
+			case 11: 1000;
 			case 12: 50;
 			case 22: 100;
-			case 23: 0.1;
+			case 23: 0.01;
+			case 26: 0.5;
 			default: 1;
 		}
 	}
