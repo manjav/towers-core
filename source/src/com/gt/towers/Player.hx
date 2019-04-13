@@ -9,7 +9,6 @@ import com.gt.towers.constants.ResourceType;
 import com.gt.towers.others.Quest;
 import com.gt.towers.scripts.ScriptEngine;
 import com.gt.towers.socials.Challenge;
-import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntCardMap;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
@@ -21,6 +20,7 @@ import com.gt.towers.utils.maps.IntStrMap;
  */
 class Player
 {
+	static var FIRST_CARDS:Int = 5;
 	public var id:Int;
 	public var admin:Bool = false;
 	public var tutorialMode:Int = 0;
@@ -149,26 +149,25 @@ class Player
 		return cast(Math.min(arena + 1, arenaKeys.length - 1), Int);
 	}
 	
-	public function availabledCards (selectedArena:Int = -1, onlySelectedArena:Bool = false) : IntList
+	/**
+	 * 
+	 * @param	selectedArena
+	 * @param	mode => 0: only arena card<br/>1: avalables<br/>2: unavailables 
+	 * @return
+	 */
+	public function availabledCards(arena:Int = -1, mode:Int = 0) : Array<Int>
 	{
-		var ret = new IntList();
-		var arena = selectedArena == -1 ? get_arena(get_point()) : selectedArena;
-		var cards = CardTypes.getAll();
-		var i = 0;
-		while ( i < cards.size() )
+		var _arena = arena == -1 ? get_arena(get_point()) : arena;
+		var _all:Array<Int> = ScriptEngine.get(CardFeatureType.F01_AVAILABLE_AT, -1);
+		if( mode == 0 )
 		{
-			if( onlySelectedArena )
-			{
-				if( ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) == arena )
-					ret.push(cards.get(i));
-			}
-			else if( ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, cards.get(i), 1 ) <= arena )
-			{
-				ret.push(cards.get(i));
-			}
-			i ++;
+			if( _arena == 0 )
+				return _all.slice(0, FIRST_CARDS);
+			return [_all[_arena + FIRST_CARDS - 1]];
 		}
-		return ret;
+		if( mode == 1 )
+			return _all.slice(0, _arena + FIRST_CARDS);
+		return _all.slice(arena + FIRST_CARDS);
 	}
 	public function getSelectedDeck():IntIntMap
 	{
@@ -312,8 +311,8 @@ class Player
 		if( myArenaIndex > 3 )
 			myArenaIndex = 3;
 		
-		var cardTypes = availabledCards(myArenaIndex);
-		var numCards:Int = cardTypes.size();
+		var cardTypes = availabledCards(myArenaIndex, 1);
+		var numCards:Int = cardTypes.length;
 		var baseLevel = get_point() * 0.005 + 1;
 		var roundBase = Math.floor(baseLevel); 
 		var ratio = baseLevel % 1;
@@ -322,7 +321,7 @@ class Player
 		cards = new IntCardMap();
         while ( i < numCards )
         {
-			var type:Int = cardTypes.get(i);
+			var type:Int = cardTypes[i];
 			var rarity = ScriptEngine.getInt(CardFeatureType.F00_RARITY, type, 1);
 			var availabled = ScriptEngine.getInt(CardFeatureType.F01_AVAILABLE_AT, type, 1);
 			var level:Int = Math.round(Math.max(1, roundBase - rarity - availabled + (Math.random() < ratio ? 1 : 0)));

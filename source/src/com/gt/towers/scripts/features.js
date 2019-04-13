@@ -117,45 +117,17 @@ if( featureType == 0 )
 // availableAt
 if( featureType == 1 )
 {
-	return switch( cardType )
+	var all = [105,106,107,108,109,151,110,111,152,112,113,153,114,154,115,116,155,117,118,119,156,120,121,122,123,157,124,125,126,127,128,158];
+	if( cardType == -1 )
 	{
-		case	101	:	0	;
-		case	102	:	0	;
-		case	103	:	0	;
-		case	104	:	0	;
-		case	105	:	0	;
-		case	106	:	1	;
-		case	107	:	2	;
-		case	108	:	3	;
-		case	109	:	4	;
-		case	110	:	5	;
-		case	151	:	6	;
-		case	111	:	7	;
-		case	152	:	8	;
-		case	112	:	9	;
-		case	153	:	10	;
-		case	113	:	11	;
-		case	154	:	12	;
-		case	114	:	13	;
-		case	115	:	14	;
-		case	116	:	15	;
-		case	117	:	16	;
-		case	118	:	17	;
-		case	119	:	18	;
-		case	120	:	19	;
-		case	121	:	20	;
-		case	122	:	21	;
-		case	123	:	22	;
-		case	124	:	23	;
-		case	125	:	24	;
-		case	126	:	25	;
-		case	127	:	26	;
-		case	128	:	27	;
-		case	129	:	28	;
-		case	130	:	29	;
-						
-		default		:	29	;
+		all.unshift(104);
+		all.unshift(103);
+		all.unshift(102);
+		all.unshift(101);
+		return all;
 	}
+	var ret = all.indexOf(cardType);
+	return ret <= -1 ? 0 : 1;
 }
 
 

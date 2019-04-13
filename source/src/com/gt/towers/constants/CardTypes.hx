@@ -32,17 +32,31 @@ class CardTypes
 	public static var C113:Int = 113;
 	public static var C114:Int = 114;
 	public static var C115:Int = 115;
+	public static var C116:Int = 116;
+	public static var C117:Int = 117;
+	public static var C118:Int = 118;
+	public static var C119:Int = 119;
+	public static var C120:Int = 120;
+	public static var C121:Int = 121;
+	public static var C122:Int = 122;
+	public static var C123:Int = 123;
+	public static var C124:Int = 124;
+	public static var C125:Int = 125;
+	public static var C126:Int = 126;
+	public static var C127:Int = 127;
+	public static var C128:Int = 128;
+	public static var C129:Int = 129;
 	
 	// spells
 	public static var C151:Int = 151;
 	public static var C152:Int = 152;
 	public static var C153:Int = 153;
 	public static var C154:Int = 154;
-	public static var C155:Int = 155;
-	public static var C156:Int = 156;
-	public static var C157:Int = 157;
-	public static var C158:Int = 158;
-	public static var C159:Int = 159;
+	//public static var C155:Int = 155;
+	//public static var C156:Int = 156;
+	//public static var C157:Int = 157;
+	//public static var C158:Int = 158;
+	//public static var C159:Int = 159;
 
 	// buildings
 	public static var C201:Int = 201;
@@ -105,14 +119,14 @@ class CardTypes
 	public static function getAll():IntList
 	{
 		var ret:IntList = new IntList();
-		var i = 101;
-		while ( i <= 115 )
+		var i = 0;
+		while ( i < 129 )
 		{
 			ret.push(i);
 			i ++;
 		}
 		i = 151;
-		while ( i <= 159 )
+		while ( i <= 154 )
 		{
 			ret.push(i);
 			i ++;

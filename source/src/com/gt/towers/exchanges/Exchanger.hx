@@ -414,12 +414,12 @@ class Exchanger
 			return;
 		}
 		
-		// try to find new card
+/*		// try to find new card
 		var a = 0;
-		var allCards = game.player.availabledCards();
-		while( a < allCards.size() )
+		var allCards = game.player.getCards(-1, );
+		while( a < allCards.length )
 		{
-			var newCard = allCards.get(a);
+			var newCard = allCards[a];
 			if( !game.player.cards.exists(newCard) && ScriptEngine.getInt(-1, newCard) <= game.player.getResource(ResourceType.R21_BOOK_OPENED_BATTLE) )
 			{
 				map.set(newCard, 1);
@@ -427,7 +427,7 @@ class Exchanger
 			}
 			a ++;
 		}
-		addRandomSlot(map, 2, 0);
+*/		addRandomSlot(map, 2, 0);
 	}
 	function addRandomSlot(map:IntIntMap, count:Int, rarity:Int) : Void
 	{

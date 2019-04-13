@@ -13,6 +13,7 @@ class ResourceType
 	public static var R4_CURRENCY_HARD:Int = 4;
 	public static var R5_CURRENCY_REAL:Int = 5;
 	public static var R6_TICKET:Int = 6;
+	public static var R7_MAX_POINT:Int = 7;
 
 	public static var R11_OPERATIONS:Int = 11;
 	public static var R12_BATTLES:Int = 12;

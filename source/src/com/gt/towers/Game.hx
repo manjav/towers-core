@@ -75,9 +75,11 @@ class Game
 		arenas.set(	24	, new Arena(	24	,	7001	,	8000	,	0	));
 		arenas.set(	25	, new Arena(	25	,	8001	,	9000	,	0	));
 		arenas.set(	26	, new Arena(	26	,	9001	,	10000	,	0	));
-		arenas.set(	27	, new Arena(	27	,	10001	,	11000	,	0	));
-		arenas.set(	28	, new Arena(	28	,	11001	,	12000	,	0	));
-		arenas.set(	29	, new Arena(	29	,	12001	,	13000	,	0	));
+		arenas.set(	27	, new Arena(	27	,	10001	,	12000	,	0	));
+		arenas.set(	28	, new Arena(	28	,	12001	,	14000	,	0	));
+		arenas.set(	29	, new Arena(	29	,	14001	,	16000	,	0	));
+		arenas.set(	30	, new Arena(	30	,	16001	,	18000	,	0	));
+		arenas.set(	31	, new Arena(	31	,	18001	,	200000	,	0	));	
 	}
 	
 	/*public function unlockedBuildingAt ( type:Int ) : Int
