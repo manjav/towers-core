@@ -147,12 +147,13 @@ class Challenge
 		return game.exchanger.exchange(getExchangeItem(type, runRequirements, arena), now);
 	}
 	
-	static public function getUnlockAt(type:Int) 
+	static public function getUnlockAt(index:Int) 
 	{
-		return switch( type )
+		return switch( index )
 		{
 			case 1:		3;
-			case 2:		5;
+			case 2:		8;
+			case 3:		20;
 			default:	0;
 		}
 	}
