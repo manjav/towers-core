@@ -288,21 +288,26 @@ class IntIntMap extends flash.events.EventDispatcher
 	{
 		var ret = new Array<Int>();
 		var keys = keys();
+		var values = new Array<Int>();
 		var len = keys.length;
 		var i:Int = 0;
 		while( i < len )
 		{
-			if ( randomly )
+			values.push(get(keys[i]));
+			i ++;
+		}
+		if( !randomly )
+			return values;
+		i = 0;
+		len = values.length;
+		while( i < len )
+		{
+			var a = keys[Std.random(len)];
+			if ( ret.indexOf(values[a]) > -1 )
 			{
-				var a = keys[Std.random(len)];
-				if( ret.indexOf(get(a)) > -1 )
-					continue;
-				ret.push(get(a));				
+				continue;
 			}
-			else
-			{
-				ret.push(get(keys[i]));				
-			}
+			ret.push(values[a]);				
 			i ++;
 		}
 		//trace( toString() + " <::> " + ret.toString() );

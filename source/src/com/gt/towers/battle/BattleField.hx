@@ -114,7 +114,8 @@ class BattleField
 			
 			if( difficulty != 0 )
 			{
-				var ep:UInt = game_0.player.get_point() + Math.round(Math.pow(1.4, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
+				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.4, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
+				trace(ep + "ss");
 				if( ep > 100000 )
 					ep = 100000;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);
@@ -176,13 +177,14 @@ class BattleField
 	{
 		var ret = new IntCardMap(); 
 		var i:Int = 0;
+		//trace("id: " + game.player.id + "-> " + cardsTypes.toString() + " friendlyMode:" + friendlyMode);
 		while( i < cardsTypes.length )
 		{
 			if( game.player.cards.exists(cardsTypes[i]) )
 				ret.set(cardsTypes[i], friendlyMode ? new Card(game,cardsTypes[i],9) : game.player.cards.get(cardsTypes[i]));
 			i ++;
 		}
-		trace(ret.queue_String());
+		trace("id: " + game.player.id + "-> " + ret.queue_String());
 		return ret;
 	}
 	

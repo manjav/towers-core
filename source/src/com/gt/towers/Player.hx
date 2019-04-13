@@ -20,7 +20,7 @@ import com.gt.towers.utils.maps.IntStrMap;
  */
 class Player
 {
-	static var FIRST_CARDS:Int = 5;
+	static var FIRST_CARDS:Int = 8;
 	public var id:Int;
 	public var admin:Bool = false;
 	public var tutorialMode:Int = 0;

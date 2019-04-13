@@ -12,7 +12,7 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1900.0328163444";//do not change len.
+	public var coreVersion:String = "1900.0413154656";//do not change len.
 	public var noticeVersion:Int = 1900;
 	public var forceVersion:Int = 1900;
 	public var resources:IntIntMap;
@@ -41,6 +41,8 @@ class LoginData
 		resources.set(CardTypes.C104, 1);
 		resources.set(CardTypes.C105, 1);
 		resources.set(CardTypes.C106, 1);
+		resources.set(CardTypes.C107, 1);
+		resources.set(CardTypes.C108, 1);
 		
 		exchanges = new IntList();
 		exchanges.push(ExchangeType.C21_SPECIAL);
@@ -52,7 +54,7 @@ class LoginData
 		exchanges.push(ExchangeType.C113_BATTLE);
 		exchanges.push(ExchangeType.C114_BATTLE);
 		
-		deck = [CardTypes.C101, CardTypes.C102, CardTypes.C103, CardTypes.C104, CardTypes.C105, CardTypes.C106];
+		deck = [CardTypes.C101, CardTypes.C102, CardTypes.C103, CardTypes.C104, CardTypes.C105, CardTypes.C106, CardTypes.C107, CardTypes.C108];
 #if java
 		initialDecks = new IntIntIntMap();
 		initialDecks.set(0, new IntIntMap("0:101, 1:105, 2:104, 3:102, 4:106, 5:103"));
