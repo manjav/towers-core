@@ -18,8 +18,8 @@ class Challenge
 
 	static public var MODE_0_HQ:Int = 0;
 	static public var MODE_1_TOUCHDOWN:Int = 1;
-	static public var MODE_2_SAFEBOX:Int = 2;
-	static public var MODE_3_CLUBS:Int = 3;
+	static public var MODE_2_CLUBS:Int = 2;
+	static public var MODE_3_SAFEBOX:Int = 3;
 
 	static public var TYPE_0_OPEN:Int = 0;
 	static public var TYPE_1_REWARD:Int = 1;
@@ -246,25 +246,24 @@ class Challenge
 		}
 		return ret;
 	}
-
-	static public function getRunRequiements(type:Int):IntIntMap
-	{
-		var ret = new IntIntMap();
-		switch( type )
-		{
-			case 1:		ret.set(ResourceType.R6_TICKET, 1);
-			case 2:		ret.set(ResourceType.R6_TICKET, 2);
-			default:	ret.set(ResourceType.R6_TICKET, 0);
-		}
-		return ret;
-	}
-	
 	#elseif flash
 	static public function getTargetLabel(type:Int) : String
 	{
 		return "challenge_wins";
 	}
 	#end
+	static public function getRunRequiements(index:Int):IntIntMap
+	{
+		var ret = new IntIntMap();
+		switch( index )
+		{
+			case 1:		ret.set(ResourceType.R6_TICKET, 1);
+			case 2:		ret.set(ResourceType.R6_TICKET, 2);
+			case 3:		ret.set(ResourceType.R6_TICKET, 3);
+			default:	ret.set(ResourceType.R6_TICKET, 0);
+		}
+		return ret;
+	}
 	
 	static public function getExchangeItem(type:Int, requirements:IntIntMap, arena:Int) : ExchangeItem
 	{

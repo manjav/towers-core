@@ -130,7 +130,7 @@ if( featureType == 1 )
 		return all;
 	}
 	var ret = all.indexOf(cardType);
-	return ret <= -1 ? 0 : 1;
+	return ret <= 0 ? 0 : 1;
 }
 
 
