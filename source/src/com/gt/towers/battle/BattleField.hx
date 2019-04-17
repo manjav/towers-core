@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.tilemap.TileMap;
 import com.gt.towers.battle.units.Card;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.lists.FloatList;
 import com.gt.towers.utils.lists.IntList;
 import com.gt.towers.utils.maps.IntBulletMap;
@@ -38,7 +39,7 @@ class BattleField
 	public var state:Int = 0;
 	public var elixirBar:FloatList;
 	public var singleMode:Bool;
-	public var friendlyMode:Bool;
+	public var friendlyMode:Int;
 	public var field:FieldData;
 	public var difficulty:Int;
 	public var arena:Int;
@@ -65,7 +66,7 @@ class BattleField
 #end
 
 	public function new(){}
-	public function initialize(game_0:Game, game_1:Game, field:FieldData, side:Int, startAt:Float, now:Float, hasExtraTime:Bool, friendlyMode:Bool) : Void
+	public function initialize(game_0:Game, game_1:Game, field:FieldData, side:Int, startAt:Float, now:Float, hasExtraTime:Bool, friendlyMode:Int) : Void
 	{
 		this.side = side;
 		this.now = now;
@@ -136,13 +137,13 @@ class BattleField
 		elixirSpeeds.set(1, Math.min(1, games[0].player.get_battleswins() / 5));
 		
 		// create castles
-		if( field.type == FieldData.TYPE_HEADQUARTER )
+		if( field.mode == Challenge.MODE_0_HQ )
 		{
 			while ( unitId < 6 )
 			{
 				var side = unitId % 2;
 				var heroType = game_0.appVersion > 1400 ? 222 : 221;
-				var card = new com.gt.towers.battle.units.Card(games[side], unitId > 1 ? heroType : 201, friendlyMode ? 9 : games[side].player.get_level(0));
+				var card = new com.gt.towers.battle.units.Card(games[side], unitId > 1 ? heroType : 201, friendlyMode > 0 ? 9 : games[side].player.get_level(0));
 				var x = 480;
 				var y = 70;
 				if( unitId > 3 )
@@ -173,7 +174,7 @@ class BattleField
 		elixirBar.push(POPULATION_INIT);
 	}
 	
-	static function getDeckCards(game:Game, cardsTypes:Array<Int>, friendlyMode:Bool):IntCardMap
+	static function getDeckCards(game:Game, cardsTypes:Array<Int>, friendlyMode:Int) : IntCardMap
 	{
 		var ret = new IntCardMap(); 
 		var i:Int = 0;
@@ -181,7 +182,7 @@ class BattleField
 		while( i < cardsTypes.length )
 		{
 			if( game.player.cards.exists(cardsTypes[i]) )
-				ret.set(cardsTypes[i], friendlyMode ? new Card(game,cardsTypes[i],9) : game.player.cards.get(cardsTypes[i]));
+				ret.set(cardsTypes[i], friendlyMode > 0 ? new Card(game,cardsTypes[i],9) : game.player.cards.get(cardsTypes[i]));
 			i ++;
 		}
 		trace("id: " + game.player.id + "-> " + ret.queue_String());

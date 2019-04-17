@@ -4,7 +4,6 @@ import com.gt.towers.Player;
 import com.gt.towers.scripts.ScriptEngine;
 import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.others.Arena;
-import com.gt.towers.battle.FieldProvider;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.Exchanger;
@@ -37,7 +36,6 @@ class Game
 		appVersion = data.appVersion;
 		market = data.market;
 		sessionsCount = data.sessionsCount;
-		FieldProvider.init();
 		fillArenas();
 		player = new Player(this, data);
 		exchanger = new Exchanger(this);

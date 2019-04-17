@@ -1,6 +1,7 @@
 package com.gt.towers.battle.fieldes;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.lists.IntList;
-import com.gt.towers.utils.lists.PlaceDataList;
+import haxe.ds.IntMap;
 
 /**
  * ...
@@ -8,74 +9,44 @@ import com.gt.towers.utils.lists.PlaceDataList;
  */
 class FieldData
 {
-	static public var TYPE_OPERATION:String = "operation";
-	static public var TYPE_TOUCHDOWN:String = "touchdown";
-	static public var TYPE_HEADQUARTER:String = "headquarter";
+	static private var fields:IntMap<FieldData> = new IntMap<FieldData>();
+	static public function intantiate(mode:Int) : FieldData
+	{
+		if( !fields.exists(mode) )
+			fields.set(mode, new FieldData(mode, "60,120,180,240"));
+		return fields.get(mode);
+	}
 
-	public var index:Int;
-	public var type:String;
+	public var mode:Int;
 	public var times:IntList;
 	public var mapLayout:String;
-	//public var places:PlaceDataList;
 #if flash
-	public var name:String;
-	public var introNum:IntList;
-	public var startNum:IntList;
-	public var endNum:IntList;
-	//public var images:com.gt.towers.utils.lists.ImageDataList;
+	//public var name:String;
+	//public var introNum:IntList;
+	//public var startNum:IntList;
+	//public var endNum:IntList;
 #elseif java
+	//public var index:Int;
+	//public var type:Int;
 	public var mapName:String;
 #end
 
-	public function new(index:Int, name:String, times:String = "", introNum:String = "", startNum:String = "", endNum:String = "", mapName:String = null) 
+	public function new(mode:Int, times:String = "") 
 	{
-		this.index = index;
-		this.type = name.split("_")[0];
-		//this.places = new PlaceDataList();
+		this.mode = mode;
 		this.times = IntList.parse(times);
 #if flash
-		this.name = name;
-		this.introNum = IntList.parse(introNum);
-		this.startNum = IntList.parse(startNum);
-		this.endNum = IntList.parse(endNum);
-//		this.images = new com.gt.towers.utils.lists.ImageDataList();
+		//this.introNum = IntList.parse(introNum);
+		//this.startNum = IntList.parse(startNum);
+		//this.endNum = IntList.parse(endNum);
 #elseif java
-		this.mapName = mapName;
+		//this.mapName = mapName;
+		//this.index = index;
 #end
 	}
-	/*
-	public function getSwipeTutorPlaces(): PlaceDataList
-	{
-		var ret = new PlaceDataList();
-		var i = 0;
-		while (i < places.size())
-		{
-			if ( places.get(i).tutorIndex > -1 )
-			{
-				if( ret.size() > 0 || places.get(i).troopType == 0 )
-					ret.push(places.get(i));
-			}
-			
-			i ++;
-		}
-		return ret;
-	}
-	
-	public function getImprovableTutorPlace():PlaceData
-	{
-		var i = 0;
-		while (i < places.size())
-		{
-			if ( places.get(i).tutorIndex < 0 && places.get(i).tutorIndex != -3 )
-				return places.get( i );
-				
-			i ++;
-		}
-		return null;
-	}*/
 	
 	public function isOperation() : Bool
 	{
-		return type == TYPE_OPERATION;
+		return false;
 	}
 }

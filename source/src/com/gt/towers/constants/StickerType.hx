@@ -29,7 +29,7 @@ class StickerType
 	public static var S16_I_SEE_YOU_SMALL:Int = 16;
 	
 #if flash
-	public static function getAll(friendlyMode:Bool) : IntList
+	public static function getAll(friendlyMode:Int) : IntList
 	{
 		var ret:IntList = new IntList();
 		
@@ -40,7 +40,7 @@ class StickerType
 		//ret.push( S4_OOPS );
 		//ret.push( S5_ALL_YOU_GOT );
 		ret.push( S6_HAHAHA );
-		ret.push( friendlyMode ? S7_REVENGE : S8_CURSED );
+		ret.push( friendlyMode > 0 ? S7_REVENGE : S8_CURSED );
 		//ret.push( S9_I_AFRAID );
 		ret.push( S10_DO_YOU_ANY );
 		ret.push( S11_NOVICE );

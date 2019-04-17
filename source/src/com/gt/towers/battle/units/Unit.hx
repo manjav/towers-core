@@ -2,10 +2,10 @@ package com.gt.towers.battle.units;
 import com.gt.towers.battle.BattleField;
 import com.gt.towers.battle.GameObject;
 import com.gt.towers.battle.tilemap.Tile;
-import com.gt.towers.battle.fieldes.FieldData;
 import com.gt.towers.battle.units.Card;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.events.BattleEvent;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.Point2;
 
 /**
@@ -45,7 +45,7 @@ class Unit extends GameObject
 		if( CardTypes.isHero(card.type) )
 			this.defaultTarget = new Point2(returnigPosition.x, returnigPosition.y);
 		else
-			this.defaultTarget = new Point2(battleField.field.type == FieldData.TYPE_HEADQUARTER ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 0 : BattleField.HEIGHT);
+			this.defaultTarget = new Point2(battleField.field.mode == Challenge.MODE_0_HQ ? BattleField.WIDTH * 0.5 : returnigPosition.x, side == 0 ? 0 : BattleField.HEIGHT);
 	}
 	
 	override public function update() : Void

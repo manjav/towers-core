@@ -147,7 +147,7 @@ class Challenge
 		return game.exchanger.exchange(getExchangeItem(type, runRequirements, arena), now);
 	}
 	
-	static public function getUnlockAt(index:Int) 
+	static public function getUnlockAt(index:Int) : Int
 	{
 		return switch( index )
 		{
@@ -157,27 +157,29 @@ class Challenge
 			default:	0;
 		}
 	}
+	
+	static public function getMode(index:Int) : Int
+	{
+		return switch( index )
+		{
+			case 1:		1;
+			case 2:		2;
+			case 3:		3;
+			default:	0;
+		}
+	}
 
 	#if java
-	static public function getlowestJoint(player:Player) : Int
+	
+	static public function getType(index:Int) : Int
 	{
-		var ret = ResourceType.R30_CHALLENGES + 1;
-		return ret;
-		/*
-		var i = 0;
-		var lowest = 9999999;
-		var joints = 0;
-		while( i < 2 )
+		return switch( index )
 		{
-			joints = player.getResource(ResourceType.CHALLENGES + i + 1 );
-			if( lowest > joints )
-			{
-				lowest = joints;
-				ret = ResourceType.CHALLENGES + i + 1;
-			}
-			i ++;
+			case 1:		1;
+			case 2:		1;
+			case 3:		2;
+			default:	0;
 		}
-		return ret;*/
 	}
 	
 	static public function getCapacity(type:Int):Int
@@ -185,16 +187,6 @@ class Challenge
 		return switch( type )
 		{
 			case 2:		100;
-			default:	0;
-		}
-	}
-	
-	static public function provideMode(type:Int):Int
-	{
-		return switch( type )
-		{
-			case 1:		2;
-			case 2:		3;
 			default:	0;
 		}
 	}
@@ -216,6 +208,27 @@ class Challenge
 			case 2:		3600 * 72;
 			default:	0;
 		}
+	}
+
+	static public function getlowestJoint(player:Player) : Int
+	{
+		var ret = ResourceType.R30_CHALLENGES + 1;
+		return ret;
+		/*
+		var i = 0;
+		var lowest = 9999999;
+		var joints = 0;
+		while( i < 2 )
+		{
+			joints = player.getResource(ResourceType.CHALLENGES + i + 1 );
+			if( lowest > joints )
+			{
+				lowest = joints;
+				ret = ResourceType.CHALLENGES + i + 1;
+			}
+			i ++;
+		}
+		return ret;*/
 	}
 	
 	static public function getRewards(type:Int):IntArenaMap
@@ -268,7 +281,7 @@ class Challenge
 	static public function getExchangeItem(type:Int, requirements:IntIntMap, arena:Int) : ExchangeItem
 	{
 		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + type + 1);
-        ret.outcomes = new IntIntMap(ResourceType.R1_XP + ":" + 10 * arena);
+        ret.outcomes = new IntIntMap(ResourceType.R1_XP + ":" + 2 * arena);
 		ret.requirements = requirements;
 		return ret;
 	}	
