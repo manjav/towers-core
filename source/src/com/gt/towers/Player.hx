@@ -33,7 +33,6 @@ class Player
 	public var nickName:String = "no_nickName";
 	public var decks:IntIntIntMap;
 	public var selectedDeckIndex:Int = 0;
-	public var selectedChallengeIndex:Int = 0;
 	public var splitTestCoef:Float = 1;
 
 	private var game:Game;
@@ -265,10 +264,6 @@ class Player
 	}
 	
 	#if flash
-	public function getSelectedChallenge() : Challenge
-	{
-		return challenges.get(selectedChallengeIndex);
-	}
 	public function dashboadTabEnabled(index:Int) : Bool
 	{
 		if( getTutorStep() >= PrefsTypes.T_027_WIN )

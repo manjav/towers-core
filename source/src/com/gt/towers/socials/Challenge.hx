@@ -151,7 +151,7 @@ class Challenge
 	{
 		return switch( index )
 		{
-			case 1:		3;
+			case 1:		1;
 			case 2:		8;
 			case 3:		20;
 			default:	0;

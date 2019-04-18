@@ -116,7 +116,6 @@ class BattleField
 			if( difficulty != 0 )
 			{
 				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.4, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
-				trace(ep + "ss");
 				if( ep > 100000 )
 					ep = 100000;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);
@@ -137,13 +136,14 @@ class BattleField
 		elixirSpeeds.set(1, Math.min(1, games[0].player.get_battleswins() / 5));
 		
 		// create castles
-		if( field.mode == Challenge.MODE_0_HQ )
+		if( field.mode != Challenge.MODE_1_TOUCHDOWN )
 		{
 			while ( unitId < 6 )
 			{
 				var side = unitId % 2;
-				var heroType = game_0.appVersion > 1400 ? 222 : 221;
-				var card = new com.gt.towers.battle.units.Card(games[side], unitId > 1 ? heroType : 201, friendlyMode > 0 ? 9 : games[side].player.get_level(0));
+				var hqType = field.mode == Challenge.MODE_0_HQ ? 201 : 221;
+				var heroType = field.mode == Challenge.MODE_0_HQ ? 222 : 223;
+				var card = new com.gt.towers.battle.units.Card(games[side], unitId > 1 ? heroType : hqType, friendlyMode > 0 ? 9 : games[side].player.get_level(0));
 				var x = 480;
 				var y = 70;
 				if( unitId > 3 )
