@@ -265,10 +265,10 @@ class Challenge
 		return "challenge_wins";
 	}
 	#end
-	static public function getRunRequiements(index:Int):IntIntMap
+	static public function getRunRequiements(mode:Int):IntIntMap
 	{
 		var ret = new IntIntMap();
-		switch( index )
+		switch( mode )
 		{
 			case 1:		ret.set(ResourceType.R6_TICKET, 1);
 			case 2:		ret.set(ResourceType.R6_TICKET, 2);
@@ -278,9 +278,9 @@ class Challenge
 		return ret;
 	}
 	
-	static public function getExchangeItem(type:Int, requirements:IntIntMap, arena:Int) : ExchangeItem
+	static public function getExchangeItem(mode:Int, requirements:IntIntMap, arena:Int) : ExchangeItem
 	{
-		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + type + 1);
+		var ret:ExchangeItem = new ExchangeItem(ResourceType.R30_CHALLENGES + mode + 1);
         ret.outcomes = new IntIntMap(ResourceType.R1_XP + ":" + 2 * arena);
 		ret.requirements = requirements;
 		return ret;
