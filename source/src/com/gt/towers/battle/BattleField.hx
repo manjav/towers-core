@@ -115,7 +115,7 @@ class BattleField
 			
 			if( difficulty != 0 )
 			{
-				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.4, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
+				var ep:Int = game_0.player.get_point() + Math.round(Math.pow(1.2, Math.abs(difficulty) ) * difficulty / Math.abs(difficulty)) + difficulty * 5;
 				if( ep > 100000 )
 					ep = 100000;
 				game_1.player.resources.set(com.gt.towers.constants.ResourceType.R2_POINT, ep);

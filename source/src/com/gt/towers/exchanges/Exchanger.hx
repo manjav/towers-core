@@ -243,7 +243,11 @@ class Exchanger
 	
 	static function ticketToHard(count:Int):Int
 	{
-		return count * 10 ;
+		return count * 2;
+	}
+	static function hardToTicket(count:Int):Int
+	{
+		return Math.round(count * 0.5) ;
 	}
 	static function realToTicket(count:Int):Int
 	{

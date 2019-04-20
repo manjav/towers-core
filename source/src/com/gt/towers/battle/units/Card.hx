@@ -147,7 +147,7 @@ class Card
 		if ( playerWinStreak - 9 <= minWinStreak )
 			ret.set(ResourceType.R16_WIN_RATE, minWinStreak - playerWinStreak);
 		else
-			ret.set(ResourceType.R16_WIN_RATE, -4);
+			ret.set(ResourceType.R16_WIN_RATE, -1);
 		
 		return ret;
 	}
