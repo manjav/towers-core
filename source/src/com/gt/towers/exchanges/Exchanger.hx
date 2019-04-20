@@ -477,7 +477,7 @@ class Exchanger
 	
 	private function getBattleBook(earnedBooks:Int) : Int
 	{
-		if( earnedBooks < 3 )
+		if( earnedBooks < 4 )
 			return ExchangeType.BOOK_51_METAL;
 		if( earnedBooks % 4 == 0 )
 			return ExchangeType.BOOK_53_STARS;
@@ -490,4 +490,30 @@ class Exchanger
 		
 		return ExchangeType.BOOK_52_KNIGHT;
 	}
+	
+/*	private function getBattleBook(earnedBooks:int) : int
+{
+	//earnedBooks %= 240; 
+	if( earnedBooks < 4 )
+		return 51;//4
+	if( (earnedBooks * 0.2 % 1) < 0.20 )
+		return 53;//52
+	if( (earnedBooks * 0.006 % 1) < 0.025 )
+		return 54;//4
+	if( earnedBooks == 53 || earnedBooks == 127 || earnedBooks == 211)
+		return 57;//3
+	if( earnedBooks == 89 || earnedBooks == 173)
+		return 59;//2
+	
+	return 52;//180
+	
+	
+//2,    3,     5,    7,   11,    13,   17,    19,    23,   29و 31,  37,  41,  43,   47,   53,    59,    61,     67, 71
+//73,   79,  83,  89,    97,   101,  103, 107,    109    113
+//127, 131    137, 139,  149, 151, 157,   163,    167    173
+//179, 181    191, 193,  197, 199    211,  223,    227    229
+//233, 239 
+//
+}*/
+	
 }
