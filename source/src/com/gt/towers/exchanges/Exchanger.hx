@@ -389,10 +389,6 @@ class Exchanger
         var softDec = ExchangeType.getNumSofts(type, arena, game.player.splitTestCoef) * 0.1;
 		ret.set( ResourceType.R3_CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
 		
-		// tickets
-		if( game.player.get_arena(0) > 1 && type > 51 )
-			ret.set( ResourceType.R6_TICKET, type - 51 );
-		
 		return ret;
 	}
 	function addNewCard(map:IntIntMap) : Void
@@ -457,63 +453,38 @@ class Exchanger
 		return ExchangeType.BOOK_M_54_BRONZE;
 	}*/
 	
-	private function getFreeBook(openedBooks:Int) : Int
+	private function getFreeBook(earnedBooks:Int) : Int
 	{
-		if( openedBooks == 0 )
-			return ExchangeType.BOOK_53_STARS;
-		if( openedBooks % 11 == 0 || openedBooks == 5 )
-			return ExchangeType.BOOK_54_SEA;
-		if( openedBooks % 19 == 0 )
-			return ExchangeType.BOOK_55_PIRATE;
-		if( openedBooks % 29 == 0 )
-			return ExchangeType.BOOK_56_JUNGLE;
-		if( openedBooks % 41 == 0 )
-			return ExchangeType.BOOK_57_TREASURE;
-		if( openedBooks % 61 == 0 )
-			return ExchangeType.BOOK_58_AMBER;
-		
-		return ExchangeType.BOOK_52_KNIGHT;
+		earnedBooks %= 240; 
+
+		if( earnedBooks == 89 || earnedBooks == 157 || earnedBooks == 199 || earnedBooks == 229)
+			return 54;//4
+		if( earnedBooks == 53 || earnedBooks == 127 || earnedBooks == 211)
+			return 55;//3
+		if( earnedBooks == 89 || earnedBooks == 173)
+			return 56;//2
+		if ( earnedBooks == 19 )
+			return 57;//1
+		if ( earnedBooks == 97 )
+			return 58;//1
+		if ( earnedBooks == 167 )
+			return 59;//1
+		return 53;//180
 	}
 	
 	private function getBattleBook(earnedBooks:Int) : Int
 	{
+		earnedBooks %= 240; 
 		if( earnedBooks < 4 )
-			return ExchangeType.BOOK_51_METAL;
-		if( earnedBooks % 4 == 0 )
-			return ExchangeType.BOOK_53_STARS;
-		if( earnedBooks % 13 == 0 )
-			return ExchangeType.BOOK_54_SEA;
-		if( earnedBooks % 23 == 0 )
-			return ExchangeType.BOOK_57_TREASURE;
-		if( earnedBooks % 47 == 0 )
-			return ExchangeType.BOOK_59_DRAGON;
-		
-		return ExchangeType.BOOK_52_KNIGHT;
+			return 51;//4
+		if( earnedBooks == 89 || earnedBooks == 157 || earnedBooks == 199 || earnedBooks == 229)
+			return 54;//4
+		if( earnedBooks == 53 || earnedBooks == 127 || earnedBooks == 211)
+			return 57;//3
+		if( earnedBooks == 89 || earnedBooks == 173)
+			return 59;//2
+		if( (earnedBooks * 0.2 % 1) < 0.20 )
+			return 53;//52	
+		return 52;//180
 	}
-	
-/*	private function getBattleBook(earnedBooks:int) : int
-{
-	//earnedBooks %= 240; 
-	if( earnedBooks < 4 )
-		return 51;//4
-	if( (earnedBooks * 0.2 % 1) < 0.20 )
-		return 53;//52
-	if( (earnedBooks * 0.006 % 1) < 0.025 )
-		return 54;//4
-	if( earnedBooks == 53 || earnedBooks == 127 || earnedBooks == 211)
-		return 57;//3
-	if( earnedBooks == 89 || earnedBooks == 173)
-		return 59;//2
-	
-	return 52;//180
-	
-	
-//2,    3,     5,    7,   11,    13,   17,    19,    23,   29و 31,  37,  41,  43,   47,   53,    59,    61,     67, 71
-//73,   79,  83,  89,    97,   101,  103, 107,    109    113
-//127, 131    137, 139,  149, 151, 157,   163,    167    173
-//179, 181    191, 193,  197, 199    211,  223,    227    229
-//233, 239 
-//
-}*/
-	
 }
