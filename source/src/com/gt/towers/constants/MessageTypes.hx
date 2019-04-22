@@ -21,6 +21,8 @@ class MessageTypes
 	public static var M20_DONATE:Int = 20;
 
 	public static var M30_FRIENDLY_BATTLE:Int = 30;
+	public static var M31_FRIENDLY_BATTLE:Int = 31;
+	public static var M32_FRIENDLY_BATTLE:Int = 32;
 
 	public static var M41_CONFIRM_JOIN:Int = 41;
 	public static var M42_CONFIRM_INVITATION:Int = 42;
@@ -49,18 +51,29 @@ class MessageTypes
 	
 	public function new(){}
 	
-	public static function isComment(type:Int) : Bool
+	static public function isComment(type:Int) : Bool
 	{
 		return type >= 10 && type < 20;
 	}
 	
-	public static function isConfirm(type:Int) : Bool
+	static public function isDonate(type:Int) : Bool
+	{
+		return type >= 20 && type < 30;
+	}
+
+	static public function isBattle(type:Int) : Bool
+	{
+		return type >= 30 && type < 40;
+	}
+
+	static public function isConfirm(type:Int) : Bool
 	{
 		return type >= 40 && type < 50;
 	}	
 	
-	public static function isEmote(type:Int) : Bool
+	static public function isEmote(type:Int) : Bool
 	{
 		return type == 51;
 	}
+	
 }
