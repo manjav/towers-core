@@ -152,7 +152,7 @@ if( featureType == 2 )
 		case 108 :  3	;
 		case 109 :  4	;
 		case 110 :  2	;
-		case 111 :  7	;
+		case 111 :  6	;
 		case 112 :  4	;
 		case 113 :  2	;
 		case 114 :  2	;
