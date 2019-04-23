@@ -363,18 +363,18 @@ if( featureType == 15 )
 	{
 		case	101	:	1.8 ;
 		case	102	:	1.0	;
-		case	103	:	0.8	;
-		case	104	:	0.8	;
-		case	105	:	0.7	;
+		case	103	:	1.0	;
+		case	104	:	1.0	;
+		case	105	:	1.0	;
 		case	106	:	1.6	;
-		case	107	:	0.7	;
+		case	107	:	1.0	;
 		case	108	:	1.4	;
 		case	109	:	1.0	;
-		case	110	:	0.8	;
-		case	111	:	0.8	;
-		case	112	:	0.7 ;
-		case	113	:	0.7 ;
-		case	114	:	0.8	;
+		case	110	:	1.0	;
+		case	111	:	1.0	;
+		case	112	:	1.2 ;
+		case	113	:	1.2 ;
+		case	114	:	1.0	;
 		
 		case 	201 : 	1.5 ;
 		case 	221 : 	1.6 ;
