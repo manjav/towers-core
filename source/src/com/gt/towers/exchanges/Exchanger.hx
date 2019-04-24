@@ -1,6 +1,8 @@
 package com.gt.towers.exchanges;
 
 import com.gt.towers.Game;
+import com.gt.towers.battle.units.Card;
+import com.gt.towers.constants.CardFeatureType;
 import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.MessageTypes;
@@ -209,7 +211,7 @@ class Exchanger
 			else if( reqKeys[i] == ResourceType.R3_CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isCard(reqKeys[i])) 
-				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
+				softs += cardToSoft(map.get(reqKeys[i]), ScriptEngine.getInt(CardFeatureType.F00_RARITY, reqKeys[i]));
 			else if( ResourceType.isBook(reqKeys[i]))
 				hards += toHard(estimateBookOutcome(reqKeys[i], map.get(reqKeys[i]), 1));
 			i ++;
@@ -233,7 +235,7 @@ class Exchanger
 			else if( reqKeys[i] == ResourceType.R3_CURRENCY_SOFT )
 				softs += map.get(reqKeys[i]);
 			else if( ResourceType.isCard(reqKeys[i]) ) 
-				softs += cardToSoft( map.get(reqKeys[i]), reqKeys[i] );
+				softs += cardToSoft(map.get(reqKeys[i]), ScriptEngine.getInt(CardFeatureType.F00_RARITY, reqKeys[i]));
 			
 			i ++;
 		}
@@ -275,7 +277,7 @@ class Exchanger
 	}
 	static public function cardToSoft(count:Int, rarity:Int) : Int
 	{
-		return count * 30 ; 
+		return count * Card.PRICE[rarity]; 
 	}
 	static public function fixedRound(count:Int) : Int
 	{

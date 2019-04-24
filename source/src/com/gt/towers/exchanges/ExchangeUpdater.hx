@@ -1,8 +1,11 @@
 package com.gt.towers.exchanges;
 import com.gt.towers.Game;
+import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
+import com.gt.towers.scripts.ScriptEngine;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -47,10 +50,10 @@ class ExchangeUpdater
 		{
 			if( item.type == ExchangeType.C23_SPECIAL )
 			{
-				if( game.player.cards.keys().length > 0 )
+				if( game.player.cards.keys().length > 0 && game.player.getResource(ResourceType.R6_TICKET) > 20 )
 					item.outcome = game.player.cards.getRandomKey();
 				else
-					item.outcome = ResourceType.R3_CURRENCY_SOFT;
+					item.outcome = ResourceType.R6_TICKET;
 			}
 			else if( item.type == ExchangeType.C22_SPECIAL )
 			{
@@ -86,9 +89,19 @@ class ExchangeUpdater
 	function getOutcomeQuantity(item:ExchangeItem):Int 
 	{
 		if( ResourceType.isCard(item.outcome) )
-			return 3 * ( arena + 1 );
-		else if( ResourceType.isBook(item.outcome) )
+			return Math.ceil(arena / (ScriptEngine.getInt(0, item.outcome) * 2 + 1) );
+		
+		if( ResourceType.isBook(item.outcome) )
 			return 1;
+		
+		if( item.outcome == ResourceType.R6_TICKET )
+		{
+			if( Challenge.getUnlockAt(3) <= arena )
+				return 15;
+			if( Challenge.getUnlockAt(2) <= arena )
+				return 10;
+			return 5;
+		}
 		
 		return switch ( item.outcome )
 		{
