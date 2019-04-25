@@ -41,7 +41,7 @@ class Unit extends GameObject
 		if( !this.movable )
 			return;
 		this.target = new Point2(0, 0);
-		var returnigPosition = battleField.tileMap.getTile(this.x, this.y);
+		var returnigPosition = battleField.field.tileMap.getTile(this.x, this.y);
 		if( CardTypes.isHero(card.type) )
 			this.defaultTarget = new Point2(returnigPosition.x, returnigPosition.y);
 		else
@@ -151,7 +151,7 @@ class Unit extends GameObject
 			path = null;
 			return;
 		}
-		path = battleField.tileMap.findPath(this.x, this.y, targetX, targetY, side == 0 ? 1 : -1);
+		path = battleField.field.tileMap.findPath(this.x, this.y, targetX, targetY, side == 0 ? 1 : -1);
 		if( path == null || path.length == 0 )
 			return;
 		if( BattleField.DEBUG_MODE )

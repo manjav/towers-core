@@ -1,48 +1,37 @@
 package com.gt.towers.battle.fieldes;
-import com.gt.towers.socials.Challenge;
+import com.gt.towers.battle.tilemap.TileMap;
 import com.gt.towers.utils.lists.IntList;
+import haxe.Json;
 import haxe.ds.IntMap;
 
 /**
- * ...
  * @author Mansour Djawadi
  */
 class FieldData
 {
-	static private var fields:IntMap<FieldData> = new IntMap<FieldData>();
-	static public function intantiate(mode:Int) : FieldData
-	{
-		if( !fields.exists(mode) )
-			fields.set(mode, new FieldData(mode, "60,120,180,240"));
-		return fields.get(mode);
-	}
+	static public var fields:IntMap<FieldData> = new IntMap<FieldData>();
 
 	public var mode:Int;
+	public var json:Dynamic;
 	public var times:IntList;
-	public var mapLayout:String;
-#if flash
-	//public var name:String;
-	//public var introNum:IntList;
-	//public var startNum:IntList;
-	//public var endNum:IntList;
-#elseif java
-	//public var index:Int;
-	//public var type:Int;
-	public var mapName:String;
-#end
+	public var mapData:String;
+	public var tileMap:TileMap;
 
-	public function new(mode:Int, times:String = "") 
+	public function new(mode:Int, mapData:String, times:String) 
 	{
 		this.mode = mode;
+		this.mapData = mapData;
 		this.times = IntList.parse(times);
-#if flash
-		//this.introNum = IntList.parse(introNum);
-		//this.startNum = IntList.parse(startNum);
-		//this.endNum = IntList.parse(endNum);
-#elseif java
-		//this.mapName = mapName;
-		//this.index = index;
-#end
+		
+		// parse json layout and occupy tile map
+		this.tileMap = new TileMap();
+		this.json = Json.parse(mapData);
+		if( this.json.layout != null )
+		{
+			var obstacles:Array<Dynamic> = json.layout.children[1].children;
+			for( obs in obstacles )
+				this.tileMap.setTileState(obs.params.x - 25 * obs.params.scaleX, obs.params.y - 25 * obs.params.scaleY, 50 * obs.params.scaleX, 50 * obs.params.scaleY, TileMap.STATE_OCCUPIED);
+		}
 	}
 	
 	public function isOperation() : Bool

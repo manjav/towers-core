@@ -52,8 +52,6 @@ class BattleField
 	public var deltaTime:Int = 25;
 	public var side:Int = 0;
 	public var spellId:Int = 1000000;
-	public var tileMap:TileMap;
-	public var json:Dynamic;
 	public var elixirSpeeds:FloatList = new  FloatList();
 	public var games:Array<Game>;
 	public var numSummonedUnits:Int;
@@ -78,16 +76,6 @@ class BattleField
 		this.friendlyMode = friendlyMode;
 		this.extraTime = hasExtraTime ? field.times.get(3) : 0;
 		//trace("this.startAt:" + this.startAt + " now:" + this.now + " this.resetTime:" + this.resetTime);
-		
-		// parse json layout and occupy tile map
-		tileMap = new TileMap();
-		json = Json.parse(field.mapLayout);
-		if( json.layout != null )
-		{
-			var obstacles:Array<Dynamic> = json.layout.children[1].children;
-			for( obs in obstacles )
-				tileMap.setTileState(obs.params.x - 25 * obs.params.scaleX, obs.params.y - 25 * obs.params.scaleY, 50 * obs.params.scaleX, 50 * obs.params.scaleY, TileMap.STATE_OCCUPIED);
-		}
 		
 		garbage = new IntList();
 		units = new IntUnitMap();
@@ -294,7 +282,7 @@ class BattleField
 		var i = card.quantity - 1;
 		while( i >= 0 )
 		{
-			var tile = tileMap.findTile(com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y), side == 0 ? 1 : -1, TileMap.STATE_EMPTY);
+			var tile = field.tileMap.findTile(com.gt.towers.utils.CoreUtils.getXPosition(card.quantity, i, x), com.gt.towers.utils.CoreUtils.getYPosition(card.quantity, i, y), side == 0 ? 1 : -1, TileMap.STATE_EMPTY);
 			if( tile == null )
 				trace("tile not found!");
 				
