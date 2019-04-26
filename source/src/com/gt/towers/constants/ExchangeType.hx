@@ -128,7 +128,7 @@ class ExchangeType
 			case 59 : 150	+ 40	* arena;
 			default : 0;
 		}
-		ret = Math.ceil(ret * coef * 0.3);
+		ret = Math.ceil(ret * coef * 0.8);
 		
 		if( rarity >= 1 )
 		{
