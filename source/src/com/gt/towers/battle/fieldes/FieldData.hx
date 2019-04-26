@@ -2,15 +2,12 @@ package com.gt.towers.battle.fieldes;
 import com.gt.towers.battle.tilemap.TileMap;
 import com.gt.towers.utils.lists.IntList;
 import haxe.Json;
-import haxe.ds.IntMap;
 
 /**
  * @author Mansour Djawadi
  */
 class FieldData
 {
-	static public var fields:IntMap<FieldData> = new IntMap<FieldData>();
-
 	public var mode:Int;
 	public var json:Dynamic;
 	public var times:IntList;
