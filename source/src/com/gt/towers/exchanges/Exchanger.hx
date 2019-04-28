@@ -249,27 +249,27 @@ class Exchanger
 	}
 	static function hardToTicket(count:Int):Int
 	{
-		return Math.round(count * 0.5);
+		return Math.ceil(count * 0.5);
 	}
 	static function realToTicket(count:Int):Int
 	{
-		return Math.round( count * 0.01 );
+		return Math.ceil( count * 0.01 );
 	}
 	static public function realToHard(count:Int):Int
 	{
-		return Math.round( count * 0.04 );
+		return Math.ceil( count * 0.04 );
 	}
 	static public function hardToReal(count:Int):Int
 	{
-		return Math.round( count / 0.04 );
+		return Math.ceil( count / 0.04 );
 	}
 	static public function softToHard(count:Int):Int
 	{
-		return Math.round( count * 0.05 );
+		return Math.ceil( count * 0.05 );
 	}
 	static public function hardToSoft(count:Int):Int
 	{
-		return Math.round( count / 0.05 );
+		return Math.ceil( count / 0.05 );
 	}
 	static public function timeToHard(count:Int):Int
 	{
