@@ -132,8 +132,14 @@ if( featureType == 1 )
 		all.unshift(101);
 		return all;
 	}
-	var ret = all.indexOf(cardType);
-	return ret <= 0 ? 0 : 1;
+	var index = 0;
+	for( c in all )
+	{
+		if( c == cardType )
+			return index;
+		index ++;
+	}
+	return 0;
 }
 
 
