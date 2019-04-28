@@ -96,11 +96,12 @@ class ExchangeUpdater
 		
 		if( item.outcome == ResourceType.R6_TICKET )
 		{
+			var rand = Math.ceil(Math.random() * 5);
 			if( Challenge.getUnlockAt(3) <= arena )
-				return 15;
+				return 15 + rand;
 			if( Challenge.getUnlockAt(2) <= arena )
-				return 10;
-			return 5;
+				return 10 + rand;
+			return 5 + rand;
 		}
 		
 		return switch ( item.outcome )
