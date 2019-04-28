@@ -1,12 +1,9 @@
 package com.gt.towers.events;
 
-import flash.events.Event;
-
 /**
- * ...
  * @author Mansour Djawadi
  */
-class CoreEvent extends Event 
+class CoreEvent extends flash.events.Event
 {
 	public static var CHANGE:String = "change";
 	

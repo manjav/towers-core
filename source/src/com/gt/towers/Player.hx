@@ -7,14 +7,12 @@ import com.gt.towers.constants.PrefsTypes;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.others.Quest;
 import com.gt.towers.scripts.ScriptEngine;
-import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.maps.IntCardMap;
 import com.gt.towers.utils.maps.IntIntIntMap;
 import com.gt.towers.utils.maps.IntIntMap;
 import com.gt.towers.utils.maps.IntStrMap;
 
 /**
- * ...
  * @author Mansour Djawadi
  */
 class Player
@@ -266,7 +264,7 @@ class Player
 	#if flash
 	public function dashboadTabEnabled(index:Int) : Bool
 	{
-		if( getTutorStep() >= PrefsTypes.T_027_WIN )
+		if( getTutorStep() >= 27 )
 			return true;
 		if( index == 1 )
 			return inDeckTutorial();

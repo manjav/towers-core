@@ -1,6 +1,5 @@
 package com.gt.towers.exchanges;
 import com.gt.towers.Game;
-import com.gt.towers.constants.CardTypes;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;

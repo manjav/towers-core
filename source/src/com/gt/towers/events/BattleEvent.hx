@@ -14,7 +14,7 @@ static public var ATTACK:String = "attack";
 static public var HIT:String = "hit";
 static public var STATE_CHANGE:String = "stateChange";
 
- #if java
+#if java
 public function new() {}
 #elseif flash
 public var data:Any;

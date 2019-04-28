@@ -1,5 +1,4 @@
 package com.gt.towers.utils;
-import com.gt.towers.battle.units.Unit;
 import haxe.Int64;
 
 /**
@@ -9,7 +8,6 @@ import haxe.Int64;
 class CoreUtils 
 {
 	public function new(){}
-	
 	static public function round(value:Dynamic) : Int
 	{
 		if( value < 100 )
