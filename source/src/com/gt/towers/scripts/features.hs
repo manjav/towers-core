@@ -19,8 +19,8 @@
 // 113	L - 0 - 0 - M - M - L
 // 114	0 - 0 - M - L - L - M
 //
-// 151	
-// 152	
+// 151  0 - M - 0 - 0 - M - 0	
+// 152	0 - H - 0 - 0 - L - 0
 //
 // 201	
 // 221	
@@ -161,7 +161,7 @@ if( featureType == 2 )
 		case 111 :  6	;
 		case 112 :  4	;
 		case 113 :  2	;
-		case 114 :  2	;
+		case 114 :  3	;
 		
 		case 151 :  4	;
 		case 152 :  3	;
@@ -278,15 +278,15 @@ if( featureType == 12 )
 		case	103	:	0.30;
 		case	104	:	1.00;
 		case	105	:	1.40;
-		case	106	:	0.60;
+		case	106	:	0.50;
 		case	107	:	0.30;
 		case	108	:	0.80;
 		case	109	:	0.30;
 		case	110	:	0.10;
 		case	111	:	1.00;
 		case	112	:	1.00;
-		case	113	:	1.00;
-		case	114	:	0.30;
+		case	113	:	1.30;
+		case	114	:	0.60;
 		
 		case	201	:	5.00;
 		case	221	:	6.00;
@@ -441,7 +441,8 @@ if( featureType == 21 )
 // (Damage/s). Inform amin if you heading to change this one. Becuase "Damage" related to "Gap".
 // H = min 0.30 , max 0.50  
 // M = min 0.20 , max 0.29  
-// L = min 0.05 , max 0.19  
+// L = min 0.05 , max 0.19 
+// Spells must divide by 3 
 if( featureType == 22 )
 {
 	var ret = switch( cardType )
@@ -459,10 +460,10 @@ if( featureType == 22 )
 		case	111	:  	0.24	;
 		case	112	:	0.10	;
 		case	113	:	0.20	;
-		case	114	:	0.06	;
+		case	114	:	0.12	;
 		
-		case	151	:	1.00	;
-		case	152	:	0.60 	;
+		case	151	:	0.70	;
+		case	152	:	0.40 	;
 		
 		case	201	:	0.06	;
 		case	221	:	0.20	;
