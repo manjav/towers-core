@@ -63,7 +63,7 @@ class IntStrMap
 	public function getAsInt(key:Int) : Int
 	{
 		if ( !exists(key) )
-			return 0;
+			return -1;
 		return Std.parseInt(get(key));
 	}
 	public function getAsBool(key:Int) : Bool

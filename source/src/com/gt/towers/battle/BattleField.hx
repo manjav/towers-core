@@ -149,10 +149,10 @@ class BattleField
 		
 		// create decks	
 		decks = new IntIntCardMap();
-		if( game_0.player.get_battleswins() < 3 )
-			decks.set(0, getDeckCards(game_0, game_0.loginData.initialDecks.get(game_0.player.get_battleswins()).toArray(false), friendlyMode));
-		else
-			decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck().toArray(true), friendlyMode));
+		// if( game_0.player.get_battleswins() < 3 )
+		// 	decks.set(0, getDeckCards(game_0, game_0.loginData.initialDecks.get(game_0.player.get_battleswins()).toArray(false), friendlyMode));
+		// else
+			decks.set(0, getDeckCards(game_0, game_0.player.getSelectedDeck().toArray(game_0.player.get_battleswins() > 3 ), friendlyMode));
 			decks.set(1, getDeckCards(game_1, game_1.player.getSelectedDeck().toArray(true), friendlyMode));
 #end
 		elixirBar = new FloatList();

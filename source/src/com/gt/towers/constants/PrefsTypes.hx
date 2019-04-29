@@ -28,8 +28,6 @@ class PrefsTypes
 	
 	public static var T_000_FIRST_RUN:Int = 0;
 	public static var T_001_START:Int = 1;
-	public static var T_004_SWIPE:Int = 4;
-	public static var T_005_CAPTURE:Int = 5;
 	public static var T_007_WIN:Int = 7;	
 	
 	public static var T_011_SLOT_FOCUS:Int = 11;
@@ -41,22 +39,11 @@ class PrefsTypes
 	public static var T_018_CARD_UPGRADED:Int = 18;
 	public static var T_019_RETURN_TO_BATTLE:Int = 19;
 	
-	public static var T_021_START:Int = 21;
-	public static var T_024_SWIPE:Int = 24;
-	public static var T_025_CAPTURE:Int = 25;
-	public static var T_027_WIN:Int = 27;
-	
-	public static var T_041_START:Int = 41;
-	public static var T_042_IMPROVE:Int = 42;
-	public static var T_044_SWIPE:Int = 44;
-	public static var T_045_CAPTURE:Int = 45;
-	public static var T_047_WIN:Int = 47;	
-	
-	public static var T_151_SELECT_NAME_FOCUS:Int = 151;
-	public static var T_152_NAME_SELECTED:Int = 152;
-	
-	public static var T_161_QUEST_FOCUS:Int = 161;
-	public static var T_162_QUEST_SHOWN:Int = 162;
+	public static var T_71_SELECT_NAME_FOCUS:Int = 71;
+	public static var T_72_NAME_SELECTED:Int = 72;
+
+	public static var T_73_CHALLENGES_SHOWN:Int = 73;
+	public static var T_74_CHALLENGE_SELECTED:Int = 74;
 
 	public function new() {}
 	public static function isSettings(type:Int) : Bool
@@ -66,9 +53,5 @@ class PrefsTypes
 	public static function isOffer(type:Int) : Bool
 	{
 		return type >= 30 && type < 40;
-	}
-	public static function isTutorial(type:Int) : Bool
-	{
-		return type >= 100 && type < 200;
 	}
 }

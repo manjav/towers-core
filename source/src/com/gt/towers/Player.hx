@@ -236,7 +236,7 @@ class Player
 		return targets.getRandomKey();
 	}
 	
-	public function getTutorStep() : Int { return tutorialMode == -1 ? PrefsTypes.T_162_QUEST_SHOWN : prefs.getAsInt(PrefsTypes.TUTOR); }
+	public function getTutorStep() : Int { return prefs.getAsInt(PrefsTypes.TUTOR); }
 	public function inSlotTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_011_SLOT_FOCUS && getTutorStep() < PrefsTypes.T_013_BOOK_OPENED; }
 	public function inDeckTutorial() : Bool { return getTutorStep() >= PrefsTypes.T_013_BOOK_OPENED && getTutorStep() < PrefsTypes.T_018_CARD_UPGRADED; }
 	public function villageEnabled() : Bool { return !inTutorial();/*get_arena(0) > 0;*/ }
@@ -253,7 +253,7 @@ class Player
 		if( tutorialMode == 1 && get_battleswins() < 2 )
 			return true;
 	#elseif flash
-		if( tutorialMode == 0 && getLastOperation() < 3 && getTutorStep() < PrefsTypes.T_151_SELECT_NAME_FOCUS )
+		if( tutorialMode == 0 && getLastOperation() < 3 && getTutorStep() < PrefsTypes.T_71_SELECT_NAME_FOCUS )
 			return true;
 		if( tutorialMode == 1 && get_battleswins() < 2 )
 			return true;
