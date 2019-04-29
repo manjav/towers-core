@@ -28,9 +28,9 @@ class StickerType
 	public static var S16_I_SEE_YOU_SMALL:Int = 16;
 	
 #if flash
-	public static function getAll(friendlyMode:Int) : IntList
+	public static function getAll(friendlyMode:Int) : Array<Int>
 	{
-		var ret:IntList = new IntList();
+		var ret = new Array<Int>();
 		
 		ret.push( S0_LUCKKY );
 		ret.push( S1_THANKS );
