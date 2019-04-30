@@ -11,9 +11,9 @@ import com.gt.towers.utils.maps.IntIntMap;
 class LoginData
 {
 	public static var coreSize:Int = 0;
-	public var coreVersion:String = "1950.0429013648";//do not change len.
-	public var noticeVersion:Int = 1900;
-	public var forceVersion:Int = 1900;
+	public var coreVersion:String = "1950.0430104827";//do not change len.
+	public var noticeVersion:Int = 1950;
+	public var forceVersion:Int = 1950;
 	public var resources:IntIntMap;
 	public var buildingsLevel:IntIntMap;
 	public var exchanges:IntList;

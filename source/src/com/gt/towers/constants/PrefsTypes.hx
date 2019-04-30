@@ -28,6 +28,9 @@ class PrefsTypes
 	
 	public static var T_000_FIRST_RUN:Int = 0;
 	public static var T_001_START:Int = 1;
+	public static var T_002_FIRST_SUMMON:Int = 2;
+	public static var T_003_FIRST_STAR:Int = 3;
+	public static var T_004_SECOND_STAR:Int = 4;
 	public static var T_007_WIN:Int = 7;	
 	
 	public static var T_011_SLOT_FOCUS:Int = 11;
