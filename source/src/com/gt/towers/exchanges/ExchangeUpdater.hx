@@ -3,6 +3,7 @@ import com.gt.towers.Game;
 import com.gt.towers.constants.ExchangeType;
 import com.gt.towers.constants.ResourceType;
 import com.gt.towers.exchanges.ExchangeItem;
+import com.gt.towers.socials.Challenge;
 import com.gt.towers.utils.maps.IntIntMap;
 
 /**
@@ -47,10 +48,10 @@ class ExchangeUpdater
 		{
 			if( item.type == ExchangeType.C23_SPECIAL )
 			{
-				if( game.player.buildings.keys().length > 0 )
+				if( game.player.buildings.keys().length > 0 && game.player.getResource(ResourceType.R6_TICKET) > 10 )
 					item.outcome = game.player.buildings.getRandomKey();
 				else
-					item.outcome = ResourceType.R3_CURRENCY_SOFT;
+					item.outcome = ResourceType.R6_TICKET;
 			}
 			else if( item.type == ExchangeType.C22_SPECIAL )
 			{
@@ -89,6 +90,9 @@ class ExchangeUpdater
 			return 3 * ( arena + 1 );
 		else if( ResourceType.isBook(item.outcome) )
 			return 1;
+		
+		if( item.outcome == ResourceType.R6_TICKET )
+			return 5 + Math.ceil(arena * 0.5);
 		
 		return switch ( item.outcome )
 		{

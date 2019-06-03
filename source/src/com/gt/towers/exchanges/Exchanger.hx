@@ -374,10 +374,6 @@ class Exchanger
         var softDec = ExchangeType.getNumSofts(type, arena, game.player.splitTestCoef) * 0.1;
 		ret.set( ResourceType.R3_CURRENCY_SOFT, Math.floor(softDec * 9 + Math.random() * softDec * 2) );
 		
-		// tickets
-		if( game.player.get_arena(0) > 1 && type > 51 )
-			ret.set( ResourceType.R6_TICKET, type - 51 );
-		
 		return ret;
 	}
 	function addNewCard(map:IntIntMap) : Void
