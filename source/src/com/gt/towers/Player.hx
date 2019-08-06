@@ -44,7 +44,7 @@ class Player
 		id = initData.id;
 		admin = isAdmin(id);
 		nickName = initData.nickName;
-		splitTestCoef = (id > 120100 && id % 2 == 0) ? 0.5 : 1;
+		splitTestCoef = (id > 120100 && id % 2 == 0) ? 2 : 1;
 		
 		// add player resources, operations data
 		resources = initData.resources;

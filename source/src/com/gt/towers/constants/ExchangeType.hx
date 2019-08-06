@@ -133,7 +133,7 @@ class ExchangeType
 
 	public static function getNumSofts(type:Int, arena:Int, coef:Float):Int
 	{
-		return Math.round(Math.pow(getNumTotalCards(type, arena, coef), 1.5) * 0.6);
+		return Math.round(Math.pow(getNumTotalCards(type, arena, coef), 1.5) * 0.5);
 	}
 
 	public static function isMagic(type:Int) : Bool
