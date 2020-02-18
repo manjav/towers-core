@@ -7,13 +7,13 @@ package com.gt.towers.constants;
 
 class ExchangeType
 {
-	public static var C0_HARD:Int = 0;
-	public static var C1_HARD:Int = 1;
-	public static var C2_HARD:Int = 2;
-	public static var C3_HARD:Int = 3;
-	public static var C4_HARD:Int = 4;
-	public static var C5_HARD:Int = 5;
-	public static var C6_HARD:Int = 6;
+	static public var C0_HARD:Int = 0;
+	static public var C1_HARD:Int = 1;
+	static public var C2_HARD:Int = 2;
+	static public var C3_HARD:Int = 3;
+	static public var C4_HARD:Int = 4;
+	static public var C5_HARD:Int = 5;
+	static public var C6_HARD:Int = 6;
 
 	static public var C10_SOFT:Int = 10;
 	static public var C11_SOFT:Int = 11;
@@ -24,6 +24,11 @@ class ExchangeType
 	static public var C71_TICKET:Int = 71;
 	static public var C72_TICKET:Int = 72;
 	static public var C73_TICKET:Int = 73;
+
+	static public var C80_EMOTES:Int = 80;
+	static public var C81_EMOTE:Int = 81;
+	static public var C82_EMOTE:Int = 82;
+	static public var C83_EMOTE:Int = 83;
 
 	static public var C20_SPECIALS:Int = 20;
 	static public var C21_SPECIAL:Int = 21;
@@ -73,12 +78,12 @@ class ExchangeType
 	static public var BOOK_59_DRAGON:Int = 59;
 
 	public function new() {}
-	public static function getCategory(type:Int):Int
+	static public function getCategory(type:Int):Int
 	{
 		return Math.floor(type / 10) * 10;
 	}
 
-	public static function getCooldown(type:Int):Int
+	static public function getCooldown(type:Int):Int
 	{
 		return switch ( type )
 		{
@@ -96,7 +101,7 @@ class ExchangeType
 		}
 	}
 
-	public static function getNumSlots(type:Int):Int
+	static public function getNumSlots(type:Int):Int
 	{
 		return switch ( type )
 		{
@@ -113,7 +118,7 @@ class ExchangeType
 		}
 	}
 
-	public static function getNumTotalCards(type:Int, arena:Int, coef:Float):Int
+	static public function getNumTotalCards(type:Int, arena:Int, coef:Float):Int
 	{
 		var ret =  switch ( type )
 		{
@@ -131,13 +136,75 @@ class ExchangeType
 		return Math.floor( ret * coef);
 	}
 
-	public static function getNumSofts(type:Int, arena:Int, coef:Float):Int
+	static public function getNumSofts(type:Int, arena:Int, coef:Float):Int
 	{
 		return Math.round(Math.pow(getNumTotalCards(type, arena, coef), 1.5) * 0.5);
 	}
 
-	public static function isMagic(type:Int) : Bool
+	static public function isMagic(type:Int) : Bool
 	{
 		return type == BOOK_55_PIRATE || type == BOOK_56_JUNGLE || type == BOOK_58_AMBER ;
+	}
+	
+	
+	static public function getName(type:Int) : String
+	{
+		switch (type)
+		{
+			case 0: return "Gems";
+			case 1: return "GemsI";
+			case 2: return "GemsII";
+			case 3: return "GemsIII";
+			case 4: return "GemsIV";
+			case 5: return "GemsV";
+			case 6: return "GemsVI";
+			case 10: return "Coins";
+			case 11: return "CoinsI";
+			case 12: return "CoinsII";
+			case 13: return "CoinsIII";
+			case 20: return "Special";
+			case 21: return "SpecialI";
+			case 22: return "SpecialII";
+			case 23: return "SpecialIII";
+			case 30: return "Bundle";
+			case 31: return "BundleI";
+			case 32: return "BundleII";
+			case 40: return "Others";
+			case 41: return "Keys";
+			case 42: return "Rename";
+			case 43: return "AD";
+			case 50: return "Books";
+			case 51: return "BookMetal";
+			case 52: return "BookKnight";
+			case 53: return "BookStars";
+			case 54: return "BookSea";
+			case 55: return "BookPirate";
+			case 56: return "BookJungle";
+			case 57: return "BookTreasure";
+			case 58: return "BookAmber";
+			case 59: return "BookDragon";
+			case 70: return "Ticket";
+			case 71: return "TicketI";
+			case 72: return "TicketII";
+			case 73: return "TicketIII";
+			case 80: return "Emote";
+			case 81: return "EmoteI";
+			case 82: return "EmoteII";
+			case 83: return "EmoteIII";
+			case 100: return "Frees";
+			case 101: return "FreesI";
+			case 102: return "FreesII";
+			case 103: return "FreesIII";
+			case 110: return "Battle";
+			case 111: return "BattleI";
+			case 112: return "BattleII";
+			case 113: return "BattleIII";
+			case 114: return "BattleIV";
+			case 120: return "Magic";
+			case 121: return "MagicI";
+			case 122: return "MagicII";
+			case 123: return "MagicIII";
+			default: return null;
+		}
 	}
 }
